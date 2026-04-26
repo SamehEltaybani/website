@@ -1,1 +1,441 @@
+/* ==========================================================================
+   FILE: assets/css/main.css
+   PURPOSE: Global Design System & Layout Foundation
+   ========================================================================== */
 
+/* ==========================================================================
+   1. COLOR DEFINITIONS & DESIGN TOKENS
+   ========================================================================== */
+:root {
+    /* --- Base Colors --- */
+    --color-midnight-blue: #1A2530;       /* Primary brand color, deep and professional */
+    --color-midnight-light: #2C3E50;      /* Lighter variant for hover states/secondary elements */
+    --color-gold: #D4AF37;                /* Accent color for highlights and active states */
+    --color-gold-light: #F1D570;          /* Lighter gold for subtle accents */
+    --color-white: #FFFFFF;               /* Clean white for backgrounds and inverted text */
+    
+    /* --- Color Roles --- */
+    --color-bg-main: var(--color-white);
+    --color-bg-alt: #F8F9FA;              /* Very light grey for distinct sections */
+    --color-bg-breadcrumb: #E9ECEF;       /* Light grey specifically for breadcrumbs */
+    
+    --color-text-main: #333333;           /* High readability dark grey for body text */
+    --color-text-muted: #6C757D;          /* Muted grey for metadata and secondary text */
+    --color-text-inverted: var(--color-white); /* White text for dark backgrounds */
+    
+    --color-border: #DEE2E6;              /* Standard subtle divider color */
+
+    /* --- Spacing Scale --- */
+    --space-xs: 0.25rem;   /* 4px */
+    --space-sm: 0.5rem;    /* 8px */
+    --space-md: 1rem;      /* 16px */
+    --space-lg: 2rem;      /* 32px */
+    --space-xl: 4rem;      /* 64px */
+
+    /* --- Typography Scale --- */
+    --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-size-sm: 0.875rem;             /* 14px */
+    --font-size-base: 1rem;               /* 16px */
+    --font-size-lg: 1.125rem;             /* 18px */
+    --font-size-xl: 1.5rem;               /* 24px */
+    --font-size-xxl: 2rem;                /* 32px */
+    
+    --line-height-base: 1.6;
+    --line-height-heading: 1.2;
+
+    /* --- Layout & Dimensions --- */
+    --container-max-width: 1100px;
+    --nav-height: 70px;
+    --breadcrumb-height: 45px;
+
+    /* --- Transitions --- */
+    --transition-fast: 0.2s ease-in-out;
+    --transition-base: 0.3s ease-in-out;
+}
+
+/* ==========================================================================
+   2. GLOBAL BASE STYLES
+   ========================================================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: var(--color-text-main);
+    background-color: var(--color-bg-main);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-midnight-blue);
+    line-height: var(--line-height-heading);
+    margin-bottom: var(--space-md);
+    font-weight: 600;
+}
+
+p {
+    margin-bottom: var(--space-md);
+}
+
+a {
+    color: var(--color-midnight-blue);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover, a:focus {
+    color: var(--color-gold);
+}
+
+ul, ol {
+    margin-bottom: var(--space-md);
+    padding-left: var(--space-lg);
+}
+
+/* ==========================================================================
+   3. LAYOUT UTILITIES
+   ========================================================================== */
+.container {
+    width: 100%;
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+}
+
+/* Flexbox Helpers */
+.d-flex { display: flex; }
+.flex-column { flex-direction: column; }
+.align-items-center { align-items: center; }
+.justify-content-between { justify-content: space-between; }
+.justify-content-center { justify-content: center; }
+.flex-wrap { flex-wrap: wrap; }
+
+/* Spacing Helpers */
+.mt-1 { margin-top: var(--space-sm); }
+.mt-2 { margin-top: var(--space-md); }
+.mt-3 { margin-top: var(--space-lg); }
+.mb-1 { margin-bottom: var(--space-sm); }
+.mb-2 { margin-bottom: var(--space-md); }
+.mb-3 { margin-bottom: var(--space-lg); }
+.py-2 { padding-top: var(--space-md); padding-bottom: var(--space-md); }
+.py-3 { padding-top: var(--space-lg); padding-bottom: var(--space-lg); }
+
+/* Text Utilities */
+.text-center { text-align: center; }
+.text-muted { color: var(--color-text-muted); }
+
+/* ==========================================================================
+   4. NAVIGATION BAR STYLING
+   ========================================================================== */
+.navbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: var(--nav-height);
+    background-color: var(--color-midnight-blue);
+    color: var(--color-white);
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar .container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    color: var(--color-white);
+    font-weight: 600;
+    font-size: var(--font-size-lg);
+}
+
+.nav-brand:hover {
+    color: var(--color-gold);
+}
+
+.nav-profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-midnight-light); /* Placeholder bg */
+    border: 2px solid var(--color-gold);
+    object-fit: cover;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: var(--space-md);
+}
+
+.nav-link {
+    color: var(--color-white);
+    font-size: var(--font-size-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: var(--space-sm) 0;
+    border-bottom: 2px solid transparent;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--color-gold);
+    border-bottom-color: var(--color-gold);
+}
+
+/* Hamburger Icon (Hidden on Desktop) */
+.nav-hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--color-white);
+    font-size: var(--font-size-xl);
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   5. BREADCRUMB BAR STYLING
+   ========================================================================== */
+.breadcrumb-bar {
+    position: sticky;
+    top: var(--nav-height); /* Directly below navbar */
+    width: 100%;
+    height: var(--breadcrumb-height);
+    background-color: var(--color-bg-breadcrumb);
+    border-bottom: 1px solid var(--color-border);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    overflow: hidden; /* Prepares for truncation */
+}
+
+/* Space reserved for a back/left arrow control */
+.breadcrumb-back-control {
+    flex-shrink: 0;
+    margin-right: var(--space-sm);
+    color: var(--color-midnight-blue);
+    cursor: pointer;
+}
+
+.breadcrumb-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+}
+
+.breadcrumb-item {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: ">";
+    margin: 0 var(--space-xs);
+    color: var(--color-text-muted);
+}
+
+.breadcrumb-link {
+    color: var(--color-midnight-light);
+}
+
+.breadcrumb-link:hover {
+    color: var(--color-midnight-blue);
+    text-decoration: underline;
+}
+
+.breadcrumb-item:last-child .breadcrumb-link {
+    color: var(--color-text-main);
+    font-weight: 600;
+    pointer-events: none; /* Last item is usually current page, unclickable */
+}
+
+/* ==========================================================================
+   6. FOOTER STYLING
+   ========================================================================== */
+.site-footer {
+    background-color: var(--color-midnight-blue);
+    color: var(--color-white);
+    padding: var(--space-xl) 0 var(--space-lg);
+    margin-top: var(--space-xl);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
+}
+
+/* Footer Headings */
+.site-footer h4 {
+    color: var(--color-gold);
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-md);
+}
+
+/* Section 1: Social Media */
+.footer-social {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-midnight-light);
+    color: var(--color-white);
+    transition: background-color var(--transition-fast);
+}
+
+.social-icon:hover {
+    background-color: var(--color-gold);
+    color: var(--color-midnight-blue);
+}
+
+/* Section 2: Sitemap */
+.footer-sitemap ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-sitemap li {
+    margin-bottom: var(--space-xs);
+}
+
+.footer-sitemap a {
+    color: var(--color-white);
+    opacity: 0.8;
+}
+
+.footer-sitemap a:hover {
+    opacity: 1;
+    color: var(--color-gold);
+}
+
+/* Section 3: Legal & Professional Disclaimer */
+.footer-disclaimer-text {
+    font-size: var(--font-size-sm);
+    opacity: 0.8;
+    margin-bottom: var(--space-xs);
+    
+    /* Truncate to 3 lines */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.footer-read-more {
+    font-size: var(--font-size-sm);
+    color: var(--color-gold);
+    font-weight: 600;
+}
+
+/* Section 4: Copyright */
+.footer-copyright {
+    text-align: center;
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--color-midnight-light);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   7. RESPONSIVE RULES
+   ========================================================================== */
+
+/* Tablet and below */
+@media (max-width: 992px) {
+    :root {
+        --font-size-base: 0.95rem;
+        --space-xl: 3rem;
+    }
+}
+
+/* Mobile Devices */
+@media (max-width: 768px) {
+    /* Navigation Adapts to Hamburger */
+    .nav-menu {
+        display: none; /* Hidden by default on mobile, handled by JS later */
+        flex-direction: column;
+        position: absolute;
+        top: var(--nav-height);
+        left: 0;
+        width: 100%;
+        background-color: var(--color-midnight-blue);
+        padding: var(--space-md);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .nav-hamburger {
+        display: block; /* Show hamburger icon */
+    }
+
+    .nav-link {
+        border-bottom: none;
+        border-left: 2px solid transparent;
+        padding-left: var(--space-sm);
+    }
+    
+    .nav-link:hover,
+    .nav-link.active {
+        border-bottom-color: transparent;
+        border-left-color: var(--color-gold);
+    }
+
+    /* Breadcrumb single-line truncation logic */
+    .breadcrumb-list {
+        /* Pushes items to the right, keeping the last hierarchy item visible */
+        display: block;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        direction: rtl; /* Truncates from the left, keeping end visible */
+        text-align: left; /* Resets text alignment for readability */
+    }
+    
+    .breadcrumb-item {
+        display: inline;
+        direction: ltr; /* Resets direction for individual items */
+    }
+
+    /* Footer adjustments */
+    .footer-grid {
+        grid-template-columns: 1fr; /* Stack footer sections */
+        gap: var(--space-md);
+    }
+    
+    .site-footer {
+        padding: var(--space-lg) 0;
+    }
+}
