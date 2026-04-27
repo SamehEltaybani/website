@@ -1,65 +1,22 @@
-[
-  {
-    "id": "nav-home",
-    "label": "Home",
-    "url": "index.html",
-    "order": 1,
-    "highlighted": false
+{
+  "profile": {
+    "name": "Dr. Sameh Eltaybani",
+    "image": "assets/images/profile.jpg",
+    "link": "index.html"
   },
-  {
-    "id": "nav-research",
-    "label": "Research",
-    "url": "research.html",
-    "order": 2,
-    "highlighted": false
-  },
-  {
-    "id": "nav-publications",
-    "label": "Publications",
-    "url": "publications.html",
-    "order": 3,
-    "highlighted": false
-  },
-  {
-    "id": "nav-data-analysis",
-    "label": "Data Analysis",
-    "url": "data-analysis.html",
-    "order": 4,
-    "highlighted": false
-  },
-  {
-    "id": "nav-teaching",
-    "label": "Teaching",
-    "url": "teaching.html",
-    "order": 5,
-    "highlighted": false
-  },
-  {
-    "id": "nav-portfolios",
-    "label": "Portfolios",
-    "url": "portfolios.html",
-    "order": 6,
-    "highlighted": false
-  },
-  {
-    "id": "nav-blog",
-    "label": "Blog",
-    "url": "blog.html",
-    "order": 7,
-    "highlighted": false
-  },
-  {
-    "id": "nav-contact",
-    "label": "Contact",
-    "url": "contact.html",
-    "order": 8,
-    "highlighted": false
-  },
-  {
-    "id": "nav-newsletter",
-    "label": "Newsletter",
-    "url": "newsletter.html",
-    "order": 9,
-    "highlighted": true
-  }
-]
+  "items": [
+    { "label": "Home", "url": "index.html" },
+    { "label": "Research", "url": "research.html" },
+    { "label": "Publications", "url": "publications.html" },
+    { "label": "Data Analysis", "url": "data-analysis.html" },
+    { "label": "Teaching", "url": "teaching.html" },
+    { "label": "Portfolios", "url": "portfolios.html" },
+    { "label": "Blog", "url": "blog.html" },
+    { "label": "Contact", "url": "contact.html" },
+    {
+      "label": "Newsletter",
+      "url": "newsletter.html",
+      "highlight": true
+    }
+  ]
+}
