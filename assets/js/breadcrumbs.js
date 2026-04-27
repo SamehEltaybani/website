@@ -1,213 +1,160 @@
-/**
- * ==========================================================================
- * FILE: assets/js/breadcrumbs.js
- * PURPOSE: Dynamically render hierarchical breadcrumb trails across the site.
- * ==========================================================================
- */
+/* ==========================================================
+   breadcrumbs.js
+   Purpose:
+   Render dynamic breadcrumbs across the website
+   ========================================================== */
 
-/**
- * ==========================================================================
- * 1. CONFIGURATION & CONSTANTS
- * ==========================================================================
- */
+
+/* ==========================================================
+   1. CONFIGURATION: PAGE-LEVEL BREADCRUMB DEFINITIONS
+   ----------------------------------------------------------
+   HOW TO USE (Non‑programmer friendly):
+   - Each key is a page file name (e.g. "research.html")
+   - Each value is an ordered list of breadcrumb items
+   - Each item has:
+       - label (text shown)
+       - url (optional; omit for current page)
+   - You may add, remove, or edit entries safely
+   ========================================================== */
+
 const BREADCRUMB_CONFIG = {
-    TARGET_CONTAINER_ID: 'site-breadcrumbs',
-    HOME_LABEL: 'Home',
-    HOME_URL: 'index.html'
+  "research.html": [
+    { label: "Home", url: "index.html" },
+    { label: "Research" }
+  ],
+
+  "publications.html": [
+    { label: "Home", url: "index.html" },
+    { label: "Publications" }
+  ],
+
+  "blog.html": [
+    { label: "Home", url: "index.html" },
+    { label: "Blog" }
+  ],
+
+  /* Example: sub‑page */
+  "research-portfolio.html": [
+    { label: "Home", url: "index.html" },
+    { label: "Research", url: "research.html" },
+    { label: "Research Portfolio" }
+  ]
+
+  /* Blog articles will be added later by templates */
 };
 
-/**
- * ==========================================================================
- * 2. PAGE HIERARCHY MAPPING (EDIT THIS SECTION)
- * ==========================================================================
- * Define the breadcrumb trail for specific pages here.
- * You do NOT need to include "Home" - it is added automatically.
- * * Format:
- * 'page-filename.html': [
- * { label: 'Parent Page', url: 'parent.html' }, // Clickable middle item
- * { label: 'Current Page' }                     // Unclickable last item
- * ]
- */
-const PAGE_HIERARCHIES = {
-    // Main Pages
-    'research.html': [{ label: 'Research' }],
-    'publications.html': [{ label: 'Publications' }],
-    'data-analysis.html': [{ label: 'Data Analysis' }],
-    'teaching.html': [{ label: 'Teaching' }],
-    'portfolios.html': [{ label: 'Portfolios' }],
-    'blog.html': [{ label: 'Blog' }],
-    'contact.html': [{ label: 'Contact' }],
-    'newsletter.html': [{ label: 'Newsletter' }],
-    
-    // Example of a sub-page hierarchy
-    'sample-portfolio-project.html': [
-        { label: 'Portfolios', url: 'portfolios.html' },
-        { label: 'Sample Project' }
-    ]
-};
+
+/* ==========================================================
+   2. UTILITY HELPERS
+   ========================================================== */
 
 /**
- * ==========================================================================
- * 3. UTILITY HELPERS
- * ==========================================================================
+ * Get the current page file name (e.g. "index.html")
  */
-
-/**
- * Calculates the relative path prefix to the root directory (e.g., '../')
- * @returns {string} The relative path prefix
- */
-function getRootPrefix() {
-    const path = window.location.pathname.replace(/^\/|\/$/g, '');
-    if (!path || path === 'index.html' || !path.includes('/')) return './';
-    const depth = path.split('/').length - 1;
-    return '../'.repeat(depth);
+function getCurrentPage() {
+  const path = window.location.pathname;
+  return path.substring(path.lastIndexOf("/") + 1) || "index.html";
 }
 
 /**
- * Extracts the current filename from the URL to look up in the configuration.
- * @returns {string} The current page filename or path
+ * Get a safe page title fallback
  */
-function getCurrentPageKey() {
-    const path = window.location.pathname;
-    const segments = path.split('/');
-    let key = segments.pop();
-    
-    // Default to index.html if pointing at a directory
-    if (!key) key = 'index.html';
-    return key;
+function getPageTitleFallback() {
+  return document.title
+    ? document.title.replace(/\|.*/, "").trim()
+    : "Current Page";
 }
 
-/**
- * ==========================================================================
- * 4. PAGE HIERARCHY RESOLUTION & BLOG ARTICLE HANDLING
- * ==========================================================================
- */
 
-/**
- * Determines the final breadcrumb array for the current page.
- * Handles exact matches, blog articles, and a generic fallback.
- * @returns {Array} Array of breadcrumb objects { label, url }
- */
-function resolveBreadcrumbTrail() {
-    const rootPrefix = getRootPrefix();
-    const pageKey = getCurrentPageKey();
-    
-    // Always start with Home
-    const trail = [
-        { label: BREADCRUMB_CONFIG.HOME_LABEL, url: rootPrefix + BREADCRUMB_CONFIG.HOME_URL }
-    ];
+/* ==========================================================
+   3. PAGE HIERARCHY RESOLUTION
+   ----------------------------------------------------------
+   Determines which breadcrumb trail to use for this page
+   ========================================================== */
 
-    // If on the home page itself, just return Home (or empty if you prefer no breadcrumb on home)
-    if (pageKey === 'index.html' || pageKey === '') {
-        return trail;
+function resolveBreadcrumbs(page) {
+  if (BREADCRUMB_CONFIG[page]) {
+    return BREADCRUMB_CONFIG[page];
+  }
+
+  /* Fallback: Home > Current Page */
+  return [
+    { label: "Home", url: "index.html" },
+    { label: getPageTitleFallback() }
+  ];
+}
+
+
+/* ==========================================================
+   4. BREADCRUMB DOM CREATION
+   ----------------------------------------------------------
+   Creates semantic breadcrumb markup dynamically
+   ========================================================== */
+
+function buildBreadcrumbs(trail) {
+  const nav = document.createElement("nav");
+  nav.className = "breadcrumbs-nav";
+
+  trail.forEach((item, index) => {
+    const isLast = index === trail.length - 1;
+
+    if (item.url && !isLast) {
+      const link = document.createElement("a");
+      link.href = item.url;
+      link.textContent = item.label;
+      link.className = "breadcrumb-link";
+      nav.appendChild(link);
+    } else {
+      const span = document.createElement("span");
+      span.textContent = item.label;
+      span.className = "breadcrumb-current";
+      nav.appendChild(span);
     }
 
-    // Check if there is a predefined hierarchy in PAGE_HIERARCHIES
-    if (PAGE_HIERARCHIES[pageKey]) {
-        return trail.concat(PAGE_HIERARCHIES[pageKey]);
+    if (!isLast) {
+      const separator = document.createElement("span");
+      separator.textContent = "›";
+      separator.className = "breadcrumb-separator";
+      nav.appendChild(separator);
     }
+  });
 
-    // Future-Proofing for Blog Articles / Dynamic Content
-    // Assumes an external script might define window.ARTICLE_DATA
-    if (window.ARTICLE_DATA) {
-        const articleLabel = window.ARTICLE_DATA.shortTitle || window.ARTICLE_DATA.title;
-        trail.push({ label: 'Blog', url: rootPrefix + 'blog.html' }); // Parent
-        trail.push({ label: articleLabel }); // Current article
-        return trail;
-    }
-
-    // Fallback: If page is unknown and no article data exists, use document title
-    const fallbackTitle = document.title || 'Current Page';
-    trail.push({ label: fallbackTitle });
-
-    return trail;
+  return nav;
 }
 
-/**
- * ==========================================================================
- * 5. BREADCRUMB DOM CREATION
- * ==========================================================================
- */
 
-/**
- * Generates the HTML structure for the breadcrumbs and injects it into the container.
- * @param {Array} trail - The array of breadcrumb objects.
- * @param {string} rootPrefix - The calculated path to the root directory.
- */
-function renderBreadcrumbs(trail, rootPrefix) {
-    const container = document.getElementById(BREADCRUMB_CONFIG.TARGET_CONTAINER_ID);
-    
-    // Fail silently if container does not exist
-    if (!container) return;
+/* ==========================================================
+   5. BLOG ARTICLE SUPPORT (PREPARED FOR FUTURE USE)
+   ----------------------------------------------------------
+   Logic ready for:
+   - fullTitle
+   - shortTitle (preferred for breadcrumbs when available)
+   Data source will be defined later (template or JSON)
+   ========================================================== */
 
-    // Create structural wrappers
-    const navBar = document.createElement('nav');
-    navBar.className = 'breadcrumb-bar';
-    navBar.setAttribute('aria-label', 'Breadcrumb');
-
-    const innerContainer = document.createElement('div');
-    innerContainer.className = 'container breadcrumb-container';
-
-    // Optional: Space reserved for back arrow logic (as defined in CSS)
-    const backControl = document.createElement('div');
-    backControl.className = 'breadcrumb-back-control';
-    innerContainer.appendChild(backControl);
-
-    const list = document.createElement('ul');
-    list.className = 'breadcrumb-list';
-
-    // Build list items
-    trail.forEach((item, index) => {
-        const isLast = index === trail.length - 1;
-        
-        const listItem = document.createElement('li');
-        listItem.className = 'breadcrumb-item';
-
-        if (isLast || !item.url) {
-            // Last item or item with no URL is text-only (non-clickable)
-            const textSpan = document.createElement('span');
-            textSpan.className = 'breadcrumb-link current';
-            textSpan.setAttribute('aria-current', 'page');
-            textSpan.textContent = item.label;
-            listItem.appendChild(textSpan);
-        } else {
-            // Clickable middle/start item
-            const link = document.createElement('a');
-            link.className = 'breadcrumb-link';
-            
-            // Format URL with root prefix if it's a relative internal link
-            const isExternal = item.url.startsWith('http');
-            link.href = isExternal ? item.url : (rootPrefix + item.url.replace(/^\.\//, ''));
-            link.textContent = item.label;
-            
-            listItem.appendChild(link);
-        }
-
-        list.appendChild(listItem);
-    });
-
-    // Assemble and inject
-    innerContainer.appendChild(list);
-    navBar.appendChild(innerContainer);
-    
-    container.innerHTML = ''; // Clear placeholder
-    container.appendChild(navBar);
+function resolveBlogTitle(articleData) {
+  if (!articleData) return null;
+  return articleData.shortTitle || articleData.fullTitle || null;
 }
 
-/**
- * ==========================================================================
- * 6. INITIALIZATION LOGIC
- * ==========================================================================
- */
 
-/**
- * Main bootstrapper function.
- */
-function initBreadcrumbs() {
-    const trail = resolveBreadcrumbTrail();
-    const rootPrefix = getRootPrefix();
-    renderBreadcrumbs(trail, rootPrefix);
-}
+/* ==========================================================
+   6. INITIALIZATION LOGIC
+   ----------------------------------------------------------
+   - Finds breadcrumb container
+   - Resolves hierarchy
+   - Injects breadcrumbs
+   - Fails silently if not applicable
+   ========================================================== */
 
-// Execute initialization when the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', initBreadcrumbs);
+(function initBreadcrumbs() {
+  const container = document.getElementById("site-breadcrumbs");
+  if (!container) return; // fail silently
+
+  const currentPage = getCurrentPage();
+  const trail = resolveBreadcrumbs(currentPage);
+  const breadcrumbsDOM = buildBreadcrumbs(trail);
+
+  container.innerHTML = "";
+  container.appendChild(breadcrumbsDOM);
+})();
