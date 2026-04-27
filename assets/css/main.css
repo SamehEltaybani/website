@@ -1,441 +1,303 @@
-/* ==========================================================================
-   FILE: assets/css/main.css
-   PURPOSE: Global Design System & Layout Foundation
-   ========================================================================== */
+/* ==========================================================
+   GLOBAL DESIGN SYSTEM — main.css
+   Personal Academic / Professional Website
+   Author: Dr. Sameh Eltaybani
+   Purpose: Single source of truth for styling
+   ========================================================== */
 
-/* ==========================================================================
-   1. COLOR DEFINITIONS & DESIGN TOKENS
-   ========================================================================== */
+
+/* ==========================================================
+   1. CSS VARIABLES (COLORS, TYPOGRAPHY, SPACING)
+   ========================================================== */
+
 :root {
-    /* --- Base Colors --- */
-    --color-midnight-blue: #1A2530;       /* Primary brand color, deep and professional */
-    --color-midnight-light: #2C3E50;      /* Lighter variant for hover states/secondary elements */
-    --color-gold: #D4AF37;                /* Accent color for highlights and active states */
-    --color-gold-light: #F1D570;          /* Lighter gold for subtle accents */
-    --color-white: #FFFFFF;               /* Clean white for backgrounds and inverted text */
-    
-    /* --- Color Roles --- */
-    --color-bg-main: var(--color-white);
-    --color-bg-alt: #F8F9FA;              /* Very light grey for distinct sections */
-    --color-bg-breadcrumb: #E9ECEF;       /* Light grey specifically for breadcrumbs */
-    
-    --color-text-main: #333333;           /* High readability dark grey for body text */
-    --color-text-muted: #6C757D;          /* Muted grey for metadata and secondary text */
-    --color-text-inverted: var(--color-white); /* White text for dark backgrounds */
-    
-    --color-border: #DEE2E6;              /* Standard subtle divider color */
+  /* --- Base Colors --- */
+  --color-midnight-blue: #1A2530;       /* Primary brand color */
+  --color-midnight-light: #2C3E50;      /* Hover / secondary dark */
 
-    /* --- Spacing Scale --- */
-    --space-xs: 0.25rem;   /* 4px */
-    --space-sm: 0.5rem;    /* 8px */
-    --space-md: 1rem;      /* 16px */
-    --space-lg: 2rem;      /* 32px */
-    --space-xl: 4rem;      /* 64px */
+  --color-gold: #D4AF37;                /* Accent / highlights */
+  --color-gold-light: #F1D570;          /* Soft accent */
 
-    /* --- Typography Scale --- */
-    --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    --font-size-sm: 0.875rem;             /* 14px */
-    --font-size-base: 1rem;               /* 16px */
-    --font-size-lg: 1.125rem;             /* 18px */
-    --font-size-xl: 1.5rem;               /* 24px */
-    --font-size-xxl: 2rem;                /* 32px */
-    
-    --line-height-base: 1.6;
-    --line-height-heading: 1.2;
+  --color-white: #FFFFFF;
 
-    /* --- Layout & Dimensions --- */
-    --container-max-width: 1100px;
-    --nav-height: 70px;
-    --breadcrumb-height: 45px;
+  /* --- Functional Color Roles --- */
+  --color-bg-main: var(--color-white);
+  --color-bg-alt: #F8F9FA;
+  --color-bg-breadcrumb: #E9ECEF;
 
-    /* --- Transitions --- */
-    --transition-fast: 0.2s ease-in-out;
-    --transition-base: 0.3s ease-in-out;
+  --color-text-main: #333333;
+  --color-text-muted: #6C757D;
+  --color-text-inverted: var(--color-white);
+
+  --color-border: #DEE2E6;
+
+  /* --- Typography --- */
+  --font-primary: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-heading: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --font-size-base: 16px;
+  --font-size-sm: 0.875rem;
+  --font-size-lg: 1.125rem;
+
+  --line-height-base: 1.6;
+  --line-height-heading: 1.3;
+
+  /* --- Spacing Scale --- */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 4rem;
+
+  /* --- Layout --- */
+  --max-width: 1200px;
+
+  /* --- Borders & Effects --- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.12);
+
+  /* --- Motion --- */
+  --transition-fast: 0.2s ease-in-out;
+  --transition-base: 0.3s ease-in-out;
 }
 
-/* ==========================================================================
-   2. GLOBAL BASE STYLES
-   ========================================================================== */
-*, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+
+/* ==========================================================
+   2. CSS RESET & BASE ELEMENTS
+   ========================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: var(--font-size-base);
+  scroll-behavior: smooth;
 }
 
 body {
-    font-family: var(--font-family-base);
-    font-size: var(--font-size-base);
-    line-height: var(--line-height-base);
-    color: var(--color-text-main);
-    background-color: var(--color-bg-main);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg-main);
+  color: var(--color-text-main);
+  font-family: var(--font-primary);
+  line-height: var(--line-height-base);
 }
 
+/* Prevent layout breaks from media */
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Links */
+a {
+  color: var(--color-gold);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-gold-light);
+}
+
+
+/* ==========================================================
+   3. TYPOGRAPHY SYSTEM
+   ========================================================== */
+
 h1, h2, h3, h4, h5, h6 {
-    color: var(--color-midnight-blue);
-    line-height: var(--line-height-heading);
-    margin-bottom: var(--space-md);
-    font-weight: 600;
+  font-family: var(--font-heading);
+  line-height: var(--line-height-heading);
+  margin-top: 0;
+  color: var(--color-midnight-blue);
+}
+
+h1 {
+  font-size: 2.25rem;
+  margin-bottom: var(--space-md);
+}
+
+h2 {
+  font-size: 1.75rem;
+  margin-bottom: var(--space-md);
+}
+
+h3 {
+  font-size: 1.375rem;
+  margin-bottom: var(--space-sm);
 }
 
 p {
-    margin-bottom: var(--space-md);
+  margin-top: 0;
+  margin-bottom: var(--space-md);
 }
 
-a {
-    color: var(--color-midnight-blue);
-    text-decoration: none;
-    transition: color var(--transition-fast);
+small,
+.text-muted {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
 }
 
-a:hover, a:focus {
-    color: var(--color-gold);
-}
 
-ul, ol {
-    margin-bottom: var(--space-md);
-    padding-left: var(--space-lg);
-}
+/* ==========================================================
+   4. LAYOUT PRIMITIVES
+   ========================================================== */
 
-/* ==========================================================================
-   3. LAYOUT UTILITIES
-   ========================================================================== */
 .container {
-    width: 100%;
-    max-width: var(--container-max-width);
-    margin: 0 auto;
-    padding: 0 var(--space-md);
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-md);
+  padding-right: var(--space-md);
 }
 
-/* Flexbox Helpers */
-.d-flex { display: flex; }
-.flex-column { flex-direction: column; }
-.align-items-center { align-items: center; }
-.justify-content-between { justify-content: space-between; }
-.justify-content-center { justify-content: center; }
-.flex-wrap { flex-wrap: wrap; }
-
-/* Spacing Helpers */
-.mt-1 { margin-top: var(--space-sm); }
-.mt-2 { margin-top: var(--space-md); }
-.mt-3 { margin-top: var(--space-lg); }
-.mb-1 { margin-bottom: var(--space-sm); }
-.mb-2 { margin-bottom: var(--space-md); }
-.mb-3 { margin-bottom: var(--space-lg); }
-.py-2 { padding-top: var(--space-md); padding-bottom: var(--space-md); }
-.py-3 { padding-top: var(--space-lg); padding-bottom: var(--space-lg); }
-
-/* Text Utilities */
-.text-center { text-align: center; }
-.text-muted { color: var(--color-text-muted); }
-
-/* ==========================================================================
-   4. NAVIGATION BAR STYLING
-   ========================================================================== */
-.navbar {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    height: var(--nav-height);
-    background-color: var(--color-midnight-blue);
-    color: var(--color-white);
-    z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+.section {
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-xl);
 }
 
-.navbar .container {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.section-alt {
+  background-color: var(--color-bg-alt);
 }
 
-.nav-brand {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    color: var(--color-white);
-    font-weight: 600;
-    font-size: var(--font-size-lg);
+
+/* ==========================================================
+   5. BUTTON SYSTEM (REUSABLE)
+   ========================================================== */
+
+.btn {
+  display: inline-block;
+  padding: 0.6em 1.2em;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background-color var(--transition-base),
+              color var(--transition-base),
+              border-color var(--transition-base);
 }
 
-.nav-brand:hover {
-    color: var(--color-gold);
+/* Primary button */
+.btn-primary {
+  background-color: var(--color-midnight-blue);
+  color: var(--color-text-inverted);
 }
 
-.nav-profile-img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: var(--color-midnight-light); /* Placeholder bg */
-    border: 2px solid var(--color-gold);
-    object-fit: cover;
+.btn-primary:hover {
+  background-color: var(--color-midnight-light);
 }
 
-.nav-menu {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: var(--space-md);
+/* Accent button */
+.btn-accent {
+  background-color: var(--color-gold);
+  color: var(--color-midnight-blue);
 }
 
-.nav-link {
-    color: var(--color-white);
-    font-size: var(--font-size-sm);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: var(--space-sm) 0;
-    border-bottom: 2px solid transparent;
+.btn-accent:hover {
+  background-color: var(--color-gold-light);
 }
 
-.nav-link:hover,
-.nav-link.active {
-    color: var(--color-gold);
-    border-bottom-color: var(--color-gold);
+/* Outline button */
+.btn-outline {
+  background-color: transparent;
+  border-color: var(--color-midnight-blue);
+  color: var(--color-midnight-blue);
 }
 
-/* Hamburger Icon (Hidden on Desktop) */
-.nav-hamburger {
-    display: none;
-    background: none;
-    border: none;
-    color: var(--color-white);
-    font-size: var(--font-size-xl);
-    cursor: pointer;
+.btn-outline:hover {
+  background-color: var(--color-midnight-blue);
+  color: var(--color-text-inverted);
 }
 
-/* ==========================================================================
-   5. BREADCRUMB BAR STYLING
-   ========================================================================== */
-.breadcrumb-bar {
-    position: sticky;
-    top: var(--nav-height); /* Directly below navbar */
-    width: 100%;
-    height: var(--breadcrumb-height);
-    background-color: var(--color-bg-breadcrumb);
-    border-bottom: 1px solid var(--color-border);
-    z-index: 999;
-    display: flex;
-    align-items: center;
+
+/* ==========================================================
+   6. CARD BASE COMPONENT
+   ========================================================== */
+
+.card {
+  background-color: var(--color-bg-main);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-base),
+              box-shadow var(--transition-base);
 }
 
-.breadcrumb-container {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    overflow: hidden; /* Prepares for truncation */
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
 }
 
-/* Space reserved for a back/left arrow control */
-.breadcrumb-back-control {
-    flex-shrink: 0;
-    margin-right: var(--space-sm);
-    color: var(--color-midnight-blue);
-    cursor: pointer;
+
+/* ==========================================================
+   7. LIST RESET & UTILITIES
+   ========================================================== */
+
+ul,
+ol {
+  padding-left: 1.2em;
+  margin-top: 0;
+  margin-bottom: var(--space-md);
 }
 
-.breadcrumb-list {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    font-size: var(--font-size-sm);
-    color: var(--color-text-muted);
-    white-space: nowrap;
+li {
+  margin-bottom: var(--space-xs);
 }
 
-.breadcrumb-item {
-    display: flex;
-    align-items: center;
+/* Utility helpers */
+.text-center {
+  text-align: center;
 }
 
-.breadcrumb-item + .breadcrumb-item::before {
-    content: ">";
-    margin: 0 var(--space-xs);
-    color: var(--color-text-muted);
+.text-right {
+  text-align: right;
 }
 
-.breadcrumb-link {
-    color: var(--color-midnight-light);
+.hidden {
+  display: none !important;
 }
 
-.breadcrumb-link:hover {
-    color: var(--color-midnight-blue);
-    text-decoration: underline;
-}
 
-.breadcrumb-item:last-child .breadcrumb-link {
-    color: var(--color-text-main);
-    font-weight: 600;
-    pointer-events: none; /* Last item is usually current page, unclickable */
-}
+/* ==========================================================
+   8. RESPONSIVE BREAKPOINTS
+   ========================================================== */
 
-/* ==========================================================================
-   6. FOOTER STYLING
-   ========================================================================== */
-.site-footer {
-    background-color: var(--color-midnight-blue);
-    color: var(--color-white);
-    padding: var(--space-xl) 0 var(--space-lg);
-    margin-top: var(--space-xl);
-}
+/* Tablets */
+@media (max-width: 900px) {
+  h1 {
+    font-size: 2rem;
+  }
 
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: var(--space-lg);
-    margin-bottom: var(--space-lg);
-}
-
-/* Footer Headings */
-.site-footer h4 {
-    color: var(--color-gold);
-    font-size: var(--font-size-lg);
-    margin-bottom: var(--space-md);
-}
-
-/* Section 1: Social Media */
-.footer-social {
-    display: flex;
-    gap: var(--space-sm);
-}
-
-.social-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: var(--color-midnight-light);
-    color: var(--color-white);
-    transition: background-color var(--transition-fast);
-}
-
-.social-icon:hover {
-    background-color: var(--color-gold);
-    color: var(--color-midnight-blue);
-}
-
-/* Section 2: Sitemap */
-.footer-sitemap ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.footer-sitemap li {
-    margin-bottom: var(--space-xs);
-}
-
-.footer-sitemap a {
-    color: var(--color-white);
-    opacity: 0.8;
-}
-
-.footer-sitemap a:hover {
-    opacity: 1;
-    color: var(--color-gold);
-}
-
-/* Section 3: Legal & Professional Disclaimer */
-.footer-disclaimer-text {
-    font-size: var(--font-size-sm);
-    opacity: 0.8;
-    margin-bottom: var(--space-xs);
-    
-    /* Truncate to 3 lines */
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.footer-read-more {
-    font-size: var(--font-size-sm);
-    color: var(--color-gold);
-    font-weight: 600;
-}
-
-/* Section 4: Copyright */
-.footer-copyright {
-    text-align: center;
+  .section {
     padding-top: var(--space-lg);
-    border-top: 1px solid var(--color-midnight-light);
-    font-size: var(--font-size-sm);
-    color: var(--color-text-muted);
+    padding-bottom: var(--space-lg);
+  }
 }
 
-/* ==========================================================================
-   7. RESPONSIVE RULES
-   ========================================================================== */
+/* Mobile */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.75rem;
+  }
 
-/* Tablet and below */
-@media (max-width: 992px) {
-    :root {
-        --font-size-base: 0.95rem;
-        --space-xl: 3rem;
-    }
-}
+  h2 {
+    font-size: 1.5rem;
+  }
 
-/* Mobile Devices */
-@media (max-width: 768px) {
-    /* Navigation Adapts to Hamburger */
-    .nav-menu {
-        display: none; /* Hidden by default on mobile, handled by JS later */
-        flex-direction: column;
-        position: absolute;
-        top: var(--nav-height);
-        left: 0;
-        width: 100%;
-        background-color: var(--color-midnight-blue);
-        padding: var(--space-md);
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-
-    .nav-hamburger {
-        display: block; /* Show hamburger icon */
-    }
-
-    .nav-link {
-        border-bottom: none;
-        border-left: 2px solid transparent;
-        padding-left: var(--space-sm);
-    }
-    
-    .nav-link:hover,
-    .nav-link.active {
-        border-bottom-color: transparent;
-        border-left-color: var(--color-gold);
-    }
-
-    /* Breadcrumb single-line truncation logic */
-    .breadcrumb-list {
-        /* Pushes items to the right, keeping the last hierarchy item visible */
-        display: block;
-        width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        direction: rtl; /* Truncates from the left, keeping end visible */
-        text-align: left; /* Resets text alignment for readability */
-    }
-    
-    .breadcrumb-item {
-        display: inline;
-        direction: ltr; /* Resets direction for individual items */
-    }
-
-    /* Footer adjustments */
-    .footer-grid {
-        grid-template-columns: 1fr; /* Stack footer sections */
-        gap: var(--space-md);
-    }
-    
-    .site-footer {
-        padding: var(--space-lg) 0;
-    }
+  .container {
+    padding-left: var(--space-sm);
+    padding-right: var(--space-sm);
+  }
 }
