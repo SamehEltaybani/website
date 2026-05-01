@@ -846,7 +846,7 @@ main {
 
 @media (max-width: 768px) {
     .progress-container {
-        top: calc(var(--nav-height-mobile) + 40px);
+        top: calc(var(--nav-height-mobile) + var(--breadcrumb-height));
     }
 }
 
