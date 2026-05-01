@@ -1,6 +1,6 @@
 <!--
 ============================================================================
-BLOG/BLOG-TEMPLATE.HTML - INDIVIDUAL ARTICLE TEMPLATE
+BLOG/BLOG-TEMPLATE.HTML - INDIVIDUAL ARTICLE TEMPLATE (FIXED)
 ============================================================================
 Copy this file to create a new article (e.g., blog-1.html).
 Before using:
@@ -11,14 +11,7 @@ Before using:
      "shortTitle": "...",
      "categories": ["...", "..."],
      "date": "YYYY-MM-DD"
-The page automatically:
- - Highlights the Blog nav item
- - Shows the shortTitle in the breadcrumb (Home > Blog > shortTitle)
- - Calculates reading time
- - Displays a scroll progress bar
- - Loads "Recommended for You" articles
- All optional content blocks (callouts, headings, images) can be copied,
- removed, or reordered without breaking anything.
+All links, CSS, JS, and images now use plain relative paths (no ../).
 ============================================================================
 -->
 <!DOCTYPE html>
@@ -27,7 +20,7 @@ The page automatically:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- ===== BASE PATH (GitHub Pages project site) ===== -->
+  <!-- ===== BASE PATH ===== -->
   <base href="/website/">
   <meta name="site-base-path" content="/website/">
 
@@ -40,13 +33,13 @@ The page automatically:
   <meta property="og:url" content="blog/your-file.html">
 
   <!-- FAVICON -->
-  <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
   <!-- FONT AWESOME -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <!-- MAIN CSS -->
-  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/main.css">
 </head>
-<body data-page="blog.html">   <!-- forces navigation to highlight Blog -->
+<body data-page="blog.html">
 
   <!-- ========== NAVIGATION BAR ========== -->
   <nav data-component="navigation" class="navbar">
@@ -63,7 +56,7 @@ The page automatically:
   <div data-component="breadcrumb" class="breadcrumb-bar"
        style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
 
-  <!-- ========== SCROLL PROGRESS BAR (fixed, thin) ========== -->
+  <!-- ========== SCROLL PROGRESS BAR ========== -->
   <div class="progress-container" style="position: sticky; top: calc(var(--nav-height-desktop) + var(--breadcrumb-height)); z-index: 998;">
     <div class="progress-bar" id="progress-bar"></div>
   </div>
@@ -73,7 +66,7 @@ The page automatically:
     <article class="section">
       <div class="container" style="max-width: 800px; margin: 0 auto;">
 
-        <!-- === TITLE METADATA BLOCK (populated by JS) === -->
+        <!-- TITLE METADATA BLOCK (populated by JS) -->
         <header id="article-header">
           <h1 id="article-title" class="heading-large">Article Title</h1>
           <div id="article-categories" class="blog-categories" style="margin-bottom: var(--space-sm);"></div>
@@ -123,14 +116,14 @@ The page automatically:
 
           <!-- Image block (single image) -->
           <figure style="margin: var(--space-md) 0;">
-            <img src="../assets/img/temp-1.webp" alt="Description" style="width:100%; border-radius:8px;" loading="lazy">
+            <img src="assets/img/temp-1.webp" alt="Description" style="width:100%; border-radius:8px;" loading="lazy">
             <figcaption class="text-muted" style="text-align:center;">Optional caption</figcaption>
           </figure>
 
           <!-- Image block (two images side by side) -->
           <div class="grid-2" style="gap: var(--space-md); margin: var(--space-md) 0;">
-            <img src="../assets/img/temp-1.webp" alt="Image 1" style="width:100%; border-radius:8px;" loading="lazy">
-            <img src="../assets/img/temp-2.webp" alt="Image 2" style="width:100%; border-radius:8px;" loading="lazy">
+            <img src="assets/img/temp-1.webp" alt="Image 1" style="width:100%; border-radius:8px;" loading="lazy">
+            <img src="assets/img/temp-2.webp" alt="Image 2" style="width:100%; border-radius:8px;" loading="lazy">
           </div>
 
           <!-- ===== CALLOUTS (8 variants) ===== -->
@@ -183,30 +176,30 @@ The page automatically:
             <p>Additional context or remark.</p>
           </div>
 
-          <!-- Callout 8: Quotation (no title, large quotation marks) -->
+          <!-- Callout 8: Quotation -->
           <div class="callout callout-quote">
             <p>“This is a block quote with large ornamental quotation marks.
             Use it for important excerpts or testimonials.”</p>
             <a href="#" class="btn btn-text">Optional button</a>
           </div>
 
-          <!-- Extra image placeholder (you can change the src) -->
-          <img src="../assets/img/temp-3.webp" alt="Extra illustration" style="width:100%; margin: var(--space-md) 0; border-radius:8px;" loading="lazy">
+          <!-- Extra image placeholder -->
+          <img src="assets/img/temp-3.webp" alt="Extra illustration" style="width:100%; margin: var(--space-md) 0; border-radius:8px;" loading="lazy">
 
           <!-- ===== END OF REPLICABLE CONTENT BLOCKS ===== -->
         </div>
 
-        <!-- === POST-CONTENT LEGAL LINE === -->
+        <!-- POST-CONTENT LEGAL LINE -->
         <div class="footer-legal" style="margin-top: var(--space-xl); padding-top: var(--space-md); border-top: 1px solid var(--color-border);">
-          <p>© Dr. Sameh Eltaybani. Content is for informational purposes only and represents personal views. <a href="../legal.html">Read more &gt;&gt;</a></p>
+          <p>© Dr. Sameh Eltaybani. Content is for informational purposes only and represents personal views. <a href="legal.html">Read more &gt;&gt;</a></p>
         </div>
 
-        <!-- === "READ MORE INSIGHTS" BUTTON === -->
+        <!-- "READ MORE INSIGHTS" BUTTON -->
         <div style="text-align: right; margin: var(--space-lg) 0;">
-          <a href="../blog.html" class="btn btn-primary">Read More Insights</a>
+          <a href="blog.html" class="btn btn-primary">Read More Insights</a>
         </div>
 
-        <!-- === "RECOMMENDED FOR YOU" SECTION === -->
+        <!-- RECOMMENDED FOR YOU -->
         <section id="recommended-section" class="section-alt" style="padding: var(--space-lg); border-radius: 12px;">
           <h2 class="heading-medium">Recommended for You</h2>
           <div id="recommended-container" class="grid-2" style="gap: var(--space-md);">
@@ -222,34 +215,24 @@ The page automatically:
   <footer data-component="footer"></footer>
 
   <!-- ========== SCRIPTS (exact order) ========== -->
-  <script src="../assets/js/utils.js"></script>
-  <script src="../assets/js/navigation.js"></script>
-  <script src="../assets/js/breadcrumbs.js"></script>
-  <script src="../assets/js/footer.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/navigation.js"></script>
+  <script src="assets/js/breadcrumbs.js"></script>
+  <script src="assets/js/footer.js"></script>
 
-  <!-- ========== PAGE-SPECIFIC SCRIPTS ========== -->
+  <!-- PAGE-SPECIFIC SCRIPTS (unchanged) -->
   <script>
     (function() {
       'use strict';
 
-      // ------------------------------------------------------------------
-      // A. UTILITIES
-      // ------------------------------------------------------------------
       function escapeHTML(text) {
         if (typeof SiteUtils !== 'undefined' && SiteUtils.escapeHTML) return SiteUtils.escapeHTML(text);
         const div = document.createElement('div'); div.textContent = text; return div.innerHTML;
       }
 
-      // ------------------------------------------------------------------
-      // B. CURRENT ARTICLE DATA
-      // ------------------------------------------------------------------
-      const currentBlogfile = location.pathname.replace(/^\/website\//, '');   // e.g., blog/blog-1.html
+      const currentBlogfile = location.pathname.replace(/^\/website\//, '');
+      let articleData = null;
 
-      let articleData = null;   // the matching entry from blog-list.json
-
-      // ------------------------------------------------------------------
-      // C. PROGRESS BAR
-      // ------------------------------------------------------------------
       function initProgressBar() {
         const bar = document.getElementById('progress-bar');
         if (!bar) return;
@@ -261,32 +244,23 @@ The page automatically:
         }, 20));
       }
 
-      // ------------------------------------------------------------------
-      // D. CALCULATE READING TIME
-      // ------------------------------------------------------------------
       function calculateReadingTime() {
         const contentEl = document.getElementById('article-content');
         if (!contentEl) return 0;
         const text = contentEl.innerText || '';
         const words = text.trim().split(/\s+/).length;
-        return Math.ceil(words / 200);   // minutes
+        return Math.ceil(words / 200);
       }
 
-      // ------------------------------------------------------------------
-      // E. DISPLAY ARTICLE METADATA
-      // ------------------------------------------------------------------
       async function displayMetadata() {
         try {
           const data = await SiteUtils.loadJSON('/json/blog-list.json', true);
           if (!data) return;
-
           const entry = data.find(item => item.blogfile === currentBlogfile);
           if (!entry) return;
           articleData = entry;
 
-          // Fill header
           document.getElementById('article-title').textContent = entry.title || 'Article';
-          // Categories
           const catContainer = document.getElementById('article-categories');
           catContainer.innerHTML = '';
           if (entry.categories && Array.isArray(entry.categories)) {
@@ -297,25 +271,18 @@ The page automatically:
               catContainer.appendChild(span);
             });
           }
-          // Date formatting
           const dateObj = new Date(entry.date);
           const dateFormatted = isNaN(dateObj.getTime()) ? entry.date : dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
           document.getElementById('article-date').textContent = dateFormatted;
 
-          // Reading time
           const readTime = calculateReadingTime();
           document.getElementById('article-read-time').textContent = (readTime || 1) + ' min. read';
-
         } catch (e) {
-          console.warn('Could not load article metadata, using defaults.');
+          console.warn('Could not load article metadata');
         }
       }
 
-      // ------------------------------------------------------------------
-      // F. OVERRIDE BREADCRUMB WITH SHORT TITLE
-      // ------------------------------------------------------------------
       async function overrideBreadcrumb() {
-        // Wait for breadcrumbs to render (it's async, so we'll retry a few times)
         let attempts = 0;
         while (attempts < 20) {
           const lastItem = document.querySelector('.breadcrumb-item.active');
@@ -324,11 +291,10 @@ The page automatically:
           attempts++;
         }
 
-        let shortTitle = 'Article';  // fallback
+        let shortTitle = 'Article';
         if (articleData && articleData.shortTitle) {
           shortTitle = articleData.shortTitle;
         } else {
-          // If no articleData yet, try to fetch directly
           try {
             const data = await SiteUtils.loadJSON('/json/blog-list.json', true);
             const entry = data ? data.find(item => item.blogfile === currentBlogfile) : null;
@@ -342,13 +308,8 @@ The page automatically:
         }
       }
 
-      // ------------------------------------------------------------------
-      // G. HIGHLIGHT THE BLOG NAVIGATION ITEM
-      // ------------------------------------------------------------------
       function highlightBlogNav() {
-        // Remove active from all nav links
         document.querySelectorAll('.nav-link.active, .mobile-nav-link.active').forEach(link => link.classList.remove('active'));
-        // Highlight the "Blog" link
         document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
           if (link.textContent.trim() === 'Blog' && link.getAttribute('href') === 'blog.html') {
             link.classList.add('active');
@@ -356,9 +317,6 @@ The page automatically:
         });
       }
 
-      // ------------------------------------------------------------------
-      // H. RECOMMENDED FOR YOU
-      // ------------------------------------------------------------------
       async function renderRecommended() {
         const container = document.getElementById('recommended-container');
         if (!container) return;
@@ -372,13 +330,12 @@ The page automatically:
           if (articleData && articleData.categories) {
             const currentCats = articleData.categories;
             recommended = data
-              .filter(item => item.blogfile !== currentBlogfile)   // exclude current
+              .filter(item => item.blogfile !== currentBlogfile)
               .filter(item => item.categories && item.categories.some(cat => currentCats.includes(cat)))
               .sort((a, b) => new Date(b.date) - new Date(a.date))
               .slice(0, 5);
           }
 
-          // Fill remaining slots with most recent articles
           if (recommended.length < 5) {
             const existingFiles = recommended.map(r => r.blogfile);
             const remaining = data
@@ -388,7 +345,6 @@ The page automatically:
             recommended = recommended.concat(remaining);
           }
 
-          // Render cards
           recommended.forEach(item => {
             const card = document.createElement('a');
             card.href = item.blogfile;
@@ -398,7 +354,7 @@ The page automatically:
             card.innerHTML = `
               <div class="card-content">
                 <h3 class="card-title">${escapeHTML(item.title)}</h3>
-                <p class="card-description" style="font-size: var(--font-size-sm);">${item.date ? new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : ''}</p>
+                <p class="card-description">${item.date ? new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : ''}</p>
               </div>
             `;
             container.appendChild(card);
@@ -408,17 +364,12 @@ The page automatically:
         }
       }
 
-      // ------------------------------------------------------------------
-      // I. INITIALISATION
-      // ------------------------------------------------------------------
       async function initArticle() {
         if (typeof SiteUtils !== 'undefined' && SiteUtils.waitForDOM) {
           await SiteUtils.waitForDOM();
         }
 
         initProgressBar();
-
-        // Load metadata and then update breadcrumb + recommendations
         await displayMetadata();
         await overrideBreadcrumb();
         highlightBlogNav();
