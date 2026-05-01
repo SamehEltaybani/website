@@ -2,12 +2,15 @@
 ============================================================================
 PUBLICATIONS.HTML - DR. SAMEH ELTAYBANI - PUBLICATIONS PAGE
 ============================================================================
-Fixes applied:
-  - Sticky dropdowns for filter & sort (no more floating)
-  - Breadcrumb on mobile collapses ONLY when truly overflowing
-  - No gap between breadcrumb and controls bar on mobile (requires main.css fix)
-  - Active highlighting on filter/sort/reset
+Fixed issues (central + page‑specific):
+  - Breadcrumb left‑aligned (via main.css)
+  - Mobile breadcrumb shows full path when space allows (via breadcrumbs.js)
+  - Filter & sort dropdowns open toward the left on mobile
+  - Search box highlights when active
+  - No gap between breadcrumb and controls bar
+  - Sticky dropdowns (positioned inside the controls bar)
   - Space between publication cards
+  - Active controls buttons highlighted
 ============================================================================
 -->
 <!DOCTYPE html>
@@ -16,11 +19,9 @@ Fixes applied:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- ===== BASE PATH ===== -->
   <base href="/website/">
   <meta name="site-base-path" content="/website/">
 
-  <!-- PAGE-SPECIFIC -->
   <title>Dr. Sameh Eltaybani - Publications</title>
   <meta name="description" content="Browse Dr. Sameh Eltaybani's publications, including journal articles, PubMed links, and personal insights.">
   <meta property="og:title" content="Dr. Sameh Eltaybani - Publications">
@@ -28,15 +29,12 @@ Fixes applied:
   <meta property="og:type" content="website">
   <meta property="og:url" content="publications.html">
 
-  <!-- FAVICON -->
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-  <!-- FONT AWESOME -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <!-- MAIN CSS -->
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body data-page="publications.html">
-  <!-- ========== NAVIGATION BAR ========== -->
+
   <nav data-component="navigation" class="navbar">
     <div class="navbar-container">
       <div class="navbar-left"></div>
@@ -47,34 +45,30 @@ Fixes applied:
     </div>
   </nav>
 
-  <!-- ========== BREADCRUMB BAR (exact height) ========== -->
   <div data-component="breadcrumb" class="breadcrumb-bar"
        style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;">
   </div>
 
-  <!-- ========== MAIN CONTENT ========== -->
   <main>
-    <!-- CONTROLS BAR (sticky) -->
     <div class="controls-bar">
       <div class="container" style="display: flex; flex-wrap: nowrap; gap: var(--space-sm); align-items: center; justify-content: space-between;">
+
         <!-- SEARCH -->
         <div class="search-box" id="search-container">
           <i class="fas fa-search"></i>
           <input type="text" id="search-input" placeholder="Search publications..." aria-label="Search publications">
         </div>
 
-        <!-- FILTER BUTTON + DROPDOWN (wrapped for sticky) -->
+        <!-- FILTER (dropdown opens to the left) -->
         <div style="position: relative;">
           <button id="filter-btn" class="btn btn-filter" aria-label="Filter">
             <i class="fas fa-filter"></i>
             <span>Filter</span>
           </button>
-          <div id="filter-dropdown" class="hidden" style="position: absolute; top: 100%; left: 0; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--space-md); box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 250px;">
+          <div id="filter-dropdown" class="hidden" style="position: absolute; top: 100%; right: 0; left: auto; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--space-md); box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 250px;">
             <div class="form-group">
               <label class="form-label">Year</label>
-              <select id="filter-year" class="form-select">
-                <option value="">All years</option>
-              </select>
+              <select id="filter-year" class="form-select"><option value="">All years</option></select>
             </div>
             <div class="form-group">
               <label class="form-label">Authorship</label>
@@ -86,28 +80,26 @@ Fixes applied:
             </div>
             <div class="form-group">
               <label class="form-label">Journal</label>
-              <select id="filter-journal" class="form-select">
-                <option value="">All journals</option>
-              </select>
+              <select id="filter-journal" class="form-select"><option value="">All journals</option></select>
             </div>
             <button id="apply-filters-btn" class="btn btn-primary" style="width: 100%;">Apply Filters</button>
           </div>
         </div>
 
-        <!-- SORT BUTTON + DROPDOWN -->
+        <!-- SORT (dropdown opens to the left) -->
         <div style="position: relative;">
           <button id="sort-btn" class="btn btn-filter" aria-label="Sort">
             <i class="fas fa-sort"></i>
             <span>Sort: Newest</span>
           </button>
-          <div id="sort-dropdown" class="hidden" style="position: absolute; top: 100%; left: 0; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 180px;">
+          <div id="sort-dropdown" class="hidden" style="position: absolute; top: 100%; right: 0; left: auto; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 180px;">
             <button class="btn btn-text" data-sort="year-desc" style="display: block; width: 100%; text-align: left;">Newest first</button>
             <button class="btn btn-text" data-sort="year-asc" style="display: block; width: 100%; text-align: left;">Oldest first</button>
             <button class="btn btn-text" data-sort="authorship" style="display: block; width: 100%; text-align: left;">Authorship (first/corresponding first)</button>
           </div>
         </div>
 
-        <!-- RESET BUTTON -->
+        <!-- RESET -->
         <button id="reset-btn" class="btn btn-filter" aria-label="Reset">
           <i class="fas fa-undo"></i>
           <span>Reset</span>
@@ -115,12 +107,9 @@ Fixes applied:
       </div>
     </div>
 
-    <!-- PUBLICATIONS CONTAINER -->
     <section class="section">
       <div class="container">
-        <div id="publications-list" data-component="publication-list">
-          <!-- Rendered by JavaScript -->
-        </div>
+        <div id="publications-list" data-component="publication-list"></div>
         <div id="load-more-container" class="text-center mt-md">
           <button id="load-more-btn" class="btn btn-load-more hidden">Load More</button>
         </div>
@@ -128,22 +117,19 @@ Fixes applied:
     </section>
   </main>
 
-  <!-- ========== FOOTER ========== -->
   <footer data-component="footer"></footer>
 
-  <!-- ========== SCRIPTS ========== -->
   <script src="assets/js/utils.js"></script>
   <script src="assets/js/navigation.js"></script>
   <script src="assets/js/breadcrumbs.js"></script>
   <script src="assets/js/footer.js"></script>
 
-  <!-- PAGE-SPECIFIC SCRIPTS -->
   <script>
     (function() {
       'use strict';
 
       // ------------------------------------------------------------------
-      // A. GLOBALS & STATE
+      // GLOBALS & STATE
       // ------------------------------------------------------------------
       const state = {
         allItems: [],
@@ -170,29 +156,29 @@ Fixes applied:
       const loadMoreBtn = document.getElementById('load-more-btn');
 
       function escapeHTML(text) {
-        if (typeof SiteUtils !== 'undefined' && SiteUtils.escapeHTML) {
-          return SiteUtils.escapeHTML(text);
-        }
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
+        if (typeof SiteUtils !== 'undefined' && SiteUtils.escapeHTML) return SiteUtils.escapeHTML(text);
+        const div = document.createElement('div'); div.textContent = text; return div.innerHTML;
       }
 
       // ------------------------------------------------------------------
-      // B. HIGHLIGHT CONTROLS
+      // HIGHLIGHT FUNCTIONS
       // ------------------------------------------------------------------
       function updateControlHighlights() {
         const hasFilters = state.activeFilters.year || state.activeFilters.authorship || state.activeFilters.journal;
         const isDefaultSort = (state.activeSort.field === 'year' && state.activeSort.direction === 'desc');
         const hasChanges = hasFilters || !isDefaultSort || state.activeSearch !== '';
-
         filterBtn.classList.toggle('active', hasFilters);
         sortBtn.classList.toggle('active', !isDefaultSort);
         resetBtn.classList.toggle('active', hasChanges);
       }
 
+      function updateSearchHighlight() {
+        const box = document.getElementById('search-container');
+        if (box) box.classList.toggle('active', searchInput.value.trim().length > 0);
+      }
+
       // ------------------------------------------------------------------
-      // C. JSON LOADING
+      // LOAD DATA
       // ------------------------------------------------------------------
       async function loadPublications() {
         try {
@@ -207,25 +193,22 @@ Fixes applied:
           allJournals = [...new Set(data.map(p => p.journal))].filter(Boolean).sort();
           populateFilterDropdowns();
           applyAllFilters();
-        } catch (error) {
-          console.error('[Publications]', error);
+        } catch (e) {
+          console.error(e);
           showEmptyState('No content available. Check back later.');
         }
       }
 
-      function showEmptyState(message) {
-        if (publicationsContainer) {
-          publicationsContainer.innerHTML = `<p class="text-center paragraph">${escapeHTML(message)}</p>`;
-        }
+      function showEmptyState(msg) {
+        if (publicationsContainer) publicationsContainer.innerHTML = `<p class="text-center paragraph">${escapeHTML(msg)}</p>`;
         if (loadMoreBtn) loadMoreBtn.classList.add('hidden');
       }
 
       // ------------------------------------------------------------------
-      // D. FILTER / SORT / SEARCH
+      // FILTER / SORT / SEARCH
       // ------------------------------------------------------------------
       function applyAllFilters() {
         let items = [...state.allItems];
-
         if (state.activeSearch) {
           const q = state.activeSearch.toLowerCase();
           items = items.filter(p => p.title && p.title.toLowerCase().includes(q));
@@ -236,10 +219,7 @@ Fixes applied:
 
         const { field, direction } = state.activeSort;
         if (field === 'year') {
-          items.sort((a, b) => {
-            const ya = parseInt(a.year) || 0, yb = parseInt(b.year) || 0;
-            return direction === 'desc' ? yb - ya : ya - yb;
-          });
+          items.sort((a, b) => ((parseInt(b.year)||0) - (parseInt(a.year)||0)) * (direction === 'desc' ? 1 : -1));
         } else if (field === 'authorship') {
           items.sort((a, b) => {
             if (a.authorship === 'First/Corresponding author' && b.authorship !== 'First/Corresponding author') return -1;
@@ -258,15 +238,13 @@ Fixes applied:
       function updateActiveSortUI() {
         const span = sortBtn.querySelector('span');
         if (!span) return;
-        if (state.activeSort.field === 'year') {
-          span.textContent = state.activeSort.direction === 'desc' ? 'Sort: Newest' : 'Sort: Oldest';
-        } else {
-          span.textContent = 'Sort: Authorship';
-        }
+        if (state.activeSort.field === 'year') span.textContent = state.activeSort.direction === 'desc' ? 'Sort: Newest' : 'Sort: Oldest';
+        else span.textContent = 'Sort: Authorship';
       }
 
       function handleSearchInput() {
         state.activeSearch = searchInput.value.trim();
+        updateSearchHighlight();
         applyAllFilters();
       }
 
@@ -278,10 +256,10 @@ Fixes applied:
         applyAllFilters();
       }
 
-      function handleSortOption(option) {
-        if (option === 'year-desc') state.activeSort = { field: 'year', direction: 'desc' };
-        else if (option === 'year-asc') state.activeSort = { field: 'year', direction: 'asc' };
-        else if (option === 'authorship') state.activeSort = { field: 'authorship', direction: 'asc' };
+      function handleSortOption(opt) {
+        if (opt === 'year-desc') state.activeSort = { field: 'year', direction: 'desc' };
+        else if (opt === 'year-asc') state.activeSort = { field: 'year', direction: 'asc' };
+        else state.activeSort = { field: 'authorship', direction: 'asc' };
         updateActiveSortUI();
         closeSortDropdown();
         applyAllFilters();
@@ -296,19 +274,20 @@ Fixes applied:
         document.getElementById('filter-authorship').value = '';
         document.getElementById('filter-journal').value = '';
         updateActiveSortUI();
+        updateSearchHighlight();
         applyAllFilters();
       }
 
       // ------------------------------------------------------------------
-      // E. DROPDOWN MANAGEMENT
+      // DROPDOWNS
       // ------------------------------------------------------------------
       function populateFilterDropdowns() {
-        const yearSelect = document.getElementById('filter-year');
-        const journalSelect = document.getElementById('filter-journal');
-        yearSelect.innerHTML = '<option value="">All years</option>';
-        allYears.forEach(y => { const o = new Option(y, y); yearSelect.add(o); });
-        journalSelect.innerHTML = '<option value="">All journals</option>';
-        allJournals.forEach(j => { const o = new Option(j, j); journalSelect.add(o); });
+        const yearSel = document.getElementById('filter-year');
+        const jSel = document.getElementById('filter-journal');
+        yearSel.innerHTML = '<option value="">All years</option>';
+        allYears.forEach(y => yearSel.add(new Option(y, y)));
+        jSel.innerHTML = '<option value="">All journals</option>';
+        allJournals.forEach(j => jSel.add(new Option(j, j)));
       }
 
       function closeFilterDropdown() { filterDropdown.classList.add('hidden'); }
@@ -324,40 +303,32 @@ Fixes applied:
         closeFilterDropdown();
         sortDropdown.classList.toggle('hidden');
       });
-
       document.addEventListener('click', (event) => {
-        if (!filterDropdown.contains(event.target) && event.target !== filterBtn && !filterBtn.contains(event.target)) {
-          closeFilterDropdown();
-        }
-        if (!sortDropdown.contains(event.target) && event.target !== sortBtn && !sortBtn.contains(event.target)) {
-          closeSortDropdown();
-        }
+        if (!filterDropdown.contains(event.target) && event.target !== filterBtn && !filterBtn.contains(event.target)) closeFilterDropdown();
+        if (!sortDropdown.contains(event.target) && event.target !== sortBtn && !sortBtn.contains(event.target)) closeSortDropdown();
       });
 
       applyFiltersBtn.addEventListener('click', handleFilterApply);
-
       sortDropdown.addEventListener('click', (e) => {
         const btn = e.target.closest('button[data-sort]');
         if (btn) handleSortOption(btn.dataset.sort);
       });
 
       // ------------------------------------------------------------------
-      // F. RENDERING PUBLICATIONS (with space between cards)
+      // RENDER
       // ------------------------------------------------------------------
       function renderCurrentPage() {
         if (!publicationsContainer) return;
         const end = state.currentPage * state.itemsPerPage;
         const itemsToShow = state.filteredItems.slice(0, end);
-
         let html = '';
-        itemsToShow.forEach((pub, index) => {
+        itemsToShow.forEach((pub, i) => {
           const authorClass = pub.authorship === 'First/Corresponding author' ? 'authorship-first' : 'authorship-coauthor';
           const authorTag = pub.authorship ? `<div class="publication-authorship ${authorClass}">${escapeHTML(pub.authorship)}</div>` : '';
-
-          let buttonsHtml = '';
-          if (pub.pubmedLink) buttonsHtml += `<a href="${escapeHTML(pub.pubmedLink)}" class="btn btn-text" target="_blank" rel="noopener" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-external-link-alt mr-xs"></i>PubMed &gt;&gt;</a>`;
-          if (pub.journalLink) buttonsHtml += `<a href="${escapeHTML(pub.journalLink)}" class="btn btn-text" target="_blank" rel="noopener" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-book-open mr-xs"></i>Journal &gt;&gt;</a>`;
-          if (pub.blogLink) buttonsHtml += `<a href="${escapeHTML(pub.blogLink)}" class="btn btn-text" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-lightbulb mr-xs"></i>My insights &gt;&gt;</a>`;
+          let btns = '';
+          if (pub.pubmedLink) btns += `<a href="${escapeHTML(pub.pubmedLink)}" class="btn btn-text" target="_blank" rel="noopener" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-external-link-alt mr-xs"></i>PubMed &gt;&gt;</a>`;
+          if (pub.journalLink) btns += `<a href="${escapeHTML(pub.journalLink)}" class="btn btn-text" target="_blank" rel="noopener" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-book-open mr-xs"></i>Journal &gt;&gt;</a>`;
+          if (pub.blogLink) btns += `<a href="${escapeHTML(pub.blogLink)}" class="btn btn-text" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-lightbulb mr-xs"></i>My insights &gt;&gt;</a>`;
 
           html += `
             <div class="publication-item" style="margin-bottom: var(--space-sm);">
@@ -369,24 +340,20 @@ Fixes applied:
                 <div class="publication-year">${escapeHTML(pub.year)}</div>
               </div>
               <div class="publication-journal">${escapeHTML(pub.journal || '')}</div>
-              ${buttonsHtml ? `<div class="publication-buttons" style="flex-wrap: nowrap; gap: var(--space-xs);">${buttonsHtml}</div>` : ''}
+              ${btns ? `<div class="publication-buttons" style="flex-wrap: nowrap; gap: var(--space-xs);">${btns}</div>` : ''}
             </div>
           `;
-
-          if ((index + 1) % state.itemsPerPage === 0 && (index + 1) < itemsToShow.length) {
-            html += `<div class="page-separator"><span>--- Page ${Math.ceil((index + 1) / state.itemsPerPage)} ---</span></div>`;
+          if ((i+1) % state.itemsPerPage === 0 && (i+1) < itemsToShow.length) {
+            html += `<div class="page-separator"><span>--- Page ${Math.ceil((i+1)/state.itemsPerPage)} ---</span></div>`;
           }
         });
-
         publicationsContainer.innerHTML = html;
 
         if (state.filteredItems.length > end) {
           loadMoreBtn.classList.remove('hidden');
           loadMoreBtn.disabled = isLoadingMore;
           loadMoreBtn.innerHTML = isLoadingMore ? '<i class="fas fa-spinner fa-spin mr-sm"></i>Loading...' : 'Load More';
-        } else {
-          hideLoadMoreButton();
-        }
+        } else hideLoadMoreButton();
       }
 
       function hideLoadMoreButton() { if (loadMoreBtn) loadMoreBtn.classList.add('hidden'); }
@@ -403,87 +370,24 @@ Fixes applied:
       });
 
       // ------------------------------------------------------------------
-      // G. EVENT LISTENERS
+      // EVENT LISTENERS
       // ------------------------------------------------------------------
-      const debouncedSearch = (typeof SiteUtils !== 'undefined' && SiteUtils.debounce) ?
-        SiteUtils.debounce(handleSearchInput, 300) : handleSearchInput;
+      const debouncedSearch = (typeof SiteUtils !== 'undefined' && SiteUtils.debounce) ? SiteUtils.debounce(handleSearchInput, 300) : handleSearchInput;
       searchInput.addEventListener('input', debouncedSearch);
       resetBtn.addEventListener('click', handleReset);
 
       // ------------------------------------------------------------------
-      // H. RESPONSIVE BREADCRUMB ENHANCEMENT (collapse only on overflow)
+      // INIT
       // ------------------------------------------------------------------
-      function adjustMobileBreadcrumb() {
-        const breadcrumbList = document.querySelector('.breadcrumb-list');
-        if (!breadcrumbList || window.innerWidth >= 768) return; // desktop uses full path
-
-        const container = breadcrumbList.parentElement;
-        if (!container) return;
-
-        // Store original items if not already saved
-        if (!container.dataset.originalItems) {
-          // clone the innerHTML to restore later
-          container.dataset.originalItems = breadcrumbList.innerHTML;
-        }
-
-        // Check if the full list overflows the container
-        const hasOverflow = breadcrumbList.scrollWidth > container.clientWidth;
-
-        if (hasOverflow) {
-          // Show only last item + back arrow
-          const items = breadcrumbList.querySelectorAll('.breadcrumb-item');
-          const lastItem = items[items.length - 1];
-          if (!lastItem) return;
-
-          // Clear list
-          breadcrumbList.innerHTML = '';
-
-          // Back arrow
-          const backItem = document.createElement('li');
-          backItem.className = 'breadcrumb-item breadcrumb-mobile-back';
-          backItem.innerHTML = '<i class="fas fa-arrow-left"></i>';
-          backItem.style.cursor = 'pointer';
-          backItem.addEventListener('click', () => {
-            // Trigger the modal (same as original mobile breadcrumb)
-            const modal = document.querySelector('.breadcrumb-modal');
-            if (modal) modal.style.transform = 'translateY(0)';
-          });
-          breadcrumbList.appendChild(backItem);
-
-          // Last item clone
-          const lastClone = lastItem.cloneNode(true);
-          lastClone.classList.add('active');
-          breadcrumbList.appendChild(lastClone);
-        } else {
-          // Restore original full hierarchy
-          breadcrumbList.innerHTML = container.dataset.originalItems;
-        }
-      }
-
-      function initMobileBreadcrumb() {
-        window.addEventListener('resize', adjustMobileBreadcrumb);
-        adjustMobileBreadcrumb(); // initial call after components render
-      }
-
-      // ------------------------------------------------------------------
-      // I. INITIALISATION
-      // ------------------------------------------------------------------
-      async function initPublications() {
-        if (typeof SiteUtils !== 'undefined' && SiteUtils.waitForDOM) {
-          await SiteUtils.waitForDOM();
-        }
+      async function initPubs() {
+        if (typeof SiteUtils !== 'undefined' && SiteUtils.waitForDOM) await SiteUtils.waitForDOM();
         await loadPublications();
         updateActiveSortUI();
         updateControlHighlights();
-        // Wait a tick for breadcrumbs to finish, then apply mobile enhancement
-        setTimeout(initMobileBreadcrumb, 200);
       }
 
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initPublications);
-      } else {
-        initPublications();
-      }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPubs);
+      else initPubs();
     })();
   </script>
 </body>
