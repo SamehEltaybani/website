@@ -12,10 +12,11 @@
  * - Reads breadcrumbHierarchy from site-data.json
  * - Traverses parent links to build full path
  * - Renders breadcrumb bar with clickable links
- * - Mobile: single line with left arrow + modal sheet for full hierarchy
+ * - Mobile: shows full path unless it overflows;
+ *   then collapses to a left arrow + last item (modal sheet for full hierarchy)
  * - Graceful degradation if JSON fails or page missing
  * 
- * Last updated: 2026-04-30
+ * Last updated: 2026-05-01 (adaptive mobile breadcrumb)
  * ============================================
  */
 
@@ -30,6 +31,7 @@
     let currentPage = '';          // Current page filename
     let breadcrumbPath = [];        // Array of { title, filename, isClickable }
     let isModalOpen = false;        // Track mobile modal state
+    let resizeObserver = null;      // For re-checking overflow on resize
     
     // ============================================
     // HELPER FUNCTIONS
@@ -43,7 +45,6 @@
         if (typeof SiteUtils !== 'undefined' && SiteUtils.getCurrentPageFilename) {
             return SiteUtils.getCurrentPageFilename();
         }
-        // Fallback if utils.js not loaded
         const path = window.location.pathname;
         const cleanPath = path.startsWith('/') ? path.slice(1) : path;
         return cleanPath === '' || cleanPath === '/' ? 'index.html' : cleanPath;
@@ -64,13 +65,10 @@
     function buildBreadcrumbPath() {
         const path = [];
         
-        // Find current page in hierarchy
         let currentEntry = findPageEntry(currentPage);
         
-        // If current page not found in hierarchy, create fallback
         if (!currentEntry) {
             console.warn(`[Breadcrumbs] Page "${currentPage}" not found in breadcrumbHierarchy`);
-            // Fallback: Home > Current Page Title (from filename)
             const pageTitle = currentPage.replace('.html', '').replace(/-/g, ' ');
             const capitalizedTitle = pageTitle.charAt(0).toUpperCase() + pageTitle.slice(1);
             return [
@@ -79,18 +77,15 @@
             ];
         }
         
-        // Build path by traversing parents
         let current = currentEntry;
         const reversePath = [];
         
-        // Add current page first (will reverse later)
         reversePath.push({
             title: current.title,
             filename: current.filename,
-            isClickable: false  // Current page is never clickable
+            isClickable: false
         });
         
-        // Traverse up to parent until null (Home)
         while (current.parent) {
             const parentEntry = findPageEntry(current.parent);
             if (!parentEntry) break;
@@ -98,13 +93,12 @@
             reversePath.push({
                 title: parentEntry.title,
                 filename: parentEntry.filename,
-                isClickable: true  // Parent pages are clickable
+                isClickable: true
             });
             
             current = parentEntry;
         }
         
-        // Reverse to get Home -> ... -> Current
         return reversePath.reverse();
     }
     
@@ -142,13 +136,9 @@
      * Creates the mobile modal sheet with full breadcrumb hierarchy
      */
     function createMobileModal() {
-        // Remove existing modal if present
         const existingModal = document.querySelector('.breadcrumb-modal');
-        if (existingModal) {
-            existingModal.remove();
-        }
+        if (existingModal) existingModal.remove();
         
-        // Create modal container
         const modal = document.createElement('div');
         modal.className = 'breadcrumb-modal';
         modal.style.cssText = `
@@ -167,7 +157,6 @@
             overflow-y: auto;
         `;
         
-        // Modal header with drag indicator and close button
         const header = document.createElement('div');
         header.style.cssText = `
             padding: var(--space-md, 16px);
@@ -203,13 +192,9 @@
         header.appendChild(dragIndicator);
         header.appendChild(closeBtn);
         
-        // Modal content - breadcrumb links
         const content = document.createElement('div');
-        content.style.cssText = `
-            padding: var(--space-md, 16px);
-        `;
+        content.style.cssText = `padding: var(--space-md, 16px);`;
         
-        // Build full breadcrumb list for modal
         breadcrumbPath.forEach((item, index) => {
             const isLast = index === breadcrumbPath.length - 1;
             const linkContainer = document.createElement('div');
@@ -231,9 +216,7 @@
                     color: var(--color-midnight-blue, #1A2530);
                     display: block;
                 `;
-                link.addEventListener('click', function() {
-                    closeMobileModal();
-                });
+                link.addEventListener('click', closeMobileModal);
                 linkContainer.appendChild(link);
             }
             
@@ -244,7 +227,6 @@
         modal.appendChild(content);
         document.body.appendChild(modal);
         
-        // Add overlay
         const overlay = document.createElement('div');
         overlay.className = 'breadcrumb-overlay';
         overlay.style.cssText = `
@@ -273,7 +255,6 @@
         
         const { modal, overlay } = createMobileModal();
         
-        // Force reflow to trigger animation
         setTimeout(() => {
             modal.style.transform = 'translateY(0)';
             overlay.style.opacity = '1';
@@ -281,8 +262,6 @@
         }, 10);
         
         isModalOpen = true;
-        
-        // Store references for closing
         document.body.dataset.breadcrumbModal = 'open';
         document.body.style.overflow = 'hidden';
     }
@@ -296,9 +275,7 @@
         const modal = document.querySelector('.breadcrumb-modal');
         const overlay = document.querySelector('.breadcrumb-overlay');
         
-        if (modal) {
-            modal.style.transform = 'translateY(100%)';
-        }
+        if (modal) modal.style.transform = 'translateY(100%)';
         if (overlay) {
             overlay.style.opacity = '0';
             overlay.style.visibility = 'hidden';
@@ -315,16 +292,29 @@
     }
     
     /**
-     * Creates the mobile breadcrumb (single line with left arrow)
+     * Checks whether the breadcrumb list overflows its container.
      */
-    function createMobileBreadcrumb() {
-        const container = document.createElement('div');
-        container.className = 'breadcrumb-container';
+    function isBreadcrumbOverflowing(list, container) {
+        if (!list || !container) return false;
+        return list.scrollWidth > container.clientWidth;
+    }
+    
+    /**
+     * Converts a full breadcrumb list into the mobile‑collapsed version
+     * (left arrow + last item only).
+     */
+    function collapseToMobileView(list, containerElement) {
+        if (!list) return;
         
-        const list = document.createElement('ul');
-        list.className = 'breadcrumb-list';
+        // Remove all items except keep a reference to the last one
+        const items = list.querySelectorAll('.breadcrumb-item');
+        const lastItem = items[items.length - 1];
+        if (!lastItem) return;
         
-        // Add back button with left arrow
+        // Clear the list
+        list.innerHTML = '';
+        
+        // Create back arrow
         const backItem = document.createElement('li');
         backItem.className = 'breadcrumb-item breadcrumb-mobile-back';
         backItem.innerHTML = '<i class="fas fa-arrow-left"></i>';
@@ -332,23 +322,23 @@
         backItem.addEventListener('click', openMobileModal);
         list.appendChild(backItem);
         
-        // Show only the last item (current page)
-        const lastItem = breadcrumbPath[breadcrumbPath.length - 1];
-        if (lastItem) {
-            const currentItem = document.createElement('li');
-            currentItem.className = 'breadcrumb-item active';
-            currentItem.textContent = lastItem.title;
-            list.appendChild(currentItem);
-        }
-        
-        container.appendChild(list);
-        return container;
+        // Clone last item and mark as active
+        const lastClone = lastItem.cloneNode(true);
+        lastClone.classList.add('active');
+        list.appendChild(lastClone);
     }
     
     /**
-     * Creates the desktop breadcrumb (full hierarchy)
+     * Renders the breadcrumb and then, if on mobile and overflowing,
+     * collapses it to the back‑arrow view.
      */
-    function createDesktopBreadcrumb() {
+    function renderAdaptiveBreadcrumb() {
+        const breadcrumbBar = document.querySelector('[data-component="breadcrumb"]');
+        if (!breadcrumbBar) return;
+        
+        breadcrumbBar.innerHTML = '';
+        
+        // Always start with the full desktop layout
         const container = document.createElement('div');
         container.className = 'breadcrumb-container';
         
@@ -359,77 +349,24 @@
             const isLast = index === breadcrumbPath.length - 1;
             const breadcrumbItem = createBreadcrumbItem(item, isLast);
             list.appendChild(breadcrumbItem);
-            
             if (!isLast) {
-                const separator = createSeparator();
-                list.appendChild(separator);
+                list.appendChild(createSeparator());
             }
         });
         
         container.appendChild(list);
-        return container;
-    }
-    
-    /**
-     * Renders the breadcrumb bar
-     */
-    function renderBreadcrumbs() {
-        const breadcrumbBar = document.querySelector('[data-component="breadcrumb"]');
-        if (!breadcrumbBar) {
-            console.warn('[Breadcrumbs] No breadcrumb container found with data-component="breadcrumb"');
-            return;
-        }
+        breadcrumbBar.appendChild(container);
         
-        // Clear existing content
-        breadcrumbBar.innerHTML = '';
-        
-        // Check if breadcrumbPath is empty
-        if (!breadcrumbPath || breadcrumbPath.length === 0) {
-            // Fallback: Home
-            const container = document.createElement('div');
-            container.className = 'breadcrumb-container';
-            const list = document.createElement('ul');
-            list.className = 'breadcrumb-list';
-            const homeItem = createBreadcrumbItem({ title: 'Home', filename: 'index.html', isClickable: true }, false);
-            list.appendChild(homeItem);
-            container.appendChild(list);
-            breadcrumbBar.appendChild(container);
-            return;
-        }
-        
-        // Check screen width for mobile vs desktop
-        const isMobile = window.innerWidth < 768;
-        
-        if (isMobile) {
-            const mobileBreadcrumb = createMobileBreadcrumb();
-            breadcrumbBar.appendChild(mobileBreadcrumb);
-        } else {
-            const desktopBreadcrumb = createDesktopBreadcrumb();
-            breadcrumbBar.appendChild(desktopBreadcrumb);
-        }
-    }
-    
-    /**
-     * Handles responsive updates when screen size changes
-     */
-    function setupResponsiveBreadcrumbs() {
-        const mediaQuery = window.matchMedia('(max-width: 767px)');
-        
-        function handleScreenChange() {
-            // Re-render breadcrumbs when screen size crosses threshold
-            renderBreadcrumbs();
-            
-            // Close modal if open and screen becomes desktop
-            if (window.innerWidth >= 768 && isModalOpen) {
-                closeMobileModal();
+        // After rendering, check if we need to collapse on mobile
+        requestAnimationFrame(() => {
+            if (window.innerWidth < 768 && isBreadcrumbOverflowing(list, container)) {
+                collapseToMobileView(list, container);
             }
-        }
-        
-        mediaQuery.addEventListener('change', handleScreenChange);
+        });
     }
     
     /**
-     * Shows fallback breadcrumb when JSON fails
+     * Render fallback (Home > current page) without overflow checks.
      */
     function showFallbackBreadcrumbs() {
         const breadcrumbBar = document.querySelector('[data-component="breadcrumb"]');
@@ -442,14 +379,10 @@
         const list = document.createElement('ul');
         list.className = 'breadcrumb-list';
         
-        // Home
         const homeItem = createBreadcrumbItem({ title: 'Home', filename: 'index.html', isClickable: true }, false);
         list.appendChild(homeItem);
+        list.appendChild(createSeparator());
         
-        const separator = createSeparator();
-        list.appendChild(separator);
-        
-        // Current page (fallback)
         const pageTitle = currentPage.replace('.html', '').replace(/-/g, ' ');
         const capitalizedTitle = pageTitle.charAt(0).toUpperCase() + pageTitle.slice(1);
         const currentItem = createBreadcrumbItem({ title: capitalizedTitle, filename: currentPage, isClickable: false }, true);
@@ -457,8 +390,16 @@
         
         container.appendChild(list);
         breadcrumbBar.appendChild(container);
-        
-        console.warn('[Breadcrumbs] Using fallback - no hierarchy data');
+    }
+    
+    /**
+     * Re-renders the breadcrumb when the window is resized.
+     */
+    function handleResize() {
+        renderAdaptiveBreadcrumb();
+        if (window.innerWidth >= 768 && isModalOpen) {
+            closeMobileModal();
+        }
     }
     
     /**
@@ -466,34 +407,27 @@
      */
     async function loadBreadcrumbData() {
         try {
-            // Check if SiteUtils is available
             if (typeof SiteUtils === 'undefined') {
-                console.error('[Breadcrumbs] utils.js not loaded. SiteUtils is undefined.');
+                console.error('[Breadcrumbs] utils.js not loaded.');
                 showFallbackBreadcrumbs();
                 return;
             }
             
-            // Load JSON with caching
             const data = await SiteUtils.loadJSON('/json/site-data.json', true);
             
             if (data && data.breadcrumbHierarchy && Array.isArray(data.breadcrumbHierarchy)) {
                 hierarchyData = data.breadcrumbHierarchy;
-                
-                // Build breadcrumb path
                 breadcrumbPath = buildBreadcrumbPath();
+                renderAdaptiveBreadcrumb();
                 
-                // Render breadcrumbs
-                renderBreadcrumbs();
-                
-                // Setup responsive behavior
-                setupResponsiveBreadcrumbs();
+                // Listen for resize to re-check overflow
+                window.addEventListener('resize', SiteUtils.debounce ? SiteUtils.debounce(handleResize, 150) : handleResize);
                 
                 console.log('[Breadcrumbs] Initialized. Path:', breadcrumbPath.map(p => p.title).join(' > '));
             } else {
-                console.error('[Breadcrumbs] Invalid JSON structure: missing breadcrumbHierarchy array');
+                console.error('[Breadcrumbs] Invalid JSON structure');
                 showFallbackBreadcrumbs();
             }
-            
         } catch (error) {
             console.error('[Breadcrumbs] Failed to load site-data.json:', error);
             showFallbackBreadcrumbs();
@@ -504,11 +438,9 @@
      * Initializes the breadcrumb bar
      */
     async function init() {
-        // Wait for DOM to be ready
         if (typeof SiteUtils !== 'undefined' && SiteUtils.waitForDOM) {
             await SiteUtils.waitForDOM();
         } else {
-            // Fallback if utils.js not loaded
             await new Promise(resolve => {
                 if (document.readyState === 'loading') {
                     document.addEventListener('DOMContentLoaded', resolve);
@@ -518,10 +450,7 @@
             });
         }
         
-        // Get current page
         currentPage = getCurrentPage();
-        
-        // Load breadcrumb data
         await loadBreadcrumbData();
     }
     
@@ -530,5 +459,4 @@
     // ============================================
     
     init();
-    
 })();
