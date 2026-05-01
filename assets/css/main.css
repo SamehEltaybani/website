@@ -676,7 +676,9 @@ main {
 
 .breadcrumb-container {
     max-width: var(--container-max-width);
-    margin: 0 auto;
+    margin-left: 0;
+    margin-right: auto;
+    padding-left: var(--container-padding);
 }
 
 .breadcrumb-list {
@@ -736,11 +738,7 @@ main {
         font-size: var(--font-size-sm);
     }
     
-    /* Hide full hierarchy on mobile, show only last item + back button */
-    .breadcrumb-item:not(:last-child):not(.breadcrumb-mobile-back-parent) {
-        display: none;
-    }
-}
+  }
 
 /* ============================================================================
    FOOTER
@@ -1439,6 +1437,8 @@ main {
     margin-bottom: var(--space-lg);
 }
 
+
+
 /* ============================================================================
    CODE BLOCKS (Syntax highlighting)
    ============================================================================ */
@@ -1504,6 +1504,12 @@ pre code {
         display: none;
     }
 }
+
+/* Active state for search box (Publications & Blog) */
+.search-box.active input {
+    border-color: var(--color-gold);
+}
+
 
 /* ============================================================================
    END OF THE main.css FILE
