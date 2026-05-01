@@ -57,8 +57,8 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
        style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
 
   <!-- ========== SCROLL PROGRESS BAR ========== -->
-  <div class="progress-container" style="position: sticky; top: calc(var(--nav-height-desktop) + var(--breadcrumb-height)); z-index: 998;">
-    <div class="progress-bar" id="progress-bar"></div>
+  <div class="progress-container">
+  <div class="progress-bar" id="progress-bar"></div>
   </div>
 
   <!-- ========== MAIN CONTENT ========== -->
@@ -283,43 +283,7 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
           console.warn('Could not load article metadata');
         }
       }
-
-      
-     async function overrideBreadcrumb() {
-  // Wait for the breadcrumb to fully render (up to 3 seconds)
-  let attempts = 0;
-  let activeItem = null;
-  while (attempts < 30) {
-    activeItem = document.querySelector('.breadcrumb-item.active');
-    if (activeItem && activeItem.textContent && activeItem.textContent.trim() !== '') break;
-    await new Promise(r => setTimeout(r, 100));
-    attempts++;
-  }
-
-  let shortTitle = 'Article';
-  if (articleData && articleData.shortTitle) {
-    shortTitle = articleData.shortTitle;
-  } else {
-    try {
-      const data = await SiteUtils.loadJSON('/json/blog-list.json', true);
-      const entry = data ? data.find(item => item.blogfile === currentBlogfile) : null;
-      if (entry && entry.shortTitle) shortTitle = entry.shortTitle;
-    } catch (e) {}
-  }
-
-  if (activeItem) {
-    activeItem.textContent = shortTitle;
-  } else {
-    // Fallback: update any text node that looks like the raw filename
-    document.querySelectorAll('.breadcrumb-item').forEach(item => {
-      if (item.textContent.includes('blog/')) {
-        item.textContent = shortTitle;
-      }
-    });
-  }
-}
-
-     
+  
 
       function highlightBlogNav() {
         document.querySelectorAll('.nav-link.active, .mobile-nav-link.active').forEach(link => link.classList.remove('active'));
@@ -384,7 +348,6 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
 
         initProgressBar();
         await displayMetadata();
-        await overrideBreadcrumb();
         highlightBlogNav();
         await renderRecommended();
       }
