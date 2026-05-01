@@ -588,13 +588,13 @@ main {
 .mobile-menu {
     display: none;
     position: fixed;
-    top: var(--nav-height-desktop);
+    top: calc(var(--nav-height-mobile) + 1px);
     left: 0;
     right: 0;
     background-color: var(--color-white);
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     padding: var(--space-md);
-    z-index: 999;
+    z-index: 1001;
     flex-direction: column;
     gap: var(--space-sm);
 }
