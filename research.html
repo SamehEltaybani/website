@@ -4,7 +4,7 @@ RESEARCH.HTML - DR. SAMEH ELTAYBANI - RESEARCH PAGE
 ============================================================================
 Page‑specific content:
   1. Title, paragraph, and external resource buttons (array‑driven)
-  2. Three prominent buttons block (logical block) – NOW TWO‑COLUMN EQUAL‑HEIGHT
+  2. Three prominent buttons block (equal height, side‑by‑side on all screens)
   3. Featured cards group (10 cards, array‑driven)
   4. Repeated three prominent buttons block (second instance)
 ============================================================================
@@ -68,16 +68,17 @@ Page‑specific content:
       </div>
     </section>
 
-    <!-- THIN BORDER SEPARATOR (requested change #1) -->
+    <!-- THIN BORDER SEPARATOR -->
     <hr style="border: none; border-top: 1px solid var(--color-border); margin: 0;">
 
-    <!-- PART 2: THREE PROMINENT BUTTONS BLOCK (now two‑column equal‑height) -->
+    <!-- PART 2: THREE PROMINENT BUTTONS BLOCK (always side‑by‑side) -->
     <section class="section-alt">
       <div class="container">
-        <!-- The block uses .grid-2 for equal height columns -->
-        <div id="three-buttons-block-1" class="grid-2" style="align-items: stretch;">
-          <!-- Left column (two stacked buttons) will be inserted by JS -->
-          <!-- Right column (image+text inside a button) will be inserted by JS -->
+        <!-- Container forces two equal columns on ALL screen sizes -->
+        <div id="three-buttons-block-1"
+             style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); align-items: stretch;">
+          <!-- Left column (two stacked buttons) -->
+          <!-- Right column (image+caption inside a single button) -->
         </div>
       </div>
     </section>
@@ -95,7 +96,8 @@ Page‑specific content:
     <!-- PART 4: REPEATED THREE PROMINENT BUTTONS BLOCK (second instance) -->
     <section class="section-alt">
       <div class="container">
-        <div id="three-buttons-block-2" class="grid-2" style="align-items: stretch;">
+        <div id="three-buttons-block-2"
+             style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); align-items: stretch;">
           <!-- Rendered by JavaScript -->
         </div>
       </div>
@@ -117,13 +119,12 @@ Page‑specific content:
       'use strict';
 
       // ------------------------------------------------------------------
-      // A. EXTERNAL RESOURCE BUTTONS (editable array)
+      // A. EXTERNAL RESOURCE BUTTONS
       // ------------------------------------------------------------------
       const externalButtons = [
         { label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=YOUR_ID' },
         { label: 'ResearchGate', url: 'https://www.researchgate.net/profile/Sameh_Eltaybani' },
         { label: 'ORCID', url: 'https://orcid.org/0000-0002-1234-5678' }
-        // Add or remove buttons here – the layout auto‑wraps
       ];
 
       function renderExternalButtons() {
@@ -144,8 +145,6 @@ Page‑specific content:
       // ------------------------------------------------------------------
       // B. THREE PROMINENT BUTTONS BLOCK (reusable renderer)
       // ------------------------------------------------------------------
-      // Data for the block. Both instances currently use the same data,
-      // but they can be edited independently in the future.
       const threeButtonsData = {
         upperLeft: {
           label: 'Featured Article on Gerontological Nursing',
@@ -164,9 +163,8 @@ Page‑specific content:
       };
 
       /**
-       * Creates the three‑button block with equal‑height right button.
-       * @param {HTMLElement} container - The DOM element to fill (a .grid-2 div).
-       * @param {Object} data - The data for this block.
+       * Renders the three‑button block with equal‑height right button.
+       * The container must be a two‑column grid (display: grid; grid-template-columns: 1fr 1fr).
        */
       function renderThreeButtonsBlock(container, data) {
         if (!container) return;
@@ -176,14 +174,14 @@ Page‑specific content:
         const leftCol = document.createElement('div');
         leftCol.style.display = 'flex';
         leftCol.style.flexDirection = 'column';
-        leftCol.style.gap = 'var(--space-md)';  // same as the grid gap
+        leftCol.style.gap = 'var(--space-md)';   // same as grid gap for visual consistency
+        leftCol.style.height = '100%';
 
         // Upper left button
         const upperBtn = document.createElement('a');
         upperBtn.href = data.upperLeft.href;
         upperBtn.className = 'btn btn-primary';
         upperBtn.textContent = data.upperLeft.label;
-        // Make it fill the width
         upperBtn.style.width = '100%';
         leftCol.appendChild(upperBtn);
 
@@ -195,41 +193,30 @@ Page‑specific content:
         lowerBtn.style.width = '100%';
         leftCol.appendChild(lowerBtn);
 
-        // ---- RIGHT COLUMN (single button containing image + caption) ----
+        // ---- RIGHT COLUMN (single clickable button containing image + caption) ----
         const rightLink = document.createElement('a');
         rightLink.href = data.rightImage.href;
-        // Style the link as a button and make it fill the column
         rightLink.style.display = 'flex';
         rightLink.style.flexDirection = 'column';
         rightLink.style.alignItems = 'center';
-        rightLink.style.justifyContent = 'center';
+        rightLink.style.justifyContent = 'space-between';  // push caption to bottom if needed
         rightLink.style.textDecoration = 'none';
         rightLink.style.color = 'inherit';
         rightLink.style.borderRadius = '8px';
         rightLink.style.overflow = 'hidden';
-        rightLink.style.backgroundColor = 'var(--color-midnight-blue)'; // dark bg to match screenshot?
-        // To keep the screenshot’s light design we can use white bg; the user said not to change colors.
-        // I’ll use a neutral light background so it looks like a button.
         rightLink.style.backgroundColor = 'var(--color-bg-alt)';
         rightLink.style.border = '1px solid var(--color-border)';
-        rightLink.style.padding = '0';
         rightLink.style.transition = 'var(--transition-base)';
-        // Hover effect will be handled by adding a hover class later if needed,
-        // but for simplicity we can add a CSS hover via inline? Not possible.
-        // Since we must use CSS classes, we can apply 'card-lift' or similar.
-        // However, the right area is not a card; it's a button-like link.
-        // I'll add a small hover effect via event listeners if needed, but the user didn't ask.
-        // I'll keep it simple.
+        rightLink.style.height = '100%';   // essential for equal height
 
-        // Image inside the button
+        // Image
         const img = document.createElement('img');
         img.src = data.rightImage.src;
         img.alt = data.rightImage.alt;
         img.style.width = '100%';
-        img.style.height = 'auto';
-        img.style.display = 'block';
+        img.style.flex = '1 1 auto';        // let image take available space
+        img.style.objectFit = 'cover';
         img.setAttribute('loading', 'lazy');
-        // Placeholder on error
         img.addEventListener('error', function() {
           const placeholder = document.createElement('div');
           placeholder.style.cssText = `
@@ -256,16 +243,16 @@ Page‑specific content:
         caption.style.fontSize = 'var(--font-size-sm)';
         caption.style.color = 'var(--color-text-muted)';
         caption.style.textAlign = 'center';
-        caption.style.backgroundColor = 'rgba(255,255,255,0.8)'; // subtle overlay
+        caption.style.backgroundColor = 'rgba(255,255,255,0.8)';
         rightLink.appendChild(caption);
 
-        // Assemble the block
+        // Assemble block
         container.appendChild(leftCol);
         container.appendChild(rightLink);
       }
 
       // ------------------------------------------------------------------
-      // C. FEATURED RESEARCH CARDS (10 cards)
+      // C. FEATURED RESEARCH CARDS
       // ------------------------------------------------------------------
       const researchCards = [
         { title: 'Care Quality in Nursing Homes', img: 'assets/img/research-card-1.webp', desc: 'Investigating staff‑to‑resident ratios and quality outcomes.', blog: 'blog/blog-21.html' },
@@ -342,19 +329,15 @@ Page‑specific content:
       function initPageSpecific() {
         renderExternalButtons();
 
-        // Three buttons block – first instance
         const block1 = document.getElementById('three-buttons-block-1');
         renderThreeButtonsBlock(block1, threeButtonsData);
 
-        // Featured cards
         renderResearchCards();
 
-        // Three buttons block – second instance (same data, can be edited independently)
         const block2 = document.getElementById('three-buttons-block-2');
         renderThreeButtonsBlock(block2, threeButtonsData);
       }
 
-      // Ensure DOM is ready
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initPageSpecific);
       } else {
