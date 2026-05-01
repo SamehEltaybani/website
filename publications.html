@@ -2,12 +2,12 @@
 ============================================================================
 PUBLICATIONS.HTML - DR. SAMEH ELTAYBANI - PUBLICATIONS PAGE
 ============================================================================
-Fixed issues:
-  - Breadcrumb bar forced to exact height (no gap)
-  - Filter dropdown z-index above breadcrumb
-  - Sort now shows a dropdown with three options
-  - Authorship tag on its own line
-  - Buttons stay in one line on small screens
+Fixes applied:
+  - Sticky dropdowns for filter & sort (no more floating)
+  - Breadcrumb on mobile collapses ONLY when truly overflowing
+  - No gap between breadcrumb and controls bar on mobile (requires main.css fix)
+  - Active highlighting on filter/sort/reset
+  - Space between publication cards
 ============================================================================
 -->
 <!DOCTYPE html>
@@ -47,31 +47,66 @@ Fixed issues:
     </div>
   </nav>
 
-  <!-- ========== BREADCRUMB BAR (exact height enforced) ========== -->
+  <!-- ========== BREADCRUMB BAR (exact height) ========== -->
   <div data-component="breadcrumb" class="breadcrumb-bar"
        style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;">
   </div>
 
   <!-- ========== MAIN CONTENT ========== -->
   <main>
-    <!-- CONTROLS BAR (sticky, top aligned with breadcrumb + nav) -->
-    <div class="controls-bar" style="top: calc(var(--nav-height-desktop) + var(--breadcrumb-height));">
+    <!-- CONTROLS BAR (sticky) -->
+    <div class="controls-bar">
       <div class="container" style="display: flex; flex-wrap: nowrap; gap: var(--space-sm); align-items: center; justify-content: space-between;">
         <!-- SEARCH -->
         <div class="search-box" id="search-container">
           <i class="fas fa-search"></i>
           <input type="text" id="search-input" placeholder="Search publications..." aria-label="Search publications">
         </div>
-        <!-- FILTER BUTTON (opens dropdown) -->
-        <button id="filter-btn" class="btn btn-filter" aria-label="Filter" style="position: relative;">
-          <i class="fas fa-filter"></i>
-          <span>Filter</span>
-        </button>
-        <!-- SORT BUTTON (opens dropdown) -->
-        <button id="sort-btn" class="btn btn-filter" aria-label="Sort" style="position: relative;">
-          <i class="fas fa-sort"></i>
-          <span>Sort: Newest</span>
-        </button>
+
+        <!-- FILTER BUTTON + DROPDOWN (wrapped for sticky) -->
+        <div style="position: relative;">
+          <button id="filter-btn" class="btn btn-filter" aria-label="Filter">
+            <i class="fas fa-filter"></i>
+            <span>Filter</span>
+          </button>
+          <div id="filter-dropdown" class="hidden" style="position: absolute; top: 100%; left: 0; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--space-md); box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 250px;">
+            <div class="form-group">
+              <label class="form-label">Year</label>
+              <select id="filter-year" class="form-select">
+                <option value="">All years</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Authorship</label>
+              <select id="filter-authorship" class="form-select">
+                <option value="">All</option>
+                <option value="First/Corresponding author">First/Corresponding author</option>
+                <option value="Co-author">Co-author</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Journal</label>
+              <select id="filter-journal" class="form-select">
+                <option value="">All journals</option>
+              </select>
+            </div>
+            <button id="apply-filters-btn" class="btn btn-primary" style="width: 100%;">Apply Filters</button>
+          </div>
+        </div>
+
+        <!-- SORT BUTTON + DROPDOWN -->
+        <div style="position: relative;">
+          <button id="sort-btn" class="btn btn-filter" aria-label="Sort">
+            <i class="fas fa-sort"></i>
+            <span>Sort: Newest</span>
+          </button>
+          <div id="sort-dropdown" class="hidden" style="position: absolute; top: 100%; left: 0; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 180px;">
+            <button class="btn btn-text" data-sort="year-desc" style="display: block; width: 100%; text-align: left;">Newest first</button>
+            <button class="btn btn-text" data-sort="year-asc" style="display: block; width: 100%; text-align: left;">Oldest first</button>
+            <button class="btn btn-text" data-sort="authorship" style="display: block; width: 100%; text-align: left;">Authorship (first/corresponding first)</button>
+          </div>
+        </div>
+
         <!-- RESET BUTTON -->
         <button id="reset-btn" class="btn btn-filter" aria-label="Reset">
           <i class="fas fa-undo"></i>
@@ -80,45 +115,12 @@ Fixed issues:
       </div>
     </div>
 
-    <!-- FILTER DROPDOWN -->
-    <div id="filter-dropdown" class="hidden" style="position: absolute; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--space-md); box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 250px;">
-      <div class="form-group">
-        <label class="form-label">Year</label>
-        <select id="filter-year" class="form-select">
-          <option value="">All years</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Authorship</label>
-        <select id="filter-authorship" class="form-select">
-          <option value="">All</option>
-          <option value="First/Corresponding author">First/Corresponding author</option>
-          <option value="Co-author">Co-author</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Journal</label>
-        <select id="filter-journal" class="form-select">
-          <option value="">All journals</option>
-        </select>
-      </div>
-      <button id="apply-filters-btn" class="btn btn-primary" style="width: 100%;">Apply Filters</button>
-    </div>
-
-    <!-- SORT DROPDOWN -->
-    <div id="sort-dropdown" class="hidden" style="position: absolute; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 180px;">
-      <button class="btn btn-text" data-sort="year-desc" style="display: block; width: 100%; text-align: left;">Newest first</button>
-      <button class="btn btn-text" data-sort="year-asc" style="display: block; width: 100%; text-align: left;">Oldest first</button>
-      <button class="btn btn-text" data-sort="authorship" style="display: block; width: 100%; text-align: left;">Authorship (first/corresponding first)</button>
-    </div>
-
     <!-- PUBLICATIONS CONTAINER -->
     <section class="section">
       <div class="container">
         <div id="publications-list" data-component="publication-list">
           <!-- Rendered by JavaScript -->
         </div>
-        <!-- Load More button -->
         <div id="load-more-container" class="text-center mt-md">
           <button id="load-more-btn" class="btn btn-load-more hidden">Load More</button>
         </div>
@@ -157,7 +159,6 @@ Fixed issues:
       let allYears = [];
       let allJournals = [];
 
-      // DOM elements
       const searchInput = document.getElementById('search-input');
       const filterBtn = document.getElementById('filter-btn');
       const sortBtn = document.getElementById('sort-btn');
@@ -168,9 +169,6 @@ Fixed issues:
       const publicationsContainer = document.getElementById('publications-list');
       const loadMoreBtn = document.getElementById('load-more-btn');
 
-      // ------------------------------------------------------------------
-      // B. UTILITY FUNCTIONS
-      // ------------------------------------------------------------------
       function escapeHTML(text) {
         if (typeof SiteUtils !== 'undefined' && SiteUtils.escapeHTML) {
           return SiteUtils.escapeHTML(text);
@@ -181,13 +179,24 @@ Fixed issues:
       }
 
       // ------------------------------------------------------------------
+      // B. HIGHLIGHT CONTROLS
+      // ------------------------------------------------------------------
+      function updateControlHighlights() {
+        const hasFilters = state.activeFilters.year || state.activeFilters.authorship || state.activeFilters.journal;
+        const isDefaultSort = (state.activeSort.field === 'year' && state.activeSort.direction === 'desc');
+        const hasChanges = hasFilters || !isDefaultSort || state.activeSearch !== '';
+
+        filterBtn.classList.toggle('active', hasFilters);
+        sortBtn.classList.toggle('active', !isDefaultSort);
+        resetBtn.classList.toggle('active', hasChanges);
+      }
+
+      // ------------------------------------------------------------------
       // C. JSON LOADING
       // ------------------------------------------------------------------
       async function loadPublications() {
         try {
-          if (typeof SiteUtils === 'undefined') {
-            throw new Error('utils.js not loaded');
-          }
+          if (typeof SiteUtils === 'undefined') throw new Error('utils.js not loaded');
           const data = await SiteUtils.loadJSON('/json/publication-list.json', true);
           if (!data || !Array.isArray(data) || data.length === 0) {
             showEmptyState('No content available. Check back later.');
@@ -199,7 +208,7 @@ Fixed issues:
           populateFilterDropdowns();
           applyAllFilters();
         } catch (error) {
-          console.error('[Publications] Failed to load publication-list.json:', error);
+          console.error('[Publications]', error);
           showEmptyState('No content available. Check back later.');
         }
       }
@@ -212,32 +221,24 @@ Fixed issues:
       }
 
       // ------------------------------------------------------------------
-      // D. FILTER / SORT / SEARCH LOGIC
+      // D. FILTER / SORT / SEARCH
       // ------------------------------------------------------------------
       function applyAllFilters() {
         let items = [...state.allItems];
 
         if (state.activeSearch) {
-          const query = state.activeSearch.toLowerCase();
-          items = items.filter(p => p.title && p.title.toLowerCase().includes(query));
+          const q = state.activeSearch.toLowerCase();
+          items = items.filter(p => p.title && p.title.toLowerCase().includes(q));
         }
-
-        if (state.activeFilters.year) {
-          items = items.filter(p => p.year == state.activeFilters.year);
-        }
-        if (state.activeFilters.authorship) {
-          items = items.filter(p => p.authorship === state.activeFilters.authorship);
-        }
-        if (state.activeFilters.journal) {
-          items = items.filter(p => p.journal === state.activeFilters.journal);
-        }
+        if (state.activeFilters.year) items = items.filter(p => p.year == state.activeFilters.year);
+        if (state.activeFilters.authorship) items = items.filter(p => p.authorship === state.activeFilters.authorship);
+        if (state.activeFilters.journal) items = items.filter(p => p.journal === state.activeFilters.journal);
 
         const { field, direction } = state.activeSort;
         if (field === 'year') {
           items.sort((a, b) => {
-            const yearA = parseInt(a.year) || 0;
-            const yearB = parseInt(b.year) || 0;
-            return direction === 'desc' ? yearB - yearA : yearA - yearB;
+            const ya = parseInt(a.year) || 0, yb = parseInt(b.year) || 0;
+            return direction === 'desc' ? yb - ya : ya - yb;
           });
         } else if (field === 'authorship') {
           items.sort((a, b) => {
@@ -251,15 +252,15 @@ Fixed issues:
         state.currentPage = 1;
         hideLoadMoreButton();
         renderCurrentPage();
+        updateControlHighlights();
       }
 
       function updateActiveSortUI() {
-        if (!sortBtn) return;
         const span = sortBtn.querySelector('span');
         if (!span) return;
         if (state.activeSort.field === 'year') {
           span.textContent = state.activeSort.direction === 'desc' ? 'Sort: Newest' : 'Sort: Oldest';
-        } else if (state.activeSort.field === 'authorship') {
+        } else {
           span.textContent = 'Sort: Authorship';
         }
       }
@@ -270,24 +271,17 @@ Fixed issues:
       }
 
       function handleFilterApply() {
-        const yearSelect = document.getElementById('filter-year');
-        const authorshipSelect = document.getElementById('filter-authorship');
-        const journalSelect = document.getElementById('filter-journal');
-        state.activeFilters.year = yearSelect.value || null;
-        state.activeFilters.authorship = authorshipSelect.value || null;
-        state.activeFilters.journal = journalSelect.value || null;
+        state.activeFilters.year = document.getElementById('filter-year').value || null;
+        state.activeFilters.authorship = document.getElementById('filter-authorship').value || null;
+        state.activeFilters.journal = document.getElementById('filter-journal').value || null;
         closeFilterDropdown();
         applyAllFilters();
       }
 
       function handleSortOption(option) {
-        if (option === 'year-desc') {
-          state.activeSort = { field: 'year', direction: 'desc' };
-        } else if (option === 'year-asc') {
-          state.activeSort = { field: 'year', direction: 'asc' };
-        } else if (option === 'authorship') {
-          state.activeSort = { field: 'authorship', direction: 'asc' };
-        }
+        if (option === 'year-desc') state.activeSort = { field: 'year', direction: 'desc' };
+        else if (option === 'year-asc') state.activeSort = { field: 'year', direction: 'asc' };
+        else if (option === 'authorship') state.activeSort = { field: 'authorship', direction: 'asc' };
         updateActiveSortUI();
         closeSortDropdown();
         applyAllFilters();
@@ -312,93 +306,48 @@ Fixed issues:
         const yearSelect = document.getElementById('filter-year');
         const journalSelect = document.getElementById('filter-journal');
         yearSelect.innerHTML = '<option value="">All years</option>';
-        allYears.forEach(y => {
-          const opt = document.createElement('option');
-          opt.value = y;
-          opt.textContent = y;
-          yearSelect.appendChild(opt);
-        });
+        allYears.forEach(y => { const o = new Option(y, y); yearSelect.add(o); });
         journalSelect.innerHTML = '<option value="">All journals</option>';
-        allJournals.forEach(j => {
-          const opt = document.createElement('option');
-          opt.value = j;
-          opt.textContent = j;
-          journalSelect.appendChild(opt);
-        });
+        allJournals.forEach(j => { const o = new Option(j, j); journalSelect.add(o); });
       }
 
-      function openFilterDropdown() {
-        const btnRect = filterBtn.getBoundingClientRect();
-        filterDropdown.style.top = (btnRect.bottom + 5) + 'px';
-        filterDropdown.style.left = btnRect.left + 'px';
-        filterDropdown.classList.remove('hidden');
-      }
-      function closeFilterDropdown() {
-        filterDropdown.classList.add('hidden');
-      }
+      function closeFilterDropdown() { filterDropdown.classList.add('hidden'); }
+      function closeSortDropdown() { sortDropdown.classList.add('hidden'); }
 
-      function openSortDropdown() {
-        const btnRect = sortBtn.getBoundingClientRect();
-        sortDropdown.style.top = (btnRect.bottom + 5) + 'px';
-        sortDropdown.style.left = btnRect.left + 'px';
-        sortDropdown.classList.remove('hidden');
-      }
-      function closeSortDropdown() {
-        sortDropdown.classList.add('hidden');
-      }
-
-      // Event listeners for dropdowns
       filterBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (filterDropdown.classList.contains('hidden')) {
-          openFilterDropdown();
-          closeSortDropdown();
-        } else {
-          closeFilterDropdown();
-        }
+        closeSortDropdown();
+        filterDropdown.classList.toggle('hidden');
       });
-
       sortBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (sortDropdown.classList.contains('hidden')) {
-          openSortDropdown();
-          closeFilterDropdown();
-        } else {
-          closeSortDropdown();
-        }
+        closeFilterDropdown();
+        sortDropdown.classList.toggle('hidden');
       });
 
       document.addEventListener('click', (event) => {
-        if (!filterDropdown.classList.contains('hidden') &&
-            !filterDropdown.contains(event.target) &&
-            event.target !== filterBtn && !filterBtn.contains(event.target)) {
+        if (!filterDropdown.contains(event.target) && event.target !== filterBtn && !filterBtn.contains(event.target)) {
           closeFilterDropdown();
         }
-        if (!sortDropdown.classList.contains('hidden') &&
-            !sortDropdown.contains(event.target) &&
-            event.target !== sortBtn && !sortBtn.contains(event.target)) {
+        if (!sortDropdown.contains(event.target) && event.target !== sortBtn && !sortBtn.contains(event.target)) {
           closeSortDropdown();
         }
       });
 
       applyFiltersBtn.addEventListener('click', handleFilterApply);
 
-      // Sort dropdown button clicks
-      document.getElementById('sort-dropdown').addEventListener('click', (e) => {
+      sortDropdown.addEventListener('click', (e) => {
         const btn = e.target.closest('button[data-sort]');
-        if (btn) {
-          handleSortOption(btn.dataset.sort);
-        }
+        if (btn) handleSortOption(btn.dataset.sort);
       });
 
       // ------------------------------------------------------------------
-      // F. RENDERING PUBLICATIONS
+      // F. RENDERING PUBLICATIONS (with space between cards)
       // ------------------------------------------------------------------
       function renderCurrentPage() {
         if (!publicationsContainer) return;
-        const start = 0;
         const end = state.currentPage * state.itemsPerPage;
-        const itemsToShow = state.filteredItems.slice(start, end);
+        const itemsToShow = state.filteredItems.slice(0, end);
 
         let html = '';
         itemsToShow.forEach((pub, index) => {
@@ -406,18 +355,12 @@ Fixed issues:
           const authorTag = pub.authorship ? `<div class="publication-authorship ${authorClass}">${escapeHTML(pub.authorship)}</div>` : '';
 
           let buttonsHtml = '';
-          if (pub.pubmedLink) {
-            buttonsHtml += `<a href="${escapeHTML(pub.pubmedLink)}" class="btn btn-text" target="_blank" rel="noopener" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-external-link-alt mr-xs"></i>PubMed &gt;&gt;</a>`;
-          }
-          if (pub.journalLink) {
-            buttonsHtml += `<a href="${escapeHTML(pub.journalLink)}" class="btn btn-text" target="_blank" rel="noopener" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-book-open mr-xs"></i>Journal &gt;&gt;</a>`;
-          }
-          if (pub.blogLink) {
-            buttonsHtml += `<a href="${escapeHTML(pub.blogLink)}" class="btn btn-text" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-lightbulb mr-xs"></i>My insights &gt;&gt;</a>`;
-          }
+          if (pub.pubmedLink) buttonsHtml += `<a href="${escapeHTML(pub.pubmedLink)}" class="btn btn-text" target="_blank" rel="noopener" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-external-link-alt mr-xs"></i>PubMed &gt;&gt;</a>`;
+          if (pub.journalLink) buttonsHtml += `<a href="${escapeHTML(pub.journalLink)}" class="btn btn-text" target="_blank" rel="noopener" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-book-open mr-xs"></i>Journal &gt;&gt;</a>`;
+          if (pub.blogLink) buttonsHtml += `<a href="${escapeHTML(pub.blogLink)}" class="btn btn-text" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-lightbulb mr-xs"></i>My insights &gt;&gt;</a>`;
 
           html += `
-            <div class="publication-item">
+            <div class="publication-item" style="margin-bottom: var(--space-sm);">
               <div class="publication-header">
                 <div style="flex: 1;">
                   ${authorTag}
@@ -430,40 +373,30 @@ Fixed issues:
             </div>
           `;
 
-          // Batch separator
           if ((index + 1) % state.itemsPerPage === 0 && (index + 1) < itemsToShow.length) {
-            const pageNumber = Math.ceil((index + 1) / state.itemsPerPage);
-            html += `<div class="page-separator"><span>--- Page ${pageNumber} ---</span></div>`;
+            html += `<div class="page-separator"><span>--- Page ${Math.ceil((index + 1) / state.itemsPerPage)} ---</span></div>`;
           }
         });
 
         publicationsContainer.innerHTML = html;
 
-        // Load More button visibility
         if (state.filteredItems.length > end) {
           loadMoreBtn.classList.remove('hidden');
-          if (isLoadingMore) {
-            loadMoreBtn.disabled = true;
-            loadMoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-sm"></i>Loading...';
-          } else {
-            loadMoreBtn.disabled = false;
-            loadMoreBtn.textContent = 'Load More';
-          }
+          loadMoreBtn.disabled = isLoadingMore;
+          loadMoreBtn.innerHTML = isLoadingMore ? '<i class="fas fa-spinner fa-spin mr-sm"></i>Loading...' : 'Load More';
         } else {
           hideLoadMoreButton();
         }
       }
 
-      function hideLoadMoreButton() {
-        if (loadMoreBtn) loadMoreBtn.classList.add('hidden');
-      }
+      function hideLoadMoreButton() { if (loadMoreBtn) loadMoreBtn.classList.add('hidden'); }
 
       loadMoreBtn.addEventListener('click', async () => {
         if (isLoadingMore || loadMoreBtn.disabled) return;
         isLoadingMore = true;
         loadMoreBtn.disabled = true;
         loadMoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-sm"></i>Loading...';
-        await new Promise(resolve => setTimeout(resolve, 100));
+        await new Promise(r => setTimeout(r, 100));
         state.currentPage++;
         isLoadingMore = false;
         renderCurrentPage();
@@ -475,11 +408,65 @@ Fixed issues:
       const debouncedSearch = (typeof SiteUtils !== 'undefined' && SiteUtils.debounce) ?
         SiteUtils.debounce(handleSearchInput, 300) : handleSearchInput;
       searchInput.addEventListener('input', debouncedSearch);
-
       resetBtn.addEventListener('click', handleReset);
 
       // ------------------------------------------------------------------
-      // H. INITIALISATION
+      // H. RESPONSIVE BREADCRUMB ENHANCEMENT (collapse only on overflow)
+      // ------------------------------------------------------------------
+      function adjustMobileBreadcrumb() {
+        const breadcrumbList = document.querySelector('.breadcrumb-list');
+        if (!breadcrumbList || window.innerWidth >= 768) return; // desktop uses full path
+
+        const container = breadcrumbList.parentElement;
+        if (!container) return;
+
+        // Store original items if not already saved
+        if (!container.dataset.originalItems) {
+          // clone the innerHTML to restore later
+          container.dataset.originalItems = breadcrumbList.innerHTML;
+        }
+
+        // Check if the full list overflows the container
+        const hasOverflow = breadcrumbList.scrollWidth > container.clientWidth;
+
+        if (hasOverflow) {
+          // Show only last item + back arrow
+          const items = breadcrumbList.querySelectorAll('.breadcrumb-item');
+          const lastItem = items[items.length - 1];
+          if (!lastItem) return;
+
+          // Clear list
+          breadcrumbList.innerHTML = '';
+
+          // Back arrow
+          const backItem = document.createElement('li');
+          backItem.className = 'breadcrumb-item breadcrumb-mobile-back';
+          backItem.innerHTML = '<i class="fas fa-arrow-left"></i>';
+          backItem.style.cursor = 'pointer';
+          backItem.addEventListener('click', () => {
+            // Trigger the modal (same as original mobile breadcrumb)
+            const modal = document.querySelector('.breadcrumb-modal');
+            if (modal) modal.style.transform = 'translateY(0)';
+          });
+          breadcrumbList.appendChild(backItem);
+
+          // Last item clone
+          const lastClone = lastItem.cloneNode(true);
+          lastClone.classList.add('active');
+          breadcrumbList.appendChild(lastClone);
+        } else {
+          // Restore original full hierarchy
+          breadcrumbList.innerHTML = container.dataset.originalItems;
+        }
+      }
+
+      function initMobileBreadcrumb() {
+        window.addEventListener('resize', adjustMobileBreadcrumb);
+        adjustMobileBreadcrumb(); // initial call after components render
+      }
+
+      // ------------------------------------------------------------------
+      // I. INITIALISATION
       // ------------------------------------------------------------------
       async function initPublications() {
         if (typeof SiteUtils !== 'undefined' && SiteUtils.waitForDOM) {
@@ -487,6 +474,9 @@ Fixed issues:
         }
         await loadPublications();
         updateActiveSortUI();
+        updateControlHighlights();
+        // Wait a tick for breadcrumbs to finish, then apply mobile enhancement
+        setTimeout(initMobileBreadcrumb, 200);
       }
 
       if (document.readyState === 'loading') {
