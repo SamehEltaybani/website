@@ -12,6 +12,18 @@
  * ============================================
  */
 
+
+// ============================================
+// BASE PATH CONFIGURATION (reads <meta name="site-base-path">)
+// ============================================
+const BASE_META = document.querySelector('meta[name="site-base-path"]');
+const SITE_BASE_PATH = BASE_META ? BASE_META.getAttribute('content') : '';
+const BASE_PATH = SITE_BASE_PATH ? (SITE_BASE_PATH.endsWith('/') ? SITE_BASE_PATH : SITE_BASE_PATH + '/') : '';
+
+
+
+
+
 const SiteUtils = (function() {
     'use strict';
 
@@ -70,6 +82,11 @@ const SiteUtils = (function() {
         }
         
         try {
+             // Apply base path to absolute URLs (e.g., /json/site-data.json → /website/json/site-data.json)
+                  if (url.startsWith('/') && BASE_PATH) {
+                    url = BASE_PATH + url.replace(/^\//, '');
+                  }
+            
             console.log(`[Utils] Fetching: ${url}`);
             const response = await fetch(url);
             
