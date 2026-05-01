@@ -420,20 +420,28 @@
             hierarchyData = data.breadcrumbHierarchy;
             breadcrumbPath = buildBreadcrumbPath();
             
-            // ---- NEW: For blog articles, replace the last item's title with the shortTitle from blog-list.json ----
-            if (currentPage.startsWith('blog/') && currentPage !== 'blog.html') {
-                try {
-                    const blogData = await SiteUtils.loadJSON('/json/blog-list.json', true);
-                    if (blogData && Array.isArray(blogData)) {
-                        const entry = blogData.find(item => item.blogfile === currentPage);
-                        if (entry && entry.shortTitle && breadcrumbPath.length > 0) {
-                            breadcrumbPath[breadcrumbPath.length - 1].title = entry.shortTitle;
+            // ---- For blog articles, build path: Home > Blog > shortTitle ----
+                    if (currentPage.startsWith('blog/') && currentPage !== 'blog.html') {
+                        let shortTitle = 'Article';
+                        try {
+                            const blogData = await SiteUtils.loadJSON('/json/blog-list.json', true);
+                            if (blogData && Array.isArray(blogData)) {
+                                const entry = blogData.find(item => item.blogfile === currentPage);
+                                if (entry && entry.shortTitle) {
+                                    shortTitle = entry.shortTitle;
+                                }
+                            }
+                        } catch (e) {
+                            console.warn('[Breadcrumbs] Could not load short title for blog article.');
                         }
-                    }
-                } catch (e) {
-                    console.warn('[Breadcrumbs] Could not load short title for blog article, using fallback.');
-                }
-            }
+                    
+                        // Override the entire breadcrumb path for blog articles
+                        breadcrumbPath = [
+                            { title: 'Home', filename: 'index.html', isClickable: true },
+                            { title: 'Blog', filename: 'blog.html', isClickable: true },
+                            { title: shortTitle, filename: currentPage, isClickable: false }
+                        ];
+                    }         
             
             renderAdaptiveBreadcrumb();
             window.addEventListener('resize', SiteUtils.debounce ? SiteUtils.debounce(handleResize, 150) : handleResize);
