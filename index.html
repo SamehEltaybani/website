@@ -1,137 +1,431 @@
+<!--
+============================================================================
+INDEX.HTML - DR. SAMEH ELTAYBANI - HOME PAGE
+============================================================================
+This page follows the project's strict HTML structure and development philosophy.
+All class names, data attributes, and script loading order are as defined in
+the fixed files (main.css, site-data.json, utils.js, navigation.js, breadcrumbs.js, footer.js).
+Page‑specific content:
+  1. Image carousel (5 slides)
+  2. Slogan + description
+  3. Featured navigation cards (8 cards)
+Page‑specific JavaScript handles the carousel and card rendering.
+============================================================================
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dr. Sameh Eltaybani | Home</title>
-    
-    <link rel="stylesheet" href="assets/css/main.css">
-    
-    <script src="assets/js/navigation.js" defer></script>
-    <script src="assets/js/breadcrumbs.js" defer></script>
-    <script src="assets/js/footer.js" defer></script>
-    <script src="assets/js/carousel.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- PAGE-SPECIFIC: Change title and description per page -->
+  <title>Dr. Sameh Eltaybani - Home</title>
+  <meta name="description" content="Welcome to the personal academic website of Dr. Sameh Eltaybani. Explore research, publications, data analysis, teaching, portfolios, blog, and more.">
+  <!-- Open Graph (for social media sharing) -->
+  <meta property="og:title" content="Dr. Sameh Eltaybani - Home">
+  <meta property="og:description" content="Welcome to the personal academic website of Dr. Sameh Eltaybani. Explore research, publications, data analysis, teaching, portfolios, blog, and more.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="index.html"> <!-- Replace with full URL when live -->
+  <!-- FAVICON -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <!-- FONT AWESOME ICONS (REQUIRED) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- MAIN CSS -->
+  <link rel="stylesheet" href="assets/css/main.css">
 </head>
-<body>
+<body data-page="index.html">
+  <!-- ========== NAVIGATION BAR ========== -->
+  <nav data-component="navigation" class="navbar">
+    <div class="navbar-container">
+      <div class="navbar-left"></div>
+      <div class="navbar-right"></div>
+      <button class="hamburger" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
 
-    <div id="site-navigation"></div>
-    <div id="site-breadcrumbs"></div>
+  <!-- ========== BREADCRUMB BAR ========== -->
+  <div data-component="breadcrumb" class="breadcrumb-bar"></div>
 
-    <main id="main-content">
+  <!-- ========== MAIN CONTENT ========== -->
+  <main>
+    <!-- PART 1: HIGHLIGHT REELS - IMAGE CAROUSEL -->
+    <section class="section" aria-label="Image carousel">
+      <div class="container">
+        <div data-component="carousel" class="carousel-container">
+          <!-- Carousel slides will be inserted by JavaScript -->
+        </div>
+      </div>
+    </section>
 
-        <section class="highlight-carousel-section" aria-label="Highlight Reels">
-            <div class="carousel-container">
-                
-                <button class="carousel-control-prev" aria-label="Previous Slide">
-                    <span class="carousel-icon-prev" aria-hidden="true">&lt;</span>
-                </button>
+    <!-- PART 2: SLOGAN + DESCRIPTION -->
+    <section class="section-alt">
+      <div class="container">
+        <!-- Slogan (short title) -->
+        <h1 class="heading-large text-center">Transforming healthcare through rigorous research and compassionate teaching</h1>
+        <!-- Descriptive paragraph -->
+        <p class="paragraph text-center" style="max-width:800px; margin-left:auto; margin-right:auto;">
+          I am an academic dedicated to evidence‑based practice, clinical data analysis, and empowering the next generation
+          of healthcare professionals. This website offers a window into my work, publications, portfolios, and ongoing projects.
+        </p>
+      </div>
+    </section>
 
-                <div class="carousel-track">
-                    
-                    <div class="carousel-slide">
-                        <img src="img/temp.webp" alt="Highlight 1" class="carousel-image">
-                    </div>
-                    
-                    <div class="carousel-slide">
-                        <img src="img/temp.webp" alt="Highlight 2" class="carousel-image">
-                    </div>
-                    
-                    <div class="carousel-slide">
-                        <img src="img/temp.webp" alt="Highlight 3" class="carousel-image">
-                    </div>
-                    
-                    <div class="carousel-slide">
-                        <img src="img/temp.webp" alt="Highlight 4" class="carousel-image">
-                    </div>
-                    
-                    <div class="carousel-slide">
-                        <img src="img/temp.webp" alt="Highlight 5" class="carousel-image">
-                    </div>
+    <!-- PART 3: FEATURED NAVIGATION CARDS (8 CARDS) -->
+    <section class="section">
+      <div class="container">
+        <h2 class="heading-medium text-center mb-lg">Explore the Site</h2>
+        <!-- Cards grid container (rendered by JavaScript to keep data editable) -->
+        <div id="featured-cards-container" class="featured-cards-grid">
+          <!-- Cards will be inserted here -->
+        </div>
+      </div>
+    </section>
+  </main>
 
-                </div>
+  <!-- ========== FOOTER ========== -->
+  <footer data-component="footer"></footer>
 
-                <button class="carousel-control-next" aria-label="Next Slide">
-                    <span class="carousel-icon-next" aria-hidden="true">&gt;</span>
-                </button>
+  <!-- ========== SCRIPTS (EXACT ORDER - DO NOT CHANGE) ========== -->
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/navigation.js"></script>
+  <script src="assets/js/breadcrumbs.js"></script>
+  <script src="assets/js/footer.js"></script>
 
-            </div>
-        </section>
+  <!-- ========== PAGE-SPECIFIC SCRIPTS ========== -->
+  <script>
+    (function() {
+      'use strict';
 
+      // ------------------------------------------------------------------
+      // 1. CAROUSEL COMPONENT
+      // ------------------------------------------------------------------
+      // Array of images for the carousel (easy to edit/remove/add)
+      const carouselImages = [
+        { src: 'assets/img/temp-1.webp', alt: 'Highlight 1' },
+        { src: 'assets/img/temp-2.webp', alt: 'Highlight 2' },
+        { src: 'assets/img/temp-3.webp', alt: 'Highlight 3' },
+        { src: 'assets/img/temp-4.webp', alt: 'Highlight 4' },
+        { src: 'assets/img/temp-5.webp', alt: 'Highlight 5' }
+      ];
 
-        <section class="slogan-section container py-3 text-center">
-            
-            <h1 class="slogan-title">
-                Bridging data analysis and impactful research for the future of healthcare.
-            </h1>
-            
-            <p class="slogan-description text-muted mt-2">
-                Welcome to my digital space. Here, I share my academic publications, ongoing data analysis projects, teaching materials, and comprehensive professional portfolios.
-            </p>
+      let currentIndex = 0;            // zero‑based index of the visible slide
+      let autoScrollTimer = null;
+      let isDragging = false;
+      let startPosX = 0;
+      let currentTranslate = 0;
+      let prevTranslate = 0;
+      let animationID = 0;
+      let carouselTrack = null;
+      let autoScrollActive = true;
 
-        </section>
+      // Constants
+      const AUTO_SCROLL_INTERVAL = 3000;   // 3 seconds
+      const INACTIVITY_RESUME_DELAY = 5000; // 5 seconds after user interaction
 
+      /**
+       * Initialize carousel: create slides, set up controls, start auto‑scroll.
+       */
+      function initCarousel() {
+        const container = document.querySelector('[data-component="carousel"]');
+        if (!container) return;
 
-        <section class="featured-cards-section container mb-3">
-            <div class="cards-grid d-flex flex-wrap justify-content-center">
+        // Create carousel internal structure
+        container.innerHTML = `
+          <div class="carousel-track"></div>
+          <button class="carousel-btn carousel-btn-prev" aria-label="Previous slide">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="carousel-btn carousel-btn-next" aria-label="Next slide">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        `;
 
-                <article class="featured-card">
-                    <h3 class="card-title">Research</h3>
-                    <p class="card-description">Explore my core areas of investigation, active studies, and the overarching themes of my academic inquiry.</p>
-                    <a href="research.html" class="card-action-btn">Go to Research</a>
-                </article>
+        carouselTrack = container.querySelector('.carousel-track');
+        const prevBtn = container.querySelector('.carousel-btn-prev');
+        const nextBtn = container.querySelector('.carousel-btn-next');
 
-                <article class="featured-card">
-                    <h3 class="card-title">Publications</h3>
-                    <p class="card-description">Browse my peer-reviewed journal articles, book chapters, conference proceedings, and academic writing.</p>
-                    <a href="publications.html" class="card-action-btn">Go to Publications</a>
-                </article>
+        // Build slides
+        carouselImages.forEach((imgData, idx) => {
+          const slide = document.createElement('div');
+          slide.className = 'carousel-slide';
+          const img = document.createElement('img');
+          img.src = imgData.src;
+          img.alt = imgData.alt;
+          img.setAttribute('loading', 'lazy');
+          // Placeholder behaviour: show grey box with filename on error
+          img.addEventListener('error', function() {
+            const placeholder = document.createElement('div');
+            placeholder.style.cssText = `
+              width: 100%;
+              height: 400px;
+              background-color: #ccc;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: white;
+              font-size: 1.2rem;
+              text-align: center;
+              padding: 1rem;
+            `;
+            placeholder.textContent = imgData.src.split('/').pop(); // filename only
+            slide.replaceChild(placeholder, img);
+          });
+          slide.appendChild(img);
+          carouselTrack.appendChild(slide);
+        });
 
-                <article class="featured-card">
-                    <h3 class="card-title">Data Analysis</h3>
-                    <p class="card-description">Discover the methodologies, datasets, and analytical techniques I utilize to derive meaningful insights.</p>
-                    <a href="data-analysis.html" class="card-action-btn">Go to Data Analysis</a>
-                </article>
+        // Set initial position
+        setSlidePosition();
 
-                <article class="featured-card">
-                    <h3 class="card-title">Teaching</h3>
-                    <p class="card-description">Access my syllabi, course materials, educational philosophy, and resources for current students.</p>
-                    <a href="teaching.html" class="card-action-btn">Go to Teaching</a>
-                </article>
+        // Event listeners
+        prevBtn.addEventListener('click', () => {
+          stopAutoScrollTemporarily();
+          moveToPrevSlide();
+        });
+        nextBtn.addEventListener('click', () => {
+          stopAutoScrollTemporarily();
+          moveToNextSlide();
+        });
 
-                <article class="featured-card">
-                    <h3 class="card-title">Portfolios</h3>
-                    <ul class="card-bullets">
-                        <li>Research Portfolio</li>
-                        <li>Teaching Portfolio</li>
-                        <li>Data Analysis Portfolio</li>
-                    </ul>
-                    <a href="portfolios.html" class="card-action-btn">Go to Portfolios</a>
-                </article>
+        // Touch & mouse drag
+        carouselTrack.addEventListener('mousedown', dragStart);
+        carouselTrack.addEventListener('mousemove', dragMove);
+        carouselTrack.addEventListener('mouseup', dragEnd);
+        carouselTrack.addEventListener('mouseleave', dragEnd);
+        carouselTrack.addEventListener('touchstart', dragStart, { passive: true });
+        carouselTrack.addEventListener('touchmove', dragMove, { passive: true });
+        carouselTrack.addEventListener('touchend', dragEnd);
 
-                <article class="featured-card">
-                    <h3 class="card-title">Blog</h3>
-                    <p class="card-description">Read my thoughts on recent developments in the field, academic life, and in-depth topic explorations.</p>
-                    <a href="blog.html" class="card-action-btn">Go to Blog</a>
-                </article>
+        // Start auto‑scroll
+        startAutoScroll();
+      }
 
-                <article class="featured-card">
-                    <h3 class="card-title">Contact</h3>
-                    <p class="card-description">Reach out for academic collaborations, speaking engagements, consulting opportunities, or general inquiries.</p>
-                    <a href="contact.html" class="card-action-btn">Go to Contact</a>
-                </article>
+      /**
+       * Move the carousel to the current index (enforces infinite loop).
+       */
+      function setSlidePosition() {
+        if (!carouselTrack) return;
+        const slideWidth = carouselTrack.clientWidth;
+        carouselTrack.style.transform = `translateX(${-currentIndex * slideWidth}px)`;
+      }
 
-                <article class="featured-card">
-                    <h3 class="card-title">Newsletter</h3>
-                    <p class="card-description">Subscribe to receive periodic updates on my latest research findings, publications, and upcoming events.</p>
-                    <a href="newsletter.html" class="card-action-btn">Go to Newsletter</a>
-                </article>
+      function moveToNextSlide() {
+        if (!carouselTrack) return;
+        currentIndex = (currentIndex + 1) % carouselImages.length;
+        setSlidePosition();
+      }
 
-            </div>
-        </section>
+      function moveToPrevSlide() {
+        if (!carouselTrack) return;
+        currentIndex = (currentIndex - 1 + carouselImages.length) % carouselImages.length;
+        setSlidePosition();
+      }
 
-    </main>
+      // ---- Auto‑scroll logic ----
+      function startAutoScroll() {
+        if (autoScrollTimer) clearInterval(autoScrollTimer);
+        autoScrollTimer = setInterval(moveToNextSlide, AUTO_SCROLL_INTERVAL);
+        autoScrollActive = true;
+      }
 
-    <div id="site-footer"></div>
+      function stopAutoScrollTemporarily() {
+        if (autoScrollTimer) {
+          clearInterval(autoScrollTimer);
+          autoScrollTimer = null;
+        }
+        autoScrollActive = false;
+        // Resume after inactivity
+        clearTimeout(window._carouselResumeTimeout);
+        window._carouselResumeTimeout = setTimeout(() => {
+          startAutoScroll();
+        }, INACTIVITY_RESUME_DELAY);
+      }
+
+      // ---- Drag & swipe ----
+      function dragStart(e) {
+        if (!carouselTrack) return;
+        isDragging = true;
+        startPosX = getEventX(e);
+        prevTranslate = -currentIndex * carouselTrack.clientWidth;
+        carouselTrack.style.transition = 'none'; // disable smooth while dragging
+        stopAutoScrollTemporarily();
+      }
+
+      function dragMove(e) {
+        if (!isDragging || !carouselTrack) return;
+        e.preventDefault();
+        const currentX = getEventX(e);
+        currentTranslate = prevTranslate + (currentX - startPosX);
+        carouselTrack.style.transform = `translateX(${currentTranslate}px)`;
+      }
+
+      function dragEnd() {
+        if (!isDragging || !carouselTrack) return;
+        isDragging = false;
+        carouselTrack.style.transition = 'transform 0.5s ease-in-out';
+        const movedBy = currentTranslate - prevTranslate;
+        const slideWidth = carouselTrack.clientWidth;
+        // Determine if we should move to next/prev based on threshold (25% of slide width)
+        if (movedBy < -slideWidth * 0.25) {
+          currentIndex = (currentIndex + 1) % carouselImages.length;
+        } else if (movedBy > slideWidth * 0.25) {
+          currentIndex = (currentIndex - 1 + carouselImages.length) % carouselImages.length;
+        }
+        setSlidePosition();
+        currentTranslate = -currentIndex * slideWidth;
+        // Resume auto‑scroll after delay
+        stopAutoScrollTemporarily(); // this will set the resume timeout
+      }
+
+      function getEventX(e) {
+        return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+      }
+
+      // ------------------------------------------------------------------
+      // 2. FEATURED NAVIGATION CARDS
+      // ------------------------------------------------------------------
+      /**
+       * Data for the 8 featured cards.
+       * Easy to edit: just change the properties here.
+       * The "Portfolios" card is special – it uses a bullet list instead of a description.
+       */
+      const featuredCardsData = [
+        {
+          title: 'Research',
+          description: 'Discover my research interests, ongoing projects, and external resources.',
+          link: 'research.html'
+        },
+        {
+          title: 'Publications',
+          description: 'Browse my published work with links to PubMed, journal sites, and personal insights.',
+          link: 'publications.html'
+        },
+        {
+          title: 'Data Analysis',
+          description: 'Translating raw data into actionable clinical insights.',
+          link: 'data-analysis.html'
+        },
+        {
+          title: 'Teaching',
+          description: 'Explore my courses, teaching philosophy, and educational materials.',
+          link: 'teaching.html'
+        },
+        {
+          title: 'Portfolios',
+          // Special: this card uses bullet points instead of a paragraph
+          isPortfolio: true,
+          bulletPoints: [
+            'Research Portfolio',
+            'Teaching Portfolio',
+            'Data Analysis Portfolio'
+          ],
+          link: 'portfolios.html'
+        },
+        {
+          title: 'Blog',
+          description: 'Read my articles on healthcare, research integrity, data analysis, and more.',
+          link: 'blog.html'
+        },
+        {
+          title: 'Contact',
+          description: 'I am always happy to communicate, collaborate, or answer questions.',
+          link: 'contact.html'
+        },
+        {
+          title: 'Newsletter',
+          description: 'Stay updated with my latest insights and academic news.',
+          link: 'newsletter.html'
+        }
+      ];
+
+      /**
+       * Renders a single featured card.
+       */
+      function createFeaturedCard(cardData) {
+        const card = document.createElement('div');
+        card.className = 'card card-lift';
+
+        const content = document.createElement('div');
+        content.className = 'card-content';
+
+        const titleEl = document.createElement('h3');
+        titleEl.className = 'card-title';
+        titleEl.textContent = cardData.title;
+        content.appendChild(titleEl);
+
+        if (cardData.isPortfolio) {
+          // Bullet list instead of description
+          const bulletList = document.createElement('ul');
+          bulletList.className = 'card-bullet-list';
+          cardData.bulletPoints.forEach(point => {
+            const li = document.createElement('li');
+            li.textContent = point;
+            bulletList.appendChild(li);
+          });
+          content.appendChild(bulletList);
+        } else {
+          // Normal description paragraph
+          const desc = document.createElement('p');
+          desc.className = 'card-description';
+          desc.textContent = cardData.description;
+          content.appendChild(desc);
+        }
+
+        // Action button
+        const button = document.createElement('a');
+        button.href = cardData.link;
+        button.className = 'btn btn-text';
+        button.textContent = 'Go to section >>';
+        content.appendChild(button);
+
+        card.appendChild(content);
+        return card;
+      }
+
+      /**
+       * Renders all featured cards into the container.
+       */
+      function renderFeaturedCards() {
+        const container = document.getElementById('featured-cards-container');
+        if (!container) return;
+        container.innerHTML = '';
+        featuredCardsData.forEach(data => {
+          container.appendChild(createFeaturedCard(data));
+        });
+      }
+
+      // ------------------------------------------------------------------
+      // 3. INITIALISATION (runs once DOM is ready and other components are done)
+      // ------------------------------------------------------------------
+      async function initPageSpecific() {
+        // Wait for DOM (just in case)
+        if (typeof SiteUtils !== 'undefined' && SiteUtils.waitForDOM) {
+          await SiteUtils.waitForDOM();
+        } else {
+          // fallback
+          await new Promise(resolve => {
+            if (document.readyState === 'loading') {
+              document.addEventListener('DOMContentLoaded', resolve);
+            } else {
+              resolve();
+            }
+          });
+        }
+
+        initCarousel();
+        renderFeaturedCards();
+      }
+
+      // Kick off – but we must ensure utils.js is already loaded (it is, via script order).
+      // We run immediately because DOMContentLoaded may have already fired (scripts at end of body).
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPageSpecific);
+      } else {
+        initPageSpecific();
+      }
+    })();
+  </script>
 
 </body>
 </html>
