@@ -1,1 +1,18 @@
+[
+{
+    "title": "Data Analysis in the Era of AI",
+    "shortTitle": "Data analysis and AI",
+   “date”: “2026-12-25”,
+    "categories": ["AI", "Data Management", "Research"],
+    "blogfile": "blog/blog-200.html"
+  },
+ 
+{
+    "title": "Why we should care about research integrity in healthcare",
+    "shortTitle": "Why research integrity",
+   “date”: "2025-2-17",
+    "categories": ["Research integrity", "Research Ethics", "Research"],
+    "blogfile": "blog/blog-116.html"
+  }
 
+]
