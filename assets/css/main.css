@@ -660,8 +660,8 @@ main {
 
 .breadcrumb-bar {
     position: sticky;
-    top: var(--nav-height-desktop);
-    z-index: 999;
+    top: calc(var(--nav-height-desktop) + 1px);
+    z-index: 1001;
     background-color: var(--color-bg-breadcrumb);
     padding: var(--space-sm) var(--space-lg);
     border-bottom: 1px solid var(--color-border);
@@ -669,7 +669,7 @@ main {
 
 @media (max-width: 768px) {
     .breadcrumb-bar {
-        top: var(--nav-height-mobile);
+        top: calc(var(--nav-height-mobile) + 1px);
         padding: var(--space-xs) var(--space-md);
     }
 }
