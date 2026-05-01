@@ -1,1 +1,505 @@
+<!--
+============================================================================
+PUBLICATIONS.HTML - DR. SAMEH ELTAYBANI - PUBLICATIONS PAGE
+============================================================================
+Page‑specific content:
+  - Search box (searches publication titles)
+  - Filter (by year, authorship, journal)
+  - Sort (by year or authorship)
+  - Reset button
+  - Dynamic publication list with Load More and batch separators
+All data comes from /json/publication-list.json.
+============================================================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- ===== BASE PATH ===== -->
+  <base href="/website/">
+  <meta name="site-base-path" content="/website/">
+
+  <!-- PAGE-SPECIFIC -->
+  <title>Dr. Sameh Eltaybani - Publications</title>
+  <meta name="description" content="Browse Dr. Sameh Eltaybani's publications, including journal articles, PubMed links, and personal insights.">
+  <meta property="og:title" content="Dr. Sameh Eltaybani - Publications">
+  <meta property="og:description" content="Browse Dr. Sameh Eltaybani's publications, including journal articles, PubMed links, and personal insights.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="publications.html">
+
+  <!-- FAVICON -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- MAIN CSS -->
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body data-page="publications.html">
+  <!-- ========== NAVIGATION BAR ========== -->
+  <nav data-component="navigation" class="navbar">
+    <div class="navbar-container">
+      <div class="navbar-left"></div>
+      <div class="navbar-right"></div>
+      <button class="hamburger" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========== BREADCRUMB BAR ========== -->
+  <div data-component="breadcrumb" class="breadcrumb-bar"></div>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main>
+    <!-- CONTROLS BAR (sticky) -->
+    <div class="controls-bar">
+      <div class="container" style="display: flex; flex-wrap: nowrap; gap: var(--space-sm); align-items: center; justify-content: space-between;">
+        <!-- SEARCH -->
+        <div class="search-box" id="search-container">
+          <i class="fas fa-search"></i>
+          <input type="text" id="search-input" placeholder="Search publications..." aria-label="Search publications">
+        </div>
+        <!-- FILTER BUTTON (opens dropdown) -->
+        <button id="filter-btn" class="btn btn-filter" aria-label="Filter" style="position: relative;">
+          <i class="fas fa-filter"></i>
+          <span>Filter</span>
+        </button>
+        <!-- SORT BUTTON -->
+        <button id="sort-btn" class="btn btn-filter" aria-label="Sort">
+          <i class="fas fa-sort"></i>
+          <span>Sort: Newest</span>
+        </button>
+        <!-- RESET BUTTON -->
+        <button id="reset-btn" class="btn btn-filter" aria-label="Reset">
+          <i class="fas fa-undo"></i>
+          <span>Reset</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- FILTER DROPDOWN (hidden by default) -->
+    <div id="filter-dropdown" class="hidden" style="position: absolute; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--space-md); box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000;">
+      <div class="form-group">
+        <label class="form-label">Year</label>
+        <select id="filter-year" class="form-select">
+          <option value="">All years</option>
+          <!-- populated dynamically -->
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Authorship</label>
+        <select id="filter-authorship" class="form-select">
+          <option value="">All</option>
+          <option value="First/Corresponding author">First/Corresponding author</option>
+          <option value="Co-author">Co-author</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Journal</label>
+        <select id="filter-journal" class="form-select">
+          <option value="">All journals</option>
+          <!-- populated dynamically -->
+        </select>
+      </div>
+      <button id="apply-filters-btn" class="btn btn-primary" style="width: 100%;">Apply Filters</button>
+    </div>
+
+    <!-- PUBLICATIONS CONTAINER -->
+    <section class="section">
+      <div class="container">
+        <div id="publications-list" data-component="publication-list">
+          <!-- Rendered by JavaScript -->
+        </div>
+        <!-- Load More button -->
+        <div id="load-more-container" class="text-center mt-md">
+          <button id="load-more-btn" class="btn btn-load-more hidden">Load More</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer data-component="footer"></footer>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/navigation.js"></script>
+  <script src="assets/js/breadcrumbs.js"></script>
+  <script src="assets/js/footer.js"></script>
+
+  <!-- PAGE-SPECIFIC SCRIPTS -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ------------------------------------------------------------------
+      // A. GLOBALS & STATE
+      // ------------------------------------------------------------------
+      const state = {
+        allItems: [],               // masterData from JSON
+        filteredItems: [],         // current display subset
+        currentPage: 1,
+        itemsPerPage: 10,
+        activeFilters: { year: null, authorship: null, journal: null },
+        activeSort: { field: 'year', direction: 'desc' },
+        activeSearch: ''
+      };
+
+      let isLoadingMore = false;    // prevent duplicate Load More clicks
+      let allYears = [];
+      let allJournals = [];
+
+      // DOM elements
+      const searchInput = document.getElementById('search-input');
+      const filterBtn = document.getElementById('filter-btn');
+      const sortBtn = document.getElementById('sort-btn');
+      const resetBtn = document.getElementById('reset-btn');
+      const filterDropdown = document.getElementById('filter-dropdown');
+      const applyFiltersBtn = document.getElementById('apply-filters-btn');
+      const publicationsContainer = document.getElementById('publications-list');
+      const loadMoreBtn = document.getElementById('load-more-btn');
+
+      // ------------------------------------------------------------------
+      // B. UTILITY FUNCTIONS
+      // ------------------------------------------------------------------
+      function escapeHTML(text) {
+        if (typeof SiteUtils !== 'undefined' && SiteUtils.escapeHTML) {
+          return SiteUtils.escapeHTML(text);
+        }
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      // ------------------------------------------------------------------
+      // C. JSON LOADING
+      // ------------------------------------------------------------------
+      async function loadPublications() {
+        try {
+          if (typeof SiteUtils === 'undefined') {
+            throw new Error('utils.js not loaded');
+          }
+          const data = await SiteUtils.loadJSON('/json/publication-list.json', true);
+          if (!data || !Array.isArray(data) || data.length === 0) {
+            showEmptyState('No content available. Check back later.');
+            return;
+          }
+          state.allItems = data;
+          // Extract unique years and journals for filters
+          allYears = [...new Set(data.map(p => p.year))].filter(Boolean).sort();
+          allJournals = [...new Set(data.map(p => p.journal))].filter(Boolean).sort();
+          populateFilterDropdowns();
+          applyAllFilters(); // initial render
+        } catch (error) {
+          console.error('[Publications] Failed to load publication-list.json:', error);
+          showEmptyState('No content available. Check back later.');
+        }
+      }
+
+      function showEmptyState(message) {
+        if (publicationsContainer) {
+          publicationsContainer.innerHTML = `<p class="text-center paragraph">${escapeHTML(message)}</p>`;
+        }
+        if (loadMoreBtn) loadMoreBtn.classList.add('hidden');
+      }
+
+      // ------------------------------------------------------------------
+      // D. FILTER / SORT / SEARCH LOGIC
+      // ------------------------------------------------------------------
+      function applyAllFilters() {
+        let items = [...state.allItems];
+
+        // Search
+        if (state.activeSearch) {
+          const query = state.activeSearch.toLowerCase();
+          items = items.filter(p => p.title && p.title.toLowerCase().includes(query));
+        }
+
+        // Year filter
+        if (state.activeFilters.year) {
+          items = items.filter(p => p.year == state.activeFilters.year);
+        }
+
+        // Authorship filter
+        if (state.activeFilters.authorship) {
+          items = items.filter(p => p.authorship === state.activeFilters.authorship);
+        }
+
+        // Journal filter
+        if (state.activeFilters.journal) {
+          items = items.filter(p => p.journal === state.activeFilters.journal);
+        }
+
+        // Sort
+        const { field, direction } = state.activeSort;
+        if (field === 'year') {
+          items.sort((a, b) => {
+            const yearA = parseInt(a.year) || 0;
+            const yearB = parseInt(b.year) || 0;
+            return direction === 'desc' ? yearB - yearA : yearA - yearB;
+          });
+        } else if (field === 'authorship') {
+          // First/Corresponding author first
+          items.sort((a, b) => {
+            if (a.authorship === 'First/Corresponding author' && b.authorship !== 'First/Corresponding author') return -1;
+            if (a.authorship !== 'First/Corresponding author' && b.authorship === 'First/Corresponding author') return 1;
+            return 0;
+          });
+        }
+
+        state.filteredItems = items;
+        state.currentPage = 1;   // reset pagination on any change
+        hideLoadMoreButton();    // will be shown/hidden after rendering
+        renderCurrentPage();
+      }
+
+      function updateActiveSortUI() {
+        if (!sortBtn) return;
+        const span = sortBtn.querySelector('span');
+        if (!span) return;
+        if (state.activeSort.field === 'year') {
+          span.textContent = state.activeSort.direction === 'desc' ? 'Sort: Newest' : 'Sort: Oldest';
+        } else if (state.activeSort.field === 'authorship') {
+          span.textContent = 'Sort: Authorship';
+        }
+      }
+
+      function handleSearchInput() {
+        state.activeSearch = searchInput.value.trim();
+        applyAllFilters();
+        updateControlHighlights();
+      }
+
+      function handleFilterApply() {
+        const yearSelect = document.getElementById('filter-year');
+        const authorshipSelect = document.getElementById('filter-authorship');
+        const journalSelect = document.getElementById('filter-journal');
+        state.activeFilters.year = yearSelect.value || null;
+        state.activeFilters.authorship = authorshipSelect.value || null;
+        state.activeFilters.journal = journalSelect.value || null;
+        closeFilterDropdown();
+        applyAllFilters();
+        updateControlHighlights();
+      }
+
+      function handleSortToggle() {
+        // cycle: year desc → year asc → authorship
+        if (state.activeSort.field === 'year' && state.activeSort.direction === 'desc') {
+          state.activeSort = { field: 'year', direction: 'asc' };
+        } else if (state.activeSort.field === 'year' && state.activeSort.direction === 'asc') {
+          state.activeSort = { field: 'authorship', direction: 'asc' };
+        } else {
+          state.activeSort = { field: 'year', direction: 'desc' };
+        }
+        updateActiveSortUI();
+        applyAllFilters();
+        updateControlHighlights();
+      }
+
+      function handleReset() {
+        searchInput.value = '';
+        state.activeSearch = '';
+        state.activeFilters = { year: null, authorship: null, journal: null };
+        state.activeSort = { field: 'year', direction: 'desc' };
+        // Reset filter dropdowns
+        document.getElementById('filter-year').value = '';
+        document.getElementById('filter-authorship').value = '';
+        document.getElementById('filter-journal').value = '';
+        updateActiveSortUI();
+        applyAllFilters();
+        updateControlHighlights();
+      }
+
+      function updateControlHighlights() {
+        // Highlight filter button if any filter active
+        const hasFilters = state.activeFilters.year || state.activeFilters.authorship || state.activeFilters.journal;
+        filterBtn.classList.toggle('active', hasFilters);
+        // Highlight sort button if not default (year desc)
+        const isDefaultSort = (state.activeSort.field === 'year' && state.activeSort.direction === 'desc');
+        sortBtn.classList.toggle('active', !isDefaultSort || state.activeSearch !== '' || hasFilters ? false : false); // sort button active if any change? Actually we only highlight if sort is modified from default. We'll highlight sort if it's not default.
+        sortBtn.classList.toggle('active', !isDefaultSort);
+        // Reset button always remains neutral (no active class unless we want). We'll just leave it.
+      }
+
+      // ------------------------------------------------------------------
+      // E. FILTER DROPDOWN MANAGEMENT
+      // ------------------------------------------------------------------
+      function populateFilterDropdowns() {
+        const yearSelect = document.getElementById('filter-year');
+        const journalSelect = document.getElementById('filter-journal');
+        // Years
+        yearSelect.innerHTML = '<option value="">All years</option>';
+        allYears.forEach(y => {
+          const opt = document.createElement('option');
+          opt.value = y;
+          opt.textContent = y;
+          yearSelect.appendChild(opt);
+        });
+        // Journals
+        journalSelect.innerHTML = '<option value="">All journals</option>';
+        allJournals.forEach(j => {
+          const opt = document.createElement('option');
+          opt.value = j;
+          opt.textContent = j;
+          journalSelect.appendChild(opt);
+        });
+      }
+
+      function openFilterDropdown() {
+        if (!filterDropdown) return;
+        // Position below filter button
+        const btnRect = filterBtn.getBoundingClientRect();
+        filterDropdown.style.position = 'absolute';
+        filterDropdown.style.top = (btnRect.bottom + 5) + 'px';
+        filterDropdown.style.left = btnRect.left + 'px';
+        filterDropdown.style.minWidth = '250px';
+        filterDropdown.classList.remove('hidden');
+      }
+
+      function closeFilterDropdown() {
+        filterDropdown.classList.add('hidden');
+      }
+
+      filterBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (filterDropdown.classList.contains('hidden')) {
+          openFilterDropdown();
+        } else {
+          closeFilterDropdown();
+        }
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!filterDropdown.classList.contains('hidden') &&
+            !filterDropdown.contains(event.target) &&
+            event.target !== filterBtn && !filterBtn.contains(event.target)) {
+          closeFilterDropdown();
+        }
+      });
+
+      applyFiltersBtn.addEventListener('click', handleFilterApply);
+
+      // ------------------------------------------------------------------
+      // F. RENDERING PUBLICATIONS
+      // ------------------------------------------------------------------
+      function renderCurrentPage() {
+        if (!publicationsContainer) return;
+        const start = 0;
+        const end = state.currentPage * state.itemsPerPage;
+        const itemsToShow = state.filteredItems.slice(start, end);
+
+        // Build HTML for each publication
+        let html = '';
+        itemsToShow.forEach((pub, index) => {
+          // Authorship tag
+          const authorClass = pub.authorship === 'First/Corresponding author' ? 'authorship-first' : 'authorship-coauthor';
+          const authorTag = pub.authorship ? `<span class="publication-authorship ${authorClass}">${escapeHTML(pub.authorship)}</span>` : '';
+
+          // Buttons
+          let buttonsHtml = '';
+          if (pub.pubmedLink) {
+            buttonsHtml += `<a href="${escapeHTML(pub.pubmedLink)}" class="btn btn-text btn-sm" target="_blank" rel="noopener"><i class="fas fa-external-link-alt mr-xs"></i>PubMed &gt;&gt;</a>`;
+          }
+          if (pub.journalLink) {
+            buttonsHtml += `<a href="${escapeHTML(pub.journalLink)}" class="btn btn-text btn-sm" target="_blank" rel="noopener"><i class="fas fa-book-open mr-xs"></i>Journal &gt;&gt;</a>`;
+          }
+          if (pub.blogLink) {
+            buttonsHtml += `<a href="${escapeHTML(pub.blogLink)}" class="btn btn-text btn-sm"><i class="fas fa-lightbulb mr-xs"></i>My insights &gt;&gt;</a>`;
+          }
+
+          html += `
+            <div class="publication-item">
+              <div class="publication-header">
+                <div class="publication-title">
+                  ${authorTag}
+                  <span>${escapeHTML(pub.title)}</span>
+                </div>
+                <div class="publication-year">${escapeHTML(pub.year)}</div>
+              </div>
+              <div class="publication-journal">${escapeHTML(pub.journal || '')}</div>
+              ${buttonsHtml ? `<div class="publication-buttons">${buttonsHtml}</div>` : ''}
+            </div>
+          `;
+
+          // Add batch separator after every 10 items, but only if more items exist
+          if ((index + 1) % state.itemsPerPage === 0 && (index + 1) < itemsToShow.length) {
+            const pageNumber = Math.ceil((index + 1) / state.itemsPerPage);
+            html += `<div class="page-separator"><span>--- Page ${pageNumber} ---</span></div>`;
+          }
+        });
+
+        publicationsContainer.innerHTML = html;
+
+        // Manage Load More button
+        if (state.filteredItems.length > end) {
+          loadMoreBtn.classList.remove('hidden');
+          if (isLoadingMore) {
+            loadMoreBtn.disabled = true;
+            loadMoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-sm"></i>Loading...';
+          } else {
+            loadMoreBtn.disabled = false;
+            loadMoreBtn.textContent = 'Load More';
+          }
+        } else {
+          hideLoadMoreButton();
+        }
+      }
+
+      function hideLoadMoreButton() {
+        if (loadMoreBtn) loadMoreBtn.classList.add('hidden');
+      }
+
+      // Load More handler
+      loadMoreBtn.addEventListener('click', async () => {
+        if (isLoadingMore || loadMoreBtn.disabled) return;
+        isLoadingMore = true;
+        loadMoreBtn.disabled = true;
+        loadMoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-sm"></i>Loading...';
+        // Simulate a tiny delay for UX (optional)
+        await new Promise(resolve => setTimeout(resolve, 100));
+        state.currentPage++;
+        isLoadingMore = false;
+        renderCurrentPage();
+      });
+
+      // ------------------------------------------------------------------
+      // G. EVENT LISTENERS
+      // ------------------------------------------------------------------
+      // Search input with debounce
+      const debouncedSearch = (typeof SiteUtils !== 'undefined' && SiteUtils.debounce) ?
+        SiteUtils.debounce(handleSearchInput, 300) : handleSearchInput;
+      searchInput.addEventListener('input', debouncedSearch);
+
+      // Sort button
+      sortBtn.addEventListener('click', handleSortToggle);
+
+      // Reset button
+      resetBtn.addEventListener('click', handleReset);
+
+      // Mobile responsiveness for search, filter, sort (icons only)
+      // Already handled by CSS hiding text spans; we just toggle active classes
+      // Highlight controls that are active
+      updateControlHighlights();
+
+      // ------------------------------------------------------------------
+      // H. INITIALISATION
+      // ------------------------------------------------------------------
+      async function initPublications() {
+        if (typeof SiteUtils !== 'undefined' && SiteUtils.waitForDOM) {
+          await SiteUtils.waitForDOM();
+        }
+        await loadPublications();
+        updateActiveSortUI();
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPublications);
+      } else {
+        initPublications();
+      }
+    })();
+  </script>
+</body>
+</html>
