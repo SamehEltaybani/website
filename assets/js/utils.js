@@ -128,21 +128,22 @@ const SiteUtils = (function() {
      * 
      * Usage: const page = SiteUtils.getCurrentPageFilename();
      */
-    function getCurrentPageFilename() {
-        const path = window.location.pathname;
-        
-        // Remove leading slash if present
-        const cleanPath = path.startsWith('/') ? path.slice(1) : path;
-        
-        // If path is empty (root) or just a slash, return index.html
-        if (cleanPath === '' || cleanPath === '/') {
-            return 'index.html';
-        }
-        
-        // Extract just the filename part (handle subdirectories like blog/blog-15.html)
-        // We want the full path relative to root, not just the filename
-        return cleanPath;
-    }
+
+        function getCurrentPageFilename() {
+            const path = window.location.pathname;     // e.g., /website/index.html
+            let cleanPath = path;
+            // Remove the base path (e.g., /website/) if it exists and is known
+            if (BASE_PATH && path.startsWith(BASE_PATH)) {
+                cleanPath = path.substring(BASE_PATH.length);  // becomes index.html
+            } else if (path.startsWith('/')) {
+                cleanPath = path.slice(1);
+            }
+            // Empty path or trailing slash → home page
+            if (cleanPath === '' || cleanPath === '/' || cleanPath.endsWith('/')) {
+                return 'index.html';
+            }
+            return cleanPath;
+        } 
     
     /**
      * Gets the current page title from breadcrumb hierarchy data
