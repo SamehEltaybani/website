@@ -1059,6 +1059,14 @@ main {
     margin-top: var(--space-sm);
 }
 
+/* Callout buttons – right aligned */
+.callout .btn,
+.callout > .btn {
+  display: block;
+  margin-left: auto;
+  text-align: right;
+}
+
 /* ============================================================================
    IMAGE CAROUSEL (Home page)
    ============================================================================ */
@@ -1508,6 +1516,12 @@ pre code {
 /* Active state for search box (Publications & Blog) */
 .search-box.active input {
     border-color: var(--color-gold);
+}
+
+/* Article content lists – slightly indented */
+#article-content ul,
+#article-content ol {
+  padding-left: 1.5rem;
 }
 
 
