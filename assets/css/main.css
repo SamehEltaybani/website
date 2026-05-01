@@ -918,10 +918,10 @@ main {
 }
 
 @media (max-width: 768px) {
-    .controls-bar {
-        top: calc(var(--nav-height-mobile) + 40px);
-        gap: var(--space-xs);
-    }
+  .controls-bar {
+    top: calc(var(--nav-height-mobile) + var(--breadcrumb-height));
+    gap: var(--space-xs);
+  }
 }
 
 /* Tight screen: icons only */
