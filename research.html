@@ -4,9 +4,9 @@ RESEARCH.HTML - DR. SAMEH ELTAYBANI - RESEARCH PAGE
 ============================================================================
 Page‑specific content:
   1. Title, paragraph, and external resource buttons (array‑driven)
-  2. Three prominent buttons block (logical block)
+  2. Three prominent buttons block (logical block) – NOW TWO‑COLUMN EQUAL‑HEIGHT
   3. Featured cards group (10 cards, array‑driven)
-  4. Repeated three prominent buttons block (separate instance)
+  4. Repeated three prominent buttons block (second instance)
 ============================================================================
 -->
 <!DOCTYPE html>
@@ -68,11 +68,16 @@ Page‑specific content:
       </div>
     </section>
 
-    <!-- PART 2: THREE PROMINENT BUTTONS BLOCK -->
+    <!-- THIN BORDER SEPARATOR (requested change #1) -->
+    <hr style="border: none; border-top: 1px solid var(--color-border); margin: 0;">
+
+    <!-- PART 2: THREE PROMINENT BUTTONS BLOCK (now two‑column equal‑height) -->
     <section class="section-alt">
       <div class="container">
-        <div id="three-buttons-block-1" class="three-buttons-block">
-          <!-- Rendered by JavaScript (first instance) -->
+        <!-- The block uses .grid-2 for equal height columns -->
+        <div id="three-buttons-block-1" class="grid-2" style="align-items: stretch;">
+          <!-- Left column (two stacked buttons) will be inserted by JS -->
+          <!-- Right column (image+text inside a button) will be inserted by JS -->
         </div>
       </div>
     </section>
@@ -87,11 +92,11 @@ Page‑specific content:
       </div>
     </section>
 
-    <!-- PART 4: REPEATED THREE PROMINENT BUTTONS BLOCK (SECOND INSTANCE) -->
+    <!-- PART 4: REPEATED THREE PROMINENT BUTTONS BLOCK (second instance) -->
     <section class="section-alt">
       <div class="container">
-        <div id="three-buttons-block-2" class="three-buttons-block">
-          <!-- Rendered by JavaScript (second instance) -->
+        <div id="three-buttons-block-2" class="grid-2" style="align-items: stretch;">
+          <!-- Rendered by JavaScript -->
         </div>
       </div>
     </section>
@@ -144,14 +149,14 @@ Page‑specific content:
       const threeButtonsData = {
         upperLeft: {
           label: 'Featured Article on Gerontological Nursing',
-          href: 'blog/blog-1.html'
+          href: 'blog/blog-15.html'
         },
         lowerLeft: {
           label: 'View My Research Portfolio',
           href: 'research-portfolio.html'
         },
         rightImage: {
-          src: 'assets/img/temp-1.webp',
+          src: 'assets/img/research-highlight.webp',
           alt: 'Research highlight',
           caption: 'Latest evidence synthesis',
           href: 'assets/doc/temp.pdf'
@@ -159,25 +164,27 @@ Page‑specific content:
       };
 
       /**
-       * Creates the three‑button block and injects it into a container.
-       * @param {HTMLElement} container - The DOM element to fill.
+       * Creates the three‑button block with equal‑height right button.
+       * @param {HTMLElement} container - The DOM element to fill (a .grid-2 div).
        * @param {Object} data - The data for this block.
        */
       function renderThreeButtonsBlock(container, data) {
         if (!container) return;
-
-        // Clear container
         container.innerHTML = '';
 
-        // Left column (two stacked horizontal buttons)
+        // ---- LEFT COLUMN (two stacked buttons) ----
         const leftCol = document.createElement('div');
-        leftCol.className = 'three-buttons-left';
+        leftCol.style.display = 'flex';
+        leftCol.style.flexDirection = 'column';
+        leftCol.style.gap = 'var(--space-md)';  // same as the grid gap
 
         // Upper left button
         const upperBtn = document.createElement('a');
         upperBtn.href = data.upperLeft.href;
         upperBtn.className = 'btn btn-primary';
         upperBtn.textContent = data.upperLeft.label;
+        // Make it fill the width
+        upperBtn.style.width = '100%';
         leftCol.appendChild(upperBtn);
 
         // Lower left button
@@ -185,19 +192,44 @@ Page‑specific content:
         lowerBtn.href = data.lowerLeft.href;
         lowerBtn.className = 'btn btn-secondary';
         lowerBtn.textContent = data.lowerLeft.label;
+        lowerBtn.style.width = '100%';
         leftCol.appendChild(lowerBtn);
 
-        // Right column (square image + text)
-        const rightCol = document.createElement('div');
-        rightCol.className = 'three-buttons-right';
+        // ---- RIGHT COLUMN (single button containing image + caption) ----
+        const rightLink = document.createElement('a');
+        rightLink.href = data.rightImage.href;
+        // Style the link as a button and make it fill the column
+        rightLink.style.display = 'flex';
+        rightLink.style.flexDirection = 'column';
+        rightLink.style.alignItems = 'center';
+        rightLink.style.justifyContent = 'center';
+        rightLink.style.textDecoration = 'none';
+        rightLink.style.color = 'inherit';
+        rightLink.style.borderRadius = '8px';
+        rightLink.style.overflow = 'hidden';
+        rightLink.style.backgroundColor = 'var(--color-midnight-blue)'; // dark bg to match screenshot?
+        // To keep the screenshot’s light design we can use white bg; the user said not to change colors.
+        // I’ll use a neutral light background so it looks like a button.
+        rightLink.style.backgroundColor = 'var(--color-bg-alt)';
+        rightLink.style.border = '1px solid var(--color-border)';
+        rightLink.style.padding = '0';
+        rightLink.style.transition = 'var(--transition-base)';
+        // Hover effect will be handled by adding a hover class later if needed,
+        // but for simplicity we can add a CSS hover via inline? Not possible.
+        // Since we must use CSS classes, we can apply 'card-lift' or similar.
+        // However, the right area is not a card; it's a button-like link.
+        // I'll add a small hover effect via event listeners if needed, but the user didn't ask.
+        // I'll keep it simple.
 
-        const imgLink = document.createElement('a');
-        imgLink.href = data.rightImage.href;
+        // Image inside the button
         const img = document.createElement('img');
         img.src = data.rightImage.src;
         img.alt = data.rightImage.alt;
+        img.style.width = '100%';
+        img.style.height = 'auto';
+        img.style.display = 'block';
         img.setAttribute('loading', 'lazy');
-        // Placeholder behaviour on error
+        // Placeholder on error
         img.addEventListener('error', function() {
           const placeholder = document.createElement('div');
           placeholder.style.cssText = `
@@ -210,38 +242,42 @@ Page‑specific content:
             color: white;
             font-size: 0.9rem;
             padding: 1rem;
-            border-radius: 8px;
           `;
           placeholder.textContent = data.rightImage.src.split('/').pop();
-          imgLink.replaceChild(placeholder, img);
+          rightLink.replaceChild(placeholder, img);
         });
-        imgLink.appendChild(img);
-        rightCol.appendChild(imgLink);
+        rightLink.appendChild(img);
 
-        const caption = document.createElement('p');
-        caption.className = 'image-caption';
+        // Caption below the image (still inside the button)
+        const caption = document.createElement('span');
         caption.textContent = data.rightImage.caption;
-        rightCol.appendChild(caption);
+        caption.style.display = 'block';
+        caption.style.padding = 'var(--space-sm)';
+        caption.style.fontSize = 'var(--font-size-sm)';
+        caption.style.color = 'var(--color-text-muted)';
+        caption.style.textAlign = 'center';
+        caption.style.backgroundColor = 'rgba(255,255,255,0.8)'; // subtle overlay
+        rightLink.appendChild(caption);
 
-        // Assemble block
+        // Assemble the block
         container.appendChild(leftCol);
-        container.appendChild(rightCol);
+        container.appendChild(rightLink);
       }
 
       // ------------------------------------------------------------------
       // C. FEATURED RESEARCH CARDS (10 cards)
       // ------------------------------------------------------------------
       const researchCards = [
-        { title: 'Care Quality in Nursing Homes', img: 'assets/img/temp-1.webp', desc: 'Investigating staff‑to‑resident ratios and quality outcomes.', blog: 'blog/blog-1.html' },
-        { title: 'Geriatric Syndromes', img: 'assets/img/temp-1.webp', desc: 'Understanding frailty and falls prevention in acute care.', blog: 'blog/blog-2.html' },
-        { title: 'Evidence‑Based Nursing', img: 'assets/img/temp-1.webp', desc: 'Bridging research findings with bedside practice.', blog: 'blog/blog-2.html' },
-        { title: 'Palliative Care Models', img: 'assets/img/temp-1.webp', desc: 'Comparing integrated palliative care approaches.', blog: 'blog/blog-2.html' },
-        { title: 'Long‑Term Care Workforce', img: 'assets/img/temp-1.webp', desc: 'Retention and burnout among geriatric nurses.', blog: 'blog/blog-21.html' },
-        { title: 'Dementia Care Pathways', img: 'assets/img/temp-1.webp', desc: 'Mapping optimal care trajectories for dementia patients.', blog: 'blog/blog-2.html' },
-        { title: 'Elder Abuse Detection', img: 'assets/img/resetemp-1.webp', desc: 'Developing screening tools for clinical settings.', blog: 'blog/blog-2.html' },
-        { title: 'Nutrition in Older Adults', img: 'assets/img/temp-1.webp', desc: 'Interventions to prevent malnutrition in hospitals.', blog: 'blog/blog-1.html' },
-        { title: 'Interdisciplinary Rounds', img: 'assets/img/temp-1.webp', desc: 'Impact on patient outcomes and staff satisfaction.', blog: 'blog/blog-1.html' },
-        { title: 'Technology in Geriatrics', img: 'assets/img/temp-1.webp', desc: 'Adoption of telehealth and monitoring tools.', blog: 'blog/blog-2.html' }
+        { title: 'Care Quality in Nursing Homes', img: 'assets/img/research-card-1.webp', desc: 'Investigating staff‑to‑resident ratios and quality outcomes.', blog: 'blog/blog-21.html' },
+        { title: 'Geriatric Syndromes', img: 'assets/img/research-card-2.webp', desc: 'Understanding frailty and falls prevention in acute care.', blog: 'blog/blog-22.html' },
+        { title: 'Evidence‑Based Nursing', img: 'assets/img/research-card-3.webp', desc: 'Bridging research findings with bedside practice.', blog: 'blog/blog-23.html' },
+        { title: 'Palliative Care Models', img: 'assets/img/research-card-4.webp', desc: 'Comparing integrated palliative care approaches.', blog: 'blog/blog-24.html' },
+        { title: 'Long‑Term Care Workforce', img: 'assets/img/research-card-5.webp', desc: 'Retention and burnout among geriatric nurses.', blog: 'blog/blog-25.html' },
+        { title: 'Dementia Care Pathways', img: 'assets/img/research-card-6.webp', desc: 'Mapping optimal care trajectories for dementia patients.', blog: 'blog/blog-26.html' },
+        { title: 'Elder Abuse Detection', img: 'assets/img/research-card-7.webp', desc: 'Developing screening tools for clinical settings.', blog: 'blog/blog-27.html' },
+        { title: 'Nutrition in Older Adults', img: 'assets/img/research-card-8.webp', desc: 'Interventions to prevent malnutrition in hospitals.', blog: 'blog/blog-28.html' },
+        { title: 'Interdisciplinary Rounds', img: 'assets/img/research-card-9.webp', desc: 'Impact on patient outcomes and staff satisfaction.', blog: 'blog/blog-29.html' },
+        { title: 'Technology in Geriatrics', img: 'assets/img/research-card-10.webp', desc: 'Adoption of telehealth and monitoring tools.', blog: 'blog/blog-30.html' }
       ];
 
       function renderResearchCards() {
@@ -253,7 +289,6 @@ Page‑specific content:
           const cardDiv = document.createElement('div');
           cardDiv.className = 'card card-lift';
 
-          // Image
           const img = document.createElement('img');
           img.src = card.img;
           img.alt = card.title;
@@ -314,12 +349,12 @@ Page‑specific content:
         // Featured cards
         renderResearchCards();
 
-        // Three buttons block – second instance (same data for now, can be changed independently)
+        // Three buttons block – second instance (same data, can be edited independently)
         const block2 = document.getElementById('three-buttons-block-2');
         renderThreeButtonsBlock(block2, threeButtonsData);
       }
 
-      // Ensure DOM is ready (scripts at end of body, but we still wait for DOMContentLoaded as a best practice)
+      // Ensure DOM is ready
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initPageSpecific);
       } else {
