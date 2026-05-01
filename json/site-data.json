@@ -1,0 +1,31 @@
+{
+  "navigation": [
+    { "label": "Home", "url": "index.html", "isHighlighted": false },
+    { "label": "Research", "url": "research.html", "isHighlighted": false },
+    { "label": "Publications", "url": "publications.html", "isHighlighted": false },
+    { "label": "Data Analysis", "url": "data-analysis.html", "isHighlighted": false },
+    { "label": "Teaching", "url": "teaching.html", "isHighlighted": false },
+    { "label": "Portfolios", "url": "portfolios.html", "isHighlighted": false },
+    { "label": "Blog", "url": "blog.html", "isHighlighted": false },
+    { "label": "Contact", "url": "contact.html", "isHighlighted": false },
+    { "label": "Newsletter", "url": "newsletter.html", "isHighlighted": true }
+  ],
+
+  "breadcrumbHierarchy": [
+    { "filename": "index.html", "title": "Home", "parent": null },
+    { "filename": "research.html", "title": "Research", "parent": "index.html" },
+    { "filename": "research-portfolio.html", "title": "Research Portfolio", "parent": "research.html" },
+    { "filename": "teaching.html", "title": "Teaching", "parent": "index.html" },
+    { "filename": "teaching-portfolio.html", "title": "Teaching Portfolio", "parent": "teaching.html" },
+    { "filename": "data-analysis.html", "title": "Data Analysis", "parent": "index.html" },
+    { "filename": "data-analysis-portfolio.html", "title": "Data Analysis Portfolio", "parent": "data-analysis.html" },
+    { "filename": "publications.html", "title": "Publications", "parent": "index.html" },
+    { "filename": "portfolios.html", "title": "Portfolios", "parent": "index.html" },
+    { "filename": "blog.html", "title": "Blog", "parent": "index.html" },
+    { "filename": "contact.html", "title": "Contact", "parent": "index.html" },
+    { "filename": "newsletter.html", "title": "Newsletter", "parent": "index.html" },
+    { "filename": "legal.html", "title": "Legal", "parent": "index.html" },
+    { "filename": "404.html", "title": "Page Not Found", "parent": "index.html" }
+  ]
+}
+
