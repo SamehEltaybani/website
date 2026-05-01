@@ -405,34 +405,49 @@
     /**
      * Loads breadcrumb data from site-data.json
      */
+
     async function loadBreadcrumbData() {
-        try {
-            if (typeof SiteUtils === 'undefined') {
-                console.error('[Breadcrumbs] utils.js not loaded.');
-                showFallbackBreadcrumbs();
-                return;
+    try {
+        if (typeof SiteUtils === 'undefined') {
+            console.error('[Breadcrumbs] utils.js not loaded.');
+            showFallbackBreadcrumbs();
+            return;
+        }
+        
+        const data = await SiteUtils.loadJSON('/json/site-data.json', true);
+        
+        if (data && data.breadcrumbHierarchy && Array.isArray(data.breadcrumbHierarchy)) {
+            hierarchyData = data.breadcrumbHierarchy;
+            breadcrumbPath = buildBreadcrumbPath();
+            
+            // ---- NEW: For blog articles, replace the last item's title with the shortTitle from blog-list.json ----
+            if (currentPage.startsWith('blog/') && currentPage !== 'blog.html') {
+                try {
+                    const blogData = await SiteUtils.loadJSON('/json/blog-list.json', true);
+                    if (blogData && Array.isArray(blogData)) {
+                        const entry = blogData.find(item => item.blogfile === currentPage);
+                        if (entry && entry.shortTitle && breadcrumbPath.length > 0) {
+                            breadcrumbPath[breadcrumbPath.length - 1].title = entry.shortTitle;
+                        }
+                    }
+                } catch (e) {
+                    console.warn('[Breadcrumbs] Could not load short title for blog article, using fallback.');
+                }
             }
             
-            const data = await SiteUtils.loadJSON('/json/site-data.json', true);
+            renderAdaptiveBreadcrumb();
+            window.addEventListener('resize', SiteUtils.debounce ? SiteUtils.debounce(handleResize, 150) : handleResize);
             
-            if (data && data.breadcrumbHierarchy && Array.isArray(data.breadcrumbHierarchy)) {
-                hierarchyData = data.breadcrumbHierarchy;
-                breadcrumbPath = buildBreadcrumbPath();
-                renderAdaptiveBreadcrumb();
-                
-                // Listen for resize to re-check overflow
-                window.addEventListener('resize', SiteUtils.debounce ? SiteUtils.debounce(handleResize, 150) : handleResize);
-                
-                console.log('[Breadcrumbs] Initialized. Path:', breadcrumbPath.map(p => p.title).join(' > '));
-            } else {
-                console.error('[Breadcrumbs] Invalid JSON structure');
-                showFallbackBreadcrumbs();
-            }
-        } catch (error) {
-            console.error('[Breadcrumbs] Failed to load site-data.json:', error);
+            console.log('[Breadcrumbs] Initialized. Path:', breadcrumbPath.map(p => p.title).join(' > '));
+        } else {
+            console.error('[Breadcrumbs] Invalid JSON structure');
             showFallbackBreadcrumbs();
         }
+    } catch (error) {
+        console.error('[Breadcrumbs] Failed to load site-data.json:', error);
+        showFallbackBreadcrumbs();
     }
+}
     
     /**
      * Initializes the breadcrumb bar
