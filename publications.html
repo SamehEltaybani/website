@@ -2,13 +2,12 @@
 ============================================================================
 PUBLICATIONS.HTML - DR. SAMEH ELTAYBANI - PUBLICATIONS PAGE
 ============================================================================
-Page‑specific content:
-  - Search box (searches publication titles)
-  - Filter (by year, authorship, journal)
-  - Sort (by year or authorship)
-  - Reset button
-  - Dynamic publication list with Load More and batch separators
-All data comes from /json/publication-list.json.
+Fixed issues:
+  - Breadcrumb bar forced to exact height (no gap)
+  - Filter dropdown z-index above breadcrumb
+  - Sort now shows a dropdown with three options
+  - Authorship tag on its own line
+  - Buttons stay in one line on small screens
 ============================================================================
 -->
 <!DOCTYPE html>
@@ -48,13 +47,15 @@ All data comes from /json/publication-list.json.
     </div>
   </nav>
 
-  <!-- ========== BREADCRUMB BAR ========== -->
-  <div data-component="breadcrumb" class="breadcrumb-bar"></div>
+  <!-- ========== BREADCRUMB BAR (exact height enforced) ========== -->
+  <div data-component="breadcrumb" class="breadcrumb-bar"
+       style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;">
+  </div>
 
   <!-- ========== MAIN CONTENT ========== -->
   <main>
-    <!-- CONTROLS BAR (sticky) -->
-    <div class="controls-bar">
+    <!-- CONTROLS BAR (sticky, top aligned with breadcrumb + nav) -->
+    <div class="controls-bar" style="top: calc(var(--nav-height-desktop) + var(--breadcrumb-height));">
       <div class="container" style="display: flex; flex-wrap: nowrap; gap: var(--space-sm); align-items: center; justify-content: space-between;">
         <!-- SEARCH -->
         <div class="search-box" id="search-container">
@@ -66,8 +67,8 @@ All data comes from /json/publication-list.json.
           <i class="fas fa-filter"></i>
           <span>Filter</span>
         </button>
-        <!-- SORT BUTTON -->
-        <button id="sort-btn" class="btn btn-filter" aria-label="Sort">
+        <!-- SORT BUTTON (opens dropdown) -->
+        <button id="sort-btn" class="btn btn-filter" aria-label="Sort" style="position: relative;">
           <i class="fas fa-sort"></i>
           <span>Sort: Newest</span>
         </button>
@@ -79,13 +80,12 @@ All data comes from /json/publication-list.json.
       </div>
     </div>
 
-    <!-- FILTER DROPDOWN (hidden by default) -->
-    <div id="filter-dropdown" class="hidden" style="position: absolute; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--space-md); box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000;">
+    <!-- FILTER DROPDOWN -->
+    <div id="filter-dropdown" class="hidden" style="position: absolute; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--space-md); box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 250px;">
       <div class="form-group">
         <label class="form-label">Year</label>
         <select id="filter-year" class="form-select">
           <option value="">All years</option>
-          <!-- populated dynamically -->
         </select>
       </div>
       <div class="form-group">
@@ -100,10 +100,16 @@ All data comes from /json/publication-list.json.
         <label class="form-label">Journal</label>
         <select id="filter-journal" class="form-select">
           <option value="">All journals</option>
-          <!-- populated dynamically -->
         </select>
       </div>
       <button id="apply-filters-btn" class="btn btn-primary" style="width: 100%;">Apply Filters</button>
+    </div>
+
+    <!-- SORT DROPDOWN -->
+    <div id="sort-dropdown" class="hidden" style="position: absolute; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 180px;">
+      <button class="btn btn-text" data-sort="year-desc" style="display: block; width: 100%; text-align: left;">Newest first</button>
+      <button class="btn btn-text" data-sort="year-asc" style="display: block; width: 100%; text-align: left;">Oldest first</button>
+      <button class="btn btn-text" data-sort="authorship" style="display: block; width: 100%; text-align: left;">Authorship (first/corresponding first)</button>
     </div>
 
     <!-- PUBLICATIONS CONTAINER -->
@@ -138,8 +144,8 @@ All data comes from /json/publication-list.json.
       // A. GLOBALS & STATE
       // ------------------------------------------------------------------
       const state = {
-        allItems: [],               // masterData from JSON
-        filteredItems: [],         // current display subset
+        allItems: [],
+        filteredItems: [],
         currentPage: 1,
         itemsPerPage: 10,
         activeFilters: { year: null, authorship: null, journal: null },
@@ -147,7 +153,7 @@ All data comes from /json/publication-list.json.
         activeSearch: ''
       };
 
-      let isLoadingMore = false;    // prevent duplicate Load More clicks
+      let isLoadingMore = false;
       let allYears = [];
       let allJournals = [];
 
@@ -157,6 +163,7 @@ All data comes from /json/publication-list.json.
       const sortBtn = document.getElementById('sort-btn');
       const resetBtn = document.getElementById('reset-btn');
       const filterDropdown = document.getElementById('filter-dropdown');
+      const sortDropdown = document.getElementById('sort-dropdown');
       const applyFiltersBtn = document.getElementById('apply-filters-btn');
       const publicationsContainer = document.getElementById('publications-list');
       const loadMoreBtn = document.getElementById('load-more-btn');
@@ -187,11 +194,10 @@ All data comes from /json/publication-list.json.
             return;
           }
           state.allItems = data;
-          // Extract unique years and journals for filters
           allYears = [...new Set(data.map(p => p.year))].filter(Boolean).sort();
           allJournals = [...new Set(data.map(p => p.journal))].filter(Boolean).sort();
           populateFilterDropdowns();
-          applyAllFilters(); // initial render
+          applyAllFilters();
         } catch (error) {
           console.error('[Publications] Failed to load publication-list.json:', error);
           showEmptyState('No content available. Check back later.');
@@ -211,28 +217,21 @@ All data comes from /json/publication-list.json.
       function applyAllFilters() {
         let items = [...state.allItems];
 
-        // Search
         if (state.activeSearch) {
           const query = state.activeSearch.toLowerCase();
           items = items.filter(p => p.title && p.title.toLowerCase().includes(query));
         }
 
-        // Year filter
         if (state.activeFilters.year) {
           items = items.filter(p => p.year == state.activeFilters.year);
         }
-
-        // Authorship filter
         if (state.activeFilters.authorship) {
           items = items.filter(p => p.authorship === state.activeFilters.authorship);
         }
-
-        // Journal filter
         if (state.activeFilters.journal) {
           items = items.filter(p => p.journal === state.activeFilters.journal);
         }
 
-        // Sort
         const { field, direction } = state.activeSort;
         if (field === 'year') {
           items.sort((a, b) => {
@@ -241,7 +240,6 @@ All data comes from /json/publication-list.json.
             return direction === 'desc' ? yearB - yearA : yearA - yearB;
           });
         } else if (field === 'authorship') {
-          // First/Corresponding author first
           items.sort((a, b) => {
             if (a.authorship === 'First/Corresponding author' && b.authorship !== 'First/Corresponding author') return -1;
             if (a.authorship !== 'First/Corresponding author' && b.authorship === 'First/Corresponding author') return 1;
@@ -250,8 +248,8 @@ All data comes from /json/publication-list.json.
         }
 
         state.filteredItems = items;
-        state.currentPage = 1;   // reset pagination on any change
-        hideLoadMoreButton();    // will be shown/hidden after rendering
+        state.currentPage = 1;
+        hideLoadMoreButton();
         renderCurrentPage();
       }
 
@@ -269,7 +267,6 @@ All data comes from /json/publication-list.json.
       function handleSearchInput() {
         state.activeSearch = searchInput.value.trim();
         applyAllFilters();
-        updateControlHighlights();
       }
 
       function handleFilterApply() {
@@ -281,21 +278,19 @@ All data comes from /json/publication-list.json.
         state.activeFilters.journal = journalSelect.value || null;
         closeFilterDropdown();
         applyAllFilters();
-        updateControlHighlights();
       }
 
-      function handleSortToggle() {
-        // cycle: year desc → year asc → authorship
-        if (state.activeSort.field === 'year' && state.activeSort.direction === 'desc') {
-          state.activeSort = { field: 'year', direction: 'asc' };
-        } else if (state.activeSort.field === 'year' && state.activeSort.direction === 'asc') {
-          state.activeSort = { field: 'authorship', direction: 'asc' };
-        } else {
+      function handleSortOption(option) {
+        if (option === 'year-desc') {
           state.activeSort = { field: 'year', direction: 'desc' };
+        } else if (option === 'year-asc') {
+          state.activeSort = { field: 'year', direction: 'asc' };
+        } else if (option === 'authorship') {
+          state.activeSort = { field: 'authorship', direction: 'asc' };
         }
         updateActiveSortUI();
+        closeSortDropdown();
         applyAllFilters();
-        updateControlHighlights();
       }
 
       function handleReset() {
@@ -303,33 +298,19 @@ All data comes from /json/publication-list.json.
         state.activeSearch = '';
         state.activeFilters = { year: null, authorship: null, journal: null };
         state.activeSort = { field: 'year', direction: 'desc' };
-        // Reset filter dropdowns
         document.getElementById('filter-year').value = '';
         document.getElementById('filter-authorship').value = '';
         document.getElementById('filter-journal').value = '';
         updateActiveSortUI();
         applyAllFilters();
-        updateControlHighlights();
-      }
-
-      function updateControlHighlights() {
-        // Highlight filter button if any filter active
-        const hasFilters = state.activeFilters.year || state.activeFilters.authorship || state.activeFilters.journal;
-        filterBtn.classList.toggle('active', hasFilters);
-        // Highlight sort button if not default (year desc)
-        const isDefaultSort = (state.activeSort.field === 'year' && state.activeSort.direction === 'desc');
-        sortBtn.classList.toggle('active', !isDefaultSort || state.activeSearch !== '' || hasFilters ? false : false); // sort button active if any change? Actually we only highlight if sort is modified from default. We'll highlight sort if it's not default.
-        sortBtn.classList.toggle('active', !isDefaultSort);
-        // Reset button always remains neutral (no active class unless we want). We'll just leave it.
       }
 
       // ------------------------------------------------------------------
-      // E. FILTER DROPDOWN MANAGEMENT
+      // E. DROPDOWN MANAGEMENT
       // ------------------------------------------------------------------
       function populateFilterDropdowns() {
         const yearSelect = document.getElementById('filter-year');
         const journalSelect = document.getElementById('filter-journal');
-        // Years
         yearSelect.innerHTML = '<option value="">All years</option>';
         allYears.forEach(y => {
           const opt = document.createElement('option');
@@ -337,7 +318,6 @@ All data comes from /json/publication-list.json.
           opt.textContent = y;
           yearSelect.appendChild(opt);
         });
-        // Journals
         journalSelect.innerHTML = '<option value="">All journals</option>';
         allJournals.forEach(j => {
           const opt = document.createElement('option');
@@ -348,26 +328,43 @@ All data comes from /json/publication-list.json.
       }
 
       function openFilterDropdown() {
-        if (!filterDropdown) return;
-        // Position below filter button
         const btnRect = filterBtn.getBoundingClientRect();
-        filterDropdown.style.position = 'absolute';
         filterDropdown.style.top = (btnRect.bottom + 5) + 'px';
         filterDropdown.style.left = btnRect.left + 'px';
-        filterDropdown.style.minWidth = '250px';
         filterDropdown.classList.remove('hidden');
       }
-
       function closeFilterDropdown() {
         filterDropdown.classList.add('hidden');
       }
 
+      function openSortDropdown() {
+        const btnRect = sortBtn.getBoundingClientRect();
+        sortDropdown.style.top = (btnRect.bottom + 5) + 'px';
+        sortDropdown.style.left = btnRect.left + 'px';
+        sortDropdown.classList.remove('hidden');
+      }
+      function closeSortDropdown() {
+        sortDropdown.classList.add('hidden');
+      }
+
+      // Event listeners for dropdowns
       filterBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         if (filterDropdown.classList.contains('hidden')) {
           openFilterDropdown();
+          closeSortDropdown();
         } else {
           closeFilterDropdown();
+        }
+      });
+
+      sortBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (sortDropdown.classList.contains('hidden')) {
+          openSortDropdown();
+          closeFilterDropdown();
+        } else {
+          closeSortDropdown();
         }
       });
 
@@ -377,9 +374,22 @@ All data comes from /json/publication-list.json.
             event.target !== filterBtn && !filterBtn.contains(event.target)) {
           closeFilterDropdown();
         }
+        if (!sortDropdown.classList.contains('hidden') &&
+            !sortDropdown.contains(event.target) &&
+            event.target !== sortBtn && !sortBtn.contains(event.target)) {
+          closeSortDropdown();
+        }
       });
 
       applyFiltersBtn.addEventListener('click', handleFilterApply);
+
+      // Sort dropdown button clicks
+      document.getElementById('sort-dropdown').addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-sort]');
+        if (btn) {
+          handleSortOption(btn.dataset.sort);
+        }
+      });
 
       // ------------------------------------------------------------------
       // F. RENDERING PUBLICATIONS
@@ -390,40 +400,37 @@ All data comes from /json/publication-list.json.
         const end = state.currentPage * state.itemsPerPage;
         const itemsToShow = state.filteredItems.slice(start, end);
 
-        // Build HTML for each publication
         let html = '';
         itemsToShow.forEach((pub, index) => {
-          // Authorship tag
           const authorClass = pub.authorship === 'First/Corresponding author' ? 'authorship-first' : 'authorship-coauthor';
-          const authorTag = pub.authorship ? `<span class="publication-authorship ${authorClass}">${escapeHTML(pub.authorship)}</span>` : '';
+          const authorTag = pub.authorship ? `<div class="publication-authorship ${authorClass}">${escapeHTML(pub.authorship)}</div>` : '';
 
-          // Buttons
           let buttonsHtml = '';
           if (pub.pubmedLink) {
-            buttonsHtml += `<a href="${escapeHTML(pub.pubmedLink)}" class="btn btn-text btn-sm" target="_blank" rel="noopener"><i class="fas fa-external-link-alt mr-xs"></i>PubMed &gt;&gt;</a>`;
+            buttonsHtml += `<a href="${escapeHTML(pub.pubmedLink)}" class="btn btn-text" target="_blank" rel="noopener" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-external-link-alt mr-xs"></i>PubMed &gt;&gt;</a>`;
           }
           if (pub.journalLink) {
-            buttonsHtml += `<a href="${escapeHTML(pub.journalLink)}" class="btn btn-text btn-sm" target="_blank" rel="noopener"><i class="fas fa-book-open mr-xs"></i>Journal &gt;&gt;</a>`;
+            buttonsHtml += `<a href="${escapeHTML(pub.journalLink)}" class="btn btn-text" target="_blank" rel="noopener" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-book-open mr-xs"></i>Journal &gt;&gt;</a>`;
           }
           if (pub.blogLink) {
-            buttonsHtml += `<a href="${escapeHTML(pub.blogLink)}" class="btn btn-text btn-sm"><i class="fas fa-lightbulb mr-xs"></i>My insights &gt;&gt;</a>`;
+            buttonsHtml += `<a href="${escapeHTML(pub.blogLink)}" class="btn btn-text" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-lightbulb mr-xs"></i>My insights &gt;&gt;</a>`;
           }
 
           html += `
             <div class="publication-item">
               <div class="publication-header">
-                <div class="publication-title">
+                <div style="flex: 1;">
                   ${authorTag}
-                  <span>${escapeHTML(pub.title)}</span>
+                  <div class="publication-title" style="margin-top: 2px;">${escapeHTML(pub.title)}</div>
                 </div>
                 <div class="publication-year">${escapeHTML(pub.year)}</div>
               </div>
               <div class="publication-journal">${escapeHTML(pub.journal || '')}</div>
-              ${buttonsHtml ? `<div class="publication-buttons">${buttonsHtml}</div>` : ''}
+              ${buttonsHtml ? `<div class="publication-buttons" style="flex-wrap: nowrap; gap: var(--space-xs);">${buttonsHtml}</div>` : ''}
             </div>
           `;
 
-          // Add batch separator after every 10 items, but only if more items exist
+          // Batch separator
           if ((index + 1) % state.itemsPerPage === 0 && (index + 1) < itemsToShow.length) {
             const pageNumber = Math.ceil((index + 1) / state.itemsPerPage);
             html += `<div class="page-separator"><span>--- Page ${pageNumber} ---</span></div>`;
@@ -432,7 +439,7 @@ All data comes from /json/publication-list.json.
 
         publicationsContainer.innerHTML = html;
 
-        // Manage Load More button
+        // Load More button visibility
         if (state.filteredItems.length > end) {
           loadMoreBtn.classList.remove('hidden');
           if (isLoadingMore) {
@@ -451,13 +458,11 @@ All data comes from /json/publication-list.json.
         if (loadMoreBtn) loadMoreBtn.classList.add('hidden');
       }
 
-      // Load More handler
       loadMoreBtn.addEventListener('click', async () => {
         if (isLoadingMore || loadMoreBtn.disabled) return;
         isLoadingMore = true;
         loadMoreBtn.disabled = true;
         loadMoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-sm"></i>Loading...';
-        // Simulate a tiny delay for UX (optional)
         await new Promise(resolve => setTimeout(resolve, 100));
         state.currentPage++;
         isLoadingMore = false;
@@ -467,21 +472,11 @@ All data comes from /json/publication-list.json.
       // ------------------------------------------------------------------
       // G. EVENT LISTENERS
       // ------------------------------------------------------------------
-      // Search input with debounce
       const debouncedSearch = (typeof SiteUtils !== 'undefined' && SiteUtils.debounce) ?
         SiteUtils.debounce(handleSearchInput, 300) : handleSearchInput;
       searchInput.addEventListener('input', debouncedSearch);
 
-      // Sort button
-      sortBtn.addEventListener('click', handleSortToggle);
-
-      // Reset button
       resetBtn.addEventListener('click', handleReset);
-
-      // Mobile responsiveness for search, filter, sort (icons only)
-      // Already handled by CSS hiding text spans; we just toggle active classes
-      // Highlight controls that are active
-      updateControlHighlights();
 
       // ------------------------------------------------------------------
       // H. INITIALISATION
