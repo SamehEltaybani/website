@@ -282,31 +282,42 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
         }
       }
 
-      async function overrideBreadcrumb() {
-        let attempts = 0;
-        while (attempts < 20) {
-          const lastItem = document.querySelector('.breadcrumb-item.active');
-          if (lastItem) break;
-          await new Promise(r => setTimeout(r, 100));
-          attempts++;
-        }
+      
+     async function overrideBreadcrumb() {
+  // Wait for the breadcrumb to fully render (up to 3 seconds)
+  let attempts = 0;
+  let activeItem = null;
+  while (attempts < 30) {
+    activeItem = document.querySelector('.breadcrumb-item.active');
+    if (activeItem && activeItem.textContent && activeItem.textContent.trim() !== '') break;
+    await new Promise(r => setTimeout(r, 100));
+    attempts++;
+  }
 
-        let shortTitle = 'Article';
-        if (articleData && articleData.shortTitle) {
-          shortTitle = articleData.shortTitle;
-        } else {
-          try {
-            const data = await SiteUtils.loadJSON('/json/blog-list.json', true);
-            const entry = data ? data.find(item => item.blogfile === currentBlogfile) : null;
-            if (entry && entry.shortTitle) shortTitle = entry.shortTitle;
-          } catch (e) {}
-        }
+  let shortTitle = 'Article';
+  if (articleData && articleData.shortTitle) {
+    shortTitle = articleData.shortTitle;
+  } else {
+    try {
+      const data = await SiteUtils.loadJSON('/json/blog-list.json', true);
+      const entry = data ? data.find(item => item.blogfile === currentBlogfile) : null;
+      if (entry && entry.shortTitle) shortTitle = entry.shortTitle;
+    } catch (e) {}
+  }
 
-        const activeItem = document.querySelector('.breadcrumb-item.active');
-        if (activeItem) {
-          activeItem.textContent = shortTitle;
-        }
+  if (activeItem) {
+    activeItem.textContent = shortTitle;
+  } else {
+    // Fallback: update any text node that looks like the raw filename
+    document.querySelectorAll('.breadcrumb-item').forEach(item => {
+      if (item.textContent.includes('blog/')) {
+        item.textContent = shortTitle;
       }
+    });
+  }
+}
+
+     
 
       function highlightBlogNav() {
         document.querySelectorAll('.nav-link.active, .mobile-nav-link.active').forEach(link => link.classList.remove('active'));
