@@ -1,1 +1,331 @@
+<!--
+============================================================================
+RESEARCH.HTML - DR. SAMEH ELTAYBANI - RESEARCH PAGE
+============================================================================
+Page‑specific content:
+  1. Title, paragraph, and external resource buttons (array‑driven)
+  2. Three prominent buttons block (logical block)
+  3. Featured cards group (10 cards, array‑driven)
+  4. Repeated three prominent buttons block (separate instance)
+============================================================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- ===== BASE PATH (for GitHub Pages project site) ===== -->
+  <base href="/website/">
+  <!-- ===== SITE BASE PATH (used by utils.js to resolve absolute URLs) ===== -->
+  <meta name="site-base-path" content="/website/">
+
+  <!-- PAGE-SPECIFIC -->
+  <title>Dr. Sameh Eltaybani - Research</title>
+  <meta name="description" content="Explore Dr. Sameh Eltaybani's research interests, key projects, and external resources. Discover evidence‑based healthcare research.">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Dr. Sameh Eltaybani - Research">
+  <meta property="og:description" content="Explore Dr. Sameh Eltaybani's research interests, key projects, and external resources. Discover evidence‑based healthcare research.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="research.html">
+
+  <!-- FAVICON -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- MAIN CSS -->
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body data-page="research.html">
+  <!-- ========== NAVIGATION BAR ========== -->
+  <nav data-component="navigation" class="navbar">
+    <div class="navbar-container">
+      <div class="navbar-left"></div>
+      <div class="navbar-right"></div>
+      <button class="hamburger" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========== BREADCRUMB BAR ========== -->
+  <div data-component="breadcrumb" class="breadcrumb-bar"></div>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main>
+    <!-- PART 1: TITLE, PARAGRAPH, EXTERNAL BUTTONS -->
+    <section class="section">
+      <div class="container">
+        <h1 class="heading-large">Research</h1>
+        <p class="paragraph">
+          My research focuses on gerontological nursing, long‑term care quality, and evidence‑based practice.
+          I collaborate with international teams to improve outcomes for older adults and their caregivers.
+        </p>
+        <!-- External resource buttons (array‑driven, auto‑wrapping) -->
+        <div id="external-buttons-container" class="mt-lg" style="display: flex; flex-wrap: wrap; gap: var(--space-sm);">
+          <!-- Rendered by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PART 2: THREE PROMINENT BUTTONS BLOCK -->
+    <section class="section-alt">
+      <div class="container">
+        <div id="three-buttons-block-1" class="three-buttons-block">
+          <!-- Rendered by JavaScript (first instance) -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PART 3: FEATURED CARDS GROUP (10 CARDS) -->
+    <section class="section">
+      <div class="container">
+        <h2 class="heading-medium mb-lg">Featured Research Projects</h2>
+        <div id="research-cards-container" class="grid-2" style="gap: var(--space-lg);">
+          <!-- Rendered by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PART 4: REPEATED THREE PROMINENT BUTTONS BLOCK (SECOND INSTANCE) -->
+    <section class="section-alt">
+      <div class="container">
+        <div id="three-buttons-block-2" class="three-buttons-block">
+          <!-- Rendered by JavaScript (second instance) -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer data-component="footer"></footer>
+
+  <!-- ========== SCRIPTS (EXACT ORDER - DO NOT CHANGE) ========== -->
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/navigation.js"></script>
+  <script src="assets/js/breadcrumbs.js"></script>
+  <script src="assets/js/footer.js"></script>
+
+  <!-- ========== PAGE-SPECIFIC SCRIPTS ========== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ------------------------------------------------------------------
+      // A. EXTERNAL RESOURCE BUTTONS (editable array)
+      // ------------------------------------------------------------------
+      const externalButtons = [
+        { label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=YOUR_ID' },
+        { label: 'ResearchGate', url: 'https://www.researchgate.net/profile/Sameh_Eltaybani' },
+        { label: 'ORCID', url: 'https://orcid.org/0000-0002-1234-5678' }
+        // Add or remove buttons here – the layout auto‑wraps
+      ];
+
+      function renderExternalButtons() {
+        const container = document.getElementById('external-buttons-container');
+        if (!container) return;
+        container.innerHTML = '';
+        externalButtons.forEach(btn => {
+          const a = document.createElement('a');
+          a.href = btn.url;
+          a.className = 'btn btn-primary';
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.textContent = btn.label;
+          container.appendChild(a);
+        });
+      }
+
+      // ------------------------------------------------------------------
+      // B. THREE PROMINENT BUTTONS BLOCK (reusable renderer)
+      // ------------------------------------------------------------------
+      // Data for the block. Both instances currently use the same data,
+      // but they can be edited independently in the future.
+      const threeButtonsData = {
+        upperLeft: {
+          label: 'Featured Article on Gerontological Nursing',
+          href: 'blog/blog-1.html'
+        },
+        lowerLeft: {
+          label: 'View My Research Portfolio',
+          href: 'research-portfolio.html'
+        },
+        rightImage: {
+          src: 'assets/img/temp-1.webp',
+          alt: 'Research highlight',
+          caption: 'Latest evidence synthesis',
+          href: 'assets/doc/temp.pdf'
+        }
+      };
+
+      /**
+       * Creates the three‑button block and injects it into a container.
+       * @param {HTMLElement} container - The DOM element to fill.
+       * @param {Object} data - The data for this block.
+       */
+      function renderThreeButtonsBlock(container, data) {
+        if (!container) return;
+
+        // Clear container
+        container.innerHTML = '';
+
+        // Left column (two stacked horizontal buttons)
+        const leftCol = document.createElement('div');
+        leftCol.className = 'three-buttons-left';
+
+        // Upper left button
+        const upperBtn = document.createElement('a');
+        upperBtn.href = data.upperLeft.href;
+        upperBtn.className = 'btn btn-primary';
+        upperBtn.textContent = data.upperLeft.label;
+        leftCol.appendChild(upperBtn);
+
+        // Lower left button
+        const lowerBtn = document.createElement('a');
+        lowerBtn.href = data.lowerLeft.href;
+        lowerBtn.className = 'btn btn-secondary';
+        lowerBtn.textContent = data.lowerLeft.label;
+        leftCol.appendChild(lowerBtn);
+
+        // Right column (square image + text)
+        const rightCol = document.createElement('div');
+        rightCol.className = 'three-buttons-right';
+
+        const imgLink = document.createElement('a');
+        imgLink.href = data.rightImage.href;
+        const img = document.createElement('img');
+        img.src = data.rightImage.src;
+        img.alt = data.rightImage.alt;
+        img.setAttribute('loading', 'lazy');
+        // Placeholder behaviour on error
+        img.addEventListener('error', function() {
+          const placeholder = document.createElement('div');
+          placeholder.style.cssText = `
+            width: 100%;
+            height: 150px;
+            background-color: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+            padding: 1rem;
+            border-radius: 8px;
+          `;
+          placeholder.textContent = data.rightImage.src.split('/').pop();
+          imgLink.replaceChild(placeholder, img);
+        });
+        imgLink.appendChild(img);
+        rightCol.appendChild(imgLink);
+
+        const caption = document.createElement('p');
+        caption.className = 'image-caption';
+        caption.textContent = data.rightImage.caption;
+        rightCol.appendChild(caption);
+
+        // Assemble block
+        container.appendChild(leftCol);
+        container.appendChild(rightCol);
+      }
+
+      // ------------------------------------------------------------------
+      // C. FEATURED RESEARCH CARDS (10 cards)
+      // ------------------------------------------------------------------
+      const researchCards = [
+        { title: 'Care Quality in Nursing Homes', img: 'assets/img/temp-1.webp', desc: 'Investigating staff‑to‑resident ratios and quality outcomes.', blog: 'blog/blog-1.html' },
+        { title: 'Geriatric Syndromes', img: 'assets/img/temp-1.webp', desc: 'Understanding frailty and falls prevention in acute care.', blog: 'blog/blog-2.html' },
+        { title: 'Evidence‑Based Nursing', img: 'assets/img/temp-1.webp', desc: 'Bridging research findings with bedside practice.', blog: 'blog/blog-2.html' },
+        { title: 'Palliative Care Models', img: 'assets/img/temp-1.webp', desc: 'Comparing integrated palliative care approaches.', blog: 'blog/blog-2.html' },
+        { title: 'Long‑Term Care Workforce', img: 'assets/img/temp-1.webp', desc: 'Retention and burnout among geriatric nurses.', blog: 'blog/blog-21.html' },
+        { title: 'Dementia Care Pathways', img: 'assets/img/temp-1.webp', desc: 'Mapping optimal care trajectories for dementia patients.', blog: 'blog/blog-2.html' },
+        { title: 'Elder Abuse Detection', img: 'assets/img/resetemp-1.webp', desc: 'Developing screening tools for clinical settings.', blog: 'blog/blog-2.html' },
+        { title: 'Nutrition in Older Adults', img: 'assets/img/temp-1.webp', desc: 'Interventions to prevent malnutrition in hospitals.', blog: 'blog/blog-1.html' },
+        { title: 'Interdisciplinary Rounds', img: 'assets/img/temp-1.webp', desc: 'Impact on patient outcomes and staff satisfaction.', blog: 'blog/blog-1.html' },
+        { title: 'Technology in Geriatrics', img: 'assets/img/temp-1.webp', desc: 'Adoption of telehealth and monitoring tools.', blog: 'blog/blog-2.html' }
+      ];
+
+      function renderResearchCards() {
+        const container = document.getElementById('research-cards-container');
+        if (!container) return;
+        container.innerHTML = '';
+
+        researchCards.forEach(card => {
+          const cardDiv = document.createElement('div');
+          cardDiv.className = 'card card-lift';
+
+          // Image
+          const img = document.createElement('img');
+          img.src = card.img;
+          img.alt = card.title;
+          img.style.cssText = 'width:100%; height:200px; object-fit:cover;';
+          img.setAttribute('loading', 'lazy');
+          img.addEventListener('error', function() {
+            const placeholder = document.createElement('div');
+            placeholder.style.cssText = `
+              width: 100%;
+              height: 200px;
+              background-color: #ccc;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: white;
+              font-size: 1rem;
+              padding: 1rem;
+            `;
+            placeholder.textContent = card.img.split('/').pop();
+            cardDiv.replaceChild(placeholder, img);
+          });
+          cardDiv.appendChild(img);
+
+          const content = document.createElement('div');
+          content.className = 'card-content';
+
+          const titleEl = document.createElement('h3');
+          titleEl.className = 'card-title';
+          titleEl.textContent = card.title;
+          content.appendChild(titleEl);
+
+          const descEl = document.createElement('p');
+          descEl.className = 'card-description';
+          descEl.textContent = card.desc;
+          content.appendChild(descEl);
+
+          const linkEl = document.createElement('a');
+          linkEl.href = card.blog;
+          linkEl.className = 'btn btn-text';
+          linkEl.textContent = 'Read more →';
+          content.appendChild(linkEl);
+
+          cardDiv.appendChild(content);
+          container.appendChild(cardDiv);
+        });
+      }
+
+      // ------------------------------------------------------------------
+      // D. INITIALISATION
+      // ------------------------------------------------------------------
+      function initPageSpecific() {
+        renderExternalButtons();
+
+        // Three buttons block – first instance
+        const block1 = document.getElementById('three-buttons-block-1');
+        renderThreeButtonsBlock(block1, threeButtonsData);
+
+        // Featured cards
+        renderResearchCards();
+
+        // Three buttons block – second instance (same data for now, can be changed independently)
+        const block2 = document.getElementById('three-buttons-block-2');
+        renderThreeButtonsBlock(block2, threeButtonsData);
+      }
+
+      // Ensure DOM is ready (scripts at end of body, but we still wait for DOMContentLoaded as a best practice)
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPageSpecific);
+      } else {
+        initPageSpecific();
+      }
+    })();
+  </script>
+</body>
+</html>
