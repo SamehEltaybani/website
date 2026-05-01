@@ -347,6 +347,7 @@ All data comes from /json/blog-list.json.
       // G. RENDER BLOG LIST (with clickable categories)
       // ------------------------------------------------------------------
       function renderCurrentPage() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         if (!blogListContainer) return;
         const end = state.currentPage * state.itemsPerPage;
         const itemsToShow = state.filteredItems.slice(0, end);
