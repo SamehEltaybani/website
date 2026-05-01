@@ -1,1 +1,452 @@
+<!--
+============================================================================
+BLOG.HTML - DR. SAMEH ELTAYBANI - BLOG PAGE
+============================================================================
+Page‑specific content:
+  - Search by title (debounced)
+  - Filter by category (dropdown + clickable inline tags)
+  - Sort by date (newest ↔ oldest)
+  - Reset button
+  - Dynamic blog article list with Load More and batch separators
+All data comes from /json/blog-list.json.
+============================================================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- ===== BASE PATH ===== -->
+  <base href="/website/">
+  <meta name="site-base-path" content="/website/">
+
+  <!-- PAGE-SPECIFIC -->
+  <title>Dr. Sameh Eltaybani - Blog</title>
+  <meta name="description" content="Read Dr. Sameh Eltaybani's articles on healthcare, research integrity, data analysis, and more. Latest insights and educational content.">
+  <meta property="og:title" content="Dr. Sameh Eltaybani - Blog">
+  <meta property="og:description" content="Read Dr. Sameh Eltaybani's articles on healthcare, research integrity, data analysis, and more.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="blog.html">
+
+  <!-- FAVICON -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- MAIN CSS -->
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body data-page="blog.html">
+
+  <!-- ========== NAVIGATION BAR ========== -->
+  <nav data-component="navigation" class="navbar">
+    <div class="navbar-container">
+      <div class="navbar-left"></div>
+      <div class="navbar-right"></div>
+      <button class="hamburger" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========== BREADCRUMB BAR (exact height) ========== -->
+  <div data-component="breadcrumb" class="breadcrumb-bar"
+       style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main>
+    <!-- CONTROLS BAR (sticky) -->
+    <div class="controls-bar">
+      <div class="container" style="display: flex; flex-wrap: nowrap; gap: var(--space-sm); align-items: center; justify-content: space-between;">
+
+        <!-- SEARCH -->
+        <div class="search-box" id="search-container">
+          <i class="fas fa-search"></i>
+          <input type="text" id="search-input" placeholder="Search articles..." aria-label="Search articles">
+        </div>
+
+        <!-- FILTER BUTTON + DROPDOWN (aligns left on mobile) -->
+        <div style="position: relative;">
+          <button id="filter-btn" class="btn btn-filter" aria-label="Filter">
+            <i class="fas fa-filter"></i>
+            <span>Filter</span>
+          </button>
+          <div id="filter-dropdown" class="hidden" style="position: absolute; top: 100%; right: 0; left: auto; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--space-md); box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 200px;">
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select id="filter-category" class="form-select">
+                <option value="">All categories</option>
+              </select>
+            </div>
+            <button id="apply-filter-btn" class="btn btn-primary" style="width: 100%;">Apply Filter</button>
+          </div>
+        </div>
+
+        <!-- SORT BUTTON + DROPDOWN (aligns left on mobile) -->
+        <div style="position: relative;">
+          <button id="sort-btn" class="btn btn-filter" aria-label="Sort">
+            <i class="fas fa-sort"></i>
+            <span>Sort: Newest</span>
+          </button>
+          <div id="sort-dropdown" class="hidden" style="position: absolute; top: 100%; right: 0; left: auto; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 180px;">
+            <button class="btn btn-text" data-sort="date-desc" style="display: block; width: 100%; text-align: left;">Newest first</button>
+            <button class="btn btn-text" data-sort="date-asc" style="display: block; width: 100%; text-align: left;">Oldest first</button>
+          </div>
+        </div>
+
+        <!-- RESET -->
+        <button id="reset-btn" class="btn btn-filter" aria-label="Reset">
+          <i class="fas fa-undo"></i>
+          <span>Reset</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- BLOG LIST CONTAINER -->
+    <section class="section">
+      <div class="container">
+        <div id="blog-list" data-component="blog-list">
+          <!-- Rendered by JavaScript -->
+        </div>
+        <!-- Load More button -->
+        <div id="load-more-container" class="text-center mt-md">
+          <button id="load-more-btn" class="btn btn-load-more hidden">Load More</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer data-component="footer"></footer>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/navigation.js"></script>
+  <script src="assets/js/breadcrumbs.js"></script>
+  <script src="assets/js/footer.js"></script>
+
+  <!-- PAGE-SPECIFIC SCRIPTS -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ------------------------------------------------------------------
+      // A. GLOBALS & STATE (Blog)
+      // ------------------------------------------------------------------
+      const state = {
+        allItems: [],              // masterData from blog-list.json
+        filteredItems: [],        // current display subset
+        currentPage: 1,
+        itemsPerPage: 10,
+        activeCategory: null,     // category filter (null = all)
+        activeSort: { field: 'date', direction: 'desc' }, // newest first default
+        activeSearch: ''
+      };
+
+      let isLoadingMore = false;
+      let allCategories = [];
+
+      // DOM elements
+      const searchInput = document.getElementById('search-input');
+      const filterBtn = document.getElementById('filter-btn');
+      const sortBtn = document.getElementById('sort-btn');
+      const resetBtn = document.getElementById('reset-btn');
+      const filterDropdown = document.getElementById('filter-dropdown');
+      const sortDropdown = document.getElementById('sort-dropdown');
+      const applyFilterBtn = document.getElementById('apply-filter-btn');
+      const filterCategorySelect = document.getElementById('filter-category');
+      const blogListContainer = document.getElementById('blog-list');
+      const loadMoreBtn = document.getElementById('load-more-btn');
+
+      // ------------------------------------------------------------------
+      // B. UTILITY
+      // ------------------------------------------------------------------
+      function escapeHTML(text) {
+        if (typeof SiteUtils !== 'undefined' && SiteUtils.escapeHTML) {
+          return SiteUtils.escapeHTML(text);
+        }
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      // ------------------------------------------------------------------
+      // C. HIGHLIGHT CONTROLS
+      // ------------------------------------------------------------------
+      function updateControlHighlights() {
+        const hasFilter = state.activeCategory !== null;
+        const isDefaultSort = (state.activeSort.field === 'date' && state.activeSort.direction === 'desc');
+        const hasChanges = hasFilter || !isDefaultSort || state.activeSearch !== '';
+
+        filterBtn.classList.toggle('active', hasFilter);
+        sortBtn.classList.toggle('active', !isDefaultSort);
+        resetBtn.classList.toggle('active', hasChanges);
+      }
+
+      function updateSearchHighlight() {
+        const box = document.getElementById('search-container');
+        if (box) box.classList.toggle('active', searchInput.value.trim().length > 0);
+      }
+
+      // ------------------------------------------------------------------
+      // D. LOAD DATA FROM blog-list.json
+      // ------------------------------------------------------------------
+      async function loadBlogData() {
+        try {
+          if (typeof SiteUtils === 'undefined') throw new Error('utils.js not loaded');
+          const data = await SiteUtils.loadJSON('/json/blog-list.json', true);
+          if (!data || !Array.isArray(data) || data.length === 0) {
+            showEmptyState('No content available. Check back later.');
+            return;
+          }
+          state.allItems = data;
+          // Extract all unique categories
+          const catSet = new Set();
+          data.forEach(post => {
+            if (Array.isArray(post.categories)) {
+              post.categories.forEach(cat => cat && catSet.add(cat));
+            }
+          });
+          allCategories = [...catSet].sort();
+          populateFilterDropdown();
+          applyAllFilters(); // initial render
+        } catch (e) {
+          console.error('[Blog] Failed to load blog-list.json:', e);
+          showEmptyState('No content available. Check back later.');
+        }
+      }
+
+      function showEmptyState(msg) {
+        if (blogListContainer) {
+          blogListContainer.innerHTML = `<p class="text-center paragraph">${escapeHTML(msg)}</p>`;
+        }
+        if (loadMoreBtn) loadMoreBtn.classList.add('hidden');
+      }
+
+      // ------------------------------------------------------------------
+      // E. FILTER / SORT / SEARCH LOGIC
+      // ------------------------------------------------------------------
+      function applyAllFilters() {
+        let items = [...state.allItems];
+
+        // Search by title
+        if (state.activeSearch) {
+          const q = state.activeSearch.toLowerCase();
+          items = items.filter(post => post.title && post.title.toLowerCase().includes(q));
+        }
+
+        // Filter by category
+        if (state.activeCategory) {
+          items = items.filter(post => post.categories && post.categories.includes(state.activeCategory));
+        }
+
+        // Sort by date
+        const { field, direction } = state.activeSort;
+        if (field === 'date') {
+          items.sort((a, b) => {
+            const dateA = new Date(a.date || '');
+            const dateB = new Date(b.date || '');
+            const validA = isNaN(dateA.getTime()) ? 0 : dateA.getTime();
+            const validB = isNaN(dateB.getTime()) ? 0 : dateB.getTime();
+            return direction === 'desc' ? validB - validA : validA - validB;
+          });
+        }
+
+        state.filteredItems = items;
+        state.currentPage = 1;   // reset pagination on any change
+        hideLoadMoreButton();
+        renderCurrentPage();
+        updateControlHighlights();
+      }
+
+      function updateActiveSortUI() {
+        const span = sortBtn.querySelector('span');
+        if (!span) return;
+        span.textContent = state.activeSort.direction === 'desc' ? 'Sort: Newest' : 'Sort: Oldest';
+      }
+
+      function handleSearchInput() {
+        state.activeSearch = searchInput.value.trim();
+        updateSearchHighlight();
+        applyAllFilters();
+      }
+
+      function handleFilterApply() {
+        state.activeCategory = filterCategorySelect.value || null;
+        closeFilterDropdown();
+        applyAllFilters();
+      }
+
+      // Called when clicking a category tag inside a blog card
+      function quickFilterByCategory(category) {
+        filterCategorySelect.value = category;
+        state.activeCategory = category;
+        closeFilterDropdown();
+        applyAllFilters();
+      }
+
+      function handleSortOption(opt) {
+        if (opt === 'date-desc') state.activeSort = { field: 'date', direction: 'desc' };
+        else if (opt === 'date-asc') state.activeSort = { field: 'date', direction: 'asc' };
+        updateActiveSortUI();
+        closeSortDropdown();
+        applyAllFilters();
+      }
+
+      function handleReset() {
+        searchInput.value = '';
+        state.activeSearch = '';
+        state.activeCategory = null;
+        filterCategorySelect.value = '';
+        state.activeSort = { field: 'date', direction: 'desc' };
+        updateActiveSortUI();
+        updateSearchHighlight();
+        applyAllFilters();
+      }
+
+      // ------------------------------------------------------------------
+      // F. DROPDOWN MANAGEMENT
+      // ------------------------------------------------------------------
+      function populateFilterDropdown() {
+        filterCategorySelect.innerHTML = '<option value="">All categories</option>';
+        allCategories.forEach(cat => {
+          const opt = new Option(cat, cat);
+          filterCategorySelect.add(opt);
+        });
+      }
+
+      function closeFilterDropdown() { filterDropdown.classList.add('hidden'); }
+      function closeSortDropdown() { sortDropdown.classList.add('hidden'); }
+
+      filterBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeSortDropdown();
+        filterDropdown.classList.toggle('hidden');
+      });
+      sortBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeFilterDropdown();
+        sortDropdown.classList.toggle('hidden');
+      });
+      document.addEventListener('click', (event) => {
+        if (!filterDropdown.contains(event.target) && event.target !== filterBtn && !filterBtn.contains(event.target)) {
+          closeFilterDropdown();
+        }
+        if (!sortDropdown.contains(event.target) && event.target !== sortBtn && !sortBtn.contains(event.target)) {
+          closeSortDropdown();
+        }
+      });
+
+      applyFilterBtn.addEventListener('click', handleFilterApply);
+      sortDropdown.addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-sort]');
+        if (btn) handleSortOption(btn.dataset.sort);
+      });
+
+      // ------------------------------------------------------------------
+      // G. RENDER BLOG LIST (with clickable categories)
+      // ------------------------------------------------------------------
+      function renderCurrentPage() {
+        if (!blogListContainer) return;
+        const end = state.currentPage * state.itemsPerPage;
+        const itemsToShow = state.filteredItems.slice(0, end);
+
+        let html = '';
+        itemsToShow.forEach((post, index) => {
+          // Categories as clickable tags
+          let categoriesHtml = '';
+          if (post.categories && Array.isArray(post.categories)) {
+            categoriesHtml = '<div class="blog-categories">';
+            post.categories.forEach(cat => {
+              const safeCat = escapeHTML(cat);
+              categoriesHtml += `<span class="blog-category" data-category="${safeCat}" style="cursor: pointer;">${safeCat}</span>`;
+            });
+            categoriesHtml += '</div>';
+          }
+
+          html += `
+            <div class="blog-card">
+              <div class="blog-title">${escapeHTML(post.title)}</div>
+              ${categoriesHtml}
+              <a href="${escapeHTML(post.blogfile)}" class="btn btn-text" style="margin-top: var(--space-sm);">Read more</a>
+            </div>
+          `;
+
+          // Batch separator
+          if ((index + 1) % state.itemsPerPage === 0 && (index + 1) < itemsToShow.length) {
+            const pageNumber = Math.ceil((index + 1) / state.itemsPerPage);
+            html += `<div class="page-separator"><span>--- Page ${pageNumber} ---</span></div>`;
+          }
+        });
+
+        blogListContainer.innerHTML = html;
+
+        // Attach click handlers to category tags
+        const categoryTags = blogListContainer.querySelectorAll('.blog-category');
+        categoryTags.forEach(tag => {
+          tag.addEventListener('click', function() {
+            const cat = this.getAttribute('data-category');
+            if (cat) quickFilterByCategory(cat);
+          });
+        });
+
+        // Load More button visibility
+        if (state.filteredItems.length > end) {
+          loadMoreBtn.classList.remove('hidden');
+          if (isLoadingMore) {
+            loadMoreBtn.disabled = true;
+            loadMoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-sm"></i>Loading...';
+          } else {
+            loadMoreBtn.disabled = false;
+            loadMoreBtn.textContent = 'Load More';
+          }
+        } else {
+          hideLoadMoreButton();
+        }
+      }
+
+      function hideLoadMoreButton() {
+        if (loadMoreBtn) loadMoreBtn.classList.add('hidden');
+      }
+
+      // Load More click handler
+      loadMoreBtn.addEventListener('click', async () => {
+        if (isLoadingMore || loadMoreBtn.disabled) return;
+        isLoadingMore = true;
+        loadMoreBtn.disabled = true;
+        loadMoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-sm"></i>Loading...';
+        await new Promise(r => setTimeout(r, 100));
+        state.currentPage++;
+        isLoadingMore = false;
+        renderCurrentPage();
+      });
+
+      // ------------------------------------------------------------------
+      // H. EVENT LISTENERS
+      // ------------------------------------------------------------------
+      const debouncedSearch = (typeof SiteUtils !== 'undefined' && SiteUtils.debounce) ?
+        SiteUtils.debounce(handleSearchInput, 300) : handleSearchInput;
+      searchInput.addEventListener('input', debouncedSearch);
+      resetBtn.addEventListener('click', handleReset);
+
+      // ------------------------------------------------------------------
+      // I. INITIALISATION
+      // ------------------------------------------------------------------
+      async function initBlog() {
+        if (typeof SiteUtils !== 'undefined' && SiteUtils.waitForDOM) {
+          await SiteUtils.waitForDOM();
+        }
+        await loadBlogData();
+        updateActiveSortUI();
+        updateControlHighlights();
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initBlog);
+      } else {
+        initBlog();
+      }
+    })();
+  </script>
+</body>
+</html>
