@@ -1,1 +1,359 @@
+<!--
+============================================================================
+TEACHING.HTML - DR. SAMEH ELTAYBANI - TEACHING PAGE
+============================================================================
+Page‑specific content:
+  1. Title, paragraph, and grid of teaching insights (editable array)
+  2. Three prominent buttons block (equal height, side‑by‑side on all screens)
+  3. Featured cards group (10 cards, array‑driven)
+  4. Repeated three prominent buttons block (second instance)
+The only difference from Data Analysis page:
+  - The lower‑left button links to teaching-portfolio.html
+All other structural and styling conventions are identical.
+============================================================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- ===== BASE PATH ===== -->
+  <base href="/website/">
+  <meta name="site-base-path" content="/website/">
+
+  <!-- PAGE-SPECIFIC -->
+  <title>Dr. Sameh Eltaybani - Teaching</title>
+  <meta name="description" content="Explore Dr. Sameh Eltaybani's teaching philosophy, courses, and educational resources. Empowering the next generation of healthcare professionals.">
+  <meta property="og:title" content="Dr. Sameh Eltaybani - Teaching">
+  <meta property="og:description" content="Explore Dr. Sameh Eltaybani's teaching philosophy, courses, and educational resources.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="teaching.html">
+
+  <!-- FAVICON -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- MAIN CSS -->
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body data-page="teaching.html">
+
+  <!-- ========== NAVIGATION BAR ========== -->
+  <nav data-component="navigation" class="navbar">
+    <div class="navbar-container">
+      <div class="navbar-left"></div>
+      <div class="navbar-right"></div>
+      <button class="hamburger" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========== BREADCRUMB BAR (exact height) ========== -->
+  <div data-component="breadcrumb" class="breadcrumb-bar"
+       style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main>
+    <!-- PART 1: TITLE, PARAGRAPH, TEACHING INSIGHTS GRID -->
+    <section class="section">
+      <div class="container">
+        <h1 class="heading-large">Teaching</h1>
+        <p class="paragraph">
+          I am passionate about equipping healthcare professionals with the knowledge and skills
+          they need to deliver evidence‑based, compassionate care. My teaching spans undergraduate
+          and postgraduate levels, blending theory with hands‑on clinical application.
+        </p>
+
+        <!-- Grid of teaching insights (editable array) -->
+        <div id="insights-grid" class="grid-data-analysis mt-lg" style="--da-grid-columns: 3;">
+          <!-- Rendered by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- THIN BORDER SEPARATOR -->
+    <hr style="border: none; border-top: 1px solid var(--color-border); margin: 0;">
+
+    <!-- PART 2: THREE PROMINENT BUTTONS BLOCK -->
+    <section class="section-alt">
+      <div class="container">
+        <div id="three-buttons-block-1"
+             style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); align-items: stretch;">
+          <!-- Rendered by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PART 3: FEATURED CARDS GROUP (10 CARDS) -->
+    <section class="section">
+      <div class="container">
+        <h2 class="heading-medium mb-lg">Featured Teaching Projects</h2>
+        <div id="analysis-cards-container" class="grid-2" style="gap: var(--space-lg);">
+          <!-- Rendered by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PART 4: REPEATED THREE PROMINENT BUTTONS BLOCK (second instance) -->
+    <section class="section-alt">
+      <div class="container">
+        <div id="three-buttons-block-2"
+             style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); align-items: stretch;">
+          <!-- Rendered by JavaScript -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer data-component="footer"></footer>
+
+  <!-- ========== SCRIPTS (EXACT ORDER) ========== -->
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/navigation.js"></script>
+  <script src="assets/js/breadcrumbs.js"></script>
+  <script src="assets/js/footer.js"></script>
+
+  <!-- PAGE-SPECIFIC SCRIPTS -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ------------------------------------------------------------------
+      // A. INSIGHTS GRID (editable list of short sentences)
+      // ------------------------------------------------------------------
+      const insightsList = [
+        'Student‑Centred Learning Approaches',
+        'Clinical Skills Development',
+        'Evidence‑Based Practice Training',
+        'Curriculum Design & Evaluation',
+        'Mentorship & Supervision',
+        'Assessment & Feedback Strategies'
+        // Add, remove, or reorder sentences – the grid auto‑wraps
+      ];
+
+      function renderInsightsGrid() {
+        const container = document.getElementById('insights-grid');
+        if (!container) return;
+        container.innerHTML = '';
+
+        insightsList.forEach(text => {
+          const item = document.createElement('div');
+          item.style.display = 'flex';
+          item.style.alignItems = 'baseline';
+          item.style.gap = 'var(--space-xs)';
+
+          const symbol = document.createElement('span');
+          symbol.textContent = '|';
+          symbol.style.color = 'var(--color-gold)';
+          symbol.style.fontWeight = 'bold';
+          symbol.style.fontSize = '1.2rem';
+
+          const sentence = document.createElement('span');
+          sentence.textContent = text;
+          sentence.style.color = 'var(--color-text-main)';
+
+          item.appendChild(symbol);
+          item.appendChild(sentence);
+          container.appendChild(item);
+        });
+      }
+
+      // ------------------------------------------------------------------
+      // B. THREE PROMINENT BUTTONS BLOCK (reusable renderer)
+      // ------------------------------------------------------------------
+      const threeButtonsData = {
+        upperLeft: {
+          label: 'Featured Article on Teaching Methods',
+          href: 'blog/blog-15.html'
+        },
+        lowerLeft: {
+          label: 'View My Teaching Portfolio',
+          href: 'teaching-portfolio.html'   // ← DIFFERENT from Data Analysis page
+        },
+        rightImage: {
+          src: 'assets/img/teaching-highlight.webp',
+          alt: 'Teaching highlight',
+          caption: 'Empowering future healthcare leaders',
+          href: 'assets/doc/temp.pdf'
+        }
+      };
+
+      function renderThreeButtonsBlock(container, data) {
+        if (!container) return;
+        container.innerHTML = '';
+
+        // ---- LEFT COLUMN (two stacked buttons) ----
+        const leftCol = document.createElement('div');
+        leftCol.style.display = 'flex';
+        leftCol.style.flexDirection = 'column';
+        leftCol.style.gap = 'var(--space-md)';
+        leftCol.style.height = '100%';
+
+        const upperBtn = document.createElement('a');
+        upperBtn.href = data.upperLeft.href;
+        upperBtn.className = 'btn btn-primary';
+        upperBtn.textContent = data.upperLeft.label;
+        upperBtn.style.width = '100%';
+        leftCol.appendChild(upperBtn);
+
+        const lowerBtn = document.createElement('a');
+        lowerBtn.href = data.lowerLeft.href;
+        lowerBtn.className = 'btn btn-secondary';
+        lowerBtn.textContent = data.lowerLeft.label;
+        lowerBtn.style.width = '100%';
+        leftCol.appendChild(lowerBtn);
+
+        // ---- RIGHT COLUMN (image+text inside a clickable button) ----
+        const rightLink = document.createElement('a');
+        rightLink.href = data.rightImage.href;
+        rightLink.style.display = 'flex';
+        rightLink.style.flexDirection = 'column';
+        rightLink.style.alignItems = 'center';
+        rightLink.style.justifyContent = 'space-between';
+        rightLink.style.textDecoration = 'none';
+        rightLink.style.color = 'inherit';
+        rightLink.style.borderRadius = '8px';
+        rightLink.style.overflow = 'hidden';
+        rightLink.style.backgroundColor = 'var(--color-bg-alt)';
+        rightLink.style.border = '1px solid var(--color-border)';
+        rightLink.style.transition = 'var(--transition-base)';
+        rightLink.style.height = '100%';
+
+        const img = document.createElement('img');
+        img.src = data.rightImage.src;
+        img.alt = data.rightImage.alt;
+        img.style.width = '100%';
+        img.style.flex = '1 1 auto';
+        img.style.objectFit = 'cover';
+        img.setAttribute('loading', 'lazy');
+        img.addEventListener('error', function() {
+          const placeholder = document.createElement('div');
+          placeholder.style.cssText = `
+            width: 100%;
+            height: 150px;
+            background-color: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+            padding: 1rem;
+          `;
+          placeholder.textContent = data.rightImage.src.split('/').pop();
+          rightLink.replaceChild(placeholder, img);
+        });
+        rightLink.appendChild(img);
+
+        const caption = document.createElement('span');
+        caption.textContent = data.rightImage.caption;
+        caption.style.display = 'block';
+        caption.style.padding = 'var(--space-sm)';
+        caption.style.fontSize = 'var(--font-size-sm)';
+        caption.style.color = 'var(--color-text-muted)';
+        caption.style.textAlign = 'center';
+        caption.style.backgroundColor = 'rgba(255,255,255,0.8)';
+        rightLink.appendChild(caption);
+
+        container.appendChild(leftCol);
+        container.appendChild(rightLink);
+      }
+
+      // ------------------------------------------------------------------
+      // C. FEATURED CARDS (10 cards)
+      // ------------------------------------------------------------------
+      const analysisCards = [
+        { title: 'Clinical Teaching Techniques', img: 'assets/img/teaching-card-1.webp', desc: 'Best practices for bedside clinical instruction.', blog: 'blog/blog-21.html' },
+        { title: 'Simulation‑Based Learning', img: 'assets/img/teaching-card-2.webp', desc: 'Using high‑fidelity simulation for skill mastery.', blog: 'blog/blog-22.html' },
+        { title: 'Assessment Blueprinting', img: 'assets/img/teaching-card-3.webp', desc: 'Designing valid and reliable exam tools.', blog: 'blog/blog-23.html' },
+        { title: 'Feedback Strategies', img: 'assets/img/teaching-card-4.webp', desc: 'Giving constructive feedback to learners.', blog: 'blog/blog-24.html' },
+        { title: 'Interprofessional Education', img: 'assets/img/teaching-card-5.webp', desc: 'Collaborative learning across disciplines.', blog: 'blog/blog-25.html' },
+        { title: 'Online Learning Tools', img: 'assets/img/teaching-card-6.webp', desc: 'Leveraging technology for remote education.', blog: 'blog/blog-26.html' },
+        { title: 'Clinical Reasoning', img: 'assets/img/teaching-card-7.webp', desc: 'Teaching diagnostic and decision‑making skills.', blog: 'blog/blog-27.html' },
+        { title: 'Mentorship Models', img: 'assets/img/teaching-card-8.webp', desc: 'Structured mentoring for career development.', blog: 'blog/blog-28.html' },
+        { title: 'Curriculum Mapping', img: 'assets/img/teaching-card-9.webp', desc: 'Aligning learning objectives with outcomes.', blog: 'blog/blog-29.html' },
+        { title: 'Programme Evaluation', img: 'assets/img/teaching-card-10.webp', desc: 'Quality improvement in educational programmes.', blog: 'blog/blog-30.html' }
+      ];
+
+      function renderAnalysisCards() {
+        const container = document.getElementById('analysis-cards-container');
+        if (!container) return;
+        container.innerHTML = '';
+
+        analysisCards.forEach(card => {
+          const cardDiv = document.createElement('div');
+          cardDiv.className = 'card card-lift';
+
+          const img = document.createElement('img');
+          img.src = card.img;
+          img.alt = card.title;
+          img.style.cssText = 'width:100%; height:200px; object-fit:cover;';
+          img.setAttribute('loading', 'lazy');
+          img.addEventListener('error', function() {
+            const placeholder = document.createElement('div');
+            placeholder.style.cssText = `
+              width: 100%;
+              height: 200px;
+              background-color: #ccc;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: white;
+              font-size: 1rem;
+              padding: 1rem;
+            `;
+            placeholder.textContent = card.img.split('/').pop();
+            cardDiv.replaceChild(placeholder, img);
+          });
+          cardDiv.appendChild(img);
+
+          const content = document.createElement('div');
+          content.className = 'card-content';
+
+          const titleEl = document.createElement('h3');
+          titleEl.className = 'card-title';
+          titleEl.textContent = card.title;
+          content.appendChild(titleEl);
+
+          const descEl = document.createElement('p');
+          descEl.className = 'card-description';
+          descEl.textContent = card.desc;
+          content.appendChild(descEl);
+
+          const linkEl = document.createElement('a');
+          linkEl.href = card.blog;
+          linkEl.className = 'btn btn-text';
+          linkEl.textContent = 'Read more →';
+          content.appendChild(linkEl);
+
+          cardDiv.appendChild(content);
+          container.appendChild(cardDiv);
+        });
+      }
+
+      // ------------------------------------------------------------------
+      // D. INITIALISATION
+      // ------------------------------------------------------------------
+      function initPageSpecific() {
+        renderInsightsGrid();
+
+        const block1 = document.getElementById('three-buttons-block-1');
+        renderThreeButtonsBlock(block1, threeButtonsData);
+
+        renderAnalysisCards();
+
+        const block2 = document.getElementById('three-buttons-block-2');
+        renderThreeButtonsBlock(block2, threeButtonsData);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPageSpecific);
+      } else {
+        initPageSpecific();
+      }
+    })();
+  </script>
+</body>
+</html>
