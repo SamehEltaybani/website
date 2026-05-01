@@ -17,6 +17,10 @@ Page‑specific JavaScript handles the carousel and card rendering.
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ===== BASE PATH (for GitHub Pages project sites) ===== -->
+  <base href="/website/">
+
   <!-- PAGE-SPECIFIC: Change title and description per page -->
   <title>Dr. Sameh Eltaybani - Home</title>
   <meta name="description" content="Welcome to the personal academic website of Dr. Sameh Eltaybani. Explore research, publications, data analysis, teaching, portfolios, blog, and more.">
@@ -100,7 +104,6 @@ Page‑specific JavaScript handles the carousel and card rendering.
       // ------------------------------------------------------------------
       // 1. CAROUSEL COMPONENT
       // ------------------------------------------------------------------
-      // Array of images for the carousel (easy to edit/remove/add)
       const carouselImages = [
         { src: 'assets/img/temp-1.webp', alt: 'Highlight 1' },
         { src: 'assets/img/temp-2.webp', alt: 'Highlight 2' },
@@ -109,28 +112,21 @@ Page‑specific JavaScript handles the carousel and card rendering.
         { src: 'assets/img/temp-5.webp', alt: 'Highlight 5' }
       ];
 
-      let currentIndex = 0;            // zero‑based index of the visible slide
+      let currentIndex = 0;
       let autoScrollTimer = null;
       let isDragging = false;
       let startPosX = 0;
       let currentTranslate = 0;
       let prevTranslate = 0;
-      let animationID = 0;
       let carouselTrack = null;
-      let autoScrollActive = true;
 
-      // Constants
-      const AUTO_SCROLL_INTERVAL = 3000;   // 3 seconds
-      const INACTIVITY_RESUME_DELAY = 5000; // 5 seconds after user interaction
+      const AUTO_SCROLL_INTERVAL = 3000;
+      const INACTIVITY_RESUME_DELAY = 5000;
 
-      /**
-       * Initialize carousel: create slides, set up controls, start auto‑scroll.
-       */
       function initCarousel() {
         const container = document.querySelector('[data-component="carousel"]');
         if (!container) return;
 
-        // Create carousel internal structure
         container.innerHTML = `
           <div class="carousel-track"></div>
           <button class="carousel-btn carousel-btn-prev" aria-label="Previous slide">
@@ -145,15 +141,13 @@ Page‑specific JavaScript handles the carousel and card rendering.
         const prevBtn = container.querySelector('.carousel-btn-prev');
         const nextBtn = container.querySelector('.carousel-btn-next');
 
-        // Build slides
-        carouselImages.forEach((imgData, idx) => {
+        carouselImages.forEach((imgData) => {
           const slide = document.createElement('div');
           slide.className = 'carousel-slide';
           const img = document.createElement('img');
           img.src = imgData.src;
           img.alt = imgData.alt;
           img.setAttribute('loading', 'lazy');
-          // Placeholder behaviour: show grey box with filename on error
           img.addEventListener('error', function() {
             const placeholder = document.createElement('div');
             placeholder.style.cssText = `
@@ -168,17 +162,15 @@ Page‑specific JavaScript handles the carousel and card rendering.
               text-align: center;
               padding: 1rem;
             `;
-            placeholder.textContent = imgData.src.split('/').pop(); // filename only
+            placeholder.textContent = imgData.src.split('/').pop();
             slide.replaceChild(placeholder, img);
           });
           slide.appendChild(img);
           carouselTrack.appendChild(slide);
         });
 
-        // Set initial position
         setSlidePosition();
 
-        // Event listeners
         prevBtn.addEventListener('click', () => {
           stopAutoScrollTemporarily();
           moveToPrevSlide();
@@ -188,7 +180,6 @@ Page‑specific JavaScript handles the carousel and card rendering.
           moveToNextSlide();
         });
 
-        // Touch & mouse drag
         carouselTrack.addEventListener('mousedown', dragStart);
         carouselTrack.addEventListener('mousemove', dragMove);
         carouselTrack.addEventListener('mouseup', dragEnd);
@@ -197,13 +188,9 @@ Page‑specific JavaScript handles the carousel and card rendering.
         carouselTrack.addEventListener('touchmove', dragMove, { passive: true });
         carouselTrack.addEventListener('touchend', dragEnd);
 
-        // Start auto‑scroll
         startAutoScroll();
       }
 
-      /**
-       * Move the carousel to the current index (enforces infinite loop).
-       */
       function setSlidePosition() {
         if (!carouselTrack) return;
         const slideWidth = carouselTrack.clientWidth;
@@ -222,11 +209,9 @@ Page‑specific JavaScript handles the carousel and card rendering.
         setSlidePosition();
       }
 
-      // ---- Auto‑scroll logic ----
       function startAutoScroll() {
         if (autoScrollTimer) clearInterval(autoScrollTimer);
         autoScrollTimer = setInterval(moveToNextSlide, AUTO_SCROLL_INTERVAL);
-        autoScrollActive = true;
       }
 
       function stopAutoScrollTemporarily() {
@@ -234,21 +219,18 @@ Page‑specific JavaScript handles the carousel and card rendering.
           clearInterval(autoScrollTimer);
           autoScrollTimer = null;
         }
-        autoScrollActive = false;
-        // Resume after inactivity
         clearTimeout(window._carouselResumeTimeout);
         window._carouselResumeTimeout = setTimeout(() => {
           startAutoScroll();
         }, INACTIVITY_RESUME_DELAY);
       }
 
-      // ---- Drag & swipe ----
       function dragStart(e) {
         if (!carouselTrack) return;
         isDragging = true;
         startPosX = getEventX(e);
         prevTranslate = -currentIndex * carouselTrack.clientWidth;
-        carouselTrack.style.transition = 'none'; // disable smooth while dragging
+        carouselTrack.style.transition = 'none';
         stopAutoScrollTemporarily();
       }
 
@@ -266,7 +248,6 @@ Page‑specific JavaScript handles the carousel and card rendering.
         carouselTrack.style.transition = 'transform 0.5s ease-in-out';
         const movedBy = currentTranslate - prevTranslate;
         const slideWidth = carouselTrack.clientWidth;
-        // Determine if we should move to next/prev based on threshold (25% of slide width)
         if (movedBy < -slideWidth * 0.25) {
           currentIndex = (currentIndex + 1) % carouselImages.length;
         } else if (movedBy > slideWidth * 0.25) {
@@ -274,8 +255,7 @@ Page‑specific JavaScript handles the carousel and card rendering.
         }
         setSlidePosition();
         currentTranslate = -currentIndex * slideWidth;
-        // Resume auto‑scroll after delay
-        stopAutoScrollTemporarily(); // this will set the resume timeout
+        stopAutoScrollTemporarily();
       }
 
       function getEventX(e) {
@@ -285,11 +265,6 @@ Page‑specific JavaScript handles the carousel and card rendering.
       // ------------------------------------------------------------------
       // 2. FEATURED NAVIGATION CARDS
       // ------------------------------------------------------------------
-      /**
-       * Data for the 8 featured cards.
-       * Easy to edit: just change the properties here.
-       * The "Portfolios" card is special – it uses a bullet list instead of a description.
-       */
       const featuredCardsData = [
         {
           title: 'Research',
@@ -313,7 +288,6 @@ Page‑specific JavaScript handles the carousel and card rendering.
         },
         {
           title: 'Portfolios',
-          // Special: this card uses bullet points instead of a paragraph
           isPortfolio: true,
           bulletPoints: [
             'Research Portfolio',
@@ -339,9 +313,6 @@ Page‑specific JavaScript handles the carousel and card rendering.
         }
       ];
 
-      /**
-       * Renders a single featured card.
-       */
       function createFeaturedCard(cardData) {
         const card = document.createElement('div');
         card.className = 'card card-lift';
@@ -355,7 +326,6 @@ Page‑specific JavaScript handles the carousel and card rendering.
         content.appendChild(titleEl);
 
         if (cardData.isPortfolio) {
-          // Bullet list instead of description
           const bulletList = document.createElement('ul');
           bulletList.className = 'card-bullet-list';
           cardData.bulletPoints.forEach(point => {
@@ -365,14 +335,12 @@ Page‑specific JavaScript handles the carousel and card rendering.
           });
           content.appendChild(bulletList);
         } else {
-          // Normal description paragraph
           const desc = document.createElement('p');
           desc.className = 'card-description';
           desc.textContent = cardData.description;
           content.appendChild(desc);
         }
 
-        // Action button
         const button = document.createElement('a');
         button.href = cardData.link;
         button.className = 'btn btn-text';
@@ -383,9 +351,6 @@ Page‑specific JavaScript handles the carousel and card rendering.
         return card;
       }
 
-      /**
-       * Renders all featured cards into the container.
-       */
       function renderFeaturedCards() {
         const container = document.getElementById('featured-cards-container');
         if (!container) return;
@@ -396,14 +361,12 @@ Page‑specific JavaScript handles the carousel and card rendering.
       }
 
       // ------------------------------------------------------------------
-      // 3. INITIALISATION (runs once DOM is ready and other components are done)
+      // 3. INITIALISATION
       // ------------------------------------------------------------------
       async function initPageSpecific() {
-        // Wait for DOM (just in case)
         if (typeof SiteUtils !== 'undefined' && SiteUtils.waitForDOM) {
           await SiteUtils.waitForDOM();
         } else {
-          // fallback
           await new Promise(resolve => {
             if (document.readyState === 'loading') {
               document.addEventListener('DOMContentLoaded', resolve);
@@ -417,8 +380,6 @@ Page‑specific JavaScript handles the carousel and card rendering.
         renderFeaturedCards();
       }
 
-      // Kick off – but we must ensure utils.js is already loaded (it is, via script order).
-      // We run immediately because DOMContentLoaded may have already fired (scripts at end of body).
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initPageSpecific);
       } else {
