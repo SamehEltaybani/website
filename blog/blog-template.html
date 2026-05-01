@@ -1,1 +1,436 @@
+<!--
+============================================================================
+BLOG/BLOG-TEMPLATE.HTML - INDIVIDUAL ARTICLE TEMPLATE
+============================================================================
+Copy this file to create a new article (e.g., blog-1.html).
+Before using:
+ - Change the <title> and meta description in the <head>.
+ - Edit the content inside <div id="article-content">.
+ - Add an entry in /json/blog-list.json with:
+     "blogfile": "blog/your-file.html",
+     "shortTitle": "...",
+     "categories": ["...", "..."],
+     "date": "YYYY-MM-DD"
+The page automatically:
+ - Highlights the Blog nav item
+ - Shows the shortTitle in the breadcrumb (Home > Blog > shortTitle)
+ - Calculates reading time
+ - Displays a scroll progress bar
+ - Loads "Recommended for You" articles
+ All optional content blocks (callouts, headings, images) can be copied,
+ removed, or reordered without breaking anything.
+============================================================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- ===== BASE PATH (GitHub Pages project site) ===== -->
+  <base href="/website/">
+  <meta name="site-base-path" content="/website/">
+
+  <!-- PAGE-SPECIFIC (edit for each article) -->
+  <title>Dr. Sameh Eltaybani - Article Title</title>
+  <meta name="description" content="A blog article by Dr. Sameh Eltaybani covering insights on healthcare, research, or data analysis.">
+  <meta property="og:title" content="Dr. Sameh Eltaybani - Article Title">
+  <meta property="og:description" content="A blog article by Dr. Sameh Eltaybani covering insights on healthcare, research, or data analysis.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="blog/your-file.html">
+
+  <!-- FAVICON -->
+  <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- MAIN CSS -->
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body data-page="blog.html">   <!-- forces navigation to highlight Blog -->
+
+  <!-- ========== NAVIGATION BAR ========== -->
+  <nav data-component="navigation" class="navbar">
+    <div class="navbar-container">
+      <div class="navbar-left"></div>
+      <div class="navbar-right"></div>
+      <button class="hamburger" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========== BREADCRUMB BAR (exact height) ========== -->
+  <div data-component="breadcrumb" class="breadcrumb-bar"
+       style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
+
+  <!-- ========== SCROLL PROGRESS BAR (fixed, thin) ========== -->
+  <div class="progress-container" style="position: sticky; top: calc(var(--nav-height-desktop) + var(--breadcrumb-height)); z-index: 998;">
+    <div class="progress-bar" id="progress-bar"></div>
+  </div>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main>
+    <article class="section">
+      <div class="container" style="max-width: 800px; margin: 0 auto;">
+
+        <!-- === TITLE METADATA BLOCK (populated by JS) === -->
+        <header id="article-header">
+          <h1 id="article-title" class="heading-large">Article Title</h1>
+          <div id="article-categories" class="blog-categories" style="margin-bottom: var(--space-sm);"></div>
+          <div id="article-meta" class="text-muted" style="margin-bottom: var(--space-md);">
+            <span id="article-date">Month Day, Year</span> &bull; <span id="article-read-time">X min. read</span>
+          </div>
+        </header>
+
+        <!-- === ARTICLE CONTENT (edit freely) === -->
+        <div id="article-content">
+          <!--
+          ============================================================
+          REPLICABLE CONTENT BLOCKS
+          Copy, delete, or reorder any block below as needed.
+          All blocks are optional – unused ones leave no gap.
+          ============================================================
+          -->
+
+          <!-- Large heading -->
+          <h2 class="heading-large">Section Title (Large Heading)</h2>
+
+          <!-- Medium heading -->
+          <h3 class="heading-medium">Subsection (Medium Heading)</h3>
+
+          <!-- Small heading -->
+          <h4 class="heading-small">Detail (Small Heading)</h4>
+
+          <!-- Paragraph block -->
+          <p class="paragraph">
+            This is a regular paragraph. Write your text here. It will
+            wrap naturally and respect the container width.
+          </p>
+
+          <!-- Bullet list block -->
+          <ul class="paragraph">
+            <li>Bullet point one</li>
+            <li>Bullet point two</li>
+            <li>Bullet point three</li>
+          </ul>
+
+          <!-- Numbered list block -->
+          <ol class="paragraph">
+            <li>First item</li>
+            <li>Second item</li>
+            <li>Third item</li>
+          </ol>
+
+          <!-- Image block (single image) -->
+          <figure style="margin: var(--space-md) 0;">
+            <img src="../assets/img/temp-1.webp" alt="Description" style="width:100%; border-radius:8px;" loading="lazy">
+            <figcaption class="text-muted" style="text-align:center;">Optional caption</figcaption>
+          </figure>
+
+          <!-- Image block (two images side by side) -->
+          <div class="grid-2" style="gap: var(--space-md); margin: var(--space-md) 0;">
+            <img src="../assets/img/temp-1.webp" alt="Image 1" style="width:100%; border-radius:8px;" loading="lazy">
+            <img src="../assets/img/temp-2.webp" alt="Image 2" style="width:100%; border-radius:8px;" loading="lazy">
+          </div>
+
+          <!-- ===== CALLOUTS (8 variants) ===== -->
+
+          <!-- Callout 1: Highlights (with bullet points) -->
+          <div class="callout callout-highlight-btn">
+            <div class="callout-title"><i class="fas fa-star"></i> Highlights</div>
+            <ul>
+              <li>Key finding or insight</li>
+              <li>Another important point</li>
+            </ul>
+          </div>
+
+          <!-- Callout 2: Tip (with button) -->
+          <div class="callout callout-tip-btn">
+            <div class="callout-title"><i class="fas fa-lightbulb"></i> Tip</div>
+            <p>Helpful advice or practical suggestion.</p>
+            <a href="#" class="btn btn-text">Learn more</a>
+          </div>
+
+          <!-- Callout 3: Tip (without button) -->
+          <div class="callout callout-tip-no-btn">
+            <div class="callout-title"><i class="fas fa-lightbulb"></i> Tip</div>
+            <p>A quick piece of advice without an extra button.</p>
+          </div>
+
+          <!-- Callout 4: Warning (with button) -->
+          <div class="callout callout-warning-btn">
+            <div class="callout-title"><i class="fas fa-exclamation-triangle"></i> Warning</div>
+            <p>Be cautious about this point. It may be misinterpreted.</p>
+            <a href="#" class="btn btn-text">Read more</a>
+          </div>
+
+          <!-- Callout 5: Warning (without button) -->
+          <div class="callout callout-warning-no-btn">
+            <div class="callout-title"><i class="fas fa-exclamation-triangle"></i> Warning</div>
+            <p>Important cautionary note without a further link.</p>
+          </div>
+
+          <!-- Callout 6: Note (with button) -->
+          <div class="callout callout-note-btn">
+            <div class="callout-title"><i class="fas fa-info-circle"></i> Note</div>
+            <p>Supplementary information with a reference link.</p>
+            <a href="#" class="btn btn-text">Reference</a>
+          </div>
+
+          <!-- Callout 7: Note (without button) -->
+          <div class="callout callout-note-no-btn">
+            <div class="callout-title"><i class="fas fa-info-circle"></i> Note</div>
+            <p>Additional context or remark.</p>
+          </div>
+
+          <!-- Callout 8: Quotation (no title, large quotation marks) -->
+          <div class="callout callout-quote">
+            <p>“This is a block quote with large ornamental quotation marks.
+            Use it for important excerpts or testimonials.”</p>
+            <a href="#" class="btn btn-text">Optional button</a>
+          </div>
+
+          <!-- Extra image placeholder (you can change the src) -->
+          <img src="../assets/img/temp-3.webp" alt="Extra illustration" style="width:100%; margin: var(--space-md) 0; border-radius:8px;" loading="lazy">
+
+          <!-- ===== END OF REPLICABLE CONTENT BLOCKS ===== -->
+        </div>
+
+        <!-- === POST-CONTENT LEGAL LINE === -->
+        <div class="footer-legal" style="margin-top: var(--space-xl); padding-top: var(--space-md); border-top: 1px solid var(--color-border);">
+          <p>© Dr. Sameh Eltaybani. Content is for informational purposes only and represents personal views. <a href="../legal.html">Read more &gt;&gt;</a></p>
+        </div>
+
+        <!-- === "READ MORE INSIGHTS" BUTTON === -->
+        <div style="text-align: right; margin: var(--space-lg) 0;">
+          <a href="../blog.html" class="btn btn-primary">Read More Insights</a>
+        </div>
+
+        <!-- === "RECOMMENDED FOR YOU" SECTION === -->
+        <section id="recommended-section" class="section-alt" style="padding: var(--space-lg); border-radius: 12px;">
+          <h2 class="heading-medium">Recommended for You</h2>
+          <div id="recommended-container" class="grid-2" style="gap: var(--space-md);">
+            <!-- dynamically filled by JS -->
+          </div>
+        </section>
+
+      </div>
+    </article>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer data-component="footer"></footer>
+
+  <!-- ========== SCRIPTS (exact order) ========== -->
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/navigation.js"></script>
+  <script src="../assets/js/breadcrumbs.js"></script>
+  <script src="../assets/js/footer.js"></script>
+
+  <!-- ========== PAGE-SPECIFIC SCRIPTS ========== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ------------------------------------------------------------------
+      // A. UTILITIES
+      // ------------------------------------------------------------------
+      function escapeHTML(text) {
+        if (typeof SiteUtils !== 'undefined' && SiteUtils.escapeHTML) return SiteUtils.escapeHTML(text);
+        const div = document.createElement('div'); div.textContent = text; return div.innerHTML;
+      }
+
+      // ------------------------------------------------------------------
+      // B. CURRENT ARTICLE DATA
+      // ------------------------------------------------------------------
+      const currentBlogfile = location.pathname.replace(/^\/website\//, '');   // e.g., blog/blog-1.html
+
+      let articleData = null;   // the matching entry from blog-list.json
+
+      // ------------------------------------------------------------------
+      // C. PROGRESS BAR
+      // ------------------------------------------------------------------
+      function initProgressBar() {
+        const bar = document.getElementById('progress-bar');
+        if (!bar) return;
+        window.addEventListener('scroll', SiteUtils.throttle(() => {
+          const winScroll = document.documentElement.scrollTop;
+          const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+          const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+          bar.style.width = Math.min(scrolled, 100) + '%';
+        }, 20));
+      }
+
+      // ------------------------------------------------------------------
+      // D. CALCULATE READING TIME
+      // ------------------------------------------------------------------
+      function calculateReadingTime() {
+        const contentEl = document.getElementById('article-content');
+        if (!contentEl) return 0;
+        const text = contentEl.innerText || '';
+        const words = text.trim().split(/\s+/).length;
+        return Math.ceil(words / 200);   // minutes
+      }
+
+      // ------------------------------------------------------------------
+      // E. DISPLAY ARTICLE METADATA
+      // ------------------------------------------------------------------
+      async function displayMetadata() {
+        try {
+          const data = await SiteUtils.loadJSON('/json/blog-list.json', true);
+          if (!data) return;
+
+          const entry = data.find(item => item.blogfile === currentBlogfile);
+          if (!entry) return;
+          articleData = entry;
+
+          // Fill header
+          document.getElementById('article-title').textContent = entry.title || 'Article';
+          // Categories
+          const catContainer = document.getElementById('article-categories');
+          catContainer.innerHTML = '';
+          if (entry.categories && Array.isArray(entry.categories)) {
+            entry.categories.forEach(cat => {
+              const span = document.createElement('span');
+              span.className = 'blog-category';
+              span.textContent = cat;
+              catContainer.appendChild(span);
+            });
+          }
+          // Date formatting
+          const dateObj = new Date(entry.date);
+          const dateFormatted = isNaN(dateObj.getTime()) ? entry.date : dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+          document.getElementById('article-date').textContent = dateFormatted;
+
+          // Reading time
+          const readTime = calculateReadingTime();
+          document.getElementById('article-read-time').textContent = (readTime || 1) + ' min. read';
+
+        } catch (e) {
+          console.warn('Could not load article metadata, using defaults.');
+        }
+      }
+
+      // ------------------------------------------------------------------
+      // F. OVERRIDE BREADCRUMB WITH SHORT TITLE
+      // ------------------------------------------------------------------
+      async function overrideBreadcrumb() {
+        // Wait for breadcrumbs to render (it's async, so we'll retry a few times)
+        let attempts = 0;
+        while (attempts < 20) {
+          const lastItem = document.querySelector('.breadcrumb-item.active');
+          if (lastItem) break;
+          await new Promise(r => setTimeout(r, 100));
+          attempts++;
+        }
+
+        let shortTitle = 'Article';  // fallback
+        if (articleData && articleData.shortTitle) {
+          shortTitle = articleData.shortTitle;
+        } else {
+          // If no articleData yet, try to fetch directly
+          try {
+            const data = await SiteUtils.loadJSON('/json/blog-list.json', true);
+            const entry = data ? data.find(item => item.blogfile === currentBlogfile) : null;
+            if (entry && entry.shortTitle) shortTitle = entry.shortTitle;
+          } catch (e) {}
+        }
+
+        const activeItem = document.querySelector('.breadcrumb-item.active');
+        if (activeItem) {
+          activeItem.textContent = shortTitle;
+        }
+      }
+
+      // ------------------------------------------------------------------
+      // G. HIGHLIGHT THE BLOG NAVIGATION ITEM
+      // ------------------------------------------------------------------
+      function highlightBlogNav() {
+        // Remove active from all nav links
+        document.querySelectorAll('.nav-link.active, .mobile-nav-link.active').forEach(link => link.classList.remove('active'));
+        // Highlight the "Blog" link
+        document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
+          if (link.textContent.trim() === 'Blog' && link.getAttribute('href') === 'blog.html') {
+            link.classList.add('active');
+          }
+        });
+      }
+
+      // ------------------------------------------------------------------
+      // H. RECOMMENDED FOR YOU
+      // ------------------------------------------------------------------
+      async function renderRecommended() {
+        const container = document.getElementById('recommended-container');
+        if (!container) return;
+        container.innerHTML = '';
+
+        try {
+          const data = await SiteUtils.loadJSON('/json/blog-list.json', true);
+          if (!data || !Array.isArray(data)) return;
+
+          let recommended = [];
+          if (articleData && articleData.categories) {
+            const currentCats = articleData.categories;
+            recommended = data
+              .filter(item => item.blogfile !== currentBlogfile)   // exclude current
+              .filter(item => item.categories && item.categories.some(cat => currentCats.includes(cat)))
+              .sort((a, b) => new Date(b.date) - new Date(a.date))
+              .slice(0, 5);
+          }
+
+          // Fill remaining slots with most recent articles
+          if (recommended.length < 5) {
+            const existingFiles = recommended.map(r => r.blogfile);
+            const remaining = data
+              .filter(item => item.blogfile !== currentBlogfile && !existingFiles.includes(item.blogfile))
+              .sort((a, b) => new Date(b.date) - new Date(a.date))
+              .slice(0, 5 - recommended.length);
+            recommended = recommended.concat(remaining);
+          }
+
+          // Render cards
+          recommended.forEach(item => {
+            const card = document.createElement('a');
+            card.href = item.blogfile;
+            card.className = 'card card-lift';
+            card.style.textDecoration = 'none';
+            card.style.color = 'inherit';
+            card.innerHTML = `
+              <div class="card-content">
+                <h3 class="card-title">${escapeHTML(item.title)}</h3>
+                <p class="card-description" style="font-size: var(--font-size-sm);">${item.date ? new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : ''}</p>
+              </div>
+            `;
+            container.appendChild(card);
+          });
+        } catch (e) {
+          container.innerHTML = '<p class="text-muted">Unable to load recommendations.</p>';
+        }
+      }
+
+      // ------------------------------------------------------------------
+      // I. INITIALISATION
+      // ------------------------------------------------------------------
+      async function initArticle() {
+        if (typeof SiteUtils !== 'undefined' && SiteUtils.waitForDOM) {
+          await SiteUtils.waitForDOM();
+        }
+
+        initProgressBar();
+
+        // Load metadata and then update breadcrumb + recommendations
+        await displayMetadata();
+        await overrideBreadcrumb();
+        highlightBlogNav();
+        await renderRecommended();
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initArticle);
+      } else {
+        initArticle();
+      }
+    })();
+  </script>
+</body>
+</html>
