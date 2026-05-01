@@ -318,6 +318,7 @@ Fixed issues (central + page‑specific):
       // RENDER
       // ------------------------------------------------------------------
       function renderCurrentPage() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         if (!publicationsContainer) return;
         const end = state.currentPage * state.itemsPerPage;
         const itemsToShow = state.filteredItems.slice(0, end);
