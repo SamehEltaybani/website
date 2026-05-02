@@ -2,47 +2,14 @@
 ============================================================================
 RESEARCH-PORTFOLIO.HTML - DR. SAMEH ELTAYBANI - RESEARCH PORTFOLIO
 ============================================================================
-This file is the master template for ALL THREE individual portfolio pages
-(Research Portfolio, Teaching Portfolio, Data Analysis Portfolio).
-
-HOW TO CREATE THE OTHER TWO PAGES:
-  1. Copy this entire file and rename it (teaching-portfolio.html or
-     data-analysis-portfolio.html).
-  2. Change the <title>, meta description, og:url, and body data-page
-     (search for "EDIT-FOR-OTHER-PORTFOLIOS" below – only 6 lines to change).
-  3. Update the main heading and intro paragraph inside the intro block.
-  4. The breadcrumb will automatically show the correct path.
-  5. Edit the Content Playground blocks as you wish.
-
-HOW TO USE THE CONTENT PLAYGROUND:
-  - Every block is wrapped in a comment pair:
-       <!-- BLOCK START: description -->
-       ...
-       <!-- BLOCK END: description -->
-  - Blocks can be copied, removed, or reordered freely. Unused blocks
-    leave no gap.
-  - Five block backgrounds are available (use the class on the wrapper div):
-      .content-block-white       (white card with border)
-      .content-block-grey        (light grey card)
-      .content-block-dark        (dark blue card, text becomes light, headings gold)
-      .content-block-transparent (no visible box, content sits on page background)
-      (no wrapper at all)        (use for the intro split block and separators)
-  - Inside any block you can place headings, paragraphs, lists, buttons,
-    images, callouts, highlight markers, horizontal separators, and empty
-    vertical spaces.
-
-ALL AMENDMENTS INTEGRATED:
-  - Breadcrumb left‑aligned, same width as page content (via main.css)
-  - Lists globally indented (via main.css)
-  - Top intro block has no gap between photo and dark panel
-  - No vertical space between breadcrumb and intro block
-  - Reusable split block (image left or image right) for playground
-  - Vertical text alignment controllable per dark block
-  - Button alignment controllable per group
-  - Empty vertical space helper
-  - Horizontal separator with configurable colour and thickness
-  - Text highlighter (<mark>) with configurable colour
-  - Only Note and Quotation callouts
+Master template for all individual portfolio pages.
+To create the Teaching or Data Analysis version:
+  1. Copy this file and rename it appropriately.
+  2. Change the 6 lines tagged with EDIT-FOR-OTHER-PORTFOLIOS.
+  3. Update the intro block heading and paragraph.
+  4. Edit the Content Playground blocks with your own text and images.
+  5. The breadcrumb path is automatic (Home > Research > Research Portfolio).
+All blocks are clearly labelled with start and end comments.
 ============================================================================
 -->
 <!DOCTYPE html>
@@ -55,15 +22,7 @@ ALL AMENDMENTS INTEGRATED:
   <base href="/website/">
   <meta name="site-base-path" content="/website/">
 
-  <!--
-    EDIT-FOR-OTHER-PORTFOLIOS: Change the 6 lines below for Teaching or Data Analysis.
-    - <title> ... </title>
-    - <meta name="description" content="...">
-    - <meta property="og:title" content="...">
-    - <meta property="og:description" content="...">
-    - <meta property="og:url" content="...">
-    - <body data-page="...">
-  -->
+  <!-- EDIT-FOR-OTHER-PORTFOLIOS: Change the 6 lines below -->
   <title>Dr. Sameh Eltaybani - Research Portfolio</title>
   <meta name="description" content="A detailed look at Dr. Sameh Eltaybani's research achievements, projects, and contributions to gerontological nursing.">
   <meta property="og:title" content="Dr. Sameh Eltaybani - Research Portfolio">
@@ -78,7 +37,7 @@ ALL AMENDMENTS INTEGRATED:
   <!-- MAIN CSS -->
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
-<!-- EDIT-FOR-OTHER-PORTFOLIOS: change the data-page value below -->
+<!-- EDIT-FOR-OTHER-PORTFOLIOS: change the data-page value -->
 <body data-page="research-portfolio.html">
 
   <!-- ========== NAVIGATION BAR ========== -->
@@ -99,36 +58,24 @@ ALL AMENDMENTS INTEGRATED:
   <!-- ========== MAIN CONTENT ========== -->
   <main>
 
-    <!-- ================================================================= -->
-    <!-- PART 1: INTRODUCTION BLOCK                                        -->
-    /*   Two columns: photo (left, ≈25%) + dark panel (right, ≈75%)     */
-    /*   They touch seamlessly (no gap). Rounded outer edges only.       */
-    /*   No space above – sits directly under the breadcrumb bar.        */
-    /*   Text is centered vertically (change align-items below to        */
-    /*   "flex-start" if you want text to start from the top).           */
-    <!-- ================================================================= -->
-    <!-- BLOCK START: Introduction (photo + dark panel) -->
+    <!-- BLOCK START: Introduction (photo + dark panel, no gap between them) -->
     <section style="padding-top: 0; padding-bottom: 0;">
       <div class="container">
         <div style="display: flex; flex-wrap: nowrap; gap: 0; align-items: stretch;">
 
-          <!-- LEFT: Photo -->
+          <!-- LEFT: Photo (rounded left edges only) -->
           <div style="flex: 0 0 22%; min-width: 100px; border-radius: 12px 0 0 12px; overflow: hidden;">
             <img src="assets/img/profile.webp" alt="Dr. Sameh Eltaybani"
                  style="width: 100%; height: 100%; object-fit: cover; display: block;">
           </div>
 
-          <!-- RIGHT: Dark panel with text -->
-          <!--
-            VERTICAL ALIGNMENT CONTROL:
-              - "center" (current): text is vertically centered in the panel
-              - "flex-start":       text starts from the top
-              Change the align-items value below.
-          -->
+          <!-- RIGHT: Dark panel with text (rounded right edges only).
+               To vertically center the text: keep justify-content: center.
+               To make text start at the top: change to justify-content: flex-start. -->
           <div style="flex: 1 1 78%; background-color: var(--color-midnight-blue); color: var(--color-text-inverted);
                       padding: var(--space-lg); border-radius: 0 12px 12px 0;
                       display: flex; flex-direction: column; justify-content: center;">
-            <!-- EDIT-FOR-OTHER-PORTFOLIOS: change the heading and paragraph below -->
+            <!-- EDIT-FOR-OTHER-PORTFOLIOS: change the heading and paragraph -->
             <h2 style="color: var(--color-gold); margin-bottom: var(--space-sm);">Research Portfolio</h2>
             <p style="line-height: 1.6; opacity: 0.9;">
               This portfolio showcases my research career, major projects, and the impact
@@ -141,36 +88,18 @@ ALL AMENDMENTS INTEGRATED:
     </section>
     <!-- BLOCK END: Introduction -->
 
-    <!-- ================================================================= -->
-    <!-- EMPTY VERTICAL SPACE EXAMPLE                                      -->
-    /*   To add a blank gap between two blocks (like pressing Enter       */
-    /*   twice in Word), insert one of these spacers. Change the height   */
-    /*   value (e.g., 1rem, 2rem, var(--space-lg)) as needed.            */
-    <!-- ================================================================= -->
+    <!-- Empty vertical space helper (change height as needed) -->
     <div style="height: var(--space-xl);"></div>
 
-    <!-- ================================================================= -->
-    <!-- HORIZONTAL SEPARATOR EXAMPLE                                      -->
-    /*   Use this <hr> line between sections.                             */
-    /*   - Change "2px" to any thickness (1px, 3px, 4px, etc.)            */
-    /*   - Change "var(--color-border)" to any colour:                    */
-    /*        #D4AF37 (gold), #1A2530 (midnight), #cccccc (light grey)    */
-    /*   - Change the margin values to control spacing above/below        */
-    <!-- ================================================================= -->
+    <!-- Horizontal separator (change thickness and colour below) -->
     <div class="container">
       <hr style="border: none; border-top: 2px solid var(--color-border); margin: var(--space-lg) 0;">
     </div>
 
-    <!-- ================================================================= -->
-    <!-- PART 2: CONTENT PLAYGROUND                                        -->
-    /*   All playground blocks are inside a .container for width control. */
-    /*   Blocks can be reordered, copied, or removed freely.              */
-    <!-- ================================================================= -->
+    <!-- ===== CONTENT PLAYGROUND (all blocks inside container for width control) ===== -->
     <div class="container">
 
-      <!-- ============================================================= -->
-      <!-- BLOCK START: White block with headings, paragraph, lists      -->
-      <!-- ============================================================= -->
+      <!-- BLOCK START: White block with headings, paragraph, lists, and buttons -->
       <div class="content-block-white">
         <h2 class="heading-large">About My Research</h2>
         <p class="paragraph">
@@ -178,43 +107,32 @@ ALL AMENDMENTS INTEGRATED:
           objectives, and overarching themes.
         </p>
 
-        <!-- Numbered list (indented globally by main.css) -->
+        <!-- Numbered list -->
         <ol class="paragraph">
           <li>First research priority or milestone</li>
           <li>Second important point</li>
           <li>Third achievement</li>
         </ol>
 
-        <!-- Bullet list (indented globally by main.css) -->
+        <!-- Bullet list -->
         <ul class="paragraph">
           <li>Supporting detail A</li>
           <li>Supporting detail B</li>
         </ul>
 
-        <!--
-          BUTTON ALIGNMENT CONTROL:
-            Change "justify-content" below to:
-              - "flex-start"  → buttons hug the left
-              - "center"      → buttons are centered
-              - "flex-end"    → buttons hug the right
-            The gap value controls spacing between buttons.
-        -->
+        <!-- Button alignment control:
+             Change justify-content to: flex-start (left), center (center), flex-end (right) -->
         <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap; justify-content: flex-start; margin-top: var(--space-md);">
           <a href="#" class="btn btn-primary">Primary Action</a>
           <a href="#" class="btn btn-secondary">Secondary Link</a>
           <a href="#" class="btn btn-text">Text‑Only Button</a>
         </div>
       </div>
-      <!-- BLOCK END: White block with headings, paragraph, lists -->
+      <!-- BLOCK END: White block -->
 
-      <!-- ============================================================= -->
-      <!-- EMPTY SPACE between blocks                                    -->
-      <!-- ============================================================= -->
       <div style="height: var(--space-lg);"></div>
 
-      <!-- ============================================================= -->
-      <!-- BLOCK START: Grey block with callout, image, text             -->
-      <!-- ============================================================= -->
+      <!-- BLOCK START: Grey block with image and note callout -->
       <div class="content-block-grey">
         <h3 class="heading-medium">Key Projects</h3>
         <p class="paragraph">
@@ -222,113 +140,73 @@ ALL AMENDMENTS INTEGRATED:
           images, or any other elements.
         </p>
 
-        <!-- Image placeholder (single photo) -->
+        <!-- Single image placeholder -->
         <figure style="margin: var(--space-md) 0;">
           <img src="assets/img/temp-1.webp" alt="Project image" style="width:100%; border-radius:8px;" loading="lazy">
           <figcaption class="text-muted" style="text-align:center;">Optional caption for the image</figcaption>
         </figure>
 
-        <!--
-          CALLOUT: Note (with optional button)
-          To remove the button, delete the <a> line below.
-          To change to the no‑button variant, replace the class
-          "callout-note-btn" with "callout-note-no-btn".
-        -->
-        <!-- NESTED BLOCK START: Note callout -->
+        <!-- Note callout (with button). To remove the button, delete the <a> line. -->
         <div class="callout callout-note-btn">
           <div class="callout-title"><i class="fas fa-info-circle"></i> Note</div>
           <p>Supplementary information or important remark goes here.</p>
-          <!-- Delete the button line below if you don't need a button -->
           <a href="#" class="btn btn-text">Reference</a>
         </div>
-        <!-- NESTED BLOCK END: Note callout -->
       </div>
-      <!-- BLOCK END: Grey block with callout, image, text -->
+      <!-- BLOCK END: Grey block -->
 
-      <!-- ============================================================= -->
-      <!-- EMPTY SPACE                                                   -->
-      <!-- ============================================================= -->
       <div style="height: var(--space-lg);"></div>
 
-      <!-- ============================================================= -->
-      /*   BLOCK START: Dark block with vertical top alignment           */
-      /*   Compare with the intro block: here text starts at the top.    */
-      /*   Change "flex-start" to "center" for vertically centered text. */
-      <!-- ============================================================= -->
+      <!-- BLOCK START: Dark block with vertical top alignment (text starts from the top) -->
       <div class="content-block-dark" style="display: flex; flex-direction: column; justify-content: flex-start;">
         <h3 class="heading-medium">Milestones &amp; Impact</h3>
         <p>
-          The dark background block is ideal for highlighting achievements or quotes.
-          All text inside this block is automatically light‑coloured, and headings
-          become gold.
-        </p>
-        <p>
-          Because this block uses <code>justify-content: flex-start</code>, the text
-          starts at the top rather than being vertically centered. Change it to
-          <code>center</code> if you prefer centered text.
+          This dark block uses <code>justify-content: flex-start</code>, so text starts at the top.
+          Change it to <code>center</code> if you prefer vertically centred text.
         </p>
 
-        <!-- Two images side‑by‑side (you can add more) -->
+        <!-- Two images side by side -->
         <div style="display: flex; gap: var(--space-sm); margin-top: var(--space-md);">
           <img src="assets/img/temp-2.webp" alt="Image 1" style="width:50%; border-radius:8px;" loading="lazy">
           <img src="assets/img/temp-3.webp" alt="Image 2" style="width:50%; border-radius:8px;" loading="lazy">
         </div>
 
-        <!-- Buttons aligned to the right -->
+        <!-- Right‑aligned button -->
         <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap; justify-content: flex-end; margin-top: var(--space-md);">
           <a href="#" class="btn btn-secondary">Learn More</a>
         </div>
       </div>
-      <!-- BLOCK END: Dark block with vertical top alignment -->
+      <!-- BLOCK END: Dark block (top aligned) -->
 
-      <!-- ============================================================= -->
-      <!-- EMPTY SPACE                                                   -->
-      <!-- ============================================================= -->
       <div style="height: var(--space-lg);"></div>
 
-      <!-- ============================================================= -->
-      /*   BLOCK START: Transparent block (no visible box)               */
-      /*   Use this when you want content directly on the page background*/
-      /*   without a card around it.                                     */
-      <!-- ============================================================= -->
+      <!-- BLOCK START: Transparent block (no visible box) -->
       <div class="content-block-transparent">
         <h3 class="heading-medium">A Section Without a Box</h3>
         <p class="paragraph">
-          This text sits directly on the page background. There is no border, no shadow,
-          no background colour – just the content. This is useful for transitional text
-          between two card‑style blocks.
+          This text sits directly on the page background. There is no border or background colour.
         </p>
       </div>
       <!-- BLOCK END: Transparent block -->
 
-      <!-- ============================================================= -->
-      <!-- EMPTY SPACE                                                   -->
-      <!-- ============================================================= -->
       <div style="height: var(--space-lg);"></div>
 
-      <!-- ============================================================= -->
-      /*   BLOCK START: Split block – IMAGE LEFT, TEXT RIGHT             */
-      /*   Same seamless style as the intro block.                       */
-      /*   Change heading, paragraph, button, and image src as needed.   */
-      <!-- ============================================================= -->
+      <!-- BLOCK START: Split block – IMAGE LEFT, TEXT RIGHT -->
       <div style="display: flex; flex-wrap: nowrap; gap: 0; align-items: stretch;
                   margin-bottom: var(--space-lg);">
 
-        <!-- LEFT: Image -->
         <div style="flex: 0 0 30%; min-width: 100px; border-radius: 12px 0 0 12px; overflow: hidden;">
           <img src="assets/img/temp-1.webp" alt="Description"
                style="width: 100%; height: 100%; object-fit: cover; display: block;">
         </div>
 
-        <!-- RIGHT: Dark panel with text -->
         <div style="flex: 1 1 70%; background-color: var(--color-midnight-blue); color: var(--color-text-inverted);
                     padding: var(--space-lg); border-radius: 0 12px 12px 0;
                     display: flex; flex-direction: column; justify-content: center;">
           <h3 style="color: var(--color-gold); margin-bottom: var(--space-sm);">Project Alpha</h3>
           <p style="line-height: 1.6; opacity: 0.9;">
-            Description of this project goes here. Change the heading, text, and button below.
+            Description of this project goes here. Change the heading, text, and button.
           </p>
-          <!-- Button inside the dark panel -->
           <div style="margin-top: var(--space-md);">
             <a href="#" class="btn btn-secondary">Read More</a>
           </div>
@@ -336,28 +214,21 @@ ALL AMENDMENTS INTEGRATED:
       </div>
       <!-- BLOCK END: Split block – IMAGE LEFT, TEXT RIGHT -->
 
-      <!-- ============================================================= -->
-      /*   BLOCK START: Split block – IMAGE RIGHT, TEXT LEFT             */
-      /*   Same as above but the image is on the right.                  */
-      /*   We use flex-direction: row-reverse to flip the order.          */
-      <!-- ============================================================= -->
+      <!-- BLOCK START: Split block – IMAGE RIGHT, TEXT LEFT -->
       <div style="display: flex; flex-wrap: nowrap; gap: 0; align-items: stretch;
                   margin-bottom: var(--space-lg); flex-direction: row-reverse;">
 
-        <!-- RIGHT-SIDE IMAGE (appears right because of row-reverse) -->
         <div style="flex: 0 0 30%; min-width: 100px; border-radius: 0 12px 12px 0; overflow: hidden;">
           <img src="assets/img/temp-2.webp" alt="Description"
                style="width: 100%; height: 100%; object-fit: cover; display: block;">
         </div>
 
-        <!-- LEFT-SIDE TEXT PANEL (appears left because of row-reverse) -->
         <div style="flex: 1 1 70%; background-color: var(--color-midnight-blue); color: var(--color-text-inverted);
                     padding: var(--space-lg); border-radius: 12px 0 0 12px;
                     display: flex; flex-direction: column; justify-content: center;">
           <h3 style="color: var(--color-gold); margin-bottom: var(--space-sm);">Project Beta</h3>
           <p style="line-height: 1.6; opacity: 0.9;">
-            When using image‑on‑the‑right, the text panel's border‑radius flips so the
-            rounded corners stay on the left side.
+            When the image is on the right, the text panel's rounded corners flip to the left side.
           </p>
           <div style="margin-top: var(--space-md);">
             <a href="#" class="btn btn-secondary">Read More</a>
@@ -366,88 +237,53 @@ ALL AMENDMENTS INTEGRATED:
       </div>
       <!-- BLOCK END: Split block – IMAGE RIGHT, TEXT LEFT -->
 
-      <!-- ============================================================= -->
-      <!-- EMPTY SPACE                                                   -->
-      <!-- ============================================================= -->
       <div style="height: var(--space-lg);"></div>
 
-      <!-- ============================================================= -->
-      /*   BLOCK START: Quotation callout                                */
-      /*   Large ornamental quotation marks, optional button.            */
-      /*   Delete the <a> button line if you don't need it.              */
-      <!-- ============================================================= -->
+      <!-- BLOCK START: Quotation callout (with optional button) -->
       <div class="callout callout-quote">
         <p>“This is a block quote with large ornamental quotation marks.
         Use it for important excerpts, testimonials, or key takeaways.”</p>
-        <!-- Delete the button line below if not needed -->
+        <!-- Delete the button line if not needed -->
         <a href="#" class="btn btn-text">Optional button</a>
       </div>
       <!-- BLOCK END: Quotation callout -->
 
-      <!-- ============================================================= -->
-      <!-- EMPTY SPACE                                                   -->
-      <!-- ============================================================= -->
       <div style="height: var(--space-lg);"></div>
 
-      <!-- ============================================================= -->
-      /*   BLOCK START: Text highlighting examples                       */
-      /*   Use the <mark> tag with a background-color to simulate a      */
-      /*   highlighter pen. Change the hex colour code to any colour.    */
-      /*   Common colours:                                               */
-      /*     #ffff00 (yellow), #D4AF37 (gold), #90EE90 (light green),    */
-      /*     #87CEEB (light blue), #FFB6C1 (light pink)                  */
-      <!-- ============================================================= -->
+      <!-- BLOCK START: Text highlighting examples -->
       <div class="content-block-white">
-        <h3 class="heading-medium">Text Highlighting Examples</h3>
+        <h3 class="heading-medium">Text Highlighting</h3>
 
-        <!-- Highlighting part of a heading -->
+        <!-- Highlight part of a heading -->
         <h4 class="heading-small">
-          This is a heading with <mark style="background-color: #ffff00; padding: 0 2px;">highlighted keywords</mark> inside it.
+          A heading with <mark style="background-color: #ffff00; padding: 0 2px;">highlighted keywords</mark>.
         </h4>
 
-        <!-- Highlighting part of a paragraph -->
+        <!-- Highlight part of a paragraph -->
         <p class="paragraph">
-          This is a normal paragraph. You can highlight
-          <mark style="background-color: #D4AF37; padding: 0 2px;">any portion of the text</mark>
-          to draw the reader's attention. Change the colour by replacing the hex code
-          in the <code>style</code> attribute.
-        </p>
-
-        <!-- Multiple highlights in one paragraph -->
-        <p class="paragraph">
-          You can even have
-          <mark style="background-color: #ffff00; padding: 0 2px;">multiple</mark>
-          different
-          <mark style="background-color: #90EE90; padding: 0 2px;">colours</mark>
-          in the same sentence for emphasis.
+          This is normal text, and you can highlight
+          <mark style="background-color: #D4AF37; padding: 0 2px;">any portion</mark>
+          by changing the <code>background-color</code> in the <code>&lt;mark&gt;</code> tag.
+          Common colours: #ffff00 (yellow), #90EE90 (light green), #87CEEB (light blue).
         </p>
       </div>
-      <!-- BLOCK END: Text highlighting examples -->
+      <!-- BLOCK END: Text highlighting -->
 
-      <!-- ============================================================= -->
-      <!-- EMPTY SPACE                                                   -->
-      <!-- ============================================================= -->
       <div style="height: var(--space-lg);"></div>
 
-      <!-- ============================================================= -->
-      /*   BLOCK START: White block with centered buttons                */
-      /*   Demonstrates button alignment control.                        */
-      <!-- ============================================================= -->
+      <!-- BLOCK START: White block with centered buttons -->
       <div class="content-block-white">
         <h4 class="heading-small">Centered Buttons</h4>
-        <p class="paragraph">These buttons are centered using <code>justify-content: center</code>.</p>
+        <p class="paragraph">These buttons are centered (justify-content: center).</p>
         <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap; justify-content: center; margin-top: var(--space-md);">
           <a href="#" class="btn btn-primary">Centered Button</a>
         </div>
       </div>
-      <!-- BLOCK END: White block with centered buttons -->
+      <!-- BLOCK END: Centered buttons -->
 
     </div>
     <!-- ===== END OF CONTENT PLAYGROUND CONTAINER ===== -->
 
-    <!-- ================================================================= -->
-    <!-- FINAL EMPTY SPACE before footer                                   -->
-    <!-- ================================================================= -->
     <div style="height: var(--space-xl);"></div>
 
   </main>
@@ -461,6 +297,6 @@ ALL AMENDMENTS INTEGRATED:
   <script src="assets/js/breadcrumbs.js"></script>
   <script src="assets/js/footer.js"></script>
 
-  <!-- No page‑specific JavaScript is needed (all components are static) -->
+  <!-- No page‑specific JavaScript needed -->
 </body>
 </html>
