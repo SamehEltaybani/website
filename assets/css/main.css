@@ -678,7 +678,7 @@ main ol {
 
 .breadcrumb-bar {
     position: sticky;
-    top: calc(var(--nav-height-desktop) + 1px);
+    top: calc(var(--nav-height-desktop) + 0px);
     z-index: 999;
     background-color: transparent;    
     padding: 0;                       
@@ -687,7 +687,7 @@ main ol {
 
 @media (max-width: 768px) {
     .breadcrumb-bar {
-        top: calc(var(--nav-height-mobile) + 1px);
+        top: calc(var(--nav-height-mobile) + 0px);
         padding: 0;
     }
 }
