@@ -185,6 +185,7 @@ Page‑specific content:
         leftCol.style.display = 'flex';
         leftCol.style.flexDirection = 'column';
         leftCol.style.gap = 'var(--space-md)';   // same as grid gap for visual consistency
+        leftCol.style.flex = '3';
         leftCol.style.height = '100%';
 
         // Upper left button
@@ -217,7 +218,7 @@ Page‑specific content:
         rightLink.style.backgroundColor = 'var(--color-bg-alt)';
         rightLink.style.border = '1px solid var(--color-border)';
         rightLink.style.transition = 'var(--transition-base)';
-        rightLink.style.height = '100%';   // essential for equal height
+        rightLink.style.flex = '1';
 
         // Image
         const img = document.createElement('img');
