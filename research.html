@@ -80,7 +80,7 @@ Page‑specific content:
 
         <!-- Container forces two equal columns on ALL screen sizes -->
         <div id="three-buttons-block-1"
-             style="display: flex; flex-direction: row; align-items: stretch; gap: var(--space-md); max-width: 800px; margin: 0 auto;">
+             style="display: flex; flex-direction: row; align-items: stretch; gap: var(--space-md); max-width: 1200px; margin: 0 auto;">
           <!-- Left column (two stacked buttons) -->
           <!-- Right column (image+caption inside a single button) -->
         </div>
@@ -107,7 +107,7 @@ Page‑specific content:
     <section class="section">
   <div class="container" style="background-color: var(--color-bg-alt); padding: var(--space-lg); border-radius: 12px;">
         <div id="three-buttons-block-2"
-             style="display: flex; flex-direction: row; align-items: stretch; gap: var(--space-md); max-width: 800px; margin: 0 auto;">
+             style="display: flex; flex-direction: row; align-items: stretch; gap: var(--space-md); max-width: 1200px; margin: 0 auto;">
           <!-- Rendered by JavaScript -->
         </div>
       </div>
@@ -172,95 +172,100 @@ Page‑specific content:
         }
       };
 
-      /**
-         * Renders the three‑button block with strict 75% / 25% split and equal height.
-         */
-        function renderThreeButtonsBlock(container, data) {
-          if (!container) return;
-          container.innerHTML = '';
-        
-          // ---- LEFT COLUMN (two stacked buttons) ----
-          const leftCol = document.createElement('div');
-          leftCol.style.display = 'flex';
-          leftCol.style.flexDirection = 'column';
-          leftCol.style.gap = 'var(--space-md)';
-          leftCol.style.flex = '0 0 75%';          // always 75% of the container width
-          leftCol.style.height = '100%';
-        
-          // Upper left button
-          const upperBtn = document.createElement('a');
-          upperBtn.href = data.upperLeft.href;
-          upperBtn.className = 'btn btn-primary';
-          upperBtn.textContent = data.upperLeft.label;
-          upperBtn.style.width = '100%';
-          leftCol.appendChild(upperBtn);
-        
-          // Lower left button
-          const lowerBtn = document.createElement('a');
-          lowerBtn.href = data.lowerLeft.href;
-          lowerBtn.className = 'btn btn-secondary';
-          lowerBtn.textContent = data.lowerLeft.label;
-          lowerBtn.style.width = '100%';
-          leftCol.appendChild(lowerBtn);
-        
-          // ---- RIGHT COLUMN (single clickable button containing image + caption) ----
-          const rightLink = document.createElement('a');
-          rightLink.href = data.rightImage.href;
-          rightLink.style.display = 'flex';
-          rightLink.style.flexDirection = 'column';
-          rightLink.style.alignItems = 'center';
-          rightLink.style.justifyContent = 'space-between';
-          rightLink.style.textDecoration = 'none';
-          rightLink.style.color = 'inherit';
-          rightLink.style.borderRadius = '8px';
-          rightLink.style.overflow = 'hidden';
-          rightLink.style.backgroundColor = 'var(--color-bg-alt)';
-          rightLink.style.border = '1px solid var(--color-border)';
-          rightLink.style.transition = 'var(--transition-base)';
-          rightLink.style.flex = '0 0 25%';        // always 25% of the container width
-          rightLink.style.height = '100%';
-        
-          // Image
-          const img = document.createElement('img');
-          img.src = data.rightImage.src;
-          img.alt = data.rightImage.alt;
-          img.style.width = '100%';
-          img.style.flex = '1 1 auto';
-          img.style.objectFit = 'cover';            // better for filling the button area
-          img.setAttribute('loading', 'lazy');
-          img.addEventListener('error', function() {
-            const placeholder = document.createElement('div');
-            placeholder.style.cssText = `
-              width: 100%;
-              height: 150px;
-              background-color: #ccc;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              color: white;
-              font-size: 0.9rem;
-              padding: 1rem;
-            `;
-            placeholder.textContent = data.rightImage.src.split('/').pop();
-            rightLink.replaceChild(placeholder, img);
-          });
-          rightLink.appendChild(img);
-        
-          // Caption below the image (still inside the button)
-          const caption = document.createElement('span');
-          caption.textContent = data.rightImage.caption;
-          caption.style.display = 'block';
-          caption.style.padding = 'var(--space-sm)';
-          caption.style.fontSize = 'var(--font-size-sm)';
-          caption.style.color = 'var(--color-text-muted)';
-          caption.style.textAlign = 'center';
-          caption.style.backgroundColor = 'rgba(255,255,255,0.8)';
-          rightLink.appendChild(caption);
-        
-          // Assemble block
-          container.appendChild(leftCol);
-          container.appendChild(rightLink);
-        }
+      /**   
+                 * Renders the three‑button block using the old proven flex layout.
+                 * Left column: flex 2 (roughly 2/3 of the space, max 450px)
+                 * Right column: flex 1 (automatically takes remaining space)
+                 */
+                function renderThreeButtonsBlock(container, data) {
+                  if (!container) return;
+                  container.innerHTML = '';
+                
+                  // ---- LEFT COLUMN (two stacked buttons) ----
+                  const leftCol = document.createElement('div');
+                  leftCol.style.display = 'flex';
+                  leftCol.style.flexDirection = 'column';
+                  leftCol.style.gap = 'var(--space-md)';
+                  leftCol.style.flex = '2';                 // exactly like .cta-left-group { flex: 2 }
+                  leftCol.style.maxWidth = '450px';         // old max-width for the left group
+                  leftCol.style.height = '100%';
+                
+                  // Upper left button
+                  const upperBtn = document.createElement('a');
+                  upperBtn.href = data.upperLeft.href;
+                  upperBtn.className = 'btn btn-primary';
+                  upperBtn.textContent = data.upperLeft.label;
+                  upperBtn.style.width = '100%';
+                  leftCol.appendChild(upperBtn);
+                
+                  // Lower left button
+                  const lowerBtn = document.createElement('a');
+                  lowerBtn.href = data.lowerLeft.href;
+                  lowerBtn.className = 'btn btn-secondary';
+                  lowerBtn.textContent = data.lowerLeft.label;
+                  lowerBtn.style.width = '100%';
+                  leftCol.appendChild(lowerBtn);
+                
+                  // ---- RIGHT COLUMN (single clickable button containing image + caption) ----
+                  const rightLink = document.createElement('a');
+                  rightLink.href = data.rightImage.href;
+                  rightLink.classList.add('btn');           // make it look like a button (optional)
+                  rightLink.style.display = 'flex';
+                  rightLink.style.flexDirection = 'column';
+                  rightLink.style.alignItems = 'center';
+                  rightLink.style.justifyContent = 'center';
+                  rightLink.style.textDecoration = 'none';
+                  rightLink.style.color = 'inherit';
+                  rightLink.style.borderRadius = '8px';
+                  rightLink.style.overflow = 'hidden';
+                  rightLink.style.backgroundColor = 'var(--color-bg-alt)';
+                  rightLink.style.border = '1px solid var(--color-border)';
+                  rightLink.style.transition = 'var(--transition-base)';
+                  rightLink.style.flex = '1';               // takes remaining space (≈1/3)
+                  rightLink.style.height = '100%';          // stretch to match left column height
+                
+                  // Image
+                  const img = document.createElement('img');
+                  img.src = data.rightImage.src;
+                  img.alt = data.rightImage.alt;
+                  img.style.width = '100%';
+                  img.style.height = 'auto';
+                  img.style.flex = '1 1 auto';
+                  img.style.objectFit = 'cover';
+                  img.setAttribute('loading', 'lazy');
+                  img.addEventListener('error', function() {
+                    const placeholder = document.createElement('div');
+                    placeholder.style.cssText = `
+                      width: 100%;
+                      height: 150px;
+                      background-color: #ccc;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      color: white;
+                      font-size: 0.9rem;
+                      padding: 1rem;
+                    `;
+                    placeholder.textContent = data.rightImage.src.split('/').pop();
+                    rightLink.replaceChild(placeholder, img);
+                  });
+                  rightLink.appendChild(img);
+                
+                  // Caption below the image (still inside the button)
+                  const caption = document.createElement('span');
+                  caption.textContent = data.rightImage.caption;
+                  caption.style.display = 'block';
+                  caption.style.padding = 'var(--space-sm)';
+                  caption.style.fontSize = 'var(--font-size-sm)';
+                  caption.style.color = 'var(--color-text-muted)';
+                  caption.style.textAlign = 'center';
+                  caption.style.backgroundColor = 'rgba(255,255,255,0.8)';
+                  rightLink.appendChild(caption);
+                
+                  // Assemble block
+                  container.appendChild(leftCol);
+                  container.appendChild(rightLink);
+                }
 
       // ------------------------------------------------------------------
       // C. FEATURED RESEARCH CARDS
