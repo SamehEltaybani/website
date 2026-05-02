@@ -185,7 +185,8 @@ Page‑specific content:
         leftCol.style.display = 'flex';
         leftCol.style.flexDirection = 'column';
         leftCol.style.gap = 'var(--space-md)';   // same as grid gap for visual consistency
-        leftCol.style.flex = '3';
+        leftCol.style.flex = '2';
+        leftCol.style.maxWidth = '500px'; 
         leftCol.style.height = '100%';
 
         // Upper left button
@@ -219,6 +220,7 @@ Page‑specific content:
         rightLink.style.border = '1px solid var(--color-border)';
         rightLink.style.transition = 'var(--transition-base)';
         rightLink.style.flex = '1';
+        rightLink.style.minWidth = '200px'; 
 
         // Image
         const img = document.createElement('img');
@@ -226,7 +228,7 @@ Page‑specific content:
         img.alt = data.rightImage.alt;
         img.style.width = '100%';
         img.style.flex = '1 1 auto';        // let image take available space
-        img.style.objectFit = 'cover';
+        img.style.objectFit = 'contain';
         img.setAttribute('loading', 'lazy');
         img.addEventListener('error', function() {
           const placeholder = document.createElement('div');
