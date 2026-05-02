@@ -675,7 +675,7 @@ main ol {
 .breadcrumb-bar {
     position: sticky;
     top: calc(var(--nav-height-desktop) + 1px);
-    z-index: 1001;
+    z-index: 999;
     background-color: transparent;    
     padding: 0;                       
     border-bottom: none;               
@@ -684,7 +684,7 @@ main ol {
 @media (max-width: 768px) {
     .breadcrumb-bar {
         top: calc(var(--nav-height-mobile) + 1px);
-        padding: var(--space-xs) 0;
+        padding: 0;
     }
 }
 
@@ -692,10 +692,12 @@ main ol {
     width: 100%;
     max-width: var(--container-max-width);
     margin: 0 auto;
-    padding: 0 var(--container-padding) var(--space-xs);
+    padding: 0 var(--container-padding);       
     background-color: var(--color-bg-breadcrumb);
     border-bottom: 1px solid var(--color-border);
-    border-radius: 0 0 8px 8px;
+    height: 100%;                                
+    display: flex;
+    align-items: center;
 }
 
 .breadcrumb-list {
