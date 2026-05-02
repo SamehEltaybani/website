@@ -670,20 +670,21 @@ main ol {
     top: calc(var(--nav-height-desktop) + 1px);
     z-index: 1001;
     background-color: var(--color-bg-breadcrumb);
-    padding: var(--space-sm) var(--space-lg);
+    padding: var(--space-sm) 0;
     border-bottom: 1px solid var(--color-border);
 }
 
 @media (max-width: 768px) {
     .breadcrumb-bar {
         top: calc(var(--nav-height-mobile) + 1px);
-        padding: var(--space-xs) var(--space-md);
+        padding: var(--space-xs) 0;
     }
 }
 
 .breadcrumb-container {
     max-width: var(--container-max-width);
     margin: 0 auto;
+    padding: 0 var(--container-padding);
 }
 
 .breadcrumb-list {
