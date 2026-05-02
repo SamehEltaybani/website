@@ -1274,11 +1274,11 @@ main ol {
 
 .publication-authorship {
     display: inline-block;
-    font-size: var(--font-size-xs);
+    font-size: 0.75rem;
     padding: 2px var(--space-xs);
     border-radius: 4px;
     margin-bottom: var(--space-xs);
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .authorship-first {
