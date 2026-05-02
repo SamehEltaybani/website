@@ -59,7 +59,7 @@ All blocks are clearly labelled with start and end comments.
   <main>
 
     <!-- BLOCK START: Introduction (photo + dark panel, no gap between them) -->
-    <section style="padding-top: 0; padding-bottom: 0;">
+    <section style="padding-top: var(--space-lg); padding-bottom: 0;">
       <div class="container">
         <div style="display: flex; flex-wrap: nowrap; gap: 0; align-items: stretch;">
 
@@ -178,6 +178,40 @@ All blocks are clearly labelled with start and end comments.
       </div>
       <!-- BLOCK END: Dark block (top aligned) -->
 
+
+
+
+<!-- BLOCK START: Dark block with vertical top alignment (text starts from the top) -->
+      <div class="content-block-dark" style="display: flex; flex-direction: column; justify-content: flex-start;">
+        <h3 class="heading-medium">Milestones &amp; Impact</h3>
+        <p>
+          This dark block uses <code>justify-content: flex-start</code>, so text starts at the top.
+          Change it to <code>center</code> if you prefer vertically centred text.
+        </p>
+
+        <!-- Two images side by side -->
+        <div style="display: flex; gap: var(--space-sm); margin-top: var(--space-md);">
+          <img src="assets/img/temp-2.webp" alt="Image 1" style="width:50%; border-radius:8px;" loading="lazy">
+          <img src="assets/img/temp-3.webp" alt="Image 2" style="width:50%; border-radius:8px;" loading="lazy">
+        </div>
+
+        <!-- Right‑aligned button -->
+        <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap; justify-content: flex-end; margin-top: var(--space-md);">
+          <a href="#" class="btn btn-secondary">Learn More</a>
+        </div>
+      </div>
+      <!-- BLOCK END: Dark block (top aligned) -->
+
+
+
+
+
+
+      
+
+
+
+      
       <div style="height: var(--space-lg);"></div>
 
       <!-- BLOCK START: Transparent block (no visible box) -->
