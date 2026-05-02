@@ -519,13 +519,13 @@ main ol {
     max-width: var(--container-max-width);
     margin: 0 auto;
     padding: var(--space-sm) var(--container-padding);
-    background-color: var(--color-white);
+    background-color: var(--color-midnight-blue);
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     display: flex;
     justify-content: space-between;
     align-items: center;
     min-height: var(--nav-height-desktop);
-    border-radius: 0 0 8px 8px;      
+    border-radius: 0 0 0px 0px;      
 }
 
 /* Left side - Profile */
@@ -546,7 +546,7 @@ main ol {
 .profile-name {
     font-weight: 600;
     font-size: var(--font-size-lg);
-    color: var(--color-midnight-blue);
+    color: var(--color-text-inverted);
 }
 
 /* Right side - Desktop navigation */
@@ -558,7 +558,7 @@ main ol {
 
 .nav-link {
     text-decoration: none;
-    color: var(--color-text-main);
+    color: var(--color-text-inverted);
     font-weight: 500;
     padding: var(--space-xs) var(--space-sm);
     transition: var(--transition-fast);
@@ -598,7 +598,7 @@ main ol {
     border: none;
     cursor: pointer;
     font-size: 1.75rem;
-    color: var(--color-midnight-blue);
+    color: var(--color-gold);
     padding: var(--space-xs);
 }
 
@@ -702,6 +702,8 @@ main ol {
     height: 100%;                                
     display: flex;
     align-items: center;
+    border-radius: 0 0 8px 8px;
+ 
 }
 
 .breadcrumb-list {
