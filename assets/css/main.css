@@ -676,9 +676,9 @@ main ol {
     position: sticky;
     top: calc(var(--nav-height-desktop) + 1px);
     z-index: 1001;
-    background-color: var(--color-bg-breadcrumb);
-    padding: var(--space-sm) 0;
-    border-bottom: 1px solid var(--color-border);
+    background-color: transparent;    
+    padding: 0;                       
+    border-bottom: none;               
 }
 
 @media (max-width: 768px) {
@@ -692,7 +692,10 @@ main ol {
     width: 100%;
     max-width: var(--container-max-width);
     margin: 0 auto;
-    padding: 0 var(--container-padding);
+    padding: 0 var(--container-padding) var(--space-xs);
+    background-color: var(--color-bg-breadcrumb);
+    border-bottom: 1px solid var(--color-border);
+    border-radius: 0 0 8px 8px;
 }
 
 .breadcrumb-list {
@@ -759,19 +762,22 @@ main ol {
    ============================================================================ */
 
 .footer {
-    background-color: var(--color-midnight-blue);
+    background-color: transparent;   /* background moved to container */
     color: var(--color-text-inverted);
-    padding: var(--space-xl) 0 var(--space-lg);
+    padding: 0;
     margin-top: var(--space-xl);
 }
 
 .footer-container {
     max-width: var(--container-max-width);
     margin: 0 auto;
-    padding: 0 var(--container-padding);
+    padding: var(--space-xl) var(--container-padding) var(--space-lg);
+    background-color: var(--color-midnight-blue);
+    border-radius: 8px 8px 0 0;     /* optional: rounded top corners */
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: var(--space-lg);
+    color: var(--color-text-inverted);
 }
 
 /* Footer sitemap section */
@@ -837,12 +843,15 @@ main ol {
 
 /* Copyright line */
 .footer-copyright {
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: 0 var(--container-padding) var(--space-md);
+    background-color: var(--color-midnight-blue);
+    color: var(--color-text-inverted);
     text-align: center;
-    padding-top: var(--space-lg);
-    margin-top: var(--space-lg);
-    border-top: 1px solid rgba(255,255,255,0.1);
     font-size: var(--font-size-sm);
-    opacity: 0.6;
+    opacity: 0.8;
+    border-radius: 0 0 8px 8px;     
 }
 
 /* ============================================================================
