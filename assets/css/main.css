@@ -510,18 +510,22 @@ main ol {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background-color: var(--color-white);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    padding: var(--space-sm) var(--space-lg);
+    background: none;                
+    padding: 0;                       
+    box-shadow: none;                
 }
 
 .navbar-container {
     max-width: var(--container-max-width);
     margin: 0 auto;
+    padding: var(--space-sm) var(--container-padding);
+    background-color: var(--color-white);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     display: flex;
     justify-content: space-between;
     align-items: center;
     min-height: var(--nav-height-desktop);
+    border-radius: 0 0 8px 8px;      
 }
 
 /* Left side - Profile */
@@ -602,7 +606,7 @@ main ol {
 .mobile-menu {
     display: none;
     position: fixed;
-    top: calc(var(--nav-height-mobile) + 1px);
+    top: calc(var(--nav-height-mobile) + 8px);
     left: 0;
     right: 0;
     background-color: var(--color-white);
