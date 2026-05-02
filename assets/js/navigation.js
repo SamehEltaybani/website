@@ -53,12 +53,22 @@
      * Checks if a navigation item is the current page
      */
     function isActivePage(itemUrl) {
-        // Handle index.html special case
-        if (itemUrl === 'index.html') {
-            return currentPage === 'index.html' || currentPage === '';
-        }
-        return currentPage === itemUrl;
+    // Map portfolio sub‑pages to their parent page for highlighting
+    let effectivePage = currentPage;
+    const portfolioMap = {
+        'research-portfolio.html': 'research.html',
+        'teaching-portfolio.html': 'teaching.html',
+        'data-analysis-portfolio.html': 'data-analysis.html'
+    };
+    if (portfolioMap[effectivePage]) {
+        effectivePage = portfolioMap[effectivePage];
     }
+
+    if (itemUrl === 'index.html') {
+        return effectivePage === 'index.html' || effectivePage === '';
+    }
+    return effectivePage === itemUrl;
+}
     
     /**
      * Creates a navigation link element
