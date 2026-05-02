@@ -464,6 +464,13 @@ main ol {
    CONTENT PLAYGROUND BACKGROUND BLOCKS (for Portfolio pages)
    ============================================================================ */
 
+.content-block-transparent {
+    background-color: transparent;
+    padding: var(--space-lg) 0;
+    margin-bottom: var(--space-lg);
+    border: none;
+    border-radius: 0;
+}
 
 .content-block-white {
     background-color: var(--color-white);
