@@ -676,9 +676,7 @@ main {
 
 .breadcrumb-container {
     max-width: var(--container-max-width);
-    margin-left: 0;
-    margin-right: auto;
-    padding-left: var(--container-padding);
+    margin: 0 auto;
 }
 
 .breadcrumb-list {
