@@ -1,1 +1,191 @@
+<!--
+============================================================================
+RESEARCH-PORTFOLIO.HTML - DR. SAMEH ELTAYBANI - RESEARCH PORTFOLIO
+============================================================================
+This page serves as the template for all three individual portfolio pages.
+To create the Teaching or Data Analysis version:
+  1. Copy this file and rename it (teaching-portfolio.html or data-analysis-portfolio.html)
+  2. Change the <title>, meta description, og:url, and body data-page
+  3. Update the main heading and the intro paragraph
+  4. The breadcrumb will automatically show the correct hierarchy
+     (Home > Research > Research Portfolio, etc.)
+  5. Edit the Content Playground with your own blocks
+All reusable blocks (headings, lists, buttons, images, callouts, section backgrounds)
+can be copied, removed, or reordered without breaking the layout.
+============================================================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- ===== BASE PATH ===== -->
+  <base href="/website/">
+  <meta name="site-base-path" content="/website/">
+
+  <!-- PAGE‑SPECIFIC (edit for each portfolio) -->
+  <title>Dr. Sameh Eltaybani - Research Portfolio</title>
+  <meta name="description" content="A detailed look at Dr. Sameh Eltaybani's research achievements, projects, and contributions to gerontological nursing.">
+  <meta property="og:title" content="Dr. Sameh Eltaybani - Research Portfolio">
+  <meta property="og:description" content="A detailed look at Dr. Sameh Eltaybani's research achievements, projects, and contributions to gerontological nursing.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="research-portfolio.html">
+
+  <!-- FAVICON -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- MAIN CSS -->
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body data-page="research-portfolio.html">
+
+  <!-- ========== NAVIGATION BAR ========== -->
+  <nav data-component="navigation" class="navbar">
+    <div class="navbar-container">
+      <div class="navbar-left"></div>
+      <div class="navbar-right"></div>
+      <button class="hamburger" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========== BREADCRUMB BAR (exact height) ========== -->
+  <div data-component="breadcrumb" class="breadcrumb-bar"
+       style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main>
+    <!-- ===== PART 1: INTRODUCTION BLOCK (two columns, always side‑by‑side) ===== -->
+    <section class="section">
+      <div class="container">
+        <!-- The flex container forces the two columns to stay in a row on ALL screens -->
+        <div style="display: flex; flex-wrap: nowrap; gap: var(--space-lg); align-items: stretch;">
+
+          <!-- LEFT COLUMN: Photo (≈25% width) -->
+          <div style="flex: 0 0 25%; min-width: 120px;">
+            <img src="assets/img/profile.webp" alt="Dr. Sameh Eltaybani"
+                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px; display: block;">
+          </div>
+
+          <!-- RIGHT COLUMN: Dark background, title + paragraph (≈75% width) -->
+          <div style="flex: 1 1 75%; background-color: var(--color-midnight-blue); color: var(--color-text-inverted); padding: var(--space-lg); border-radius: 12px; display: flex; flex-direction: column; justify-content: center;">
+            <h2 style="color: var(--color-gold); margin-bottom: var(--space-sm);">Research Portfolio</h2>
+            <p style="line-height: 1.6; opacity: 0.9;">
+              This portfolio showcases my research career, major projects, and the impact of my work on gerontological nursing and evidence‑based practice.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PART 2: CONTENT PLAYGROUND ===== -->
+    <!--
+      Every block below is a self‑contained “content block”.
+      You can:
+        - Remove any block you don’t need (it leaves no gap)
+        - Copy and reorder blocks as you wish
+        - Use the three background variants: white (.content-block-white),
+          grey (.content-block-grey), and dark blue (.content-block-dark)
+        - Inside any block, place headings, paragraphs, lists, buttons, images
+    -->
+
+    <!-- ---- White background block ---- -->
+    <div class="content-block-white">
+      <h2 class="heading-large">About My Research</h2>
+      <p class="paragraph">
+        Replace this text with a detailed description of your research philosophy,
+        objectives, and overarching themes.
+      </p>
+
+      <!-- Numbered list example -->
+      <ol class="paragraph">
+        <li>First research priority or milestone</li>
+        <li>Second important point</li>
+        <li>Third achievement</li>
+      </ol>
+
+      <!-- Buttons (three styles) -->
+      <div class="btn-group" style="display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-top: var(--space-md);">
+        <a href="#" class="btn btn-primary">Primary Action</a>
+        <a href="#" class="btn btn-secondary">Secondary Link</a>
+        <a href="#" class="btn btn-text">Text‑Only Button</a>
+      </div>
+    </div>
+
+    <!-- ---- Grey background block ---- -->
+    <div class="content-block-grey">
+      <h3 class="heading-medium">Key Projects</h3>
+      <p class="paragraph">
+        Use this grey block to highlight specific projects. You can include bullet lists,
+        images, or any other elements.
+      </p>
+
+      <!-- Bullet list example -->
+      <ul class="paragraph">
+        <li>Project Alpha – impact on nursing home quality of care</li>
+        <li>Project Beta – international collaboration on geriatric syndromes</li>
+        <li>Project Gamma – development of a new assessment tool</li>
+      </ul>
+
+      <!-- Image placeholder (single photo) -->
+      <figure style="margin: var(--space-md) 0;">
+        <img src="assets/img/temp-1.webp" alt="Project image" style="width:100%; border-radius:8px;" loading="lazy">
+        <figcaption class="text-muted" style="text-align:center;">Optional caption for the image</figcaption>
+      </figure>
+    </div>
+
+    <!-- ---- Dark background block ---- -->
+    <div class="content-block-dark">
+      <h3 class="heading-medium">Milestones &amp; Impact</h3>
+      <p>
+        The dark background block is ideal for highlighting achievements or quotes.
+        All text inside this block is automatically light‑coloured, and headings
+        become gold.
+      </p>
+
+      <!-- Two images side‑by‑side (you can add more) -->
+      <div style="display: flex; gap: var(--space-sm); margin-top: var(--space-md);">
+        <img src="assets/img/temp-2.webp" alt="Image 1" style="width:50%; border-radius:8px;" loading="lazy">
+        <img src="assets/img/temp-3.webp" alt="Image 2" style="width:50%; border-radius:8px;" loading="lazy">
+      </div>
+    </div>
+
+    <!-- ---- Another white block (example with headings only) ---- -->
+    <div class="content-block-white">
+      <h2 class="heading-large">Large Heading</h2>
+      <h3 class="heading-medium">Medium Heading</h3>
+      <h4 class="heading-small">Small Heading</h4>
+      <p class="paragraph">
+        You can mix and match heading sizes freely. All heading styles are defined centrally in main.css.
+      </p>
+    </div>
+
+    <!-- ---- Example of a callout inside a portfolio block ---- -->
+    <div class="content-block-grey">
+      <div class="callout callout-highlight-btn">
+        <div class="callout-title"><i class="fas fa-star"></i> Highlights</div>
+        <ul>
+          <li>Pro tip: You can nest callouts inside any content block.</li>
+          <li>This callout uses the “Highlight” variant.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ===== END OF CONTENT PLAYGROUND ===== -->
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer data-component="footer"></footer>
+
+  <!-- ========== SCRIPTS (EXACT ORDER) ========== -->
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/navigation.js"></script>
+  <script src="assets/js/breadcrumbs.js"></script>
+  <script src="assets/js/footer.js"></script>
+
+  <!-- No page‑specific JavaScript is needed (all components are static) -->
+</body>
+</html>
