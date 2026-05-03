@@ -88,7 +88,6 @@ Page‑specific content:
     <!-- PART 3: FEATURED CARDS GROUP (10 CARDS) -->
     <section class="section">
       <div class="container">
-        <h2 class="heading-medium mb-lg">Featured Research Projects</h2>
         <div id="research-cards-container" class="grid-2" style="gap: var(--space-lg);">
           <!-- Rendered by JavaScript -->
         </div>
@@ -171,27 +170,34 @@ Page‑specific content:
                   const a = document.createElement('a');
                   a.href = btn.link;
                   a.className = 'btn-feature';
+                  a.style.padding = 'var(--space-sm) var(--space-md)';
+                  
               
                   // Icon
                   const icon = document.createElement('i');
                   icon.className = btn.icon + ' btn-feature-icon';
+                  icon.style.width = '40px';
+                  icon.style.height = '40px';
+                  icon.style.fontSize = '1.4rem';
                   a.appendChild(icon);
               
                   // Text block
                   const textDiv = document.createElement('div');
                   textDiv.className = 'btn-feature-text';
-              
-                  const titleSpan = document.createElement('span');
-                  titleSpan.className = 'btn-feature-title';
-                  titleSpan.textContent = btn.title;
-                  textDiv.appendChild(titleSpan);
-              
-                  const descSpan = document.createElement('span');
-                  descSpan.className = 'btn-feature-desc';
-                  descSpan.textContent = btn.description;
-                  textDiv.appendChild(descSpan);
-              
-                  a.appendChild(textDiv);
+
+                    const titleDiv = document.createElement('div');
+                    titleDiv.className = 'btn-feature-title';
+                    titleDiv.textContent = btn.title;
+                    textDiv.appendChild(titleDiv);
+                    
+                    if (btn.description && btn.description.trim() !== '') {
+                        const descDiv = document.createElement('div');
+                        descDiv.className = 'btn-feature-desc';
+                        descDiv.textContent = btn.description;
+                        textDiv.appendChild(descDiv);
+                    }
+                    a.appendChild(textDiv);
+                  
               
                   // Arrow
                   const arrow = document.createElement('span');
@@ -270,17 +276,14 @@ Page‑specific content:
         // Visual "button" (no link, just text)
         const btnText = document.createElement('span');
         btnText.className = 'btn btn-text';
-        btnText.textContent = 'Read more →';
+        btnText.innerHTML = '<i class="fas fa-newspaper mr-xs"></i> Read more →';
         content.appendChild(btnText);
 
         cardLink.appendChild(content);
         container.appendChild(cardLink);
     });
 }
-      
-
-
-      
+            
 
       // ------------------------------------------------------------------
       // D. INITIALISATION
