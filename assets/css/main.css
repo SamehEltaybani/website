@@ -1321,7 +1321,16 @@ footer .footer-copyright {
     background-color: var(--color-bg-alt);
     padding: 2px var(--space-sm);
     border-radius: 20px;
-    color: var(--color-text-muted);
+    color: #0000EE;          
+    text-decoration: underline;                  /* underline by default */
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.blog-category:hover {
+    color: var(--color-gold);                    /* gold text on hover */
+    background-color: var(--color-gold-light);   /* light gold background */
+    text-decoration: underline;
 }
 
 /* ============================================================================
