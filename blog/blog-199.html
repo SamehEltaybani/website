@@ -263,16 +263,24 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
           articleData = entry;
 
           document.getElementById('article-title').textContent = entry.title || 'Article';
-          const catContainer = document.getElementById('article-categories');
-          catContainer.innerHTML = '';
-          if (entry.categories && Array.isArray(entry.categories)) {
-            entry.categories.forEach(cat => {
-              const span = document.createElement('span');
-              span.className = 'blog-category';
-              span.textContent = cat;
-              catContainer.appendChild(span);
-            });
-          }
+            
+         const catContainer = document.getElementById('article-categories');
+            catContainer.innerHTML = '';
+            if (entry.categories && Array.isArray(entry.categories)) {
+                entry.categories.forEach(cat => {
+                    const a = document.createElement('a');
+                    a.href = 'blog.html?category=' + encodeURIComponent(cat);
+                    a.className = 'blog-category';
+                    a.textContent = cat;
+                    a.style.textDecoration = 'none';
+                    a.style.color = 'inherit';
+                    catContainer.appendChild(a);
+                });
+            }
+
+
+
+         
           const dateObj = new Date(entry.date);
           const dateFormatted = isNaN(dateObj.getTime()) ? entry.date : dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
           document.getElementById('article-date').textContent = dateFormatted;
