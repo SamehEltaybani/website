@@ -272,8 +272,14 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
                     a.href = 'blog.html?category=' + encodeURIComponent(cat);
                     a.className = 'blog-category';
                     a.textContent = cat;
-                    a.style.textDecoration = 'none';
-                    a.style.color = 'inherit';
+                    entry.categories.forEach(cat => {
+    const a = document.createElement('a');
+    a.href = 'blog.html?category=' + encodeURIComponent(cat);
+    a.className = 'blog-category';
+    a.textContent = cat;
+    // no inline style overrides – CSS will handle blue + underline
+    catContainer.appendChild(a);
+});
                     catContainer.appendChild(a);
                 });
             }
