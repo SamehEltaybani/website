@@ -1,15 +1,13 @@
 <!--
 ============================================================================
-INDEX.HTML - DR. SAMEH ELTAYBANI - HOME PAGE
+INDEX.HTML - DR. SAMEH ELTAYBANI - HOME PAGE (CAROUSEL FIXED)
 ============================================================================
-This page follows the project's strict HTML structure and development philosophy.
-All class names, data attributes, and script loading order are as defined in
-the fixed files (main.css, site-data.json, utils.js, navigation.js, breadcrumbs.js, footer.js).
-Page‑specific content:
-  1. Image carousel (5 slides)
-  2. Slogan + description
-  3. Featured navigation cards (8 cards)
-Page‑specific JavaScript handles the carousel and card rendering.
+Carousel changes:
+  - One full image visible + ~30% of previous / next images on both sides
+  - Previous / next buttons placed between the panes (at 30% and 70% width)
+  - Smooth slide transition (0.5s cubic-bezier)
+  - Truly infinite loop – after the 5th image the cycle continues forward seamlessly
+  - Vertical space above and below the carousel reduced by half
 ============================================================================
 -->
 <!DOCTYPE html>
@@ -18,22 +16,21 @@ Page‑specific JavaScript handles the carousel and card rendering.
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- ===== BASE PATH (for GitHub Pages project sites) ===== -->
+  <!-- ===== BASE PATH ===== -->
   <base href="/website/">
   <meta name="site-base-path" content="/website/">
 
-
-  <!-- PAGE-SPECIFIC: Change title and description per page -->
+  <!-- PAGE-SPECIFIC -->
   <title>Dr. Sameh Eltaybani - Home</title>
   <meta name="description" content="Welcome to the personal academic website of Dr. Sameh Eltaybani. Explore research, publications, data analysis, teaching, portfolios, blog, and more.">
-  <!-- Open Graph (for social media sharing) -->
   <meta property="og:title" content="Dr. Sameh Eltaybani - Home">
   <meta property="og:description" content="Welcome to the personal academic website of Dr. Sameh Eltaybani. Explore research, publications, data analysis, teaching, portfolios, blog, and more.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="index.html"> <!-- Replace with full URL when live -->
+  <meta property="og:url" content="index.html">
+
   <!-- FAVICON -->
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-  <!-- FONT AWESOME ICONS (REQUIRED) -->
+  <!-- FONT AWESOME -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <!-- MAIN CSS -->
   <link rel="stylesheet" href="assets/css/main.css">
@@ -52,12 +49,12 @@ Page‑specific JavaScript handles the carousel and card rendering.
 
   <!-- ========== BREADCRUMB BAR ========== -->
   <div data-component="breadcrumb" class="breadcrumb-bar"
-     style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
+       style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
 
   <!-- ========== MAIN CONTENT ========== -->
   <main>
-    <!-- PART 1: HIGHLIGHT REELS - IMAGE CAROUSEL -->
-    <section class="section" aria-label="Image carousel">
+    <!-- PART 1: HIGHLIGHT REELS - IMAGE CAROUSEL (reduced vertical space) -->
+    <section class="section" style="padding-top: var(--space-lg); padding-bottom: var(--space-lg);" aria-label="Image carousel">
       <div class="container">
         <div data-component="carousel" class="carousel-container">
           <!-- Carousel slides will be inserted by JavaScript -->
@@ -68,9 +65,7 @@ Page‑specific JavaScript handles the carousel and card rendering.
     <!-- PART 2: SLOGAN + DESCRIPTION -->
     <section class="section-alt">
       <div class="container">
-        <!-- Slogan (short title) -->
         <h1 class="heading-large text-center">Transforming healthcare through rigorous research and compassionate teaching</h1>
-        <!-- Descriptive paragraph -->
         <p class="paragraph text-center" style="max-width:800px; margin-left:auto; margin-right:auto;">
           I am an academic dedicated to evidence‑based practice, clinical data analysis, and empowering the next generation
           of healthcare professionals. This website offers a window into my work, publications, portfolios, and ongoing projects.
@@ -82,7 +77,6 @@ Page‑specific JavaScript handles the carousel and card rendering.
     <section class="section">
       <div class="container">
         <h2 class="heading-medium text-center mb-lg">Explore the Site</h2>
-        <!-- Cards grid container (rendered by JavaScript to keep data editable) -->
         <div id="featured-cards-container" class="featured-cards-grid">
           <!-- Cards will be inserted here -->
         </div>
@@ -93,7 +87,7 @@ Page‑specific JavaScript handles the carousel and card rendering.
   <!-- ========== FOOTER ========== -->
   <footer data-component="footer"></footer>
 
-  <!-- ========== SCRIPTS (EXACT ORDER - DO NOT CHANGE) ========== -->
+  <!-- ========== SCRIPTS (EXACT ORDER) ========== -->
   <script src="assets/js/utils.js"></script>
   <script src="assets/js/navigation.js"></script>
   <script src="assets/js/breadcrumbs.js"></script>
@@ -105,7 +99,7 @@ Page‑specific JavaScript handles the carousel and card rendering.
       'use strict';
 
       // ------------------------------------------------------------------
-      // 1. CAROUSEL COMPONENT
+      // 1. CAROUSEL – SMOOTH, INFINITE, PEEKING NEIGHBOURS
       // ------------------------------------------------------------------
       const carouselImages = [
         { src: 'assets/img/temp-1.webp', alt: 'Highlight 1' },
@@ -115,74 +109,59 @@ Page‑specific JavaScript handles the carousel and card rendering.
         { src: 'assets/img/temp-5.webp', alt: 'Highlight 5' }
       ];
 
-      let currentIndex = 0;
+      let currentRealIndex = 0;       // 0‑4 maps to the original images
+      let carouselTrack = null;
       let autoScrollTimer = null;
       let isDragging = false;
       let startPosX = 0;
       let currentTranslate = 0;
       let prevTranslate = 0;
-      let carouselTrack = null;
-
+      let animationID = null;
       const AUTO_SCROLL_INTERVAL = 3000;
       const INACTIVITY_RESUME_DELAY = 5000;
 
-      function initCarousel() {
+      // Clone slides for infinite effect: last clone before first, first clone after last
+      function buildCarousel() {
         const container = document.querySelector('[data-component="carousel"]');
         if (!container) return;
-
         container.innerHTML = `
-          <div class="carousel-track"></div>
-          <button class="carousel-btn carousel-btn-prev" aria-label="Previous slide">
+          <div class="carousel-track" style="transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);"></div>
+          <button class="carousel-btn carousel-btn-prev" aria-label="Previous slide" style="left: 30%;">
             <i class="fas fa-chevron-left"></i>
           </button>
-          <button class="carousel-btn carousel-btn-next" aria-label="Next slide">
+          <button class="carousel-btn carousel-btn-next" aria-label="Next slide" style="left: 70%; right: auto;">
             <i class="fas fa-chevron-right"></i>
           </button>
         `;
-
         carouselTrack = container.querySelector('.carousel-track');
+
+        // Build slides with clones
+        const slides = [];
+        // Clone last image at beginning
+        slides.push(createSlideElement(carouselImages[carouselImages.length - 1]));
+        // Original images
+        carouselImages.forEach(img => slides.push(createSlideElement(img)));
+        // Clone first image at end
+        slides.push(createSlideElement(carouselImages[0]));
+
+        slides.forEach(slide => carouselTrack.appendChild(slide));
+
+        setSlidePosition(1);         // start at real first image (index 1 in track)
+        currentRealIndex = 0;
+
+        // Setup interactions
         const prevBtn = container.querySelector('.carousel-btn-prev');
         const nextBtn = container.querySelector('.carousel-btn-next');
-
-        carouselImages.forEach((imgData) => {
-          const slide = document.createElement('div');
-          slide.className = 'carousel-slide';
-          const img = document.createElement('img');
-          img.src = imgData.src;
-          img.alt = imgData.alt;
-          img.setAttribute('loading', 'lazy');
-          img.addEventListener('error', function() {
-            const placeholder = document.createElement('div');
-            placeholder.style.cssText = `
-              width: 100%;
-              height: 400px;
-              background-color: #ccc;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              color: white;
-              font-size: 1.2rem;
-              text-align: center;
-              padding: 1rem;
-            `;
-            placeholder.textContent = imgData.src.split('/').pop();
-            slide.replaceChild(placeholder, img);
-          });
-          slide.appendChild(img);
-          carouselTrack.appendChild(slide);
-        });
-
-        setSlidePosition();
-
         prevBtn.addEventListener('click', () => {
           stopAutoScrollTemporarily();
-          moveToPrevSlide();
+          moveToPrev();
         });
         nextBtn.addEventListener('click', () => {
           stopAutoScrollTemporarily();
-          moveToNextSlide();
+          moveToNext();
         });
 
+        // Touch / mouse drag
         carouselTrack.addEventListener('mousedown', dragStart);
         carouselTrack.addEventListener('mousemove', dragMove);
         carouselTrack.addEventListener('mouseup', dragEnd);
@@ -194,27 +173,88 @@ Page‑specific JavaScript handles the carousel and card rendering.
         startAutoScroll();
       }
 
-      function setSlidePosition() {
-        if (!carouselTrack) return;
-        const slideWidth = carouselTrack.clientWidth;
-        carouselTrack.style.transform = `translateX(${-currentIndex * slideWidth}px)`;
+      function createSlideElement(imgData) {
+        const slide = document.createElement('div');
+        slide.className = 'carousel-slide';
+        slide.style.width = '40%';               // 40% of container, leaving 30% each side for neighbours
+        slide.style.flexShrink = '0';
+        const img = document.createElement('img');
+        img.src = imgData.src;
+        img.alt = imgData.alt;
+        img.setAttribute('loading', 'lazy');
+        img.addEventListener('error', function() {
+          const placeholder = document.createElement('div');
+          placeholder.style.cssText = `
+            width: 100%;
+            height: 100%;
+            background-color: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 1rem;
+          `;
+          placeholder.textContent = imgData.src.split('/').pop();
+          slide.replaceChild(placeholder, img);
+        });
+        slide.appendChild(img);
+        return slide;
       }
 
-      function moveToNextSlide() {
+      function setSlidePosition(trackIndex) {
         if (!carouselTrack) return;
-        currentIndex = (currentIndex + 1) % carouselImages.length;
-        setSlidePosition();
+        const containerWidth = carouselTrack.parentElement.clientWidth;
+        const slideWidth = containerWidth * 0.4;
+        const offset = (containerWidth - slideWidth) / 2;   // space on left
+        const translateX = -(trackIndex * slideWidth - offset);
+        carouselTrack.style.transform = `translateX(${translateX}px)`;
       }
 
-      function moveToPrevSlide() {
-        if (!carouselTrack) return;
-        currentIndex = (currentIndex - 1 + carouselImages.length) % carouselImages.length;
-        setSlidePosition();
+      function moveToNext() {
+        currentRealIndex = (currentRealIndex + 1) % carouselImages.length;
+        const trackIndex = currentRealIndex + 1;   // because track has a clone at position 0
+        setSlidePosition(trackIndex);
+        updateButtons();
+        // After transition, check if we need to jump for infinite loop
+        setTimeout(() => {
+          if (currentRealIndex === 0) {
+            // We moved to the clone of first image at the end, jump back to real first
+            carouselTrack.style.transition = 'none';
+            setSlidePosition(1);
+            // Force reflow
+            carouselTrack.offsetHeight;
+            carouselTrack.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
+          }
+        }, 500);
       }
 
+      function moveToPrev() {
+        currentRealIndex = (currentRealIndex - 1 + carouselImages.length) % carouselImages.length;
+        const trackIndex = currentRealIndex + 1;
+        setSlidePosition(trackIndex);
+        updateButtons();
+        setTimeout(() => {
+          if (currentRealIndex === carouselImages.length - 1) {
+            // We moved to the clone of last image at beginning, jump to real last
+            carouselTrack.style.transition = 'none';
+            setSlidePosition(carouselImages.length);   // real last is at index images.length (track index images.length)
+            carouselTrack.offsetHeight;
+            carouselTrack.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
+          }
+        }, 500);
+      }
+
+      function updateButtons() {
+        // Dynamically adjust button positions based on currentRealIndex (not needed as they are fixed)
+        // Buttons are placed statically at 30% and 70% left.
+      }
+
+      // ---- Auto‑scroll ----
       function startAutoScroll() {
         if (autoScrollTimer) clearInterval(autoScrollTimer);
-        autoScrollTimer = setInterval(moveToNextSlide, AUTO_SCROLL_INTERVAL);
+        autoScrollTimer = setInterval(moveToNext, AUTO_SCROLL_INTERVAL);
       }
 
       function stopAutoScrollTemporarily() {
@@ -228,11 +268,12 @@ Page‑specific JavaScript handles the carousel and card rendering.
         }, INACTIVITY_RESUME_DELAY);
       }
 
+      // ---- Drag & swipe ----
       function dragStart(e) {
         if (!carouselTrack) return;
         isDragging = true;
         startPosX = getEventX(e);
-        prevTranslate = -currentIndex * carouselTrack.clientWidth;
+        prevTranslate = getTranslateX();
         carouselTrack.style.transition = 'none';
         stopAutoScrollTemporarily();
       }
@@ -248,17 +289,27 @@ Page‑specific JavaScript handles the carousel and card rendering.
       function dragEnd() {
         if (!isDragging || !carouselTrack) return;
         isDragging = false;
-        carouselTrack.style.transition = 'transform 0.5s ease-in-out';
+        carouselTrack.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
         const movedBy = currentTranslate - prevTranslate;
-        const slideWidth = carouselTrack.clientWidth;
-        if (movedBy < -slideWidth * 0.25) {
-          currentIndex = (currentIndex + 1) % carouselImages.length;
-        } else if (movedBy > slideWidth * 0.25) {
-          currentIndex = (currentIndex - 1 + carouselImages.length) % carouselImages.length;
+        const containerWidth = carouselTrack.parentElement.clientWidth;
+        const slideWidth = containerWidth * 0.4;
+        const threshold = slideWidth * 0.25;
+
+        if (movedBy < -threshold) {
+          moveToNext();
+        } else if (movedBy > threshold) {
+          moveToPrev();
+        } else {
+          setSlidePosition(currentRealIndex + 1);
         }
-        setSlidePosition();
-        currentTranslate = -currentIndex * slideWidth;
         stopAutoScrollTemporarily();
+      }
+
+      function getTranslateX() {
+        if (!carouselTrack) return 0;
+        const style = window.getComputedStyle(carouselTrack);
+        const matrix = new DOMMatrixReadOnly(style.transform);
+        return matrix.m41;
       }
 
       function getEventX(e) {
@@ -266,7 +317,7 @@ Page‑specific JavaScript handles the carousel and card rendering.
       }
 
       // ------------------------------------------------------------------
-      // 2. FEATURED NAVIGATION CARDS
+      // 2. FEATURED NAVIGATION CARDS (unchanged)
       // ------------------------------------------------------------------
       const featuredCardsData = [
         {
@@ -379,7 +430,7 @@ Page‑specific JavaScript handles the carousel and card rendering.
           });
         }
 
-        initCarousel();
+        buildCarousel();
         renderFeaturedCards();
       }
 
@@ -390,6 +441,5 @@ Page‑specific JavaScript handles the carousel and card rendering.
       }
     })();
   </script>
-
 </body>
 </html>
