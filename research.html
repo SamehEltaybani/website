@@ -74,18 +74,16 @@ Page‑specific content:
   <hr style="border: none; border-top: 3px solid var(--color-gold); margin: 0;">
 </div>
 
-    <!-- PART 2: THREE PROMINENT BUTTONS BLOCK (always side‑by‑side) -->
-    <section class="section">
-  <div class="container" style="background-color: var(--color-bg-alt); padding: var(--space-lg); border-radius: 12px;">
-
-        <!-- Container forces two equal columns on ALL screen sizes -->
-        <div id="three-buttons-block-1"
-             style="display: flex; flex-direction: row; align-items: stretch; gap: var(--space-md); max-width: 1200px; margin: 0 auto;">
-          <!-- Left column (two stacked buttons) -->
-          <!-- Right column (image+caption inside a single button) -->
-        </div>
-      </div>
-    </section>
+    
+    <!-- PART 2: FEATURE BUTTONS (3 stacked, centred) -->
+<section class="section">
+  <div class="container">
+    <div id="feature-buttons-container" class="feature-buttons-container">
+      <!-- Rendered by JavaScript -->
+    </div>
+  </div>
+</section>
+ 
 
     <!-- PART 3: FEATURED CARDS GROUP (10 CARDS) -->
     <section class="section">
@@ -97,21 +95,7 @@ Page‑specific content:
       </div>
     </section>
 
-     <!-- THIN BORDER SEPARATOR -->
-        <div class="container">
-      <hr style="border: none; border-top: 3px solid var(--color-gold); margin: 0;">
-    </div>
-    
-
-    <!-- PART 4: REPEATED THREE PROMINENT BUTTONS BLOCK (second instance) -->
-    <section class="section">
-  <div class="container" style="background-color: var(--color-bg-alt); padding: var(--space-lg); border-radius: 12px;">
-        <div id="three-buttons-block-2"
-             style="display: flex; flex-direction: row; align-items: stretch; gap: var(--space-md); max-width: 1200px; margin: 0 auto;">
-          <!-- Rendered by JavaScript -->
-        </div>
-      </div>
-    </section>
+     
   </main>
 
   <!-- ========== FOOTER ========== -->
@@ -152,120 +136,77 @@ Page‑specific content:
         });
       }
 
-      // ------------------------------------------------------------------
-      // B. THREE PROMINENT BUTTONS BLOCK (reusable renderer)
-      // ------------------------------------------------------------------
-      const threeButtonsData = {
-        upperLeft: {
-          label: 'Read my insights on exceptional research ❯ ❯',
-          href: 'blog/blog-15.html'
-        },
-        lowerLeft: {
-          label: 'View My Research Portfolio',
-          href: 'research-portfolio.html'
-        },
-        rightImage: {
-          src: 'assets/img/temp-1.webp',
-          alt: 'Research highlight',
-          caption: 'Infographic summary ❯ ❯',
-          href: 'assets/doc/temp.pdf'
-        }
-      };
-
-      /**   
-                 * Renders the three‑button block using the old proven flex layout.
-                 * Left column: flex 2 (roughly 2/3 of the space, max 450px)
-                 * Right column: flex 1 (automatically takes remaining space)
-                 */
-                function renderThreeButtonsBlock(container, data) {
-                  if (!container) return;
-                  container.innerHTML = '';
-                
-                  // ---- LEFT COLUMN (two stacked buttons) ----
-                  const leftCol = document.createElement('div');
-                  leftCol.style.display = 'flex';
-                  leftCol.style.flexDirection = 'column';
-                  leftCol.style.gap = 'var(--space-md)';
-                  leftCol.style.flex = '2';                 // exactly like .cta-left-group { flex: 2 }
-                  leftCol.style.maxWidth = '450px';         // old max-width for the left group
-                  leftCol.style.height = '100%';
-                
-                  // Upper left button
-                  const upperBtn = document.createElement('a');
-                  upperBtn.href = data.upperLeft.href;
-                  upperBtn.className = 'btn btn-primary';
-                  upperBtn.textContent = data.upperLeft.label;
-                  upperBtn.style.width = '100%';
-                  leftCol.appendChild(upperBtn);
-                
-                  // Lower left button
-                  const lowerBtn = document.createElement('a');
-                  lowerBtn.href = data.lowerLeft.href;
-                  lowerBtn.className = 'btn btn-secondary';
-                  lowerBtn.textContent = data.lowerLeft.label;
-                  lowerBtn.style.width = '100%';
-                  leftCol.appendChild(lowerBtn);
-                
-                  // ---- RIGHT COLUMN (single clickable button containing image + caption) ----
-                  const rightLink = document.createElement('a');
-                  rightLink.href = data.rightImage.href;
-                  rightLink.classList.add('btn');           // make it look like a button (optional)
-                  rightLink.style.display = 'flex';
-                  rightLink.style.flexDirection = 'column';
-                  rightLink.style.alignItems = 'center';
-                  rightLink.style.justifyContent = 'center';
-                  rightLink.style.textDecoration = 'none';
-                  rightLink.style.color = 'inherit';
-                  rightLink.style.borderRadius = '8px';
-                  rightLink.style.overflow = 'hidden';
-                  rightLink.style.backgroundColor = 'var(--color-bg-alt)';
-                  rightLink.style.border = '1px solid var(--color-border)';
-                  rightLink.style.transition = 'var(--transition-base)';
-                  rightLink.style.flex = '1';               // takes remaining space (≈1/3)
-                  rightLink.style.height = '100%';          // stretch to match left column height
-                
-                  // Image
-                  const img = document.createElement('img');
-                  img.src = data.rightImage.src;
-                  img.alt = data.rightImage.alt;
-                  img.style.width = '100%';
-                  img.style.height = 'auto';
-                  img.style.flex = '1 1 auto';
-                  img.style.objectFit = 'cover';
-                  img.setAttribute('loading', 'lazy');
-                  img.addEventListener('error', function() {
-                    const placeholder = document.createElement('div');
-                    placeholder.style.cssText = `
-                      width: 100%;
-                      height: 150px;
-                      background-color: #ccc;
-                      display: flex;
-                      align-items: center;
-                      justify-content: center;
-                      color: white;
-                      font-size: 0.9rem;
-                      padding: 1rem;
-                    `;
-                    placeholder.textContent = data.rightImage.src.split('/').pop();
-                    rightLink.replaceChild(placeholder, img);
-                  });
-                  rightLink.appendChild(img);
-                
-                  // Caption below the image (still inside the button)
-                  const caption = document.createElement('span');
-                  caption.textContent = data.rightImage.caption;
-                  caption.style.display = 'block';
-                  caption.style.padding = 'var(--space-sm)';
-                  caption.style.fontSize = 'var(--font-size-sm)';
-                  caption.style.color = 'var(--color-text-muted)';
-                  caption.style.textAlign = 'center';
-                  caption.style.backgroundColor = 'rgba(255,255,255,0.8)';
-                  rightLink.appendChild(caption);
-                
-                  // Assemble block
-                  container.appendChild(leftCol);
-                  container.appendChild(rightLink);
+      
+        // ------------------------------------------------------------------
+        // B. FEATURE BUTTONS (simplified)
+        // ------------------------------------------------------------------
+      
+              const featureButtonsData = [
+                {
+                  icon: 'fas fa-newspaper',
+                  title: 'Read my insights about exceptional research',
+                  description: 'Explore blog articles where I discuss key findings and personal reflections.',
+                  link: 'blog/blog-15.html'
+                },
+                {
+                  icon: 'fas fa-folder-open',
+                  title: 'Explore my research portfolio',
+                  description: 'A curated collection of my major projects, grants, and research achievements.',
+                  link: 'research-portfolio.html'
+                },
+                {
+                  icon: 'fas fa-image',
+                  title: 'Infographic summary',
+                  description: 'A visual summary of my research focus areas and impact metrics.',
+                  link: 'assets/doc/temp.pdf'
                 }
+              ];
+              
+              function renderFeatureButtons() {
+                const container = document.getElementById('feature-buttons-container');
+                if (!container) return;
+                container.innerHTML = '';
+              
+                featureButtonsData.forEach(btn => {
+                  const a = document.createElement('a');
+                  a.href = btn.link;
+                  a.className = 'btn-feature';
+              
+                  // Icon
+                  const icon = document.createElement('i');
+                  icon.className = btn.icon + ' btn-feature-icon';
+                  a.appendChild(icon);
+              
+                  // Text block
+                  const textDiv = document.createElement('div');
+                  textDiv.className = 'btn-feature-text';
+              
+                  const titleSpan = document.createElement('span');
+                  titleSpan.className = 'btn-feature-title';
+                  titleSpan.textContent = btn.title;
+                  textDiv.appendChild(titleSpan);
+              
+                  const descSpan = document.createElement('span');
+                  descSpan.className = 'btn-feature-desc';
+                  descSpan.textContent = btn.description;
+                  textDiv.appendChild(descSpan);
+              
+                  a.appendChild(textDiv);
+              
+                  // Arrow
+                  const arrow = document.createElement('span');
+                  arrow.className = 'btn-feature-arrow';
+                  arrow.innerHTML = '&#x203A;';   // single right‑pointing angle quote
+                  a.appendChild(arrow);
+              
+                  container.appendChild(a);
+                });
+              }
+
+      
+
+
+      
 
       // ------------------------------------------------------------------
       // C. FEATURED RESEARCH CARDS
@@ -346,14 +287,8 @@ Page‑specific content:
       // ------------------------------------------------------------------
       function initPageSpecific() {
         renderExternalButtons();
-
-        const block1 = document.getElementById('three-buttons-block-1');
-        renderThreeButtonsBlock(block1, threeButtonsData);
-
-        renderResearchCards();
-
-        const block2 = document.getElementById('three-buttons-block-2');
-        renderThreeButtonsBlock(block2, threeButtonsData);
+        renderFeatureButtons();
+        renderResearchCards();       
       }
 
       if (document.readyState === 'loading') {
