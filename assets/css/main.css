@@ -1244,12 +1244,12 @@ footer .footer-copyright {
 }
 
 .authorship-first {
-    background-color: var(--color-gold-light);
+    background-color: rgba(212, 175, 55, 0.2);
     color: var(--color-midnight-blue);
 }
 
 .authorship-coauthor {
-    background-color: var(--color-bg-alt);
+    background-color: #e5e5da;
     color: var(--color-text-muted);
 }
 
