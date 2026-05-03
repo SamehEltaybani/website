@@ -789,33 +789,48 @@ main ol {
    ============================================================================ */
 
 .footer {
-    background-color: transparent;   /* background moved to container */
+    background-color: transparent;
     color: var(--color-text-inverted);
     padding: 0;
     margin-top: var(--space-xl);
 }
 
-.footer-container {
+/* ---- Social Icons Bar (horizontal, centred) ---- */
+.footer-social-bar {
+    background-color: var(--color-midnight-blue);
     max-width: var(--container-max-width);
     margin: 0 auto;
-    padding: var(--space-xl) var(--container-padding) var(--space-lg);
-    background-color: var(--color-midnight-blue);
-    border-radius: 8px 8px 0 0;     /* optional: rounded top corners */
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: var(--space-lg);
-    color: var(--color-text-inverted);
+    padding: var(--space-md) var(--container-padding);
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    border-radius: 8px 8px 0 0;
 }
 
-/* Footer sitemap section */
+/* ---- Two-Column Layout (sitemap + legal) ---- */
+.footer-columns {
+    background-color: var(--color-midnight-blue);
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: var(--space-md) var(--container-padding);
+    display: flex;
+    flex-wrap: nowrap;          /* stays side‑by‑side on all screens */
+    gap: var(--space-lg);
+}
+
+.footer-columns > * {
+    flex: 1 1 50%;
+}
+
+/* ---- Section headings (sitemap & legal) ---- */
 .footer-sitemap h4,
-.footer-social h4,
 .footer-legal h4 {
     font-size: var(--font-size-lg);
     margin-bottom: var(--space-md);
     color: var(--color-gold);
 }
 
+/* ---- Sitemap links ---- */
 .footer-sitemap-links {
     display: flex;
     flex-direction: column;
@@ -834,7 +849,7 @@ main ol {
     padding-left: var(--space-xs);
 }
 
-/* Social icons */
+/* ---- Social icons (used inside the social bar) ---- */
 .social-icons {
     display: flex;
     gap: var(--space-md);
@@ -851,7 +866,7 @@ main ol {
     transform: translateY(-2px);
 }
 
-/* Footer legal & disclaimer */
+/* ---- Legal & Disclaimer text ---- */
 .footer-legal p {
     font-size: var(--font-size-sm);
     line-height: 1.5;
@@ -868,17 +883,16 @@ main ol {
     text-decoration: underline;
 }
 
-/* Copyright line */
+/* ---- Copyright line ---- */
 .footer-copyright {
+    background-color: var(--color-midnight-blue);
     max-width: var(--container-max-width);
     margin: 0 auto;
     padding: 0 var(--container-padding) var(--space-md);
-    background-color: var(--color-midnight-blue);
-    color: var(--color-text-inverted);
     text-align: center;
     font-size: var(--font-size-sm);
     opacity: 0.8;
-    border-radius: 0 0 8px 8px;     
+    border-radius: 0 0 8px 8px;
 }
 
 /* ============================================================================
