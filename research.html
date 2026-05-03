@@ -283,61 +283,63 @@ Page‑specific content:
         { title: 'Technology in Geriatrics', img: 'assets/img/research-card-10.webp', desc: 'Adoption of telehealth and monitoring tools.', blog: 'blog/blog-30.html' }
       ];
 
+
       function renderResearchCards() {
-        const container = document.getElementById('research-cards-container');
-        if (!container) return;
-        container.innerHTML = '';
+    const container = document.getElementById('research-cards-container');
+    if (!container) return;
+    container.innerHTML = '';
 
-        researchCards.forEach(card => {
-          const cardDiv = document.createElement('div');
-          cardDiv.className = 'card card-lift';
+    researchCards.forEach(card => {
+        // Create a clickable link that wraps the entire card
+        const cardLink = document.createElement('a');
+        cardLink.href = card.blog;
+        cardLink.className = 'card card-lift';
+        cardLink.style.textDecoration = 'none';
+        cardLink.style.color = 'inherit';
+        cardLink.style.display = 'block';
 
-          const img = document.createElement('img');
-          img.src = card.img;
-          img.alt = card.title;
-          img.style.cssText = 'width:100%; height:200px; object-fit:cover;';
-          img.setAttribute('loading', 'lazy');
-          img.addEventListener('error', function() {
+        // Image
+        const img = document.createElement('img');
+        img.src = card.img;
+        img.alt = card.title;
+        img.style.cssText = 'width:100%; height:200px; object-fit:cover; display:block;';
+        img.setAttribute('loading', 'lazy');
+        img.addEventListener('error', function() {
             const placeholder = document.createElement('div');
-            placeholder.style.cssText = `
-              width: 100%;
-              height: 200px;
-              background-color: #ccc;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              color: white;
-              font-size: 1rem;
-              padding: 1rem;
-            `;
+            placeholder.style.cssText = 'width:100%; height:200px; background-color:#ccc; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1rem;';
             placeholder.textContent = card.img.split('/').pop();
-            cardDiv.replaceChild(placeholder, img);
-          });
-          cardDiv.appendChild(img);
-
-          const content = document.createElement('div');
-          content.className = 'card-content';
-
-          const titleEl = document.createElement('h3');
-          titleEl.className = 'card-title';
-          titleEl.textContent = card.title;
-          content.appendChild(titleEl);
-
-          const descEl = document.createElement('p');
-          descEl.className = 'card-description';
-          descEl.textContent = card.desc;
-          content.appendChild(descEl);
-
-          const linkEl = document.createElement('a');
-          linkEl.href = card.blog;
-          linkEl.className = 'btn btn-text';
-          linkEl.textContent = 'Read more →';
-          content.appendChild(linkEl);
-
-          cardDiv.appendChild(content);
-          container.appendChild(cardDiv);
+            cardLink.replaceChild(placeholder, img);
         });
-      }
+        cardLink.appendChild(img);
+
+        // Content
+        const content = document.createElement('div');
+        content.className = 'card-content';
+
+        const titleEl = document.createElement('h3');
+        titleEl.className = 'card-title';
+        titleEl.textContent = card.title;
+        content.appendChild(titleEl);
+
+        const descEl = document.createElement('p');
+        descEl.className = 'card-description';
+        descEl.textContent = card.desc;
+        content.appendChild(descEl);
+
+        // Visual "button" (no link, just text)
+        const btnText = document.createElement('span');
+        btnText.className = 'btn btn-text';
+        btnText.textContent = 'Read more →';
+        content.appendChild(btnText);
+
+        cardLink.appendChild(content);
+        container.appendChild(cardLink);
+    });
+}
+      
+
+
+      
 
       // ------------------------------------------------------------------
       // D. INITIALISATION
