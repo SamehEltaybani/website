@@ -38,7 +38,7 @@
 .carousel-slide {
   flex: 0 0 auto;
   width: 40%;
-  padding: 0 4px;
+  padding: 0 1px;
   box-sizing: border-box;
 }
 
@@ -237,13 +237,22 @@
 }
 
       // ---------- POSITION TRACK (center current slide) ----------
+      
       function positionTrack(animate = true) {
-  const slideWidth = track.children[0].offsetWidth;
-  const wrapperWidth = wrapper.offsetWidth;
+  const wrapperWidth = wrapper.clientWidth;
 
-  const centerOffset = (wrapperWidth - slideWidth) / 2;
+  // Detect mobile
+  const isMobile = window.innerWidth < 768;
 
-  const x = -(currentIndex * slideWidth) + centerOffset;
+  const slideWidth = isMobile
+    ? wrapperWidth              // 100% on mobile
+    : wrapperWidth * 0.4;       // 40% on desktop
+
+  const offset = isMobile
+    ? 0                         // no centering needed
+    : (wrapperWidth - slideWidth) / 2;
+
+  const x = -(currentIndex * slideWidth) + offset;
 
   track.style.transition = animate ? 'transform 0.6s ease-in-out' : 'none';
   track.style.transform = `translateX(${x}px)`;
@@ -345,7 +354,7 @@
       // ---------- RESIZE HANDLER ----------
       function handleResize() {
         updateSlideStyles();
-        positionTrack(false);   // reposition instantly without animation
+        positionTrack(false);   
       }
 
       // ---------- INITIALISE ----------
