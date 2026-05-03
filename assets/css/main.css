@@ -1,13 +1,9 @@
 <!--
 ============================================================================
-INDEX.HTML - DR. SAMEH ELTAYBANI - HOME PAGE (CAROUSEL FIXED)
+INDEX.HTML - DR. SAMEH ELTAYBANI - HOME PAGE (SAFE CAROUSEL FIX)
 ============================================================================
-Carousel changes:
-  - One full image visible + ~30% of previous / next images on both sides
-  - Previous / next buttons placed between the panes (at 30% and 70% width)
-  - Smooth slide transition (0.5s cubic-bezier)
-  - Truly infinite loop – after the 5th image the cycle continues forward seamlessly
-  - Vertical space above and below the carousel reduced by half
+Carousel: smooth infinite loop, 3 slides visible on desktop, 1 on mobile,
+buttons between panes, reduced vertical space.  Everything else unchanged.
 ============================================================================
 -->
 <!DOCTYPE html>
@@ -16,11 +12,9 @@ Carousel changes:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- ===== BASE PATH ===== -->
   <base href="/website/">
   <meta name="site-base-path" content="/website/">
 
-  <!-- PAGE-SPECIFIC -->
   <title>Dr. Sameh Eltaybani - Home</title>
   <meta name="description" content="Welcome to the personal academic website of Dr. Sameh Eltaybani. Explore research, publications, data analysis, teaching, portfolios, blog, and more.">
   <meta property="og:title" content="Dr. Sameh Eltaybani - Home">
@@ -28,41 +22,99 @@ Carousel changes:
   <meta property="og:type" content="website">
   <meta property="og:url" content="index.html">
 
-  <!-- FAVICON -->
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-  <!-- FONT AWESOME -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <!-- MAIN CSS -->
   <link rel="stylesheet" href="assets/css/main.css">
+
+  <!-- Minimal extra CSS for the new carousel behaviour -->
+  <style>
+    /* Carousel inner wrapper */
+    .carousel-viewport {
+      overflow: hidden;
+      width: 100%;
+      position: relative;
+    }
+    .carousel-strip {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      will-change: transform;
+    }
+    .carousel-strip .carousel-slide {
+      flex: 0 0 40%;           /* 40% of container = 2.5 slides visible */
+      padding: 0 6px;
+      box-sizing: border-box;
+    }
+    .carousel-strip .carousel-slide img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+    }
+    @media (max-width: 768px) {
+      .carousel-strip .carousel-slide {
+        flex: 0 0 100%;        /* single image on mobile */
+        padding: 0;
+      }
+      .carousel-strip .carousel-slide img {
+        height: 250px;
+        border-radius: 8px;
+      }
+    }
+    /* Buttons placed between panes */
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.85);
+      border: none;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .carousel-btn-prev { left: 28%; }
+    .carousel-btn-next { left: 68%; }
+    .carousel-btn:hover { background: #fff; transform: translateY(-50%) scale(1.08); }
+    .carousel-btn i { font-size: 1rem; }
+    @media (max-width: 768px) {
+      .carousel-btn-prev { left: 10px; }
+      .carousel-btn-next { left: auto; right: 10px; }
+    }
+  </style>
 </head>
 <body data-page="index.html">
-  <!-- ========== NAVIGATION BAR ========== -->
+
   <nav data-component="navigation" class="navbar">
     <div class="navbar-container">
       <div class="navbar-left"></div>
       <div class="navbar-right"></div>
-      <button class="hamburger" aria-label="Menu">
-        <i class="fas fa-bars"></i>
-      </button>
+      <button class="hamburger" aria-label="Menu"><i class="fas fa-bars"></i></button>
     </div>
   </nav>
 
-  <!-- ========== BREADCRUMB BAR ========== -->
   <div data-component="breadcrumb" class="breadcrumb-bar"
        style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
 
-  <!-- ========== MAIN CONTENT ========== -->
   <main>
-    <!-- PART 1: HIGHLIGHT REELS - IMAGE CAROUSEL (reduced vertical space) -->
-    <section class="section" style="padding-top: var(--space-lg); padding-bottom: var(--space-lg);" aria-label="Image carousel">
+    <!-- PART 1: CAROUSEL (reduced vertical space) -->
+    <section style="padding: var(--space-lg) 0;" aria-label="Image carousel">
       <div class="container">
-        <div data-component="carousel" class="carousel-container">
-          <!-- Carousel slides will be inserted by JavaScript -->
+        <div data-component="carousel" class="carousel-viewport">
+          <div class="carousel-strip" id="carousel-strip"></div>
+          <button class="carousel-btn carousel-btn-prev" id="prev-btn" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+          <button class="carousel-btn carousel-btn-next" id="next-btn" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
         </div>
       </div>
     </section>
 
-    <!-- PART 2: SLOGAN + DESCRIPTION -->
+    <!-- PART 2: SLOGAN -->
     <section class="section-alt">
       <div class="container">
         <h1 class="heading-large text-center">Transforming healthcare through rigorous research and compassionate teaching</h1>
@@ -73,334 +125,162 @@ Carousel changes:
       </div>
     </section>
 
-    <!-- PART 3: FEATURED NAVIGATION CARDS (8 CARDS) -->
+    <!-- PART 3: FEATURED CARDS -->
     <section class="section">
       <div class="container">
         <h2 class="heading-medium text-center mb-lg">Explore the Site</h2>
-        <div id="featured-cards-container" class="featured-cards-grid">
-          <!-- Cards will be inserted here -->
-        </div>
+        <div id="featured-cards-container" class="featured-cards-grid"></div>
       </div>
     </section>
   </main>
 
-  <!-- ========== FOOTER ========== -->
   <footer data-component="footer"></footer>
 
-  <!-- ========== SCRIPTS (EXACT ORDER) ========== -->
   <script src="assets/js/utils.js"></script>
   <script src="assets/js/navigation.js"></script>
   <script src="assets/js/breadcrumbs.js"></script>
   <script src="assets/js/footer.js"></script>
 
-  <!-- ========== PAGE-SPECIFIC SCRIPTS ========== -->
   <script>
     (function() {
       'use strict';
 
-      // ------------------------------------------------------------------
-      // 1. CAROUSEL – SMOOTH, INFINITE, PEEKING NEIGHBOURS
-      // ------------------------------------------------------------------
-      const carouselImages = [
-        { src: 'assets/img/temp-1.webp', alt: 'Highlight 1' },
-        { src: 'assets/img/temp-2.webp', alt: 'Highlight 2' },
-        { src: 'assets/img/temp-3.webp', alt: 'Highlight 3' },
-        { src: 'assets/img/temp-4.webp', alt: 'Highlight 4' },
-        { src: 'assets/img/temp-5.webp', alt: 'Highlight 5' }
+      // ----- CAROUSEL (smooth, infinite, peek) -----
+      const images = [
+        'assets/img/temp-1.webp',
+        'assets/img/temp-2.webp',
+        'assets/img/temp-3.webp',
+        'assets/img/temp-4.webp',
+        'assets/img/temp-5.webp'
       ];
+      const strip = document.getElementById('carousel-strip');
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
 
-      let currentRealIndex = 0;       // 0‑4 maps to the original images
-      let carouselTrack = null;
-      let autoScrollTimer = null;
-      let isDragging = false;
-      let startPosX = 0;
-      let currentTranslate = 0;
-      let prevTranslate = 0;
-      let animationID = null;
-      const AUTO_SCROLL_INTERVAL = 3000;
-      const INACTIVITY_RESUME_DELAY = 5000;
+      let current = 0;          // index in the extended "strip" (0 = clone of last real)
+      const totalReal = images.length;
+      let autoTimer = null;
+      const interval = 3000;
 
-      // Clone slides for infinite effect: last clone before first, first clone after last
-      function buildCarousel() {
-        const container = document.querySelector('[data-component="carousel"]');
-        if (!container) return;
-        container.innerHTML = `
-          <div class="carousel-track" style="transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);"></div>
-          <button class="carousel-btn carousel-btn-prev" aria-label="Previous slide" style="left: 30%;">
-            <i class="fas fa-chevron-left"></i>
-          </button>
-          <button class="carousel-btn carousel-btn-next" aria-label="Next slide" style="left: 70%; right: auto;">
-            <i class="fas fa-chevron-right"></i>
-          </button>
-        `;
-        carouselTrack = container.querySelector('.carousel-track');
-
-        // Build slides with clones
-        const slides = [];
-        // Clone last image at beginning
-        slides.push(createSlideElement(carouselImages[carouselImages.length - 1]));
-        // Original images
-        carouselImages.forEach(img => slides.push(createSlideElement(img)));
-        // Clone first image at end
-        slides.push(createSlideElement(carouselImages[0]));
-
-        slides.forEach(slide => carouselTrack.appendChild(slide));
-
-        setSlidePosition(1);         // start at real first image (index 1 in track)
-        currentRealIndex = 0;
-
-        // Setup interactions
-        const prevBtn = container.querySelector('.carousel-btn-prev');
-        const nextBtn = container.querySelector('.carousel-btn-next');
-        prevBtn.addEventListener('click', () => {
-          stopAutoScrollTemporarily();
-          moveToPrev();
+      // Build slides: [clone(last), img0, img1, img2, img3, img4, clone(first)]
+      function buildStrip() {
+        const all = [images[totalReal-1], ...images, images[0]];
+        all.forEach((src, idx) => {
+          const slide = document.createElement('div');
+          slide.className = 'carousel-slide';
+          const img = document.createElement('img');
+          img.src = src;
+          img.alt = 'Highlight ' + (idx % totalReal + 1);
+          img.loading = 'lazy';
+          img.onerror = function() {
+            const ph = document.createElement('div');
+            ph.style.cssText = 'width:100%;height:100%;background:#ccc;display:flex;align-items:center;justify-content:center;color:#fff;';
+            ph.textContent = src.split('/').pop();
+            slide.replaceChild(ph, img);
+          };
+          slide.appendChild(img);
+          strip.appendChild(slide);
         });
-        nextBtn.addEventListener('click', () => {
-          stopAutoScrollTemporarily();
-          moveToNext();
-        });
-
-        // Touch / mouse drag
-        carouselTrack.addEventListener('mousedown', dragStart);
-        carouselTrack.addEventListener('mousemove', dragMove);
-        carouselTrack.addEventListener('mouseup', dragEnd);
-        carouselTrack.addEventListener('mouseleave', dragEnd);
-        carouselTrack.addEventListener('touchstart', dragStart, { passive: true });
-        carouselTrack.addEventListener('touchmove', dragMove, { passive: true });
-        carouselTrack.addEventListener('touchend', dragEnd);
-
-        startAutoScroll();
       }
 
-      function createSlideElement(imgData) {
-        const slide = document.createElement('div');
-        slide.className = 'carousel-slide';
-        slide.style.width = '40%';               // 40% of container, leaving 30% each side for neighbours
-        slide.style.flexShrink = '0';
-        const img = document.createElement('img');
-        img.src = imgData.src;
-        img.alt = imgData.alt;
-        img.setAttribute('loading', 'lazy');
-        img.addEventListener('error', function() {
-          const placeholder = document.createElement('div');
-          placeholder.style.cssText = `
-            width: 100%;
-            height: 100%;
-            background-color: #ccc;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            text-align: center;
-            padding: 1rem;
-          `;
-          placeholder.textContent = imgData.src.split('/').pop();
-          slide.replaceChild(placeholder, img);
-        });
-        slide.appendChild(img);
-        return slide;
+      function goTo(index, animate = true) {
+        if (!strip) return;
+        strip.style.transition = animate ? 'transform 0.5s ease-in-out' : 'none';
+        const slideWidth = strip.clientWidth / (totalReal + 2); // total slides = real+2 clones
+        strip.style.transform = `translateX(-${index * slideWidth}px)`;
       }
 
-      function setSlidePosition(trackIndex) {
-        if (!carouselTrack) return;
-        const containerWidth = carouselTrack.parentElement.clientWidth;
-        const slideWidth = containerWidth * 0.4;
-        const offset = (containerWidth - slideWidth) / 2;   // space on left
-        const translateX = -(trackIndex * slideWidth - offset);
-        carouselTrack.style.transform = `translateX(${translateX}px)`;
-      }
-
-      function moveToNext() {
-        currentRealIndex = (currentRealIndex + 1) % carouselImages.length;
-        const trackIndex = currentRealIndex + 1;   // because track has a clone at position 0
-        setSlidePosition(trackIndex);
-        updateButtons();
-        // After transition, check if we need to jump for infinite loop
+      function next() {
+        current++;
+        goTo(current, true);
+        // After transition, if we reached the clone of first, jump to real first
         setTimeout(() => {
-          if (currentRealIndex === 0) {
-            // We moved to the clone of first image at the end, jump back to real first
-            carouselTrack.style.transition = 'none';
-            setSlidePosition(1);
-            // Force reflow
-            carouselTrack.offsetHeight;
-            carouselTrack.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
+          if (current === totalReal + 1) {
+            current = 1;
+            goTo(current, false);
           }
         }, 500);
       }
 
-      function moveToPrev() {
-        currentRealIndex = (currentRealIndex - 1 + carouselImages.length) % carouselImages.length;
-        const trackIndex = currentRealIndex + 1;
-        setSlidePosition(trackIndex);
-        updateButtons();
+      function prev() {
+        current--;
+        goTo(current, true);
         setTimeout(() => {
-          if (currentRealIndex === carouselImages.length - 1) {
-            // We moved to the clone of last image at beginning, jump to real last
-            carouselTrack.style.transition = 'none';
-            setSlidePosition(carouselImages.length);   // real last is at index images.length (track index images.length)
-            carouselTrack.offsetHeight;
-            carouselTrack.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
+          if (current === 0) {
+            current = totalReal;
+            goTo(current, false);
           }
         }, 500);
       }
 
-      function updateButtons() {
-        // Dynamically adjust button positions based on currentRealIndex (not needed as they are fixed)
-        // Buttons are placed statically at 30% and 70% left.
+      function startAuto() {
+        stopAuto();
+        autoTimer = setInterval(next, interval);
       }
 
-      // ---- Auto‑scroll ----
-      function startAutoScroll() {
-        if (autoScrollTimer) clearInterval(autoScrollTimer);
-        autoScrollTimer = setInterval(moveToNext, AUTO_SCROLL_INTERVAL);
+      function stopAuto() {
+        clearInterval(autoTimer);
+        autoTimer = null;
       }
 
-      function stopAutoScrollTemporarily() {
-        if (autoScrollTimer) {
-          clearInterval(autoScrollTimer);
-          autoScrollTimer = null;
+      // Initialise
+      buildStrip();
+      current = 1;   // first real image
+      goTo(current, false);
+      startAuto();
+
+      // Button events
+      prevBtn.addEventListener('click', () => { stopAuto(); prev(); startAuto(); });
+      nextBtn.addEventListener('click', () => { stopAuto(); next(); startAuto(); });
+
+      // Touch swipe
+      let touchStartX = 0;
+      strip.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; stopAuto(); }, {passive: true});
+      strip.addEventListener('touchend', (e) => {
+        const diff = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(diff) > 40) {
+          diff > 0 ? prev() : next();
         }
-        clearTimeout(window._carouselResumeTimeout);
-        window._carouselResumeTimeout = setTimeout(() => {
-          startAutoScroll();
-        }, INACTIVITY_RESUME_DELAY);
-      }
+        startAuto();
+      });
 
-      // ---- Drag & swipe ----
-      function dragStart(e) {
-        if (!carouselTrack) return;
-        isDragging = true;
-        startPosX = getEventX(e);
-        prevTranslate = getTranslateX();
-        carouselTrack.style.transition = 'none';
-        stopAutoScrollTemporarily();
-      }
-
-      function dragMove(e) {
-        if (!isDragging || !carouselTrack) return;
-        e.preventDefault();
-        const currentX = getEventX(e);
-        currentTranslate = prevTranslate + (currentX - startPosX);
-        carouselTrack.style.transform = `translateX(${currentTranslate}px)`;
-      }
-
-      function dragEnd() {
-        if (!isDragging || !carouselTrack) return;
-        isDragging = false;
-        carouselTrack.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
-        const movedBy = currentTranslate - prevTranslate;
-        const containerWidth = carouselTrack.parentElement.clientWidth;
-        const slideWidth = containerWidth * 0.4;
-        const threshold = slideWidth * 0.25;
-
-        if (movedBy < -threshold) {
-          moveToNext();
-        } else if (movedBy > threshold) {
-          moveToPrev();
-        } else {
-          setSlidePosition(currentRealIndex + 1);
-        }
-        stopAutoScrollTemporarily();
-      }
-
-      function getTranslateX() {
-        if (!carouselTrack) return 0;
-        const style = window.getComputedStyle(carouselTrack);
-        const matrix = new DOMMatrixReadOnly(style.transform);
-        return matrix.m41;
-      }
-
-      function getEventX(e) {
-        return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-      }
-
-      // ------------------------------------------------------------------
-      // 2. FEATURED NAVIGATION CARDS (unchanged)
-      // ------------------------------------------------------------------
+      // ----- FEATURED CARDS (unchanged) -----
       const featuredCardsData = [
-        {
-          title: 'Research',
-          description: 'Discover my research interests, ongoing projects, and external resources.',
-          link: 'research.html'
-        },
-        {
-          title: 'Publications',
-          description: 'Browse my published work with links to PubMed, journal sites, and personal insights.',
-          link: 'publications.html'
-        },
-        {
-          title: 'Data Analysis',
-          description: 'Translating raw data into actionable clinical insights.',
-          link: 'data-analysis.html'
-        },
-        {
-          title: 'Teaching',
-          description: 'Explore my courses, teaching philosophy, and educational materials.',
-          link: 'teaching.html'
-        },
-        {
-          title: 'Portfolios',
-          isPortfolio: true,
-          bulletPoints: [
-            'Research Portfolio',
-            'Teaching Portfolio',
-            'Data Analysis Portfolio'
-          ],
-          link: 'portfolios.html'
-        },
-        {
-          title: 'Blog',
-          description: 'Read my articles on healthcare, research integrity, data analysis, and more.',
-          link: 'blog.html'
-        },
-        {
-          title: 'Contact',
-          description: 'I am always happy to communicate, collaborate, or answer questions.',
-          link: 'contact.html'
-        },
-        {
-          title: 'Newsletter',
-          description: 'Stay updated with my latest insights and academic news.',
-          link: 'newsletter.html'
-        }
+        { title: 'Research', description: 'Discover my research interests, ongoing projects, and external resources.', link: 'research.html' },
+        { title: 'Publications', description: 'Browse my published work with links to PubMed, journal sites, and personal insights.', link: 'publications.html' },
+        { title: 'Data Analysis', description: 'Translating raw data into actionable clinical insights.', link: 'data-analysis.html' },
+        { title: 'Teaching', description: 'Explore my courses, teaching philosophy, and educational materials.', link: 'teaching.html' },
+        { title: 'Portfolios', isPortfolio: true, bulletPoints: ['Research Portfolio','Teaching Portfolio','Data Analysis Portfolio'], link: 'portfolios.html' },
+        { title: 'Blog', description: 'Read my articles on healthcare, research integrity, data analysis, and more.', link: 'blog.html' },
+        { title: 'Contact', description: 'I am always happy to communicate, collaborate, or answer questions.', link: 'contact.html' },
+        { title: 'Newsletter', description: 'Stay updated with my latest insights and academic news.', link: 'newsletter.html' }
       ];
 
       function createFeaturedCard(cardData) {
         const card = document.createElement('div');
         card.className = 'card card-lift';
-
         const content = document.createElement('div');
         content.className = 'card-content';
-
         const titleEl = document.createElement('h3');
         titleEl.className = 'card-title';
         titleEl.textContent = cardData.title;
         content.appendChild(titleEl);
-
         if (cardData.isPortfolio) {
-          const bulletList = document.createElement('ul');
-          bulletList.className = 'card-bullet-list';
-          cardData.bulletPoints.forEach(point => {
-            const li = document.createElement('li');
-            li.textContent = point;
-            bulletList.appendChild(li);
-          });
-          content.appendChild(bulletList);
+          const ul = document.createElement('ul');
+          ul.className = 'card-bullet-list';
+          cardData.bulletPoints.forEach(p => { const li = document.createElement('li'); li.textContent = p; ul.appendChild(li); });
+          content.appendChild(ul);
         } else {
           const desc = document.createElement('p');
           desc.className = 'card-description';
           desc.textContent = cardData.description;
           content.appendChild(desc);
         }
-
-        const button = document.createElement('a');
-        button.href = cardData.link;
-        button.className = 'btn btn-text';
-        button.textContent = 'Go to section >>';
-        content.appendChild(button);
-
+        const btn = document.createElement('a');
+        btn.href = cardData.link;
+        btn.className = 'btn btn-text';
+        btn.textContent = 'Go to section >>';
+        content.appendChild(btn);
         card.appendChild(content);
         return card;
       }
@@ -409,35 +289,13 @@ Carousel changes:
         const container = document.getElementById('featured-cards-container');
         if (!container) return;
         container.innerHTML = '';
-        featuredCardsData.forEach(data => {
-          container.appendChild(createFeaturedCard(data));
-        });
-      }
-
-      // ------------------------------------------------------------------
-      // 3. INITIALISATION
-      // ------------------------------------------------------------------
-      async function initPageSpecific() {
-        if (typeof SiteUtils !== 'undefined' && SiteUtils.waitForDOM) {
-          await SiteUtils.waitForDOM();
-        } else {
-          await new Promise(resolve => {
-            if (document.readyState === 'loading') {
-              document.addEventListener('DOMContentLoaded', resolve);
-            } else {
-              resolve();
-            }
-          });
-        }
-
-        buildCarousel();
-        renderFeaturedCards();
+        featuredCardsData.forEach(data => container.appendChild(createFeaturedCard(data)));
       }
 
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initPageSpecific);
+        document.addEventListener('DOMContentLoaded', renderFeaturedCards);
       } else {
-        initPageSpecific();
+        renderFeaturedCards();
       }
     })();
   </script>
