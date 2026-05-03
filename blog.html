@@ -440,6 +440,18 @@ All data comes from /json/blog-list.json.
         await loadBlogData();
         updateActiveSortUI();
         updateControlHighlights();
+
+// Auto‑apply category filter from URL (e.g., blog.html?category=AI)
+const urlParams = new URLSearchParams(window.location.search);
+const catParam = urlParams.get('category');
+if (catParam) {
+    if (filterCategorySelect) {
+        filterCategorySelect.value = catParam;
+    }
+    state.activeCategory = catParam;
+    applyAllFilters();
+    updateControlHighlights();
+}
       }
 
       if (document.readyState === 'loading') {
