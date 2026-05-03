@@ -818,8 +818,14 @@ main ol {
     gap: var(--space-lg);
 }
 
-.footer-columns > * {
-    flex: 0 0 50%;
+.footer-columns > :first-child {
+    flex: 0 0 30%;
+    max-width: 30%;
+    box-sizing: border-box;
+}
+
+.footer-columns > :last-child {
+    flex: 1 1 70%;
     box-sizing: border-box;
 }
 
