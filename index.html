@@ -21,105 +21,93 @@
 
   <!-- Carousel-specific styles (kept minimal, no comments inside) -->
   <style>
-    .carousel-wrapper {
-      position: relative;
-      overflow: hidden;
-      border-radius: 12px;
-      margin: 0 auto;
-    }
-    .carousel-track {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-      will-change: transform;
-    }
-    .carousel-slide {
-      flex-shrink: 0;
-      box-sizing: border-box;
-      padding: 0 8px;
-      transition: all 0.5s ease-in-out;
-    }
-    .carousel-slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 12px;
-      display: block;
-    }
-    /* Center slide styling */
-    .carousel-slide.centre-slide {
-      opacity: 1;
-      filter: none;
-      transform: scale(1);
-      z-index: 2;
-    }
-    .carousel-slide.centre-slide img {
-      border-radius: 12px;
-    }
-    /* Side slide styling (blurred, smaller, lower opacity) */
-    .carousel-slide.side-slide {
-      opacity: 0.6;
-      filter: blur(2px);
-      transform: scale(0.85);
-      z-index: 1;
-    }
-    .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background-color: rgba(255,255,255,0.85);
-      border: none;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 3;
-    }
-    .carousel-btn:hover {
-      background-color: #fff;
-      transform: translateY(-50%) scale(1.08);
-    }
-    .carousel-btn i {
-      font-size: 1.2rem;
-      color: var(--color-midnight-blue);
-    }
-    .prev-btn {
-      left: 30%;
-      transform: translate(-50%, -50%);
-    }
-    .next-btn {
-      left: 70%;
-      transform: translate(-50%, -50%);
-    }
-    /* Mobile adjustments */
-    @media (max-width: 768px) {
-      .carousel-slide {
-        padding: 0;
-      }
-      .carousel-slide.centre-slide {
-        transform: scale(1);
-      }
-      .carousel-slide.side-slide {
-        display: none;   /* hide side images on mobile, only one visible */
-      }
-      .carousel-btn {
-        width: 36px;
-        height: 36px;
-      }
-      .prev-btn {
-        left: 10px;
-        transform: translate(0, -50%);
-      }
-      .next-btn {
-        left: auto;
-        right: 10px;
-        transform: translate(0, -50%);
-      }
-    }
+
+
+.carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  margin: 0 auto;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.6s ease-in-out;
+  will-change: transform;
+}
+
+.carousel-slide {
+  flex: 0 0 60%; /* center takes 60% */
+  box-sizing: border-box;
+  padding: 0 10px;
+  transition: all 0.6s ease;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
+
+/* Center */
+.carousel-slide.centre-slide {
+  transform: scale(1);
+  opacity: 1;
+  filter: none;
+  z-index: 2;
+}
+
+/* Side (≈30% visible) */
+.carousel-slide.side-slide {
+  transform: scale(0.85);
+  opacity: 0.6;
+  filter: blur(2px);
+  z-index: 1;
+}
+
+/* Buttons */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255,255,255,0.9);
+  border: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 3;
+}
+
+/* Positioned BETWEEN center and side */
+.prev-btn {
+  left: 20%;
+}
+
+.next-btn {
+  right: 20%;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .carousel-slide {
+    flex: 0 0 100%;
+    padding: 0;
+  }
+
+  .carousel-slide.side-slide {
+    display: none;
+  }
+
+  .prev-btn { left: 10px; }
+  .next-btn { right: 10px; }
+}
+
+
+
+    
   </style>
 </head>
 <body data-page="index.html">
@@ -216,7 +204,7 @@
           const slide = document.createElement('div');
           slide.className = 'carousel-slide';
           // Width will be controlled by JS based on screen size
-          slide.style.width = '40%';   // default desktop
+          slide.style.flex = '0 0 60%'; 
           const img = document.createElement('img');
           img.src = src;
           img.alt = 'Highlight image';
@@ -237,60 +225,30 @@
 
       // ---------- UPDATE SLIDE CLASSES & WIDTHS ----------
       function updateSlideStyles() {
-        const slides = track.children;
-        const totalSlides = slides.length;
-        // Determine width based on screen
-        const isMobile = window.innerWidth < 768;
-        const slideWidth = isMobile ? 100 : 40;
-        for (let i = 0; i < totalSlides; i++) {
-          slides[i].style.width = slideWidth + '%';
-          // Reset all classes
-          slides[i].classList.remove('centre-slide', 'side-slide');
-          // Only three slides are relevant: prev, current, next (others still exist but will be hidden by overflow)
-          if (i === currentIndex) {
-            slides[i].classList.add('centre-slide');
-          } else if (i === currentIndex - 1 || i === currentIndex + 1) {
-            slides[i].classList.add('side-slide');
-          } else {
-            // Other slides get no special class; they remain in the DOM but are visually outside the viewport and have default opacity/transform. To keep clean, we could hide them completely, but transition might show them. Better to set them invisible with no transition? Actually, they will still be visible during sliding if we don't hide them. We'll set opacity:0 and pointer-events:none.
-            slides[i].style.opacity = '0';
-            slides[i].style.pointerEvents = 'none';
-          }
-          // For side and centre slides, ensure opacity and pointer events are normal (overrides previous)
-          if (slides[i].classList.contains('centre-slide') || slides[i].classList.contains('side-slide')) {
-            slides[i].style.opacity = '';
-            slides[i].style.pointerEvents = '';
-          }
-        }
-        // Update button positions: desktop (30%/70%), mobile (edge)
-        if (isMobile) {
-          prevBtn.style.left = '10px';
-          prevBtn.style.transform = 'translate(0, -50%)';
-          nextBtn.style.left = 'auto';
-          nextBtn.style.right = '10px';
-          nextBtn.style.transform = 'translate(0, -50%)';
-        } else {
-          prevBtn.style.left = '30%';
-          prevBtn.style.transform = 'translate(-50%, -50%)';
-          nextBtn.style.left = '70%';
-          nextBtn.style.transform = 'translate(-50%, -50%)';
-        }
-      }
+  const slides = track.children;
+
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].classList.remove('centre-slide', 'side-slide');
+
+    if (i === currentIndex) {
+      slides[i].classList.add('centre-slide');
+    } else if (i === currentIndex - 1 || i === currentIndex + 1) {
+      slides[i].classList.add('side-slide');
+    }
+  }
+}
 
       // ---------- POSITION TRACK (center current slide) ----------
       function positionTrack(animate = true) {
-        if (!track || !wrapper) return;
-        const wrapperWidth = wrapper.clientWidth;
-        const slideWidthPercent = window.innerWidth < 768 ? 100 : 40;
-        const slideWidthPx = wrapperWidth * (slideWidthPercent / 100);
-        // Desired offset: we want the current slide to be centered.
-        // The left edge of the current slide = (wrapperWidth - slideWidthPx) / 2
-        // Then transform = - (currentIndex * slideWidthPx) + leftTarget
-        const leftTarget = (wrapperWidth - slideWidthPx) / 2;
-        const targetX = -currentIndex * slideWidthPx + leftTarget;
-        track.style.transition = animate ? 'transform 0.5s ease-in-out' : 'none';
-        track.style.transform = `translateX(${targetX}px)`;
-      }
+  const wrapperWidth = wrapper.clientWidth;
+  const slideWidth = wrapperWidth * 0.6; // 60%
+  const offset = (wrapperWidth - slideWidth) / 2;
+
+  const x = -currentIndex * slideWidth + offset;
+
+  track.style.transition = animate ? 'transform 0.6s ease-in-out' : 'none';
+  track.style.transform = `translateX(${x}px)`;
+}
 
       // ---------- NAVIGATION ----------
       function goToNext() {
