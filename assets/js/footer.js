@@ -199,87 +199,119 @@
     /**
      * Renders the complete footer
      */
-    function renderFooter() {
-        if (!footerContainer) {
+      /**
+ * Renders the complete footer with the new layout:
+ *   - Horizontal social icon bar (centred, no heading)
+ *   - Two equal columns (sitemap left, legal right) side‑by‑side on all screens
+ *   - Copyright line
+ */
+        function renderFooter() {
+          if (!footerContainer) {
             console.error('[Footer] Footer container not found');
             return;
+          }
+        
+          footerContainer.innerHTML = '';
+        
+          // ---- MAIN FOOTER WRAPPER ----
+          const footer = document.createElement('footer');
+          footer.className = 'footer';
+        
+          // ===== 1. SOCIAL ICONS BAR (horizontal, centred) =====
+          const socialBar = document.createElement('div');
+          socialBar.className = 'footer-social-bar';  // new class
+          socialBar.style.cssText = 'display: flex; justify-content: center; gap: var(--space-md); padding: var(--space-md) 0;';
+        
+          socialLinks.forEach(social => {
+            const link = document.createElement('a');
+            link.href = social.url;
+            link.className = 'social-icon';   // reuse existing social-icon class
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.setAttribute('aria-label', social.name);
+            const icon = document.createElement('i');
+            icon.className = social.iconClass;
+            link.appendChild(icon);
+            socialBar.appendChild(link);
+          });
+        
+          footer.appendChild(socialBar);
+        
+          // ===== 2. TWO‑COLUMN CONTENT (sitemap + legal) =====
+          const columnsWrapper = document.createElement('div');
+          columnsWrapper.className = 'footer-columns';                   // new class
+          columnsWrapper.style.cssText = 'display: flex; flex-wrap: nowrap; gap: var(--space-lg); max-width: var(--container-max-width); margin: 0 auto; padding: 0 var(--container-padding);';
+        
+          // --- Left column: Sitemap ---
+          const sitemapSection = createSitemapSection();
+          sitemapSection.style.flex = '1 1 50%';
+          columnsWrapper.appendChild(sitemapSection);
+        
+          // --- Right column: Legal ---
+          const legalSection = createLegalSection();
+          legalSection.style.flex = '1 1 50%';
+          columnsWrapper.appendChild(legalSection);
+        
+          footer.appendChild(columnsWrapper);
+        
+          // ===== 3. COPYRIGHT (centred) =====
+          const copyrightSection = createCopyrightSection();
+          footer.appendChild(copyrightSection);
+        
+          footerContainer.appendChild(footer);
         }
-        
-        // Clear existing content
-        footerContainer.innerHTML = '';
-        
-        // Create main footer wrapper
-        const footer = document.createElement('footer');
-        footer.className = 'footer';
-        
-        // Create container for grid layout
-        const container = document.createElement('div');
-        container.className = 'footer-container';
-        
-        // Add the three main sections (sitemap, social, legal)
-        const sitemapSection = createSitemapSection();
-        const socialSection = createSocialSection();
-        const legalSection = createLegalSection();
-        
-        container.appendChild(sitemapSection);
-        container.appendChild(socialSection);
-        container.appendChild(legalSection);
-        
-        footer.appendChild(container);
-        
-        // Add copyright section
-        const copyrightSection = createCopyrightSection();
-        footer.appendChild(copyrightSection);
-        
-        footerContainer.appendChild(footer);
-    }
-    
+
+
     /**
      * Shows fallback footer when JSON fails
      */
-    function showFallbackFooter() {
-        console.warn('[Footer] Using fallback footer - no navigation data');
-        
-        if (!footerContainer) return;
-        
-        footerContainer.innerHTML = '';
-        
-        const footer = document.createElement('footer');
-        footer.className = 'footer';
-        
-        const container = document.createElement('div');
-        container.className = 'footer-container';
-        
-        // Sitemap (fallback)
-        const sitemapSection = createFallbackSitemap();
-        container.appendChild(sitemapSection);
-        
-        // Social section (always works)
-        const socialSection = createSocialSection();
-        container.appendChild(socialSection);
-        
-        // Legal section (always works)
-        const legalSection = createLegalSection();
-        container.appendChild(legalSection);
-        
-        footer.appendChild(container);
-        
-        const copyrightSection = createCopyrightSection();
-        footer.appendChild(copyrightSection);
-        
-        footerContainer.appendChild(footer);
-        
-        // Show non-intrusive error message
-        const errorMsg = document.createElement('div');
-        errorMsg.style.cssText = 'background-color: #F1D570; color: #1A2530; text-align: center; padding: 4px; font-size: 12px;';
-        errorMsg.textContent = 'Footer temporarily using fallback data. Refresh the page.';
-        footer.insertBefore(errorMsg, footer.firstChild);
-        
-        setTimeout(() => {
-            errorMsg.style.opacity = '0';
-            setTimeout(() => errorMsg.remove(), 500);
-        }, 5000);
-    }
+
+          function showFallbackFooter() {
+           if (!footerContainer) return;
+           footerContainer.innerHTML = '';
+         
+           const socialBar = document.createElement('div');
+           socialBar.className = 'footer-social-bar';
+           socialBar.style.cssText = 'display: flex; justify-content: center; gap: var(--space-md); padding: var(--space-md) 0;';
+           socialLinks.forEach(social => {
+             const link = document.createElement('a');
+             link.href = social.url;
+             link.className = 'social-icon';
+             link.target = '_blank';
+             link.rel = 'noopener noreferrer';
+             link.setAttribute('aria-label', social.name);
+             const icon = document.createElement('i');
+             icon.className = social.iconClass;
+             link.appendChild(icon);
+             socialBar.appendChild(link);
+           });
+         
+           const columnsWrapper = document.createElement('div');
+           columnsWrapper.className = 'footer-columns';
+           columnsWrapper.style.cssText = 'display: flex; flex-wrap: nowrap; gap: var(--space-lg); max-width: var(--container-max-width); margin: 0 auto; padding: 0 var(--container-padding);';
+         
+           const sitemapSection = createFallbackSitemap();
+           sitemapSection.style.flex = '1 1 50%';
+           columnsWrapper.appendChild(sitemapSection);
+         
+           const legalSection = createLegalSection();
+           legalSection.style.flex = '1 1 50%';
+           columnsWrapper.appendChild(legalSection);
+         
+           const copyrightSection = createCopyrightSection();
+         
+           const footer = document.createElement('footer');
+           footer.className = 'footer';
+           footer.appendChild(socialBar);
+           footer.appendChild(columnsWrapper);
+           footer.appendChild(copyrightSection);
+           footerContainer.appendChild(footer);
+         }
+
+
+
+
+ 
     
     /**
      * Loads navigation data from site-data.json
