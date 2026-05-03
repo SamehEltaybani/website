@@ -176,8 +176,8 @@ main {
 
 .section-alt-tight {
   padding-top: 0;
-  padding-bottom: var(--space-xs);
   margin-top: 0;
+  margin-bottom: var(--space-xs);
   border-radius: 0 0 8px 8px;
 }
 
@@ -188,6 +188,9 @@ main {
   }
 }
 
+.section-alt-tight h1 {
+  margin-top: 0;
+}
 
 
 /* ============================================================================
