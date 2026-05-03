@@ -266,23 +266,18 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
             
          const catContainer = document.getElementById('article-categories');
             catContainer.innerHTML = '';
-            if (entry.categories && Array.isArray(entry.categories)) {
-                entry.categories.forEach(cat => {
-                    const a = document.createElement('a');
-                    a.href = 'blog.html?category=' + encodeURIComponent(cat);
-                    a.className = 'blog-category';
-                    a.textContent = cat;
-                    entry.categories.forEach(cat => {
-    const a = document.createElement('a');
-    a.href = 'blog.html?category=' + encodeURIComponent(cat);
-    a.className = 'blog-category';
-    a.textContent = cat;
-    // no inline style overrides – CSS will handle blue + underline
-    catContainer.appendChild(a);
-});
-                    catContainer.appendChild(a);
-                });
-            }
+
+         if (entry.categories && Array.isArray(entry.categories)) {
+    // Remove duplicate categories
+    const uniqueCategories = [...new Set(entry.categories)];
+    uniqueCategories.forEach(cat => {
+        const a = document.createElement('a');
+        a.href = 'blog.html?category=' + encodeURIComponent(cat);
+        a.className = 'blog-category';
+        a.textContent = cat;
+        catContainer.appendChild(a);
+    });
+}
 
 
 
