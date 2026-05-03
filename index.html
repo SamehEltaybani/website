@@ -38,7 +38,7 @@
 .carousel-slide {
   flex: 0 0 auto;
   width: 40%;
-  padding: 0 10px;
+  padding: 0 4px;
   box-sizing: border-box;
 }
 
@@ -250,38 +250,68 @@
 }
 
       // ---------- NAVIGATION ----------
+
       function goToNext() {
         if (isTransitioning) return;
+      
         isTransitioning = true;
         currentIndex++;
+      
         updateSlideStyles();
         positionTrack(true);
-        // After transition, if we hit the clone of first, jump to real first
+      
         setTimeout(() => {
+          // Disable transition to avoid flash
+          track.style.transition = 'none';
+      
           if (currentIndex === realCount + 1) {
             currentIndex = 1;
-            updateSlideStyles();
-            positionTrack(false);
           }
+      
+          updateSlideStyles();
+          positionTrack(false);
+      
+          // Force reflow (prevents visual glitch)
+          track.offsetHeight;
+      
+          // Re-enable smooth transition
+          track.style.transition = 'transform 0.6s ease-in-out';
+      
           isTransitioning = false;
-        }, 500); // match CSS transition duration
+        }, 600);
       }
-
-      function goToPrev() {
+      
+      
+        function goToPrev() {
         if (isTransitioning) return;
+      
         isTransitioning = true;
         currentIndex--;
+      
         updateSlideStyles();
         positionTrack(true);
+      
         setTimeout(() => {
+          // Disable transition to avoid flash
+          track.style.transition = 'none';
+      
           if (currentIndex === 0) {
             currentIndex = realCount;
-            updateSlideStyles();
-            positionTrack(false);
           }
+      
+          updateSlideStyles();
+          positionTrack(false);
+      
+          // Force reflow (prevents visual glitch)
+          track.offsetHeight;
+      
+          // Re-enable smooth transition
+          track.style.transition = 'transform 0.6s ease-in-out';
+      
           isTransitioning = false;
-        }, 500);
-      }
+        }, 600);
+      }   
+
 
       // ---------- AUTO-PLAY ----------
       function startAuto() {
