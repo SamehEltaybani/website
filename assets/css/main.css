@@ -1573,9 +1573,12 @@ pre code {
 /* ============================================================================
    FEATURE BUTTONS (Research, Teaching, Data Analysis pages)
    ============================================================================ */
+
 .feature-buttons-container {
     max-width: 600px;
     margin: 0 auto;
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
