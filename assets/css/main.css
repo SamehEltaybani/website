@@ -1561,6 +1561,14 @@ pre code {
 }
 
 
+/* Gold left border on featured cards (Research, Teaching, Data Analysis) */
+#research-cards-container .card,
+#teaching-cards-container .card,
+#analysis-cards-container .card {
+    border-left: 4px solid var(--color-gold);
+}
+
+
 /* ============================================================================
    END OF THE main.css FILE
    ============================================================================ */
