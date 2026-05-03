@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- ===== BASE PATH ===== -->
   <base href="/website/">
   <meta name="site-base-path" content="/website/">
 
@@ -17,9 +18,113 @@
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="assets/css/main.css">
+
+  <!-- Carousel-specific styles (kept minimal, no comments inside) -->
+  <style>
+    .carousel-wrapper {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      margin: 0 auto;
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      will-change: transform;
+    }
+    .carousel-slide {
+      flex-shrink: 0;
+      box-sizing: border-box;
+      padding: 0 8px;
+      transition: all 0.5s ease-in-out;
+    }
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+    }
+    /* Center slide styling */
+    .carousel-slide.centre-slide {
+      opacity: 1;
+      filter: none;
+      transform: scale(1);
+      z-index: 2;
+    }
+    .carousel-slide.centre-slide img {
+      border-radius: 12px;
+    }
+    /* Side slide styling (blurred, smaller, lower opacity) */
+    .carousel-slide.side-slide {
+      opacity: 0.6;
+      filter: blur(2px);
+      transform: scale(0.85);
+      z-index: 1;
+    }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(255,255,255,0.85);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+    }
+    .carousel-btn:hover {
+      background-color: #fff;
+      transform: translateY(-50%) scale(1.08);
+    }
+    .carousel-btn i {
+      font-size: 1.2rem;
+      color: var(--color-midnight-blue);
+    }
+    .prev-btn {
+      left: 30%;
+      transform: translate(-50%, -50%);
+    }
+    .next-btn {
+      left: 70%;
+      transform: translate(-50%, -50%);
+    }
+    /* Mobile adjustments */
+    @media (max-width: 768px) {
+      .carousel-slide {
+        padding: 0;
+      }
+      .carousel-slide.centre-slide {
+        transform: scale(1);
+      }
+      .carousel-slide.side-slide {
+        display: none;   /* hide side images on mobile, only one visible */
+      }
+      .carousel-btn {
+        width: 36px;
+        height: 36px;
+      }
+      .prev-btn {
+        left: 10px;
+        transform: translate(0, -50%);
+      }
+      .next-btn {
+        left: auto;
+        right: 10px;
+        transform: translate(0, -50%);
+      }
+    }
+  </style>
 </head>
 <body data-page="index.html">
 
+  <!-- ========== NAVIGATION BAR ========== -->
   <nav data-component="navigation" class="navbar">
     <div class="navbar-container">
       <div class="navbar-left"></div>
@@ -30,19 +135,21 @@
     </div>
   </nav>
 
+  <!-- ========== BREADCRUMB BAR (exact height) ========== -->
   <div data-component="breadcrumb" class="breadcrumb-bar"
        style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
 
+  <!-- ========== MAIN CONTENT ========== -->
   <main>
-    <!-- CAROUSEL SECTION with reduced vertical padding -->
+    <!-- CAROUSEL SECTION with reduced vertical space -->
     <section style="padding: var(--space-lg) 0;" aria-label="Image carousel">
       <div class="container">
-        <div id="carousel-wrapper" style="position: relative; overflow: hidden; border-radius: 12px;">
-          <div id="carousel-track" style="display: flex; transition: transform 0.5s ease-in-out;"></div>
-          <button id="prev-btn" class="carousel-btn" style="position: absolute; left: 30%; top: 50%; transform: translate(-50%, -50%); z-index: 10;" aria-label="Previous">
+        <div id="home-carousel" class="carousel-wrapper">
+          <div class="carousel-track" id="carousel-track"></div>
+          <button class="carousel-btn prev-btn" id="prev-btn" aria-label="Previous slide">
             <i class="fas fa-chevron-left"></i>
           </button>
-          <button id="next-btn" class="carousel-btn" style="position: absolute; left: 70%; top: 50%; transform: translate(-50%, -50%); z-index: 10;" aria-label="Next">
+          <button class="carousel-btn next-btn" id="next-btn" aria-label="Next slide">
             <i class="fas fa-chevron-right"></i>
           </button>
         </div>
@@ -69,162 +176,160 @@
     </section>
   </main>
 
+  <!-- ========== FOOTER ========== -->
   <footer data-component="footer"></footer>
 
+  <!-- ========== SCRIPTS (EXACT ORDER) ========== -->
   <script src="assets/js/utils.js"></script>
   <script src="assets/js/navigation.js"></script>
   <script src="assets/js/breadcrumbs.js"></script>
   <script src="assets/js/footer.js"></script>
 
+  <!-- PAGE-SPECIFIC SCRIPTS -->
   <script>
-    (function () {
+    (function() {
       'use strict';
 
-      // --- CAROUSEL IMAGES ---
-      var images = [
+      // ---------- CAROUSEL CONFIG ----------
+      const images = [
         'assets/img/temp-1.webp',
         'assets/img/temp-2.webp',
         'assets/img/temp-3.webp',
         'assets/img/temp-4.webp',
         'assets/img/temp-5.webp'
       ];
-      var totalReal = images.length;
+      const realCount = images.length;
+      const track = document.getElementById('carousel-track');
+      const wrapper = document.getElementById('home-carousel');
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
 
-      var track = document.getElementById('carousel-track');
-      var prevBtn = document.getElementById('prev-btn');
-      var nextBtn = document.getElementById('next-btn');
-      var wrapper = document.getElementById('carousel-wrapper');
+      let currentIndex = 1;          // track index (0 = clone of last, 1..realCount = real, realCount+1 = clone of first)
+      let isTransitioning = false;
+      let autoTimer = null;
+      const autoInterval = 3000;
 
-      var currentIndex = 1;          // 1 = first real image (track has clone at 0)
-      var autoTimer = null;
-      var isTransitioning = false;   // prevent rapid clicks during animation
-      var slideWidthPercent = 40;    // default desktop
-      var visibleFraction = 0.30;    // 30% of adjacent slides visible
-
-      // --- BUILD SLIDES ---
+      // ---------- BUILD SLIDES (with clones) ----------
       function buildSlides() {
-        // order: clone of last, all real, clone of first
-        var allSources = [images[totalReal - 1]].concat(images).concat([images[0]]);
-        allSources.forEach(function (src, idx) {
-          var slide = document.createElement('div');
+        const allSources = [images[realCount - 1], ...images, images[0]];
+        allSources.forEach((src, idx) => {
+          const slide = document.createElement('div');
           slide.className = 'carousel-slide';
-          // width will be set dynamically by setSlideWidths()
-          slide.style.flex = '0 0 auto';
-          slide.style.padding = '0 6px';
-          slide.style.boxSizing = 'border-box';
-
-          var img = document.createElement('img');
+          // Width will be controlled by JS based on screen size
+          slide.style.width = '40%';   // default desktop
+          const img = document.createElement('img');
           img.src = src;
-          img.alt = '';
-          img.style.width = '100%';
-          img.style.height = '350px';
-          img.style.objectFit = 'cover';
-          img.style.borderRadius = '12px';
+          img.alt = 'Highlight image';
           img.loading = 'lazy';
-
-          img.onerror = function () {
-            var placeholder = document.createElement('div');
-            placeholder.style.cssText = 'width:100%;height:100%;background:#ccc;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;';
+          // Fallback for missing images
+          img.addEventListener('error', function() {
+            const placeholder = document.createElement('div');
+            placeholder.style.cssText = 'width:100%;height:100%;background:#ccc;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;border-radius:12px;';
             placeholder.textContent = src.split('/').pop();
             slide.replaceChild(placeholder, img);
-          };
-
+          });
           slide.appendChild(img);
           track.appendChild(slide);
         });
+        // Set initial classes (all slides start as side by default, later we mark centre)
+        updateSlideStyles();
       }
 
-      // --- SET SLIDE WIDTHS BASED ON SCREEN SIZE ---
-      function setSlideWidths() {
-        var isMobile = window.innerWidth < 768;
-        var slides = track.children;
-        var totalSlides = slides.length;   // real + 2 clones
-
-        if (isMobile) {
-          slideWidthPercent = 100;
-          // On mobile, no padding between slides
-          for (var i = 0; i < slides.length; i++) {
-            slides[i].style.width = '100%';
-            slides[i].style.padding = '0';
+      // ---------- UPDATE SLIDE CLASSES & WIDTHS ----------
+      function updateSlideStyles() {
+        const slides = track.children;
+        const totalSlides = slides.length;
+        // Determine width based on screen
+        const isMobile = window.innerWidth < 768;
+        const slideWidth = isMobile ? 100 : 40;
+        for (let i = 0; i < totalSlides; i++) {
+          slides[i].style.width = slideWidth + '%';
+          // Reset all classes
+          slides[i].classList.remove('centre-slide', 'side-slide');
+          // Only three slides are relevant: prev, current, next (others still exist but will be hidden by overflow)
+          if (i === currentIndex) {
+            slides[i].classList.add('centre-slide');
+          } else if (i === currentIndex - 1 || i === currentIndex + 1) {
+            slides[i].classList.add('side-slide');
+          } else {
+            // Other slides get no special class; they remain in the DOM but are visually outside the viewport and have default opacity/transform. To keep clean, we could hide them completely, but transition might show them. Better to set them invisible with no transition? Actually, they will still be visible during sliding if we don't hide them. We'll set opacity:0 and pointer-events:none.
+            slides[i].style.opacity = '0';
+            slides[i].style.pointerEvents = 'none';
           }
-          // hide the button "between panes" concept, buttons move to edges via CSS? We'll keep the inline style; we can reposition buttons via JS or rely on media query. Since we have inline styles, we'll update button positions.
-          updateButtonPositions('edge');
-        } else {
-          slideWidthPercent = 40;
-          for (var i = 0; i < slides.length; i++) {
-            slides[i].style.width = slideWidthPercent + '%';
-            slides[i].style.padding = '0 6px';
+          // For side and centre slides, ensure opacity and pointer events are normal (overrides previous)
+          if (slides[i].classList.contains('centre-slide') || slides[i].classList.contains('side-slide')) {
+            slides[i].style.opacity = '';
+            slides[i].style.pointerEvents = '';
           }
-          updateButtonPositions('pane');
         }
-      }
-
-      function updateButtonPositions(mode) {
-        if (mode === 'pane') {
-          prevBtn.style.left = '30%';
-          prevBtn.style.transform = 'translate(-50%, -50%)';
-          nextBtn.style.left = '70%';
-          nextBtn.style.transform = 'translate(-50%, -50%)';
-        } else { // edge (mobile)
+        // Update button positions: desktop (30%/70%), mobile (edge)
+        if (isMobile) {
           prevBtn.style.left = '10px';
           prevBtn.style.transform = 'translate(0, -50%)';
           nextBtn.style.left = 'auto';
           nextBtn.style.right = '10px';
           nextBtn.style.transform = 'translate(0, -50%)';
+        } else {
+          prevBtn.style.left = '30%';
+          prevBtn.style.transform = 'translate(-50%, -50%)';
+          nextBtn.style.left = '70%';
+          nextBtn.style.transform = 'translate(-50%, -50%)';
         }
       }
 
-      // --- POSITION TRACK ---
-      function goTo(index, animate) {
-        if (!track) return;
+      // ---------- POSITION TRACK (center current slide) ----------
+      function positionTrack(animate = true) {
+        if (!track || !wrapper) return;
+        const wrapperWidth = wrapper.clientWidth;
+        const slideWidthPercent = window.innerWidth < 768 ? 100 : 40;
+        const slideWidthPx = wrapperWidth * (slideWidthPercent / 100);
+        // Desired offset: we want the current slide to be centered.
+        // The left edge of the current slide = (wrapperWidth - slideWidthPx) / 2
+        // Then transform = - (currentIndex * slideWidthPx) + leftTarget
+        const leftTarget = (wrapperWidth - slideWidthPx) / 2;
+        const targetX = -currentIndex * slideWidthPx + leftTarget;
         track.style.transition = animate ? 'transform 0.5s ease-in-out' : 'none';
-
-        var wrapperWidth = wrapper.clientWidth;
-        var slideWidthPx = wrapperWidth * (slideWidthPercent / 100);
-        // The offset needed to center the active slide with the desired reveal
-        // Center of wrapper is at 50%. The active slide's center should be at 50%.
-        // The left edge of the active slide = 50% - (slideWidthPercent/2) = 50% - 20% = 30% (when 40% wide)
-        // So we need transform: translateX( - (index * slideWidthPx) + (wrapperWidth * 0.3) )
-        var targetShift = -index * slideWidthPx + wrapperWidth * 0.3;
-        track.style.transform = 'translateX(' + targetShift + 'px)';
+        track.style.transform = `translateX(${targetX}px)`;
       }
 
-      // --- NAVIGATION ---
-      function next() {
+      // ---------- NAVIGATION ----------
+      function goToNext() {
         if (isTransitioning) return;
         isTransitioning = true;
         currentIndex++;
-        goTo(currentIndex, true);
-
-        // After transition, if we've reached the clone of first, jump to real first
-        setTimeout(function () {
-          if (currentIndex === totalReal + 1) {
+        updateSlideStyles();
+        positionTrack(true);
+        // After transition, if we hit the clone of first, jump to real first
+        setTimeout(() => {
+          if (currentIndex === realCount + 1) {
             currentIndex = 1;
-            goTo(currentIndex, false);
+            updateSlideStyles();
+            positionTrack(false);
           }
           isTransitioning = false;
-        }, 500);
+        }, 500); // match CSS transition duration
       }
 
-      function prev() {
+      function goToPrev() {
         if (isTransitioning) return;
         isTransitioning = true;
         currentIndex--;
-        goTo(currentIndex, true);
-
-        setTimeout(function () {
+        updateSlideStyles();
+        positionTrack(true);
+        setTimeout(() => {
           if (currentIndex === 0) {
-            currentIndex = totalReal;
-            goTo(currentIndex, false);
+            currentIndex = realCount;
+            updateSlideStyles();
+            positionTrack(false);
           }
           isTransitioning = false;
         }, 500);
       }
 
-      // --- AUTO PLAY ---
+      // ---------- AUTO-PLAY ----------
       function startAuto() {
         stopAuto();
-        autoTimer = setInterval(next, 3000);
+        autoTimer = setInterval(goToNext, autoInterval);
       }
 
       function stopAuto() {
@@ -232,45 +337,50 @@
         autoTimer = null;
       }
 
-      // --- TOUCH SWIPE ---
-      var touchStartX = 0;
-      function onTouchStart(e) {
+      // ---------- TOUCH SWIPE ----------
+      let touchStartX = 0;
+      function handleTouchStart(e) {
         touchStartX = e.touches[0].clientX;
         stopAuto();
       }
-      function onTouchEnd(e) {
-        var diff = e.changedTouches[0].clientX - touchStartX;
+      function handleTouchEnd(e) {
+        const diff = e.changedTouches[0].clientX - touchStartX;
         if (Math.abs(diff) > 40) {
-          diff > 0 ? prev() : next();
+          if (diff > 0) {
+            goToPrev();
+          } else {
+            goToNext();
+          }
         }
         startAuto();
       }
 
-      // --- RESIZE HANDLER ---
-      function onResize() {
-        setSlideWidths();
-        goTo(currentIndex, false);   // reposition without animation
+      // ---------- RESIZE HANDLER ----------
+      function handleResize() {
+        updateSlideStyles();
+        positionTrack(false);   // reposition instantly without animation
       }
 
-      // --- INIT ---
+      // ---------- INITIALISE ----------
       function initCarousel() {
         buildSlides();
-        setSlideWidths();
-        currentIndex = 1;             // first real image
-        goTo(currentIndex, false);    // set position without animation
+        // Set initial index to first real image (1)
+        currentIndex = 1;
+        updateSlideStyles();
+        positionTrack(false);
         startAuto();
 
-        prevBtn.addEventListener('click', function () { stopAuto(); prev(); startAuto(); });
-        nextBtn.addEventListener('click', function () { stopAuto(); next(); startAuto(); });
+        prevBtn.addEventListener('click', () => { stopAuto(); goToPrev(); startAuto(); });
+        nextBtn.addEventListener('click', () => { stopAuto(); goToNext(); startAuto(); });
 
-        track.addEventListener('touchstart', onTouchStart, { passive: true });
-        track.addEventListener('touchend', onTouchEnd);
+        track.addEventListener('touchstart', handleTouchStart, { passive: true });
+        track.addEventListener('touchend', handleTouchEnd);
 
-        window.addEventListener('resize', onResize);
+        window.addEventListener('resize', handleResize);
       }
 
-      // --- FEATURED CARDS (unchanged) ---
-      var featuredCardsData = [
+      // ---------- FEATURED CARDS (unchanged) ----------
+      const featuredCardsData = [
         { title: 'Research', description: 'Discover my research interests, ongoing projects, and external resources.', link: 'research.html' },
         { title: 'Publications', description: 'Browse my published work with links to PubMed, journal sites, and personal insights.', link: 'publications.html' },
         { title: 'Data Analysis', description: 'Translating raw data into actionable clinical insights.', link: 'data-analysis.html' },
@@ -282,26 +392,30 @@
       ];
 
       function createFeaturedCard(cardData) {
-        var card = document.createElement('div');
+        const card = document.createElement('div');
         card.className = 'card card-lift';
-        var content = document.createElement('div');
+        const content = document.createElement('div');
         content.className = 'card-content';
-        var titleEl = document.createElement('h3');
+        const titleEl = document.createElement('h3');
         titleEl.className = 'card-title';
         titleEl.textContent = cardData.title;
         content.appendChild(titleEl);
         if (cardData.isPortfolio) {
-          var ul = document.createElement('ul');
+          const ul = document.createElement('ul');
           ul.className = 'card-bullet-list';
-          cardData.bulletPoints.forEach(function (p) { var li = document.createElement('li'); li.textContent = p; ul.appendChild(li); });
+          cardData.bulletPoints.forEach(point => {
+            const li = document.createElement('li');
+            li.textContent = point;
+            ul.appendChild(li);
+          });
           content.appendChild(ul);
         } else {
-          var desc = document.createElement('p');
+          const desc = document.createElement('p');
           desc.className = 'card-description';
           desc.textContent = cardData.description;
           content.appendChild(desc);
         }
-        var btn = document.createElement('a');
+        const btn = document.createElement('a');
         btn.href = cardData.link;
         btn.className = 'btn btn-text';
         btn.textContent = 'Go to section >>';
@@ -311,15 +425,15 @@
       }
 
       function renderFeaturedCards() {
-        var container = document.getElementById('featured-cards-container');
+        const container = document.getElementById('featured-cards-container');
         if (!container) return;
         container.innerHTML = '';
-        featuredCardsData.forEach(function (data) { container.appendChild(createFeaturedCard(data)); });
+        featuredCardsData.forEach(data => container.appendChild(createFeaturedCard(data)));
       }
 
-      // --- START EVERYTHING ---
+      // ---------- START ----------
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', () => {
           initCarousel();
           renderFeaturedCards();
         });
