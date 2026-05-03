@@ -238,25 +238,29 @@
 
       // ---------- POSITION TRACK (center current slide) ----------
       
-      function positionTrack(animate = true) {
-  const wrapperWidth = wrapper.clientWidth;
-
-  // Detect mobile
-  const isMobile = window.innerWidth < 768;
-
-  const slideWidth = isMobile
-    ? wrapperWidth              // 100% on mobile
-    : wrapperWidth * 0.4;       // 40% on desktop
-
-  const offset = isMobile
-    ? 0                         // no centering needed
-    : (wrapperWidth - slideWidth) / 2;
-
-  const x = -(currentIndex * slideWidth) + offset;
-
-  track.style.transition = animate ? 'transform 0.6s ease-in-out' : 'none';
-  track.style.transform = `translateX(${x}px)`;
-}
+          function positionTrack(animate = true) {
+          const isMobile = window.innerWidth < 768;
+          const slides = track.children;
+        
+          if (!slides[currentIndex]) return;
+        
+          const slideWidth = slides[currentIndex].offsetWidth;
+        
+          let x;
+        
+          if (isMobile) {
+            // On mobile: no centering, just move slide-by-slide
+            x = -currentIndex * slideWidth;
+          } else {
+            // Desktop: center the active slide
+            const wrapperWidth = wrapper.clientWidth;
+            const offset = (wrapperWidth - slideWidth) / 2;
+            x = -currentIndex * slideWidth + offset;
+          }
+        
+          track.style.transition = animate ? 'transform 0.6s ease-in-out' : 'none';
+          track.style.transform = `translateX(${x}px)`;
+        }
 
       // ---------- NAVIGATION ----------
 
