@@ -38,6 +38,7 @@
 
 .carousel-slide {
   flex: 0 0 60%; /* center takes 60% */
+  max-width: 60%;
   box-sizing: border-box;
   padding: 0 10px;
   transition: all 0.6s ease;
@@ -204,7 +205,6 @@
           const slide = document.createElement('div');
           slide.className = 'carousel-slide';
           // Width will be controlled by JS based on screen size
-          slide.style.flex = '0 0 60%'; 
           const img = document.createElement('img');
           img.src = src;
           img.alt = 'Highlight image';
@@ -240,14 +240,23 @@
 
       // ---------- POSITION TRACK (center current slide) ----------
       function positionTrack(animate = true) {
-  const wrapperWidth = wrapper.clientWidth;
-  const slideWidth = wrapperWidth * 0.6; // 60%
-  const offset = (wrapperWidth - slideWidth) / 2;
+  const slides = track.children;
+  if (!slides[currentIndex]) return;
 
-  const x = -currentIndex * slideWidth + offset;
+  const wrapperRect = wrapper.getBoundingClientRect();
+  const slideRect = slides[currentIndex].getBoundingClientRect();
+
+  const wrapperCenter = wrapperRect.left + wrapperRect.width / 2;
+  const slideCenter = slideRect.left + slideRect.width / 2;
+
+  const shift = wrapperCenter - slideCenter;
 
   track.style.transition = animate ? 'transform 0.6s ease-in-out' : 'none';
-  track.style.transform = `translateX(${x}px)`;
+
+  const currentTransform = track.style.transform.match(/-?\d+\.?\d*/);
+  const currentX = currentTransform ? parseFloat(currentTransform[0]) : 0;
+
+  track.style.transform = `translateX(${currentX + shift}px)`;
 }
 
       // ---------- NAVIGATION ----------
