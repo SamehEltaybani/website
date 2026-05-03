@@ -57,9 +57,12 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
        style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
 
   <!-- ========== SCROLL PROGRESS BAR ========== -->
-  <div class="progress-container">
-  <div class="progress-bar" id="progress-bar"></div>
+  
+ <div style="max-width: var(--container-max-width); margin: 0 auto;">
+  <div class="progress-container" style="position: sticky; top: calc(var(--nav-height-desktop) + var(--breadcrumb-height)); z-index: 998;">
+    <div class="progress-bar" id="progress-bar"></div>
   </div>
+</div>
 
   <!-- ========== MAIN CONTENT ========== -->
   <main>
@@ -319,7 +322,7 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
               .filter(item => item.blogfile !== currentBlogfile)
               .filter(item => item.categories && item.categories.some(cat => currentCats.includes(cat)))
               .sort((a, b) => new Date(b.date) - new Date(a.date))
-              .slice(0, 5);
+              .slice(0, 6);
           }
 
           if (recommended.length < 5) {
@@ -327,7 +330,7 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
             const remaining = data
               .filter(item => item.blogfile !== currentBlogfile && !existingFiles.includes(item.blogfile))
               .sort((a, b) => new Date(b.date) - new Date(a.date))
-              .slice(0, 5 - recommended.length);
+              .slice(0, 6 - recommended.length);
             recommended = recommended.concat(remaining);
           }
 
