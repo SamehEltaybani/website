@@ -176,8 +176,16 @@ main {
 
 .section-alt-tight {
   padding-top: 0;
-  padding-bottom: var(--space-md);
+  padding-bottom: var(--space-xs);
   margin-top: 0;
+  border-radius: 0 0 8px 8px;
+}
+
+@media (max-width: 768px) {
+  .section-alt-tight {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
 }
 
 
