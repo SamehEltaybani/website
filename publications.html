@@ -345,12 +345,7 @@ Fixed issues (central + page‑specific):
             </div>
           `;
           if ((i+1) % state.itemsPerPage === 0 && (i+1) < itemsToShow.length) {
-            const pageNumber = Math.ceil((index + 1) / state.itemsPerPage);
-            html += `<div class="page-separator">
-              <span class="page-sep-label">&#x25B2; PAGE ${pageNumber}</span>
-              <div class="page-sep-line"></div>
-              <span class="page-sep-label">&#x25BC; PAGE ${pageNumber + 1}</span>
-            </div>`;
+            html += `<div class="page-separator"><span>--- Page ${Math.ceil((i+1)/state.itemsPerPage)} ---</span></div>`;
           }
         });
         publicationsContainer.innerHTML = html;
