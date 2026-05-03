@@ -1148,6 +1148,10 @@ main ol {
     gap: var(--space-lg);
 }
 
+.grid-3 .card {
+    border-left: 4px solid var(--color-gold);
+}
+
 .grid-4 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -1298,6 +1302,10 @@ main ol {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: var(--space-lg);
     margin: var(--space-lg) 0;
+}
+
+.featured-cards-grid .card {
+    border-left: 4px solid var(--color-gold);
 }
 
 /* Special rule for Portfolios card bullet points */
