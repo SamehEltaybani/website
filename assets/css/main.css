@@ -1064,7 +1064,7 @@ footer .footer-copyright {
 
 /* Highlight callouts */
 .callout-highlight-btn,
-.callout-tip-no-btn {
+.callout-highlight-no-btn {
     background-color: rgba(13, 235, 58, 0.06);
     border-left-color: var(--color-gold);
 }
@@ -1250,12 +1250,12 @@ footer .footer-copyright {
 }
 
 .authorship-first {
-    background-color: #e9dfc1;
+    background-color: rgba(212, 175, 55, 0.1);
     color: var(--color-midnight-blue);
 }
 
 .authorship-coauthor {
-    background-color: #c1cbe9;
+    background-color: #add8e6;
     color: var(--color-text-muted);
 }
 
@@ -1318,17 +1318,17 @@ footer .footer-copyright {
 
 .blog-category {
     font-size: var(--font-size-xs);
-    background-color: var(--color-bg-alt);
+    background-color: rgba(212, 175, 55, 0.1);
     padding: 2px var(--space-sm);
     border-radius: 20px;
     color: #0000EE;          
-    text-decoration: underline;                  /* underline by default */
+    text-decoration: underline;         
     cursor: pointer;
     transition: var(--transition-fast);
 }
 
 .blog-category:hover {
-    color: var(--color-gold);                    /* gold text on hover */
+    color: var(--color-midnight-blue);                    
     background-color: var(--color-gold-light);   /* light gold background */
     text-decoration: underline;
 }
