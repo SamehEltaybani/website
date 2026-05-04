@@ -622,21 +622,24 @@ main ol {
 .mobile-menu {
     display: none;
     position: fixed;
-    top: calc(var(--nav-height-mobile) + 8px);
-    left: 0;
+    top: calc(var(--nav-height-mobile) + 1px);   /* aligns with the breadcrumb */
+    left: auto;                                   /* push to the right */
     right: 0;
+    width: 50%;                                   /* half the screen width */
+    min-width: 200px;                             /* prevents it from becoming too narrow */
+    max-width: 400px;                             /* stops it from being too wide on tablets */
     background-color: var(--color-white);
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     padding: var(--space-md);
     z-index: 1001;
     flex-direction: column;
     gap: var(--space-sm);
+    border-radius: 0 0 0 12px;                   /* soft corner on the bottom‑left only */
 }
 
 .mobile-menu.open {
     display: flex;
 }
-
 .mobile-nav-link {
     text-decoration: none;
     color: var(--color-text-main);
