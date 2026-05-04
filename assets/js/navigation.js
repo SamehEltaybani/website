@@ -198,7 +198,7 @@
      * Sets up responsive behavior (matchMedia)
      */
     function setupResponsiveBehavior() {
-        const mediaQuery = window.matchMedia('(min-width: 769px)');
+        const mediaQuery = window.matchMedia('(min-width: 993px)');
         
         function handleScreenChange(e) {
             if (e.matches) {
