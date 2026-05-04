@@ -153,7 +153,7 @@
         if (!mobileMenuElement) return;
         mobileMenuElement.classList.add('open');
         isMobileMenuOpen = true;
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        //document.body.style.overflow = 'hidden'; // Prevent background scrolling (now, "//" at th begining stopping the code, and therefore, scrolling is OK)
     }
     
     /**
@@ -163,7 +163,7 @@
         if (!mobileMenuElement) return;
         mobileMenuElement.classList.remove('open');
         isMobileMenuOpen = false;
-        //document.body.style.overflow = ''; // Now, scrolling while the hamburger menu is open is ALLOWED. Removing "//" at the beginning of this line will block scrolling while the menu is open.
+        document.body.style.overflow = ''; // This is related to "prevent background scrolling" above. (it is unchanged [only the above sentence is changed])
     }
     
     /**
