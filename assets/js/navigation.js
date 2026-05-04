@@ -163,7 +163,7 @@
         if (!mobileMenuElement) return;
         mobileMenuElement.classList.remove('open');
         isMobileMenuOpen = false;
-        document.body.style.overflow = ''; // Restore scrolling
+        //document.body.style.overflow = ''; // Now, scrolling while the hamburger menu is open is ALLOWED. Removing "//" at the beginning of this line will block scrolling while the menu is open.
     }
     
     /**
