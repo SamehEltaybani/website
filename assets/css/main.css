@@ -628,6 +628,8 @@ main ol {
     width: 50%;                                   /* half the screen width */
     min-width: 200px;                             /* prevents it from becoming too narrow */
     max-width: 400px;                             /* stops it from being too wide on tablets */
+    max-height: calc(100vh - var(--nav-height-mobile) - 1px);
+    overflow-y: auto;   
     background-color: var(--color-white);
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     padding: var(--space-md);
