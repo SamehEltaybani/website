@@ -347,65 +347,76 @@ All data comes from /json/blog-list.json.
       // ------------------------------------------------------------------
       // G. RENDER BLOG LIST (with clickable categories)
       // ------------------------------------------------------------------
+    
       function renderCurrentPage() {
-        if (!blogListContainer) return;
-        const end = state.currentPage * state.itemsPerPage;
-        const itemsToShow = state.filteredItems.slice(0, end);
+    if (!blogListContainer) return;
+    const end = state.currentPage * state.itemsPerPage;
+    const itemsToShow = state.filteredItems.slice(0, end);
 
-        let html = '';
-        itemsToShow.forEach((post, index) => {
-          // Categories as clickable tags
-          let categoriesHtml = '';
-          if (post.categories && Array.isArray(post.categories)) {
+    let html = '';
+    itemsToShow.forEach((post, index) => {
+        // Format the full date
+        const dateObj = new Date(post.date);
+        const dateFormatted = isNaN(dateObj.getTime())
+            ? post.date
+            : dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+        // Categories as clickable tags
+        let categoriesHtml = '';
+        if (post.categories && Array.isArray(post.categories)) {
             categoriesHtml = '<div class="blog-categories">';
             post.categories.forEach(cat => {
-              const safeCat = escapeHTML(cat);
-              categoriesHtml += `<span class="blog-category" data-category="${safeCat}" style="cursor: pointer;">${safeCat}</span>`;
+                const safeCat = escapeHTML(cat);
+                categoriesHtml += `<span class="blog-category" data-category="${safeCat}" style="cursor: pointer;">${safeCat}</span>`;
             });
             categoriesHtml += '</div>';
-          }
+        }
 
-          html += `
+        html += `
             <div class="blog-card">
-              <div class="blog-title">${escapeHTML(post.title)}</div>
-              ${categoriesHtml}
-              <a href="${escapeHTML(post.blogfile)}" class="btn btn-text" style="margin-top: var(--space-sm);"><i class="fas fa-newspaper mr-xs"></i> Read article &gt;&gt;</a>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-sm);">
+                    <div class="blog-title" style="flex: 1;">${escapeHTML(post.title)}</div>
+                    <div class="blog-date" style="white-space: nowrap; font-size: var(--font-size-sm); color: var(--color-text-muted); padding-top: 2px;">${escapeHTML(dateFormatted)}</div>
+                </div>
+                ${categoriesHtml}
+                <a href="${escapeHTML(post.blogfile)}" class="btn btn-text" style="margin-top: var(--space-sm);"><i class="fas fa-newspaper mr-xs"></i> Read article &gt;&gt;</a>
             </div>
-          `;
+        `;
 
-          // Batch separator
-          if ((index + 1) % state.itemsPerPage === 0 && (index + 1) < itemsToShow.length) {
+        // Batch separator
+        if ((index + 1) % state.itemsPerPage === 0 && (index + 1) < itemsToShow.length) {
             const pageNumber = Math.ceil((index + 1) / state.itemsPerPage);
             html += `<div class="page-separator"><span>--- Page ${pageNumber} ---</span></div>`;
-          }
-        });
+        }
+    });
 
-        blogListContainer.innerHTML = html;
+    blogListContainer.innerHTML = html;
 
-        // Attach click handlers to category tags
-        const categoryTags = blogListContainer.querySelectorAll('.blog-category');
-        categoryTags.forEach(tag => {
-          tag.addEventListener('click', function() {
+    // Attach click handlers to category tags
+    const categoryTags = blogListContainer.querySelectorAll('.blog-category');
+    categoryTags.forEach(tag => {
+        tag.addEventListener('click', function() {
             const cat = this.getAttribute('data-category');
             if (cat) quickFilterByCategory(cat);
-          });
         });
+    });
 
-        // Load More button visibility
-        if (state.filteredItems.length > end) {
-          loadMoreBtn.classList.remove('hidden');
-          if (isLoadingMore) {
+    // Load More button visibility
+    if (state.filteredItems.length > end) {
+        loadMoreBtn.classList.remove('hidden');
+        if (isLoadingMore) {
             loadMoreBtn.disabled = true;
             loadMoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-sm"></i>Loading...';
-          } else {
+        } else {
             loadMoreBtn.disabled = false;
             loadMoreBtn.textContent = 'Load More';
-          }
-        } else {
-          hideLoadMoreButton();
         }
-      }
-
+    } else {
+        hideLoadMoreButton();
+    }
+}
+      
+         
       function hideLoadMoreButton() {
         if (loadMoreBtn) loadMoreBtn.classList.add('hidden');
       }
