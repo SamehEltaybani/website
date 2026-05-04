@@ -44,7 +44,7 @@ body {
     font-size: var(--font-size-base);
     line-height: var(--line-height-base);
     color: var(--color-text-main);
-    background-color: var(--color-bg-main);
+    background-color: var(--color-bg-main);     /* The background space outside the container area [any space beyond the navigation bar, readcrumb, footer, etc.] */
     min-height: 100%;
     display: flex;
     flex-direction: column;
@@ -68,7 +68,7 @@ main {
     --color-white: #FFFFFF;
     
     /* ===== COLORS - Roles ===== */
-    --color-bg-main: var(--color-white);
+    --color-bg-main: var(--color-white);       /* The background space outside the container area [any space beyond the navigation bar, readcrumb, footer, etc.] */
     --color-bg-alt: #F8F9FA;
     --color-bg-breadcrumb: #E9ECEF;
     --color-text-main: #333333;
@@ -529,22 +529,19 @@ main ol {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: none;                
+    background: var(--color-midnight-blue);                
     padding: 0;                       
-    box-shadow: none;                
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);                
 }
 
 .navbar-container {
     max-width: var(--container-max-width);
     margin: 0 auto;
     padding: var(--space-sm) var(--container-padding);
-    background-color: var(--color-midnight-blue);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     display: flex;
     justify-content: space-between;
     align-items: center;
     min-height: var(--nav-height-desktop);
-    border-radius: 0 0 0px 0px;      
 }
 
 /* Left side - Profile */
@@ -699,9 +696,9 @@ main ol {
     position: sticky;
     top: calc(var(--nav-height-desktop) + 0px);
     z-index: 999;
-    background-color: transparent;    
-    padding: 0;                       
-    border-bottom: none;               
+    background-color: var(--color-bg-breadcrumb);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-sm) 0;      /* vertical padding only */
 }
 
 @media (max-width: 768px) {
@@ -716,12 +713,9 @@ main ol {
     max-width: var(--container-max-width);
     margin: 0 auto;
     padding: 0 var(--container-padding);       
-    background-color: var(--color-bg-breadcrumb);
-    border-bottom: 1px solid var(--color-border);
     height: 100%;                                
     display: flex;
     align-items: center;
-    border-radius: 0 0 8px 8px;
  
 }
 
@@ -789,7 +783,7 @@ main ol {
    ============================================================================ */
 
 .footer {
-    background-color: transparent;
+    background-color: var(--color-midnight-blue);
     color: var(--color-text-inverted);
     padding: 0;
     margin-top: var(--space-xl);
@@ -797,24 +791,21 @@ main ol {
 
 /* ---- Social Icons Bar (horizontal, centred) ---- */
 .footer-social-bar {
-    background-color: var(--color-midnight-blue);
     max-width: var(--container-max-width);
     margin: 0 auto;
     padding: var(--space-md) var(--container-padding);
     display: flex;
     justify-content: center;
     gap: var(--space-md);
-    border-radius: 8px 8px 0 0;
 }
 
 /* ---- Two-Column Layout (sitemap + legal) ---- */
 .footer-columns {
-    background-color: var(--color-midnight-blue);
     max-width: var(--container-max-width);
     margin: 0 auto;
     padding: var(--space-md) var(--container-padding);
     display: flex;
-    flex-wrap: nowrap;          /* stays side‑by‑side on all screens */
+    flex-wrap: nowrap;
     gap: var(--space-lg);
 }
 
@@ -891,15 +882,13 @@ main ol {
 }
 
 /* ---- Copyright line ---- */
-footer .footer-copyright {
-    background-color: var(--color-midnight-blue) !important;
+.footer-columns {
     max-width: var(--container-max-width);
     margin: 0 auto;
-    padding: 0 var(--container-padding) var(--space-md);
-    text-align: center;
-    font-size: var(--font-size-sm);
-    opacity: 1;
-    border-radius: 0 0 8px 8px;
+    padding: var(--space-md) var(--container-padding);
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--space-lg);
 }
 
 /* ============================================================================
@@ -978,22 +967,19 @@ footer .footer-copyright {
     position: sticky;
     top: calc(var(--nav-height-desktop) + var(--breadcrumb-height));
     z-index: 997;
-    background: none;
-    border-bottom: none;
-    padding: 0;
+    background-color: var(--color-white);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-sm) 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 0;
+    gap: var(--space-sm);
     align-items: center;
 }
 
 .controls-bar .container {
-    background-color: var(--color-white);
-    border-bottom: 1px solid var(--color-border);
-    padding: var(--space-sm) var(--container-padding);
     max-width: var(--container-max-width);
     margin: 0 auto;
-    width: 100%;
+    padding: 0 var(--container-padding);
     display: flex;
     flex-wrap: nowrap;
     gap: var(--space-sm);
