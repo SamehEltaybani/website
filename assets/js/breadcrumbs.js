@@ -359,7 +359,7 @@
         
         // After rendering, check if we need to collapse on mobile
         requestAnimationFrame(() => {
-            if (window.innerWidth < 768 && isBreadcrumbOverflowing(list, container)) {
+            if (window.innerWidth < 992 && isBreadcrumbOverflowing(list, container)) {
                 collapseToMobileView(list, container);
             }
         });
@@ -397,9 +397,9 @@
      */
     function handleResize() {
         renderAdaptiveBreadcrumb();
-        if (window.innerWidth >= 768 && isModalOpen) {
+        if (window.innerWidth >= 992 && isModalOpen) {
             closeMobileModal();
-        }
+        }0
     }
     
     /**
