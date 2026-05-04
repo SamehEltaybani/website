@@ -885,9 +885,9 @@ main ol {
 footer .footer-copyright {
     max-width: var(--container-max-width);
     margin: 0 auto;
-    padding: var(--space-md) var(--container-padding);
+    padding: var(--space-lg) var(--container-padding);
     text-align: center;
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-lg);
     opacity: 1;
 }
 
