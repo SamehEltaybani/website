@@ -204,6 +204,12 @@ All blocks are clearly labelled with start and end comments.
 
 
 
+      <!-- Empty vertical space helper (change height as needed) -->
+      <div style="height: var(--space-lg);"></div>
+
+
+
+
       
 
       <!-- BLOCK START: Dark block with vertical top alignment (text starts from the top) -->
@@ -248,18 +254,6 @@ All blocks are clearly labelled with start and end comments.
 
               <!-- ============================================================
              DARK CONTENT BLOCK (customisable background, text, radius)
-             ============================================================
-             - To change BACKGROUND COLOUR: modify the hex value in
-               "background-color: #1A2530;" (currently midnight blue).
-             - To change FONT COLOUR: modify "color: #ffffff;".
-             - To change BORDER RADIUS: modify "border-radius: 12px;".
-               Use 0 for sharp corners, or e.g. 20px for very rounded.
-             - To remove the gap between this block and the next one,
-               add "margin-bottom: 0;" to the style (already done below).
-             - IMPORTANT: the .content-block-dark CLASS also carries its own
-               background, text colour, and margin. The INLINE styles below
-               OVERRIDE those defaults, so you can freely customise each
-               block without touching main.css.
              ============================================================ -->
         
         <!-- ── First dark block (with margin-bottom: 0) ── -->
@@ -287,7 +281,7 @@ All blocks are clearly labelled with start and end comments.
         <div class="content-block-dark" style="display: flex; flex-direction: column; justify-content: flex-start;
                     background-color: #2C3E50;              /* ← slightly lighter for contrast */
                     color: #f0f0f0;                         /* ← change me for different text colour */
-                    border-radius: 0 0 12px 12px 12px;      /* ← change me for different roundness */
+                    border-radius: 0 0 12px 12px;          /* ← change me for different roundness */
                     margin-top: 0;                          /* ← ensures it touches the block above */
                     margin-bottom: 0;                       /* ← remove gap below (if another block follows) */
                     ">
