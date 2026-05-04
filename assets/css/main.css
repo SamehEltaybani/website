@@ -181,7 +181,7 @@ main {
   border-radius: 0 0 8px 8px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .section-alt-tight {
     padding-top: 0 !important;
     margin-top: 0 !important;
@@ -256,7 +256,7 @@ main {
 }
 
 /* Remove white-space for mobile */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .btn {
         white-space: normal;
         padding: var(--space-sm) var(--space-md);
@@ -661,7 +661,7 @@ main ol {
    RESPONSIVE NAVIGATION (Mobile)
    ============================================================================ */
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .navbar-right {
         display: none;
     }
@@ -701,7 +701,7 @@ main ol {
     padding: var(--space-sm) 0;      /* vertical padding only */
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .breadcrumb-bar {
         top: calc(var(--nav-height-mobile) + 0px);
         padding: 0;
@@ -756,7 +756,7 @@ main ol {
 }
 
 /* Mobile breadcrumb - single line with back arrow */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .breadcrumb-list {
         flex-wrap: nowrap;
         overflow-x: auto;
@@ -907,7 +907,7 @@ footer .footer-copyright {
     border-radius: 8px 8px 0 0;
  }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .progress-container {
         top: calc(var(--nav-height-mobile) + var(--breadcrumb-height));
     }
@@ -989,7 +989,7 @@ footer .footer-copyright {
     justify-content: space-between;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .controls-bar {
         top: calc(var(--nav-height-mobile) + var(--breadcrumb-height));
     }
@@ -1175,7 +1175,7 @@ footer .footer-copyright {
     gap: var(--space-md);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .grid-2, .grid-3, .grid-4 {
         grid-template-columns: 1fr;
         gap: var(--space-md);
@@ -1399,7 +1399,7 @@ footer .footer-copyright {
     color: var(--color-text-muted);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .three-buttons-block {
         grid-template-columns: 1fr;
         gap: var(--space-md);
@@ -1440,7 +1440,7 @@ footer .footer-copyright {
     color: var(--color-gold);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .portfolio-photo,
     .portfolio-bio {
         flex: 1 1 100%;
@@ -1520,7 +1520,7 @@ pre code {
    RESPONSIVE UTILITIES
    ============================================================================ */
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .hide-mobile {
         display: none;
     }
@@ -1532,7 +1532,7 @@ pre code {
     }
 }
 
-@media (min-width: 769px) {
+@media (min-width: 993px) {
     .hide-desktop {
         display: none;
     }
