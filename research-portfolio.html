@@ -187,6 +187,43 @@ All blocks are clearly labelled with start and end comments.
 
 
 
+          <!-- ============================================================
+         CONTENT BLOCK WITH LEFT VERTICAL LINE
+         - To change LINE COLOR: edit the hex value in "border-left-color"
+         - To change LINE THICKNESS: edit the number in "border-left-width"
+         - To remove the line: delete the three "border-left-*" lines
+         - The background is white by default; you can change it via
+           "background-color" if desired.
+         ============================================================ -->
+              <div style="
+                  border-left: 4px solid var(--color-gold);   /* ← thickness and colour */
+                  padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg);
+                  background-color: #ffffff;
+                  border-radius: 0 8px 8px 0;               /* soft right corners */
+                  margin-bottom: var(--space-lg);
+                  box-shadow: 0 1px 4px rgba(0,0,0,0.04);  /* optional subtle shadow */
+              ">
+              
+                  <!-- Inside this div you can place any element: -->
+                  <h2 class="heading-large">Section Title</h2>
+                  <p class="paragraph">Your paragraph text goes here.</p>
+              
+                  <!-- Bullet list example -->
+                  <ul class="paragraph">
+                      <li>List item one</li>
+                      <li>List item two</li>
+                  </ul>
+              
+                  <!-- Image example -->
+                  <img src="assets/img/temp-1.webp" alt="Description" style="width:100%; border-radius:8px; margin-top: var(--space-md);" loading="lazy">
+              
+                  <!-- You can also include callouts, buttons, etc. -->
+              
+              </div>
+        <!-- =======  Block ended  ===================================================== -->
+
+
+
 
       
 
