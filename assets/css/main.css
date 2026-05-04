@@ -882,14 +882,16 @@ main ol {
 }
 
 /* ---- Copyright line ---- */
-.footer-columns {
+footer .footer-copyright {
     max-width: var(--container-max-width);
     margin: 0 auto;
     padding: var(--space-md) var(--container-padding);
-    display: flex;
-    flex-wrap: nowrap;
-    gap: var(--space-lg);
+    text-align: center;
+    font-size: var(--font-size-sm);
+    opacity: 1;
 }
+
+
 
 /* ============================================================================
    PROGRESS BAR (For blog articles)
