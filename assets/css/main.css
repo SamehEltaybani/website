@@ -892,7 +892,7 @@ footer .footer-copyright {
     margin: 0 auto;
     padding: var(--space-lg) var(--container-padding);
     text-align: center;
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-sm);
     opacity: 1;
 }
 
