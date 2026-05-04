@@ -1576,7 +1576,7 @@ pre code {
    ============================================================================ */
 
 .feature-buttons-container {
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
     padding-left: var(--container-padding);
     padding-right: var(--container-padding);
