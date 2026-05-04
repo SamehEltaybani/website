@@ -88,7 +88,8 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
           ============================================================
           -->
 
-          <!-- Large heading -->
+          
+         <!-- Large heading -->
           <h2 class="heading-large">Section Title (Large Heading)</h2>
 
           <!-- Medium heading -->
@@ -123,15 +124,59 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
             <figcaption class="text-muted" style="text-align:center;">Optional caption</figcaption>
           </figure>
 
-          <!-- Image block (two images side by side) -->
+          
+       
+         
+         <!-- ============================================================
+     CONTENT BLOCK WITH LEFT VERTICAL LINE
+     - To change LINE COLOR: edit the hex value in "border-left-color"
+     - To change LINE THICKNESS: edit the number in "border-left-width"
+     - To remove the line: delete the three "border-left-*" lines
+     - The background is white by default; you can change it via
+       "background-color" if desired.
+     ============================================================ -->
+<div style="
+    border-left: 4px solid var(--color-gold);   /* ← thickness and colour */
+    padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg);
+    background-color: #ffffff;
+    border-radius: 0 8px 8px 0;               /* soft right corners */
+    margin-bottom: var(--space-lg);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);  /* optional subtle shadow */
+">
+
+    <!-- Inside this div you can place any element: -->
+    <h2 class="heading-large">Section Title</h2>
+    <p class="paragraph">Your paragraph text goes here.</p>
+
+    <!-- Bullet list example -->
+    <ul class="paragraph">
+        <li>List item one</li>
+        <li>List item two</li>
+    </ul>
+
+    <!-- Image example -->
+    <img src="assets/img/temp-1.webp" alt="Description" style="width:100%; border-radius:8px; margin-top: var(--space-md);" loading="lazy">
+
+    <!-- You can also include callouts, buttons, etc. -->
+</div>
+<!-- ============================================================ -->
+         
+         
+         
+         
+         
+         <!-- Image block (two images side by side) -->
           <div class="grid-2" style="gap: var(--space-md); margin: var(--space-md) 0;">                    
             <img src="assets/img/temp-1.webp" alt="Image 1" style="width:100%; border-radius:8px;" loading="lazy">
             <img src="assets/img/temp-2.webp" alt="Image 2" style="width:100%; border-radius:8px;" loading="lazy">
           </div>
 
-          <!-- ===== CALLOUTS (8 variants) ===== -->
+         
+         
+         <!-- ===== CALLOUTS (8 variants) ===== -->
 
-          <!-- Callout 1: Highlights (with bullet points) -->
+         
+         <!-- Callout 1: Highlights (with bullet points) -->
           <div class="callout callout-highlight-btn">
             <div class="callout-title"><i class="fas fa-star"></i> Highlights</div>
             <ul>
@@ -140,14 +185,18 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
             </ul>
           </div>
 
-          <!-- Callout 2: Tip (with button) -->
+         
+         
+         <!-- Callout 2: Tip (with button) -->
           <div class="callout callout-tip-btn">
             <div class="callout-title"><i class="fas fa-lightbulb"></i> Tip</div>
             <p>Helpful advice or practical suggestion.</p>
             <a href="#" class="btn btn-text">Learn more</a>
           </div>
 
-          <!-- Callout 3: Tip (without button) -->
+         
+         
+         <!-- Callout 3: Tip (without button) -->
           <div class="callout callout-tip-no-btn">
             <div class="callout-title"><i class="fas fa-lightbulb"></i> Tip</div>
             <p>A quick piece of advice without an extra button.</p>
@@ -160,37 +209,56 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
             <a href="#" class="btn btn-text">Read more</a>
           </div>
 
-          <!-- Callout 5: Warning (without button) -->
+         
+         <!-- Callout 5: Warning (without button) -->
           <div class="callout callout-warning-no-btn">
             <div class="callout-title"><i class="fas fa-exclamation-triangle"></i> Warning</div>
             <p>Important cautionary note without a further link.</p>
           </div>
 
-          <!-- Callout 6: Note (with button) -->
+          
+         
+         <!-- Callout 6: Note (with button) -->
           <div class="callout callout-note-btn">
             <div class="callout-title"><i class="fas fa-info-circle"></i> Note</div>
             <p>Supplementary information with a reference link.</p>
             <a href="#" class="btn btn-text">Reference</a>
           </div>
 
-          <!-- Callout 7: Note (without button) -->
+         
+         
+         <!-- Callout 7: Note (without button) -->
           <div class="callout callout-note-no-btn">
             <div class="callout-title"><i class="fas fa-info-circle"></i> Note</div>
             <p>Additional context or remark.</p>
           </div>
 
-          <!-- Callout 8: Quotation -->
+          
+         
+         <!-- Callout 8: Quotation -->
           <div class="callout callout-quote">
             <p>“This is a block quote with large ornamental quotation marks.
             Use it for important excerpts or testimonials.”</p>
             <a href="#" class="btn btn-text">Optional button</a>
           </div>
 
-          <!-- Extra image placeholder -->
+          
+         
+         <!-- Extra image placeholder -->
           <img src="assets/img/temp-3.webp" alt="Extra illustration" style="width:100%; margin: var(--space-md) 0; border-radius:8px;" loading="lazy">
 
-          <!-- ===== END OF REPLICABLE CONTENT BLOCKS ===== -->
+          
+         
+         <!-- ===== END OF REPLICABLE CONTENT BLOCKS ===== -->
+        
         </div>
+
+
+
+
+
+
+       
 
         <!-- POST-CONTENT LEGAL LINE -->
         <div class="footer-legal" style="margin-top: var(--space-xl); padding-top: var(--space-md); border-top: 1px solid var(--color-border);">
