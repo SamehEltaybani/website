@@ -1251,13 +1251,13 @@ footer .footer-copyright {
 }
 
 .authorship-first {
-    background-color: rgba(212, 175, 55, 0.1);
+    background-color: rgba(252, 243, 90, 0.66);
     color: var(--color-midnight-blue);
 }
 
 .authorship-coauthor {
     background-color: #add8e6;
-    color: var(--color-text-muted);
+    color: var(--color-midnight-blue);
 }
 
 .publication-buttons {
