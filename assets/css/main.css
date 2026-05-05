@@ -588,16 +588,16 @@ main ol {
 .nav-link.active {
     color: var(--color-gold);
     border-bottom: 2px solid var(--color-gold);
-    position: relative;                            
+    position: relative;
 }
 
-.nav-link.active::after {
+.nav-link.active::before {
     content: '▼';
     position: absolute;
-    bottom: -14px;                                 
+    top: -12px;                  /* places it just above the tab */
     left: 50%;
     transform: translateX(-50%);
-    font-size: 0.55rem;
+    font-size: 1rem;
     color: var(--color-gold);
     line-height: 1;
 }
@@ -684,10 +684,10 @@ main ol {
        .mobile-nav-link.active::before {
            content: '▶';
            position: absolute;
-           left: -8px;                                   /* base touches the gold border */
+           left: -4px;                                   /* base touches the gold border */
            top: 50%;
            transform: translateY(-50%);
-           font-size: 0.7rem;
+           font-size: 1rem;
            color: var(--color-gold);
        }
 
