@@ -73,37 +73,58 @@
     /**
      * Creates a navigation link element
      */
-    function createNavLink(item, isMobile = false) {
-        const isActive = isActivePage(item.url);
-        const isHighlighted = item.isHighlighted === true;
-        
-        let linkClass = isMobile ? 'mobile-nav-link' : 'nav-link';
-        
-        if (isHighlighted && !isMobile) {
-            linkClass = 'nav-link-highlight';
-        } else if (isHighlighted && isMobile) {
-            linkClass = 'mobile-nav-link mobile-nav-link-highlight';
-        }
-        
-        const link = document.createElement('a');
-        link.href = item.url;
-        link.textContent = item.label;
-        link.className = linkClass;
-        
-        if (isActive) {
-            link.classList.add('active');
-        }
-        
-        // Close mobile menu when link is clicked
-        if (isMobile) {
-            link.addEventListener('click', function() {
-                closeMobileMenu();
-            });
-        }
-        
-        return link;
-    }
     
+    function createNavLink(item, isMobile = false) {
+    const isActive = isActivePage(item.url);
+    const isHighlighted = item.isHighlighted === true;
+
+    let linkClass = isMobile ? 'mobile-nav-link' : 'nav-link';
+    if (isHighlighted && !isMobile) {
+        linkClass = 'nav-link-highlight';
+    } else if (isHighlighted && isMobile) {
+        linkClass = 'mobile-nav-link mobile-nav-link-highlight';
+    }
+
+    const link = document.createElement('a');
+    link.href = item.url;
+    link.className = linkClass;
+    if (isActive) {
+        link.classList.add('active');
+    }
+
+    // ---- ADD ICONS TO MOBILE LINKS ONLY ----
+    if (isMobile) {
+        const iconMap = {
+            'Home': 'fas fa-home',
+            'Research': 'fas fa-flask',
+            'Publications': 'fas fa-file-alt',
+            'Data Analysis': 'fas fa-chart-bar',
+            'Teaching': 'fas fa-chalkboard-teacher',
+            'Portfolios': 'fas fa-briefcase',
+            'Blog': 'fas fa-blog',
+            'Contact': 'fas fa-envelope',
+            'Newsletter': 'fas fa-newspaper'
+        };
+        if (iconMap[item.label]) {
+            link.innerHTML = '<i class="' + iconMap[item.label] + ' fa-fw" style="margin-right: 0.5rem;"></i>' + item.label;
+        } else {
+            link.textContent = item.label;
+        }
+    } else {
+        link.textContent = item.label;
+    }
+    // -----------------------------------------
+
+    if (isMobile) {
+        link.addEventListener('click', function() {
+            closeMobileMenu();
+        });
+    }
+
+    return link;
+}
+
+   
     /**
      * Creates the desktop navigation links container
      */
