@@ -224,6 +224,8 @@ Page‑specific content:
                 }
                 
                 a.appendChild(iconWrapper);
+                a.appendChild(document.createTextNode(' ' + btn.label));
+                container.appendChild(a);
         });
       }
 
