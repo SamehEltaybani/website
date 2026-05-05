@@ -673,7 +673,7 @@ main ol {
        .mobile-nav-link.active::before {
            content: '▶';
            position: absolute;
-           left: -12px;                                   /* base touches the gold border */
+           left: -20px;                                   /* base touches the gold border */
            top: 50%;
            transform: translateY(-50%);
            font-size: 1rem;
