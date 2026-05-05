@@ -175,18 +175,22 @@ Breadcrumb: Home > Page Not Found (Home links to index.html).
     const titleEl = document.createElement('h3');
     titleEl.className = 'card-title';
 
-    if (cardData.icon) {
+        if (cardData.icon) {
         const icon = document.createElement('i');
         icon.className = cardData.icon + ' fa-fw';
         icon.style.marginRight = '0.5rem';
         icon.style.fontSize = '1.5rem';
-        background-color: var(--color-gold-light);
-        display: inline-flex; align-items: center; justify-content: center;
-        width: 2.5rem; height: 2.5rem;
-        border-radius: 50%;
-      
-          titleEl.appendChild(icon);
+        icon.style.backgroundColor = 'var(--color-gold-light)';
+        icon.style.display = 'inline-flex';
+        icon.style.alignItems = 'center';
+        icon.style.justifyContent = 'center';
+        icon.style.width = '2.5rem';
+        icon.style.height = '2.5rem';
+        icon.style.borderRadius = '50%';
+        icon.style.color = 'var(--color-midnight-blue)';
+        titleEl.appendChild(icon);
     }
+        
     titleEl.appendChild(document.createTextNode(cardData.title));
     // ---------------------------------
 
