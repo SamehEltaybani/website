@@ -179,7 +179,13 @@ Breadcrumb: Home > Page Not Found (Home links to index.html).
         const icon = document.createElement('i');
         icon.className = cardData.icon + ' fa-fw';
         icon.style.marginRight = '0.5rem';
-        titleEl.appendChild(icon);
+        icon.style.fontSize = '1.5rem';
+        background-color: var(--color-gold-light);
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 2.5rem; height: 2.5rem;
+        border-radius: 50%;
+      
+          titleEl.appendChild(icon);
     }
     titleEl.appendChild(document.createTextNode(cardData.title));
     // ---------------------------------
