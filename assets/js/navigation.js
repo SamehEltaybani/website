@@ -96,7 +96,7 @@
     if (isMobile) {
         const iconMap = {
             'Home': 'fas fa-home',
-            'Research': 'fas fa-flask',
+            'Research': 'fas fa-brain',
             'Publications': 'fas fa-file-alt',
             'Data Analysis': 'fas fa-chart-bar',
             'Teaching': 'fas fa-chalkboard-teacher',
