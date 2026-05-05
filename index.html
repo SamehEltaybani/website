@@ -76,19 +76,72 @@
       'use strict';
 
       // ---------- FEATURED CARDS (unchanged) ----------
+      
       const featuredCardsData = [
-        { title: 'Research', description: 'Discover my research interests, ongoing projects, and external resources.', link: 'research.html' },
-        { title: 'Publications', description: 'Browse my published work with links to PubMed, journal sites, and personal insights.', link: 'publications.html' },
-        { title: 'Data Analysis', description: 'Translating raw data into actionable clinical insights.', link: 'data-analysis.html' },
-        { title: 'Teaching', description: 'Explore my courses, teaching philosophy, and educational materials.', link: 'teaching.html' },
-        { title: 'Portfolios', isPortfolio: true, bulletPoints: ['Research Portfolio','Teaching Portfolio','Data Analysis Portfolio'], link: 'portfolios.html' },
-        { title: 'Blog', description: 'Read my articles on healthcare, research integrity, data analysis, and more.', link: 'blog.html' },
-        { title: 'Contact', description: 'I am always happy to communicate, collaborate, or answer questions.', link: 'contact.html' },
-        { title: 'Newsletter', description: 'Stay updated with my latest insights and academic news.', link: 'newsletter.html' },
-        { title: 'Legal and Professional Disclaimer', description: 'Read the legal disclaimer and privacy policy.', link: 'legal.html' }
-      ];
+    {
+      title: 'Research',
+      icon: 'fas fa-flask',
+      description: 'Discover my research interests, ongoing projects, and external resources.',
+      link: 'research.html'
+    },
+    {
+      title: 'Publications',
+      icon: 'fas fa-file-alt',
+      description: 'Browse my published work with links to PubMed, journal sites, and personal insights.',
+      link: 'publications.html'
+    },
+    {
+      title: 'Data Analysis',
+      icon: 'fas fa-chart-bar',
+      description: 'Translating raw data into actionable clinical insights.',
+      link: 'data-analysis.html'
+    },
+    {
+      title: 'Teaching',
+      icon: 'fas fa-chalkboard-teacher',
+      description: 'Explore my courses, teaching philosophy, and educational materials.',
+      link: 'teaching.html'
+    },
+    {
+      title: 'Portfolios',
+      icon: 'fas fa-briefcase',
+      isPortfolio: true,
+      bulletPoints: [
+        'Research Portfolio',
+        'Teaching Portfolio',
+        'Data Analysis Portfolio'
+      ],
+      link: 'portfolios.html'
+    },
+    {
+      title: 'Blog',
+      icon: 'fas fa-blog',
+      description: 'Read my articles on healthcare, research integrity, data analysis, and more.',
+      link: 'blog.html'
+    },
+    {
+      title: 'Contact',
+      icon: 'fas fa-envelope',
+      description: 'I am always happy to communicate, collaborate, or answer questions.',
+      link: 'contact.html'
+    },
+    {
+      title: 'Newsletter',
+      icon: 'fas fa-newspaper',
+      description: 'Stay updated with my latest insights and academic news.',
+      link: 'newsletter.html'
+    },
+    {
+      title: 'Legal',
+      icon: 'fas fa-balance-scale',
+      description: 'Read the legal disclaimer and privacy policy.',
+      link: 'legal.html'
+    }
+];
 
-      function createFeaturedCard(cardData) {
+
+
+    function createFeaturedCard(cardData) {
     // Create an <a> that wraps the entire card, making it fully clickable
     const cardLink = document.createElement('a');
     cardLink.href = cardData.link;
@@ -100,9 +153,19 @@
     const content = document.createElement('div');
     content.className = 'card-content';
 
+    // ---- Title with optional icon ----
     const titleEl = document.createElement('h3');
     titleEl.className = 'card-title';
-    titleEl.textContent = cardData.title;
+
+    if (cardData.icon) {
+        const icon = document.createElement('i');
+        icon.className = cardData.icon + ' fa-fw';
+        icon.style.marginRight = '0.5rem';
+        titleEl.appendChild(icon);
+    }
+    titleEl.appendChild(document.createTextNode(cardData.title));
+    // ---------------------------------
+
     content.appendChild(titleEl);
 
     if (cardData.isPortfolio) {
@@ -121,7 +184,6 @@
         content.appendChild(desc);
     }
 
-    // Keep the button text visually, but the whole card is already clickable
     const buttonText = document.createElement('span');
     buttonText.className = 'btn btn-text';
     buttonText.textContent = 'Go to section >>';
@@ -130,6 +192,9 @@
     cardLink.appendChild(content);
     return cardLink;
 }
+
+
+      
 
       function renderFeaturedCards() {
         const container = document.getElementById('featured-cards-container');
