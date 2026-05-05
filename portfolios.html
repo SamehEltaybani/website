@@ -109,48 +109,93 @@ All amendments integrated (base path, breadcrumb height, left‑aligned, etc.)
       // ------------------------------------------------------------------
       // C. LOAD & RENDER PORTFOLIO CARDS
       // ------------------------------------------------------------------
-      async function renderPortfolioCards() {
-        const container = document.getElementById('portfolio-cards-container');
-        if (!container) return;
 
-        try {
-          const data = await SiteUtils.loadJSON('/json/portfolio-list.json', true);
-          if (!data || !Array.isArray(data) || data.length === 0) {
+      
+async function renderPortfolioCards() {
+    const container = document.getElementById('portfolio-cards-container');
+    if (!container) return;
+
+    // Icon assignments based on portfolio name
+    const iconMap = {
+        'Research Portfolio': 'fas fa-flask',
+        'Teaching Portfolio': 'fas fa-chalkboard-teacher',
+        'Data Analysis Portfolio': 'fas fa-chart-bar'
+    };
+
+    try {
+        const data = await SiteUtils.loadJSON('/json/portfolio-list.json', true);
+        if (!data || !Array.isArray(data) || data.length === 0) {
             container.innerHTML = '<p class="text-center text-muted">No portfolios found.</p>';
             return;
-          }
+        }
 
-          container.innerHTML = '';   // clear loading area
+        container.innerHTML = '';
 
-          data.forEach(item => {
+        data.forEach(item => {
             const name = item.portfolioname || 'Untitled Portfolio';
             const description = item.description || '';
-            const pageUrl = portfolioPageMap[name] || '#';   // fallback if unknown
+            const pageUrl = portfolioPageMap[name] || '#';
+            const iconClass = iconMap[name] || 'fas fa-folder';   // fallback icon
 
-            // Create an <a> that wraps the entire card (card-lift)
+            // Create clickable card
             const cardLink = document.createElement('a');
             cardLink.href = pageUrl;
             cardLink.className = 'card card-lift';
             cardLink.style.textDecoration = 'none';
             cardLink.style.color = 'inherit';
-            cardLink.style.display = 'block';  // ensure it behaves like a block
+            cardLink.style.display = 'block';
 
-            // Card content
-            cardLink.innerHTML = `
-              <div class="card-content">
-                <h3 class="card-title">${escapeHTML(name)}</h3>
-                <p class="card-description">${escapeHTML(description)}</p>
-                <span class="btn btn-text" style="margin-top: var(--space-sm); margin-left: auto; display: block; text-align: right;">Explore →</span>
-              </div>
-            `;
+            const content = document.createElement('div');
+            content.className = 'card-content';
 
+            // Circular icon (same styling as Home featured cards)
+            const icon = document.createElement('i');
+            icon.className = iconClass + ' fa-fw';
+            icon.style.marginRight = '0.5rem';
+            icon.style.fontSize = '1.5rem';
+            icon.style.backgroundColor = 'var(--color-gold-light)';
+            icon.style.display = 'inline-flex';
+            icon.style.alignItems = 'center';
+            icon.style.justifyContent = 'center';
+            icon.style.width = '2.5rem';
+            icon.style.height = '2.5rem';
+            icon.style.borderRadius = '50%';
+            icon.style.color = 'var(--color-midnight-blue)';
+
+            const titleEl = document.createElement('h3');
+            titleEl.className = 'card-title';
+            titleEl.appendChild(icon);
+            titleEl.appendChild(document.createTextNode(' ' + name));   // space + title
+            content.appendChild(titleEl);
+
+            // Description – only shown if not empty
+            if (description.trim() !== '') {
+                const descEl = document.createElement('p');
+                descEl.className = 'card-description';
+                descEl.textContent = description;
+                content.appendChild(descEl);
+            }
+
+            // Right‑aligned "Explore →" button
+            const btnText = document.createElement('span');
+            btnText.className = 'btn btn-text';
+            btnText.textContent = 'Explore →';
+            btnText.style.marginLeft = 'auto';
+            btnText.style.display = 'block';
+            btnText.style.textAlign = 'right';
+            content.appendChild(btnText);
+
+            cardLink.appendChild(content);
             container.appendChild(cardLink);
-          });
-        } catch (error) {
-          console.error('[Portfolios] Failed to load portfolio-list.json:', error);
-          container.innerHTML = '<p class="text-center text-muted">Unable to load portfolio data. Please try again later.</p>';
-        }
-      }
+        });
+    } catch (error) {
+        console.error('[Portfolios] Failed to load portfolio-list.json:', error);
+        container.innerHTML = '<p class="text-center text-muted">Unable to load portfolio data. Please try again later.</p>';
+    }
+}
+
+
+      
 
       // ------------------------------------------------------------------
       // D. INITIALISATION
