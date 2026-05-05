@@ -588,6 +588,18 @@ main ol {
 .nav-link.active {
     color: var(--color-gold);
     border-bottom: 2px solid var(--color-gold);
+    position: relative;                            
+}
+
+.nav-link.active::after {
+    content: '▼';
+    position: absolute;
+    bottom: -14px;                                 
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.55rem;
+    color: var(--color-gold);
+    line-height: 1;
 }
 
 /* Special newsletter button (pill with shadow - DESKTOP) */
@@ -631,6 +643,7 @@ main ol {
     max-height: calc(100vh - var(--nav-height-mobile) - 1px);
     overflow-y: auto;   
     background-color: var(--color-white);
+    border-left: 4px solid var(--color-gold);
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     padding: var(--space-md);
     z-index: 1001;
@@ -639,28 +652,44 @@ main ol {
     border-radius: 0 0 0 12px;                   /* soft corner on the bottom‑left only */
 }
 
-.mobile-menu.open {
-    display: flex;
-}
-.mobile-nav-link {
-    text-decoration: none;
-    color: var(--color-text-main);
-    padding: var(--space-sm) var(--space-md);
-    font-weight: 500;
-    border-radius: 8px;
-}
-
-.mobile-nav-link.active {
-    color: var(--color-gold);
-    background-color: var(--color-bg-alt);
-}
-
-/* Mobile newsletter button (gold filled - no shadow, saves space) */
-.mobile-nav-link-highlight {
-    background-color: var(--color-gold);
-    color: var(--color-midnight-blue);
-    border-radius: 8px;
-}
+   .mobile-menu.open {
+           display: flex;
+       }
+       .mobile-nav-link {
+           text-decoration: none;
+           color: var(--color-text-main);
+           padding: var(--space-sm) var(--space-md);
+           font-weight: 500;
+           border-radius: 8px;
+       }
+       
+       .mobile-nav-link.active {
+           color: var(--color-gold);
+           background-color: var(--color-bg-alt);
+       }
+       
+       /* Mobile newsletter button (gold filled - no shadow, saves space) */
+       .mobile-nav-link-highlight {
+           background-color: var(--color-gold);
+           color: var(--color-midnight-blue);
+           border-radius: 8px;
+       }
+       
+       /* ▶ indicator for the active mobile link */
+       .mobile-nav-link.active {
+           position: relative;
+           padding-left: 1rem;                          /* extra room for the arrow */
+       }
+       
+       .mobile-nav-link.active::before {
+           content: '▶';
+           position: absolute;
+           left: -8px;                                   /* base touches the gold border */
+           top: 50%;
+           transform: translateY(-50%);
+           font-size: 0.7rem;
+           color: var(--color-gold);
+       }
 
 /* ============================================================================
    RESPONSIVE NAVIGATION (Mobile)
