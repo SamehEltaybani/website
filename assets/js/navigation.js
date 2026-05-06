@@ -145,27 +145,69 @@
     /**
      * Creates the mobile hamburger menu
      */
-    function renderMobileMenu(navItems) {
-        // Create or get mobile menu container
-        let mobileMenu = document.querySelector('.mobile-menu');
-        
-        if (!mobileMenu) {
-            mobileMenu = document.createElement('div');
-            mobileMenu.className = 'mobile-menu';
-            document.body.appendChild(mobileMenu);
-        }
-        
-        mobileMenuElement = mobileMenu;
-        
-        // Clear existing content
-        mobileMenu.innerHTML = '';
-        
-        // Add each navigation link to mobile menu
-        navItems.forEach(item => {
-            const link = createNavLink(item, true);
-            mobileMenu.appendChild(link);
-        });
+
+function renderMobileMenu(navItems) {
+    // Create or get mobile menu container
+    let mobileMenu = document.querySelector('.mobile-menu');
+    if (!mobileMenu) {
+        mobileMenu = document.createElement('div');
+        mobileMenu.className = 'mobile-menu';
+        document.body.appendChild(mobileMenu);
     }
+    mobileMenuElement = mobileMenu;
+
+    // Clear existing content
+    mobileMenu.innerHTML = '';
+
+    // ---- STICKY CLOSE BUTTON (top‑right) ----
+    const closeHeader = document.createElement('div');
+    closeHeader.style.cssText = `
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        display: flex;
+        justify-content: flex-end;       /* push to the right edge */
+        padding: var(--space-sm);
+        background-color: var(--color-white);
+        border-bottom: 1px solid var(--color-border);
+    `;
+
+    const closeBtn = document.createElement('button');
+    closeBtn.style.cssText = `
+        background: none;
+        border: none;
+        padding: 4px 0;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--color-midnight-blue);
+        font-size: var(--font-size-sm);
+        line-height: 1.2;
+    `;
+    closeBtn.innerHTML = '<i class="fas fa-times" style="font-size:1.2rem; margin-bottom:2px;"></i><span>Close</span>';
+    closeBtn.addEventListener('click', closeMobileMenu);
+
+    closeHeader.appendChild(closeBtn);
+    mobileMenu.appendChild(closeHeader);
+    // ---------------------------------------
+
+    // Add each navigation link (with icons on mobile)
+    navItems.forEach(item => {
+        const link = createNavLink(item, true);
+        mobileMenu.appendChild(link);
+    });
+
+    // Add some padding at the bottom so the last item isn’t hidden behind the address bar
+    const spacer = document.createElement('div');
+    spacer.style.paddingBottom = 'var(--space-md)';
+    mobileMenu.appendChild(spacer);
+}
+
+    
+
+
+    
     
     /**
      * Opens the mobile menu
