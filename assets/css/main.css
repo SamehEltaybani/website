@@ -673,10 +673,10 @@ main ol {
        .mobile-nav-link.active::before {
            content: '▶';
            position: absolute;
-           left: -16px;                                   /* base touches the gold border */
+           left: -20px;                                   /* base touches the gold border */
            top: 50%;
            transform: translateY(-50%);
-           font-size: 3rem;
+           font-size: 1.5rem;
            color: var(--color-gold);
        }
 
