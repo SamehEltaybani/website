@@ -177,7 +177,7 @@
         
         const readMoreLink = document.createElement('a');
         readMoreLink.href = 'legal.html';
-        readMoreLink.textContent = 'Read more >>';
+        readMoreLink.textContent = 'Read more ❯❯';
         section.appendChild(readMoreLink);
         
         return section;
