@@ -478,7 +478,11 @@ All blocks are clearly labelled with start and end comments.
       <div style="height: var(--space-lg);"></div>
 
 
-      
+      <!-- TIMELINE placeholder – rendered by JavaScript [data are entered in the JS at the end of this document]-->
+<div id="timeline-container" style="margin: var(--space-xl) 0;"></div>
+
+
+        <div style="height: var(--space-lg);"></div>
       
 
       <!-- BLOCK START: White block with centered buttons -->
@@ -564,6 +568,37 @@ All blocks are clearly labelled with start and end comments.
 
 </div>
 
+<!-- ==================== ACCORDION (COLLAPSIBLE) SECTION END  =================== -->
+
+
+
+<!-- STATS COUNTER placeholder – rendered by JavaScript [all detailed contents should be inserted in the JS part at the bottom] -->
+
+      <div id="stats-counter-container" class="grid-4" style="gap: var(--space-lg); margin-bottom: var(--space-lg);"></div>
+
+<!-- ==================== STATS COUNTER placeholder END  =================== -->
+
+
+
+
+
+
+
+      
+
+    </div>
+    <!-- ===== END OF CONTENT PLAYGROUND CONTAINER ===== -->
+
+    <div style="height: var(--space-xl);"></div>
+
+  </main>
+  
+  <!-- ========== FOOTER ========== -->
+  <footer data-component="footer"></footer>
+
+
+
+
 <!-- ===== ACCORDION JAVASCRIPT ===== -->
 <script>
 (function() {
@@ -591,27 +626,277 @@ All blocks are clearly labelled with start and end comments.
 
 
 
+  
+
+
+  // ------------------------------------------------------------------
+// SIMPLE STATS COUNTER JS
+// ------------------------------------------------------------------
+// Edit the array below to add/remove stats.
+// - icon   : Font Awesome class (e.g. 'fas fa-flask'), or leave empty '' for image
+// - img    : path to image in assets/img/, used ONLY if icon is empty
+// - number : the statistic (text – keeps your formatting, e.g. "45" or "3,200+")
+// - label  : the short label below the number
+
+  <script>
+                const statsData = [
+                { icon: 'fas fa-flask', img: '', number: '45', label: 'Publications' },
+                { icon: 'fas fa-chart-bar', img: '', number: '12', label: 'Grants' },
+                { icon: 'fas fa-chalkboard-teacher', img: '', number: '3,200+', label: 'Students Taught' },
+                { icon: '', img: 'assets/img/temp-1.webp', number: '8', label: 'Ongoing Projects' },
+                { icon: 'fas fa-award', img: '', number: '5', label: 'Awards' }
+              ];
+              
+              // Circle appearance (edit to change size/colours)
+              const STAT_CIRCLE_SIZE = '80px';            // width & height of the circle
+              const STAT_CIRCLE_BG   = 'var(--color-gold-light)';
+              const STAT_ICON_COLOR  = 'var(--color-midnight-blue)';
+              const STAT_ICON_SIZE   = '2rem';
+              const STAT_IMAGE_SIZE  = '60%';             // image inside circle
+              
+              function renderStatsCounter() {
+                const container = document.getElementById('stats-counter-container');
+                if (!container) return;
+                if (!statsData || statsData.length === 0) {
+                  container.style.display = 'none';       // totally hidden when empty
+                  return;
+                }
+                container.innerHTML = '';
+              
+                statsData.forEach(item => {
+                  const card = document.createElement('div');
+                  card.style.textAlign = 'center';
+              
+                  // ---- Circle ----
+                  const circle = document.createElement('div');
+                  circle.style.cssText = `
+                    width: ${STAT_CIRCLE_SIZE};
+                    height: ${STAT_CIRCLE_SIZE};
+                    border-radius: 50%;
+                    background-color: ${STAT_CIRCLE_BG};
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0 auto var(--space-sm) auto;
+                  `;
+              
+                  if (item.img) {
+                    // Use image instead of icon
+                    const imgEl = document.createElement('img');
+                    imgEl.src = item.img;
+                    imgEl.alt = item.label;
+                    imgEl.style.width = STAT_IMAGE_SIZE;
+                    imgEl.style.height = STAT_IMAGE_SIZE;
+                    imgEl.style.objectFit = 'cover';
+                    imgEl.style.borderRadius = '50%';
+                    circle.appendChild(imgEl);
+                  } else if (item.icon) {
+                    const iconEl = document.createElement('i');
+                    iconEl.className = item.icon + ' fa-fw';
+                    iconEl.style.color = STAT_ICON_COLOR;
+                    iconEl.style.fontSize = STAT_ICON_SIZE;
+                    circle.appendChild(iconEl);
+                  }
+              
+                  // ---- Number ----
+                  const numberEl = document.createElement('div');
+                  numberEl.style.fontSize = 'var(--font-size-xl)';
+                  numberEl.style.fontWeight = '700';
+                  numberEl.style.color = 'var(--color-midnight-blue)';
+                  numberEl.textContent = item.number;
+              
+                  // ---- Label ----
+                  const labelEl = document.createElement('div');
+                  labelEl.style.fontSize = 'var(--font-size-sm)';
+                  labelEl.style.color = 'var(--color-text-muted)';
+                  labelEl.textContent = item.label;
+              
+                  card.appendChild(circle);
+                  card.appendChild(numberEl);
+                  card.appendChild(labelEl);
+                  container.appendChild(card);
+                });
+              }
+
+</script>
+    
+    // Call the function together with other page‑specific renderers
+// (add `renderStatsCounter();` inside your init function)
+
+// ===================================================================
+
+
+  
+
+
+  // ------------------------------------------------------------------
+// TIMELINE JS
+// ------------------------------------------------------------------
+// Edit the array below. Each object is one timeline entry.
+// - year  : e.g. "2020"
+// - title : e.g. "PhD in Gerontological Nursing"
+// - desc  : short description
+
+<script>
+            const timelineData = [
+            { year: '2026', title: 'Launched International Research Collaboration', desc: 'Started a multi‑centre study across Europe and Asia.' },
+            { year: '2024', title: 'Published Landmark Paper', desc: 'First author on a paper that influenced national guidelines.' },
+            { year: '2021', title: 'Appointed Associate Professor', desc: 'Joined the faculty of nursing at a leading university.' },
+            { year: '2019', title: 'Completed PhD', desc: 'Defended thesis on long‑term care quality indicators.' }
+          ];
+          
+          // Customisation
+          const TIMELINE_LINE_COLOR = 'var(--color-gold)';
+          const TIMELINE_DOT_COLOR  = 'var(--color-gold)';
+          const TIMELINE_LINE_WIDTH = '2px';
+          
+          function renderTimeline() {
+            const container = document.getElementById('timeline-container');
+            if (!container) return;
+            if (!timelineData || timelineData.length === 0) {
+              container.style.display = 'none';
+              return;
+            }
+          
+            container.innerHTML = '';
+          
+            // ---- Outer wrapper with central line ----
+            const wrapper = document.createElement('div');
+            wrapper.style.cssText = `
+              position: relative;
+              padding-left: var(--space-lg);
+              padding-right: var(--space-lg);
+            `;
+          
+            // Central line (visible on desktop)
+            const line = document.createElement('div');
+            line.style.cssText = `
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              left: 50%;
+              width: ${TIMELINE_LINE_WIDTH};
+              background-color: ${TIMELINE_LINE_COLOR};
+              transform: translateX(-50%);
+              z-index: 0;
+            `;
+            wrapper.appendChild(line);
+          
+            // ---- Build entries ----
+            timelineData.forEach((entry, index) => {
+              const isLeft = index % 2 === 0;   // even items on the left
+          
+              const row = document.createElement('div');
+              row.style.cssText = `
+                display: flex;
+                align-items: flex-start;
+                margin-bottom: var(--space-lg);
+                position: relative;
+                z-index: 1;
+              `;
+          
+              // Year dot
+              const dot = document.createElement('div');
+              dot.style.cssText = `
+                flex-shrink: 0;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background-color: ${TIMELINE_DOT_COLOR};
+                color: white;
+                font-weight: 700;
+                font-size: 0.75rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: var(--space-xs);
+              `;
+              dot.textContent = entry.year;
+          
+              // Content card
+              const card = document.createElement('div');
+              card.style.cssText = `
+                flex: 1;
+                background-color: var(--color-white);
+                border: 1px solid var(--color-border);
+                border-radius: 12px;
+                padding: var(--space-md);
+                box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+              `;
+          
+              const titleEl = document.createElement('h4');
+              titleEl.style.cssText = `
+                font-size: var(--font-size-lg);
+                font-weight: 600;
+                color: var(--color-midnight-blue);
+                margin-bottom: var(--space-xs);
+              `;
+              titleEl.textContent = entry.title;
+          
+              const descEl = document.createElement('p');
+              descEl.style.cssText = `
+                font-size: var(--font-size-sm);
+                color: var(--color-text-muted);
+                line-height: 1.5;
+              `;
+              descEl.textContent = entry.desc;
+          
+              card.appendChild(titleEl);
+              card.appendChild(descEl);
+          
+              // Layout: left/right
+              if (isLeft) {
+                row.style.flexDirection = 'row';
+                row.appendChild(dot);
+                row.appendChild(document.createElement('div')).style.width = 'var(--space-md)'; // spacer
+                row.appendChild(card);
+                card.style.marginRight = '5%';
+              } else {
+                row.style.flexDirection = 'row-reverse';
+                row.appendChild(dot);
+                row.appendChild(document.createElement('div')).style.width = 'var(--space-md)'; // spacer
+                row.appendChild(card);
+                card.style.marginLeft = '5%';
+              }
+          
+              wrapper.appendChild(row);
+            });
+          
+            container.appendChild(wrapper);
+          }
+
+</script>
+  
+  // Call the function together with other page‑specific renderers
+// (add `renderTimeline();` inside your init function)
+
+
+  // ================================================================
+
+
+
+<script>
+   // ---- INITIALISE ALL COMPONENTS (Do not delete; this initiate functions ralted to STATS COUNTER & TIMELINE)----
+  (function() {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        renderStatsCounter();
+        renderTimeline();
+        // add other render calls here
+      });
+    } else {
+      renderStatsCounter();
+      renderTimeline();
+    }
+  })();
+</script>
+
+ // ================================================================
 
 
 
 
-
-
-
-
-
-
-      
-
-    </div>
-    <!-- ===== END OF CONTENT PLAYGROUND CONTAINER ===== -->
-
-    <div style="height: var(--space-xl);"></div>
-
-  </main>
-
-  <!-- ========== FOOTER ========== -->
-  <footer data-component="footer"></footer>
+  
 
   <!-- ========== SCRIPTS (EXACT ORDER) ========== -->
   <script src="assets/js/utils.js"></script>
