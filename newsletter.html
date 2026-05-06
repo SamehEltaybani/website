@@ -7,7 +7,7 @@ Page‑specific content:
   - "Explore my insights and Newsletters >>" button → blog.html
   - Subscribe / Unsubscribe buttons (mailto with pre‑filled subject)
   - Contact me button → contact.html
-  - Privacy notice + "Read more >>" → legal.html
+  - Privacy notice + "Read more ❯❯" → legal.html
 The email address is built from fragments in JavaScript – never written in plain HTML.
 ============================================================================
 -->
@@ -68,7 +68,7 @@ The email address is built from fragments in JavaScript – never written in pla
 
         <!-- Explore blog button -->
         <a href="blog.html" class="btn btn-secondary" style="margin-bottom: var(--space-lg);">
-          <i class="fas fa-newspaper mr-sm"></i> Explore my insights and Newsletters &gt;&gt;
+          <i class="fas fa-newspaper mr-sm"></i> Explore my insights and Newsletters ❯❯
         </a>
 
         <!-- Horizontal separator -->
@@ -98,7 +98,7 @@ The email address is built from fragments in JavaScript – never written in pla
         <p class="paragraph" style="font-size: var(--font-size-sm); color: var(--color-text-muted);">
           Your privacy is important. I will never share your email address and you can unsubscribe at any time.
         </p>
-        <a href="legal.html" class="btn btn-text">Read more &gt;&gt;</a>
+        <a href="legal.html" class="btn btn-text">Read more ❯❯</a>
 
       </div>
     </section>
@@ -128,22 +128,26 @@ The email address is built from fragments in JavaScript – never written in pla
 
       const fullEmail = emailPart1 + '@' + emailPart2 + '.' + emailPart3;
 
-      // Pre‑filled subject lines for subscribe / unsubscribe
-      const subscribeSubject   = 'ADD me to the mailing list of your Newsletter';
-      const unsubscribeSubject = 'REMOVE me from the mailing list of your Newsletter';
+      // Pre‑filled subject lines and body for subscribe / unsubscribe
+      const subscribeSubject   = 'Newsletter - Add me';
+      const unsubscribeSubject = 'Newsletter - Remove me';
+      const subscribeBody   = 'Dear Dr. Eltaybani,%0D%0A%0D%0APlease add me to your newsletter mailing list.%0D%0A%0D%0AThank you.';
+      const unsubscribeBody = 'Dear Dr. Eltaybani,%0D%0A%0D%0APlease remove me from your newsletter mailing list.%0D%0A%0D%0AThank you.';
 
       // Set the subscribe button's mailto link
       const subscribeBtn = document.getElementById('subscribe-btn');
       if (subscribeBtn) {
         subscribeBtn.href = 'mailto:' + fullEmail +
-          '?subject=' + encodeURIComponent(subscribeSubject);
+        '?subject=' + encodeURIComponent(subscribeSubject) +
+        '&body=' + encodeURIComponent(subscribeBody);
       }
 
       // Set the unsubscribe button's mailto link
       const unsubscribeBtn = document.getElementById('unsubscribe-btn');
       if (unsubscribeBtn) {
         unsubscribeBtn.href = 'mailto:' + fullEmail +
-          '?subject=' + encodeURIComponent(unsubscribeSubject);
+        '?subject=' + encodeURIComponent(unsubscribeSubject) +
+        '&body=' + encodeURIComponent(unsubscribeBody);
       }
     })();
   </script>
