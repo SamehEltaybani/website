@@ -640,7 +640,7 @@ main ol {
     border-right: 4px solid var(--color-gold); 
     border-radius: 0 0 0 12px;                  /* soft corner only on bottom‑left */
     overflow-y: auto;                            /* scroll the menu itself */
-    overflow-x: hidden;
+    overflow-x: visible;
     overscroll-behavior: contain;               /* prevent scroll chaining to the page */
     -webkit-overflow-scrolling: touch;          /* smooth scrolling on iOS */
     touch-action: pan-y;                        /* only vertical panning on the menu */
@@ -668,7 +668,7 @@ main ol {
 .mobile-nav-link.active::before {
     content: '▶';
          position: absolute;
-         left: -1px;                                 
+         left: -calc(-1 * var(--space-md) - 0.5rem);                                  
          top: 50%;
          transform: translateY(-50%);
          font-size: 1.5rem;                        /* slightly smaller for a cleaner look */
