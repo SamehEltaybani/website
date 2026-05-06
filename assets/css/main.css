@@ -636,8 +636,8 @@ main ol {
     z-index: 1001;
     flex-direction: column;
     gap: 0;
-    border-left: 4px solid var(--color-gold);    /* left gold border */
-    border-right: 1px solid var(--color-border); /* subtle right border for framing */
+    border-left: 4px solid var(--color-gold);    
+    border-right: 4px solid var(--color-gold); 
     border-radius: 0 0 0 12px;                  /* soft corner only on bottom‑left */
     overflow-y: auto;                            /* scroll the menu itself */
     overflow-x: hidden;
@@ -657,12 +657,26 @@ main ol {
            font-weight: 500;
            border-radius: 8px;
        }
-       
-       .mobile-nav-link.active {
-           color: var(--color-gold);
-           background-color: var(--color-bg-alt);
-       }
-       
+
+        .mobile-nav-link.active {
+             color: var(--color-gold);
+             background-color: var(--color-bg-alt);
+             position: relative;
+             padding-left: 1.8rem;                      /* extra room for the arrow */
+         }
+
+.mobile-nav-link.active::before {
+    content: '▶';
+         position: absolute;
+         left: 6px;                                 /* sits inside the menu, near the left edge */
+         top: 50%;
+         transform: translateY(-50%);
+         font-size: 0.75rem;                        /* slightly smaller for a cleaner look */
+         color: var(--color-gold);
+     }
+
+
+              
        /* Mobile newsletter button (gold filled - no shadow, saves space) */
        .mobile-nav-link-highlight {
            background-color: var(--color-gold);
@@ -670,21 +684,7 @@ main ol {
            border-radius: 8px;
        }
        
-       /* ▶ indicator for the active mobile link */
-       .mobile-nav-link.active {
-           position: relative;
-           padding-left: 1rem;                          /* extra room for the arrow */
-       }
        
-       .mobile-nav-link.active::before {
-           content: '▶';
-           position: absolute;
-           left: -20px;                                   /* base touches the gold border */
-           top: 50%;
-           transform: translateY(-50%);
-           font-size: 1.5rem;
-           color: var(--color-gold);
-       }
 
 /* ============================================================================
    RESPONSIVE NAVIGATION (Mobile)
