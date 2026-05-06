@@ -623,27 +623,33 @@ main ol {
 .mobile-menu {
     display: none;
     position: fixed;
-    top: calc(var(--nav-height-mobile) + 1px);   /* aligns with the breadcrumb */
-    left: auto;                                   /* push to the right */
+    top: calc(var(--nav-height-mobile) + 1px);
+    left: auto;
     right: 0;
-    width: 50%;                                   /* half the screen width */
-    min-width: 200px;                             /* prevents it from becoming too narrow */
-    max-width: 400px;                             /* stops it from being too wide on tablets */
-    max-height: calc(100vh - var(--nav-height-mobile) - 1px);
-    overflow-y: auto;   
+    width: 50%;
+    min-width: 200px;
+    max-width: 400px;
+    max-height: calc(100vh - var(--nav-height-mobile) - 1px);   /* limit height to screen */
     background-color: var(--color-white);
-    border-left: 4px solid var(--color-gold);
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    padding: var(--space-md);
+    padding: 0;                           /* padding moves to inner content */
     z-index: 1001;
     flex-direction: column;
-    gap: var(--space-sm);
-    border-radius: 0 0 0 12px;                   /* soft corner on the bottom‑left only */
+    gap: 0;
+    border-left: 4px solid var(--color-gold);    /* left gold border */
+    border-right: 1px solid var(--color-border); /* subtle right border for framing */
+    border-radius: 0 0 0 12px;                  /* soft corner only on bottom‑left */
+    overflow-y: auto;                            /* scroll the menu itself */
+    overflow-x: hidden;
+    overscroll-behavior: contain;               /* prevent scroll chaining to the page */
+    -webkit-overflow-scrolling: touch;          /* smooth scrolling on iOS */
+    touch-action: pan-y;                        /* only vertical panning on the menu */
 }
 
-   .mobile-menu.open {
-           display: flex;
-       }
+.mobile-menu.open {
+    display: flex;
+}
+
        .mobile-nav-link {
            text-decoration: none;
            color: var(--color-text-main);
