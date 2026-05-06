@@ -595,7 +595,7 @@ main ol {
 .nav-link-highlight {
     background-color: var(--color-gold);
     color: var(--color-midnight-blue);
-    border-radius: 50px;
+    border-radius: 30px;
     padding: var(--space-xs) var(--space-md);
     box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
     transition: var(--transition-base);
