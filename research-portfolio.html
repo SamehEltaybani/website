@@ -499,6 +499,102 @@ All blocks are clearly labelled with start and end comments.
 
 
 
+    <!-- ============================================================
+     ACCORDION (COLLAPSIBLE) SECTION
+     ============================================================
+     - To add more items: copy the block from "ACCORDION ITEM START"
+       to "ACCORDION ITEM END" and change the title and inner content.
+     - To change the VERTICAL LINE COLOR: edit the value of
+       "border-left-color" in the .accordion-body style.
+     - To change the LINE THICKNESS: edit "border-left-width".
+     - To give the content area a BACKGROUND COLOR: add
+       "background-color: #f9f9f9;" (or any colour) to the
+       .accordion-body style.
+     ============================================================ -->
+
+  <div class="accordion-container" style="margin-bottom: var(--space-lg);">
+
+  <!-- ===== ACCORDION ITEM START (Replicable) ===== -->
+  <div class="accordion-item" style="border-bottom: 1px solid var(--color-border);">
+
+    <!-- Header button -->
+    <button class="accordion-header"
+            style="display: flex; align-items: center; justify-content: space-between;
+                   width: 100%; padding: var(--space-md); background: var(--color-white);
+                   border: none; border-radius: 8px; font-size: var(--font-size-lg);
+                   font-weight: 600; color: var(--color-midnight-blue); cursor: pointer;
+                   transition: background-color 0.2s;">
+      <span>Project Alpha</span>
+      <span class="accordion-icon" style="font-size: 1.5rem; line-height: 1;">+</span>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="accordion-body"
+         style="display: none; padding: var(--space-md) var(--space-md) var(--space-md) var(--space-xl);
+                border-left: 4px solid var(--color-gold); margin-left: var(--space-md);
+                background-color: transparent; /* ← change to any colour if needed */
+                line-height: 1.6;">
+      <p class="paragraph">Put any content here: paragraphs, images, lists, callouts…</p>
+      <!-- Example image -->
+      <img src="assets/img/temp-1.webp" alt="Demo" style="width:100%; border-radius:8px; margin-top: var(--space-sm);">
+    </div>
+  </div>
+  <!-- ===== ACCORDION ITEM END ===== -->
+
+  <!-- ===== ACCORDION ITEM START (copy this block to add more) ===== -->
+  <div class="accordion-item" style="border-bottom: 1px solid var(--color-border);">
+    <button class="accordion-header"
+            style="display: flex; align-items: center; justify-content: space-between;
+                   width: 100%; padding: var(--space-md); background: var(--color-white);
+                   border: none; border-radius: 8px; font-size: var(--font-size-lg);
+                   font-weight: 600; color: var(--color-midnight-blue); cursor: pointer;
+                   transition: background-color 0.2s;">
+      <span>Project Beta</span>
+      <span class="accordion-icon" style="font-size: 1.5rem; line-height: 1;">+</span>
+    </button>
+    <div class="accordion-body"
+         style="display: none; padding: var(--space-md) var(--space-md) var(--space-md) var(--space-xl);
+                border-left: 4px solid var(--color-gold); margin-left: var(--space-md);
+                background-color: transparent;
+                line-height: 1.6;">
+      <p class="paragraph">Another panel’s content.</p>
+    </div>
+  </div>
+  <!-- ===== ACCORDION ITEM END ===== -->
+
+</div>
+
+<!-- ===== ACCORDION JAVASCRIPT ===== -->
+<script>
+(function() {
+  // Select all headers inside the accordion container
+  const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+  accordionHeaders.forEach(header => {
+    header.addEventListener('click', function() {
+      const body = this.nextElementSibling;          // the accordion-body div
+      const icon = this.querySelector('.accordion-icon');
+      const isOpen = body.style.display === 'block';
+
+      // Close all other panels
+      document.querySelectorAll('.accordion-body').forEach(b => b.style.display = 'none');
+      document.querySelectorAll('.accordion-icon').forEach(i => i.textContent = '+');
+
+      if (!isOpen) {
+        body.style.display = 'block';
+        icon.textContent = '–';
+      }
+    });
+  });
+})();
+</script>
+
+
+
+
+
+
+
 
 
 
