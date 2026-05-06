@@ -21,6 +21,7 @@
 
 (function() {
     'use strict';
+    function preventPageScroll(e) { e.stopPropagation(); }
     
     // ============================================
     // PRIVATE VARIABLES
@@ -216,6 +217,7 @@ function renderMobileMenu(navItems) {
         if (!mobileMenuElement) return;
         mobileMenuElement.classList.add('open');
         isMobileMenuOpen = true;
+        mobileMenuElement.addEventListener('touchmove', preventPageScroll, { passive: false });
         //document.body.style.overflow = 'hidden'; // Prevent background scrolling (now, "//" at th begining stopping the code, and therefore, scrolling is OK)
     }
     
@@ -225,6 +227,7 @@ function renderMobileMenu(navItems) {
     function closeMobileMenu() {
         if (!mobileMenuElement) return;
         mobileMenuElement.classList.remove('open');
+        mobileMenuElement.removeEventListener('touchmove', preventPageScroll);
         isMobileMenuOpen = false;
         document.body.style.overflow = ''; // This is related to "prevent background scrolling" above. (it is unchanged [only the above sentence is changed])
     }
