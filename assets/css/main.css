@@ -671,7 +671,7 @@ main ol {
          left: 6px;                                 /* sits inside the menu, near the left edge */
          top: 50%;
          transform: translateY(-50%);
-         font-size: 0.75rem;                        /* slightly smaller for a cleaner look */
+         font-size: 1.5rem;                        /* slightly smaller for a cleaner look */
          color: var(--color-gold);
      }
 
@@ -679,10 +679,14 @@ main ol {
               
        /* Mobile newsletter button (gold filled - no shadow, saves space) */
        .mobile-nav-link-highlight {
-           background-color: var(--color-gold);
-           color: var(--color-midnight-blue);
-           border-radius: 8px;
-       }
+         background-color: var(--color-gold);
+         color: var(--color-midnight-blue);
+         border-radius: 8px;
+         margin-left: var(--space-md);      /* space on the left */
+         margin-right: var(--space-md);     /* space on the right */
+         width: auto;                       /* only as wide as its content */
+         align-self: center;                /* center it inside the flex column */
+}
        
        
 
