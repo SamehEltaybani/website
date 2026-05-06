@@ -668,7 +668,7 @@ main ol {
 .mobile-nav-link.active::before {
     content: '▶';
          position: absolute;
-         left: -2.0rem;                                  
+         left: -1.0rem;                                  
          top: 50%;
          transform: translateY(-50%);
          font-size: 1.5rem;                        /* slightly smaller for a cleaner look */
