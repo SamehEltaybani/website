@@ -359,7 +359,7 @@ All data comes from /json/blog-list.json.
         const dateObj = new Date(post.date);
         const dateFormatted = isNaN(dateObj.getTime())
             ? post.date
-            : dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            : dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).replace(/(\w+)\s/, '$1. ');
 
         // Categories as clickable tags
         let categoriesHtml = '';
