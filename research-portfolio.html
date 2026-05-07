@@ -232,6 +232,101 @@ All blocks are clearly labelled with start and end comments.
 
 
 
+      
+
+
+<!-- =================================================================
+     MEDIA OBJECT EXAMPLES
+     =================================================================
+     · icon / number / image → always on the left
+     · title → on the right, at the top
+     · description text → below the title, indented so that the area
+       under the icon stays empty
+     · every part is optional – remove what you don't need
+     ================================================================= -->
+
+<!-- EXAMPLE 1: Icon only + Title + Text -->
+<div class="media-object">
+    <!-- Left: icon inside a circle -->
+    <div class="media-icon">
+        <i class="fas fa-flask"></i>
+    </div>
+    <!-- Right: title and text -->
+    <div class="media-body">
+        <h3 class="media-title">Research Excellence</h3>
+        <p class="media-text">
+            My research focuses on gerontological nursing, long‑term care quality,
+            and evidence‑based practice. I collaborate with international teams to
+            improve outcomes for older adults and their caregivers.
+        </p>
+    </div>
+</div>
+
+<!-- EXAMPLE 2: Number only + Title + Text -->
+<div class="media-object">
+    <!-- Left: number inside the circle -->
+    <div class="media-icon">
+        <span class="media-number">45</span>
+    </div>
+    <div class="media-body">
+        <h3 class="media-title">Publications</h3>
+        <p class="media-text">
+            Peer‑reviewed articles in high‑impact journals, covering topics from
+            dementia care to nursing workforce.
+        </p>
+    </div>
+</div>
+
+<!-- EXAMPLE 3: Image only (circular) + Title + Text -->
+<div class="media-object">
+    <!-- Left: circular image from assets/img -->
+    <div class="media-icon">
+        <img src="assets/img/temp-1.webp" alt="Project image">
+    </div>
+    <div class="media-body">
+        <h3 class="media-title">Grant‑Funded Study</h3>
+        <p class="media-text">
+            A multi‑site project investigating staff‑to‑resident ratios and their
+            impact on care quality in nursing homes.
+        </p>
+    </div>
+</div>
+
+<!-- EXAMPLE 4: Icon + Number (number sits beside the icon) -->
+<div class="media-object">
+    <div class="media-icon" style="background: transparent; width: auto; height: auto; display: flex; gap: var(--space-xs); align-items: center;">
+        <!-- icon and number side by side -->
+        <i class="fas fa-chalkboard-teacher" style="font-size: 2.5rem; color: var(--color-gold);"></i>
+        <span class="media-number">3,200+</span>
+    </div>
+    <div class="media-body">
+        <h3 class="media-title">Students Taught</h3>
+        <p class="media-text">
+            Over the course of my career, I have educated thousands of undergraduate
+            and postgraduate nursing students.
+        </p>
+    </div>
+</div>
+
+<!-- EXAMPLE 5: Only icon and title (no description) -->
+<div class="media-object">
+    <div class="media-icon">
+        <i class="fas fa-award"></i>
+    </div>
+    <div class="media-body">
+        <h3 class="media-title">Award Recipient</h3>
+    </div>
+</div>
+
+<!-- END OF MEDIA OBJECT EXAMPLES -->
+
+
+
+
+
+
+      
+
 
       <p>
           Any paragraph can be here, and any <code>formula can be highlighted in this way</code>, to differentiate it from normal text.
