@@ -1689,7 +1689,60 @@ pre code {
 
 
 
+/* ============================================================================
+   MEDIA OBJECT (icon left, title & text right)
+   ============================================================================ */
+.media-object {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
 
+.media-icon {
+    flex-shrink: 0;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: var(--color-gold-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--color-midnight-blue);
+    position: relative;
+    overflow: hidden;
+}
+
+.media-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.media-number {
+    font-weight: 700;
+    font-size: 1.8rem;
+    line-height: 1;
+}
+
+.media-body {
+    flex: 1;
+}
+
+.media-title {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--color-midnight-blue);
+    margin-bottom: var(--space-sm);
+}
+
+.media-text {
+    font-size: var(--font-size-base);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+}
 
 
 
