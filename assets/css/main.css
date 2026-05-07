@@ -1668,6 +1668,28 @@ pre code {
 }
 
 
+/* Reusable left vertical line with top & bottom gaps */
+.left-line {
+    position: relative;
+    padding-left: var(--space-xl);          /* make room for the line */
+    margin-left: var(--space-md);
+    border-left: none !important;           /* ensure no border */
+}
+
+.left-line::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: var(--space-sm);                   /* gap at the top */
+    bottom: var(--space-sm);                /* gap at the bottom */
+    width: 1px;                             /* line thickness */
+    background-color: var(--color-gold);    /* line colour */
+    border-radius: 2px;
+}
+
+
+
+
 
 
 
