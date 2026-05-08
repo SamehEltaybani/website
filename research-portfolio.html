@@ -702,10 +702,9 @@ All blocks are clearly labelled with start and end comments.
 
 
 
-<!-- ===== ACCORDION JAVASCRIPT ===== -->
+<!-- ===== ACCORDION JAVASCRIPT (independent open / close) ===== -->
 <script>
 (function() {
-  // Select all headers inside the accordion container
   const accordionHeaders = document.querySelectorAll('.accordion-header');
 
   accordionHeaders.forEach(header => {
@@ -714,11 +713,12 @@ All blocks are clearly labelled with start and end comments.
       const icon = this.querySelector('.accordion-icon');
       const isOpen = body.style.display === 'block';
 
-      // Close all other panels - When these 2 lines are active, only one panel will be open, and any other open one will be closed
-      // document.querySelectorAll('.accordion-body').forEach(b => b.style.display = 'none');
-      // document.querySelectorAll('.accordion-icon').forEach(i => i.textContent = '+');
-
-      if (!isOpen) {
+      if (isOpen) {
+        // Close the panel
+        body.style.display = 'none';
+        icon.textContent = '+';
+      } else {
+        // Open the panel
         body.style.display = 'block';
         icon.textContent = '–';
       }
