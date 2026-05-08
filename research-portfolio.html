@@ -714,9 +714,9 @@ All blocks are clearly labelled with start and end comments.
       const icon = this.querySelector('.accordion-icon');
       const isOpen = body.style.display === 'block';
 
-      // Close all other panels
-      document.querySelectorAll('.accordion-body').forEach(b => b.style.display = 'none');
-      document.querySelectorAll('.accordion-icon').forEach(i => i.textContent = '+');
+      // Close all other panels - When these 2 lines are active, only one panel will be open, and any other open one will be closed
+      // document.querySelectorAll('.accordion-body').forEach(b => b.style.display = 'none');
+      // document.querySelectorAll('.accordion-icon').forEach(i => i.textContent = '+');
 
       if (!isOpen) {
         body.style.display = 'block';
