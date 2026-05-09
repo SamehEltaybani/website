@@ -60,7 +60,7 @@
       tipsList.innerHTML = `
         <li>Be specific (eg, “nursing education” instead of “nursing”).</li>
         <li>Try different terms or synonyms.</li>
-        <li>This search covers key metadata information – not full text.</li>
+        <li>This search covers key metadata – not full text of every page.</li>
       `;
 
       tipsContainer.appendChild(tipsLabel);
