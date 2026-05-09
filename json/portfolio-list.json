@@ -1,14 +1,17 @@
 [
   {
     "portfolioname": "Research Portfolio",
-    "description": "My research career and what I have achieved"
+    "description": "My research career and what I have achieved",
+    "summary": ""
   },
   {
     "portfolioname": "Teaching Portfolio",
-    "description": "My teaching experience in an outcome-oriented way"
+    "description": "My teaching experience in an outcome-oriented way", 
+    "summary": ""
   },
   {
     "portfolioname": "Data Analysis Portfolio",
-    "description": "How to translate data into insights"
+    "description": "How to translate data into insights", 
+    "summary": ""
   }
 ]
