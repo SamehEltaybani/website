@@ -21,36 +21,7 @@
       closeBtn.innerHTML = '&times;';
       box.appendChild(closeBtn);
 
-      // Search tips header
-      const tipsRow = document.createElement('div');
-      tipsRow.style.cssText = 'display:flex; align-items:center; gap: var(--space-sm); margin-bottom: var(--space-sm);';
-      const tipsBtn = document.createElement('button');
-      tipsBtn.type = 'button';
-      tipsBtn.className = 'btn btn-text';
-      tipsBtn.innerHTML = '<i class="fas fa-question-circle mr-xs"></i> Search tips';
-      tipsRow.appendChild(tipsBtn);
-      box.appendChild(tipsRow);
-
-      // Tips tooltip (hidden)
-      const tipsTooltip = document.createElement('div');
-      tipsTooltip.className = 'search-tips-tooltip';
-      tipsTooltip.innerHTML = `
-        <button class="search-tips-close">&times;</button>
-        <strong>Tips for better results:</strong><br>
-        · Use specific words like “nursing education” rather than just “nursing”.<br>
-        · Try different terms or synonyms.<br>
-        · The search looks at titles, summaries, and key metadata across the site.<br>
-        · For full article content, browse the <a href="blog.html">Blog</a> or filter by category.
-      `;
-      box.appendChild(tipsTooltip);
-
-      tipsBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        tipsTooltip.classList.toggle('open');
-      });
-      tipsTooltip.querySelector('.search-tips-close').addEventListener('click', function() {
-        tipsTooltip.classList.remove('open');
-      });
+      
 
       // Input wrapper
       const inputWrapper = document.createElement('div');
@@ -75,11 +46,29 @@
       submitBtn.textContent = 'Search';
       box.appendChild(submitBtn);
 
-      // Scope note
-      const scopeNote = document.createElement('p');
-      scopeNote.style.cssText = 'font-size: var(--font-size-sm); color: var(--color-text-muted); margin-top: var(--space-sm); text-align: center;';
-      scopeNote.textContent = 'This search covers page titles, article/blog titles and summaries, publication titles and summaries, and portfolio names. It does not scan the full text of every page.';
-      box.appendChild(scopeNote);
+
+            // ---- Compact tips section (static, below the search button) ----
+      const tipsContainer = document.createElement('div');
+      tipsContainer.style.cssText = 'display:flex; align-items:flex-start; gap:var(--space-sm); margin-top:var(--space-md); font-size:var(--font-size-sm); color:var(--color-text-muted); line-height:1.5;';
+
+      const tipsLabel = document.createElement('span');
+      tipsLabel.style.cssText = 'font-weight:600; white-space:nowrap;';
+      tipsLabel.textContent = 'Search tips:';
+
+      const tipsList = document.createElement('ul');
+      tipsList.style.cssText = 'margin:0; padding-left:var(--space-lg); list-style:disc;';
+      tipsList.innerHTML = `
+        <li>Be specific (eg, “nursing education” instead of "nursing".</li>
+        <li>Try different terms or synonyms.</li>
+        <li>Search covers key metadata information – not full text.</li>
+      `;
+
+      tipsContainer.appendChild(tipsLabel);
+      tipsContainer.appendChild(tipsList);
+      box.appendChild(tipsContainer);
+      // -------------------------------------------------------------
+
+
 
       overlay.appendChild(box);
       document.body.appendChild(overlay);
