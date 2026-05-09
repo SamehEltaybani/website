@@ -1783,7 +1783,7 @@ pre code {
     border-radius: 50%;
     background-color: var(--search-icon-bg);
     color: var(--search-icon-color);
-    border: var(--color-gold-light);
+    border: 2px var(--color-gold-light);
     cursor: pointer;
     display: flex;
     align-items: center;
