@@ -12,20 +12,48 @@
   ],
 
   "breadcrumbHierarchy": [
-    { "filename": "index.html", "title": "Home", "parent": null },
-    { "filename": "research.html", "title": "Research", "parent": "index.html" },
-    { "filename": "research-portfolio.html", "title": "Research Portfolio", "parent": "research.html" },
-    { "filename": "teaching.html", "title": "Teaching", "parent": "index.html" },
-    { "filename": "teaching-portfolio.html", "title": "Teaching Portfolio", "parent": "teaching.html" },
-    { "filename": "data-analysis.html", "title": "Data Analysis", "parent": "index.html" },
-    { "filename": "data-analysis-portfolio.html", "title": "Data Analysis Portfolio", "parent": "data-analysis.html" },
-    { "filename": "publications.html", "title": "Publications", "parent": "index.html" },
-    { "filename": "portfolios.html", "title": "Portfolios", "parent": "index.html" },
-    { "filename": "blog.html", "title": "Blog", "parent": "index.html" },
-    { "filename": "contact.html", "title": "Contact", "parent": "index.html" },
-    { "filename": "newsletter.html", "title": "Newsletter", "parent": "index.html" },
-    { "filename": "legal.html", "title": "Legal", "parent": "index.html" },
-    { "filename": "404.html", "title": "Page Not Found", "parent": "index.html" }
+    { "filename": "index.html", "title": "Home", "parent": null,
+    "summary": ""},
+    
+    { "filename": "research.html", "title": "Research", "parent": "index.html",
+    "summary": ""},
+    
+    { "filename": "research-portfolio.html", "title": "Research Portfolio", "parent": "research.html",
+    "summary": ""},
+    
+    { "filename": "teaching.html", "title": "Teaching", "parent": "index.html",
+    "summary": ""},
+    
+    { "filename": "teaching-portfolio.html", "title": "Teaching Portfolio", "parent": "teaching.html",
+    "summary": ""},
+    
+    { "filename": "data-analysis.html", "title": "Data Analysis", "parent": "index.html",
+    "summary": ""},
+    
+    { "filename": "data-analysis-portfolio.html", "title": "Data Analysis Portfolio", "parent": "data-analysis.html",
+    "summary": ""},
+    
+    { "filename": "publications.html", "title": "Publications", "parent": "index.html",
+    "summary": ""},
+    
+    { "filename": "portfolios.html", "title": "Portfolios", "parent": "index.html",
+    "summary": ""},
+    
+    { "filename": "blog.html", "title": "Blog", "parent": "index.html",
+    "summary": ""},
+    
+    { "filename": "contact.html", "title": "Contact", "parent": "index.html",
+    "summary": ""},
+    
+    { "filename": "newsletter.html", "title": "Newsletter", "parent": "index.html",
+    "summary": ""},
+    
+    { "filename": "legal.html", "title": "Legal", "parent": "index.html",
+    "summary": ""},
+    
+    { "filename": "404.html", "title": "Page Not Found", "parent": "index.html",
+    "summary": ""}
+    
   ]
 }
 
