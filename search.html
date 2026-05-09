@@ -265,17 +265,28 @@
                          const typeClass = typeMap[item.type] || 'page';
           const description = item.summary ? `<p class="paragraph" style="font-size:var(--font-size-sm); margin-top:2px;">${escapeHTML(item.summary.length > 150 ? item.summary.substring(0,150)+'…' : item.summary)}</p>` : '';
 
-          html += `
-            <div class="publication-item" style="margin-bottom: var(--space-sm);">
-              <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-sm);">
-                <div style="flex:1;">
-                  <a href="${escapeHTML(item.url)}" class="card-title" style="text-decoration:none;">${escapeHTML(item.title)}</a>
-                  ${description}
-                </div>
-                <span class="result-type result-type-${typeClass}">${escapeHTML(item.type)}</span>
-              </div>
-            </div>
-          `;
+
+
+                    html += `
+             <a href="${escapeHTML(item.url)}" style="display:block; text-decoration:none; color:inherit;">
+               <div class="publication-item" style="margin-bottom: var(--space-sm);">
+                 <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-sm);">
+                   <div style="flex:1;">
+                     <span class="card-title">${escapeHTML(item.title)}</span>
+                     ${description}
+                   </div>
+                   <span class="result-type result-type-${typeClass}">${escapeHTML(item.type)}</span>
+                 </div>
+               </div>
+             </a>
+           `;
+
+
+
+
+
+
+         
 
           // Add batch separator
           if ((idx + 1) % perPage === 0 && (idx + 1) < (end - displayed)) {
