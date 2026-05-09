@@ -55,9 +55,10 @@ Fixed issues (central + page‑specific):
 
         <!-- SEARCH -->
         <div class="search-box" id="search-container">
-          <i class="fas fa-search"></i>
-          <input type="text" id="search-input" placeholder="Search publications..." aria-label="Search publications">
-        </div>
+        <i class="fas fa-search"></i>
+        <input type="text" id="search-input" placeholder="Search publications..." aria-label="Search publications">
+        <div id="autocomplete-dropdown" class="hidden" style="position: absolute; top: 100%; left: 0; right: 0; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; max-height: 200px; overflow-y: auto;"></div>
+      </div>
 
         <!-- FILTER (dropdown opens to the left) -->
         <div style="position: relative;">
@@ -146,6 +147,78 @@ Fixed issues (central + page‑specific):
       let allJournals = [];
 
       const searchInput = document.getElementById('search-input');
+
+                          // ------------------------------------------------------------------
+                          // AUTOCOMPLETE FOR SEARCH
+                          // ------------------------------------------------------------------
+                          const autocompleteDropdown = document.getElementById('autocomplete-dropdown');
+                          let suggestionPool = [];      // unique words from titles and summaries
+                          
+                          // Build suggestion pool from all publication entries
+                          function buildSuggestionPool() {
+                            const words = new Set();
+                            state.allItems.forEach(pub => {
+                              const fields = [pub.title, pub.summary];
+                              fields.forEach(field => {
+                                if (field) {
+                                  field.toLowerCase().split(/\s+/).forEach(w => {
+                                    if (w.length > 1) words.add(w);
+                                  });
+                                }
+                              });
+                            });
+                            suggestionPool = [...words].sort();
+                          }
+                          
+                          function showAutocomplete(matches) {
+                            if (!autocompleteDropdown) return;
+                            autocompleteDropdown.innerHTML = '';
+                            if (matches.length === 0) {
+                              autocompleteDropdown.classList.add('hidden');
+                              return;
+                            }
+                            matches.forEach(match => {
+                              const item = document.createElement('div');
+                              item.textContent = match;
+                              item.style.cssText = 'padding: var(--space-xs) var(--space-sm); cursor: pointer; font-size: var(--font-size-sm); color: var(--color-text-main);';
+                              item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--color-bg-alt)');
+                              item.addEventListener('mouseleave', () => item.style.backgroundColor = '');
+                              item.addEventListener('click', () => {
+                                searchInput.value = match;
+                                autocompleteDropdown.classList.add('hidden');
+                                handleSearchInput();   // trigger the actual search
+                              });
+                              autocompleteDropdown.appendChild(item);
+                            });
+                            autocompleteDropdown.classList.remove('hidden');
+                          }
+                          
+                          function handleAutocomplete() {
+                            const query = searchInput.value.trim().toLowerCase();
+                            if (query.length === 0) {
+                              autocompleteDropdown.classList.add('hidden');
+                              return;
+                            }
+                            const matches = suggestionPool.filter(word => word.startsWith(query)).slice(0, 8);
+                            showAutocomplete(matches);
+                          }
+                          
+                          // Close dropdown when clicking outside
+                          document.addEventListener('click', function(e) {
+                            if (autocompleteDropdown && !searchInput.contains(e.target) && !autocompleteDropdown.contains(e.target)) {
+                              autocompleteDropdown.classList.add('hidden');
+                            }
+                          });
+                          
+                          // Keyboard: Escape closes the dropdown
+                          searchInput.addEventListener('keydown', function(e) {
+                            if (e.key === 'Escape') {
+                              autocompleteDropdown.classList.add('hidden');
+                            }
+                          });
+
+
+      
       const filterBtn = document.getElementById('filter-btn');
       const sortBtn = document.getElementById('sort-btn');
       const resetBtn = document.getElementById('reset-btn');
@@ -191,6 +264,7 @@ Fixed issues (central + page‑specific):
           state.allItems = data;
           allYears = [...new Set(data.map(p => p.year))].filter(Boolean).sort();
           allJournals = [...new Set(data.map(p => p.journal))].filter(Boolean).sort();
+          buildSuggestionPool(); 
           populateFilterDropdowns();
           applyAllFilters();
         } catch (e) {
@@ -210,10 +284,16 @@ Fixed issues (central + page‑specific):
       function applyAllFilters() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         let items = [...state.allItems];
+
         if (state.activeSearch) {
           const q = state.activeSearch.toLowerCase();
-          items = items.filter(p => p.title && p.title.toLowerCase().includes(q));
+          items = items.filter(p => {
+            const inTitle = p.title && p.title.toLowerCase().includes(q);
+            const inSummary = p.summary && p.summary.toLowerCase().includes(q);
+            return inTitle || inSummary;
+          });
         }
+        
         if (state.activeFilters.year) items = items.filter(p => p.year == state.activeFilters.year);
         if (state.activeFilters.authorship) items = items.filter(p => p.authorship === state.activeFilters.authorship);
         if (state.activeFilters.journal) items = items.filter(p => p.journal === state.activeFilters.journal);
@@ -379,7 +459,10 @@ Fixed issues (central + page‑specific):
       // EVENT LISTENERS
       // ------------------------------------------------------------------
       const debouncedSearch = (typeof SiteUtils !== 'undefined' && SiteUtils.debounce) ? SiteUtils.debounce(handleSearchInput, 300) : handleSearchInput;
-      searchInput.addEventListener('input', debouncedSearch);
+      searchInput.addEventListener('input', function(e) {
+        debouncedSearch();
+        handleAutocomplete();
+      });
       resetBtn.addEventListener('click', handleReset);
 
       // ------------------------------------------------------------------
