@@ -1896,6 +1896,108 @@ pre code {
 .result-type-portfolio { background-color: #E8DAEF; color: #6A1B9A; }  /* soft purple */
 .result-type-page   { background-color: #F5E6CC; color: #7B5E3B; }    /* soft tan */
 
+
+
+
+
+/* ============================================================================
+   SEARCH MODAL ENHANCEMENTS (autocomplete, tips, tooltip, mobile)
+   ============================================================================ */
+
+/* Ensure the modal input has position relative for dropdown */
+.search-modal-input-wrapper {
+    position: relative;
+}
+
+/* Autocomplete dropdown inside the modal */
+.search-modal-autocomplete {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 1100;
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+}
+
+.search-modal-autocomplete.open {
+    display: block;
+}
+
+.search-modal-autocomplete-item {
+    padding: var(--space-sm) var(--space-md);
+    cursor: pointer;
+    font-size: var(--font-size-base);
+    color: var(--color-text-main);
+}
+
+.search-modal-autocomplete-item:hover {
+    background-color: var(--color-bg-alt);
+}
+
+/* Tips tooltip */
+.search-tips-tooltip {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: var(--space-md);
+    z-index: 1101;
+    display: none;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-main);
+    line-height: 1.6;
+}
+
+.search-tips-tooltip.open {
+    display: block;
+}
+
+.search-tips-close {
+    position: absolute;
+    top: var(--space-xs);
+    right: var(--space-xs);
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--color-text-muted);
+}
+
+/* Mobile – make modal taller */
+@media (max-width: 992px) {
+    .search-modal-box {
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+}
+
+/* "Did not find" banner on results page */
+.not-found-banner {
+    background-color: var(--color-bg-alt);
+    border-left: 4px solid var(--color-gold);
+    padding: var(--space-md);
+    border-radius: 8px;
+    margin-bottom: var(--space-lg);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-main);
+    line-height: 1.6;
+}
+
+.not-found-banner a {
+    color: var(--color-midnight-blue);
+    font-weight: 600;
+}
+
 /* ============================================================================
    END OF THE main.css FILE
    ============================================================================ */
