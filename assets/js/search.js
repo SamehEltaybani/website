@@ -1,131 +1,96 @@
-/* ============================================================================
-   SITE‑WIDE SEARCH (icon, modal, result labels)
-   ============================================================================
-   To customize the search icon, change the values below:
-   --search-icon-size: width/height of the circle
-   --search-icon-bg: background colour of the circle
-   --search-icon-color: the magnifying‑glass colour
-   --search-icon-hover-bg: background on hover
-   ============================================================================ */
+/**
+ * ============================================
+ * SEARCH.JS – SEARCH MODAL FOR THE WHOLE SITE
+ * ============================================
+ * Loaded on every page after footer.js.
+ * Creates the full‑page overlay and redirects to search.html.
+ */
 
-:root {
-    --search-icon-size: 38px;
-    --search-icon-bg: var(--color-gold);
-    --search-icon-color: var(--color-midnight-blue);
-    --search-icon-hover-bg: var(--color-gold-light);
-}
+(function() {
+  'use strict';
 
-/* Search icon button (circle) */
-.search-icon-btn {
-    width: var(--search-icon-size);
-    height: var(--search-icon-size);
-    border-radius: 50%;
-    background-color: var(--search-icon-bg);
-    color: var(--search-icon-color);
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
-    transition: background-color 0.2s, transform 0.2s;
-    padding: 0;
-    flex-shrink: 0;
-}
+  function initSearch() {
+    // Find the search icon button (added to every page’s navbar)
+    const toggleBtn = document.getElementById('search-toggle');
+    if (!toggleBtn) return;
 
-.search-icon-btn:hover {
-    background-color: var(--search-icon-hover-bg);
-    transform: scale(1.08);
-}
+    // Create the modal overlay (only once)
+    let overlay = document.querySelector('.search-modal-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.className = 'search-modal-overlay';
 
-/* On mobile, move the icon to the left of the hamburger */
-@media (max-width: 992px) {
-    .navbar-right {
-        display: flex;
-        align-items: center;
-        gap: var(--space-sm);
+      const box = document.createElement('div');
+      box.className = 'search-modal-box';
+
+      const closeBtn = document.createElement('button');
+      closeBtn.className = 'search-modal-close';
+      closeBtn.innerHTML = '&times;';
+      closeBtn.setAttribute('aria-label', 'Close search');
+      box.appendChild(closeBtn);
+
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'search-modal-input';
+      input.placeholder = 'Search the site...';
+      input.setAttribute('aria-label', 'Search');
+      box.appendChild(input);
+
+      const submitBtn = document.createElement('button');
+      submitBtn.className = 'btn btn-primary search-modal-submit';
+      submitBtn.textContent = 'Search';
+      box.appendChild(submitBtn);
+
+      overlay.appendChild(box);
+      document.body.appendChild(overlay);
+
+      // Open modal when icon is clicked
+      toggleBtn.addEventListener('click', function() {
+        overlay.classList.add('open');
+        input.focus();
+      });
+
+      // Close with the X button
+      closeBtn.addEventListener('click', function() {
+        overlay.classList.remove('open');
+      });
+
+      // Close when clicking the dark background
+      overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) {
+          overlay.classList.remove('open');
+        }
+      });
+
+      // Close with Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) {
+          overlay.classList.remove('open');
+        }
+      });
+
+      // Perform search on Enter or button click
+      function doSearch() {
+        const query = input.value.trim();
+        if (query) {
+          window.location.href = 'search.html?q=' + encodeURIComponent(query);
+        }
+        overlay.classList.remove('open');
+      }
+
+      submitBtn.addEventListener('click', doSearch);
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          doSearch();
+        }
+      });
     }
-    .search-icon-btn {
-        order: -1;   /* forces it to the far left of the right group */
-    }
-}
+  }
 
-/* ============================================================================
-   SEARCH MODAL (pop‑up overlay)
-   ============================================================================ */
-.search-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 2000;
-    display: none;
-    align-items: center;
-    justify-content: center;
-}
-
-.search-modal-overlay.open {
-    display: flex;
-}
-
-.search-modal-box {
-    background-color: var(--color-white);
-    border-radius: 12px;
-    padding: var(--space-lg);
-    width: 90%;
-    max-width: 500px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-    position: relative;
-}
-
-.search-modal-input {
-    width: 100%;
-    padding: var(--space-sm) var(--space-lg);
-    font-size: 16px;
-    border: 2px solid var(--color-border);
-    border-radius: 8px;
-    outline: none;
-    transition: border-color 0.2s;
-    font-family: inherit;
-}
-
-.search-modal-input:focus {
-    border-color: var(--color-gold);
-}
-
-.search-modal-close {
-    position: absolute;
-    top: var(--space-sm);
-    right: var(--space-sm);
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--color-text-muted);
-    line-height: 1;
-}
-
-.search-modal-submit {
-    margin-top: var(--space-md);
-    width: 100%;
-}
-
-/* ============================================================================
-   RESULT TYPE LABELS (used on search.html)
-   ============================================================================ */
-.result-type {
-    display: inline-block;
-    padding: 2px 10px;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.result-type-blog    { background-color: #DCE9F9; color: #1B5E9E; }   /* soft blue */
-.result-type-publication { background-color: #D4EDDA; color: #1B5E20; } /* soft green */
-.result-type-portfolio { background-color: #E8DAEF; color: #6A1B9A; }  /* soft purple */
-.result-type-page   { background-color: #F5E6CC; color: #7B5E3B; }    /* soft tan */
+  // Run after DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSearch);
+  } else {
+    initSearch();
+  }
+})();
