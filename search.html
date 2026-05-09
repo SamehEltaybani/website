@@ -1,9 +1,9 @@
-/**
+<!--
  * ============================================
  * SEARCH.HTML – For results of SEARCHING THE WHOLE SITE
  * ============================================
  * This page automatically loads data from your four JSON files, builds the search index, and displays results with pagination.
- */
+ -->
 
 
 <!DOCTYPE html>
@@ -27,17 +27,19 @@
 
   <nav data-component="navigation" class="navbar">
     <div class="navbar-container">
-      <div class="navbar-left"></div>
-      <div class="navbar-right">
-        <button id="search-toggle" class="search-icon-btn" aria-label="Search">
-          <i class="fas fa-search"></i>
+        <div class="navbar-left"></div>
+        <div class="navbar-right">
+            <!-- Search icon (appears on desktop and mobile) -->
+            <button id="search-toggle" class="search-icon-btn" aria-label="Search">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+        <button class="hamburger" aria-label="Menu">
+            <i class="fas fa-bars"></i>
         </button>
-      </div>
-      <button class="hamburger" aria-label="Menu">
-        <i class="fas fa-bars"></i>
-      </button>
     </div>
-  </nav>
+</nav>
+  
 
   <div data-component="breadcrumb" class="breadcrumb-bar"
        style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
