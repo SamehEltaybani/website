@@ -58,9 +58,9 @@
       const tipsList = document.createElement('ul');
       tipsList.style.cssText = 'margin:0; padding-left:var(--space-lg); list-style:disc;';
       tipsList.innerHTML = `
-        <li>Be specific (eg, “nursing education” instead of "nursing".</li>
+        <li>Be specific (eg, “nursing education” instead of “nursing”).</li>
         <li>Try different terms or synonyms.</li>
-        <li>Search covers key metadata information – not full text.</li>
+        <li>This search covers key metadata information – not full text.</li>
       `;
 
       tipsContainer.appendChild(tipsLabel);
