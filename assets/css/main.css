@@ -18,7 +18,7 @@
  * ============================================================================
  */
 
-/* ============================================================================
+/* ===========================================================================
    IMPORTS & FONT FACES
    ============================================================================ */
 
@@ -1798,15 +1798,18 @@ pre code {
     transform: scale(1.08);
 }
 
-/* On mobile, move the icon to the left of the hamburger */
+/* On mobile: show search icon and hamburger, hide desktop links */
 @media (max-width: 992px) {
     .navbar-right {
-        display: flex;
-        align-items: center;
-        gap: var(--space-sm);
+        display: none;          /* hide desktop nav links */
     }
     .search-icon-btn {
-        order: -1;   /* forces it to the far left of the right group */
+        order: 2;               /* appears before hamburger in the flex order */
+        margin-left: auto;      /* pushes to the right, next to hamburger */
+    }
+    .hamburger {
+        display: block;         /* ensure hamburger is visible */
+        order: 3;
     }
 }
 
