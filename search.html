@@ -47,8 +47,32 @@
     <section class="section">
       <div class="container" style="max-width: 800px; margin: 0 auto;">
         <h1 class="heading-large">Search Results</h1>
-        <p id="search-query-display" class="paragraph text-muted"></p>
-        <div id="search-results-list"></div>
+        
+       <p id="search-query-display" class="paragraph text-muted"></p>
+
+<div style="text-align: right; margin-bottom: var(--space-sm);">
+  <button id="results-tips-btn" class="btn btn-text">
+    <i class="fas fa-question-circle mr-xs"></i> Search tips
+  </button>
+</div>
+<div id="results-tips-tooltip" class="search-tips-tooltip" style="position: relative; margin-bottom: var(--space-md);">
+  <button class="search-tips-close">&times;</button>
+  <strong>Tips for better results:</strong><br>
+  · Use specific words like “nursing education” rather than just “nursing”.<br>
+  · Try different terms or synonyms.<br>
+  · The search looks at titles, summaries, and key metadata across the site.<br>
+  · For full article content, browse the <a href="blog.html">Blog</a> or filter by category.
+</div>
+<div id="not-found-banner" class="not-found-banner" style="display: none;">
+  <strong>Did not find what you’re looking for?</strong><br>
+  · The search does not scan the full text of every article or page.<br>
+  · You can <a href="blog.html">browse the Blog</a> and filter by categories, or <a href="publications.html">search Publications</a> by year, journal, and keywords.<br>
+  · For further assistance, <a href="contact.html">contact me</a>.
+</div>
+
+<div id="search-results-list"></div>
+       
+       
         <div id="load-more-container" class="text-center mt-md">
           <button id="load-more-btn" class="btn btn-load-more hidden">Load More</button>
         </div>
@@ -71,6 +95,19 @@
       const resultsList = document.getElementById('search-results-list');
       const queryDisplay = document.getElementById('search-query-display');
       const loadMoreBtn = document.getElementById('load-more-btn');
+
+              // --- Tips toggle for results page ---
+              const resultsTipsBtn = document.getElementById('results-tips-btn');
+              const resultsTipsTooltip = document.getElementById('results-tips-tooltip');
+              if (resultsTipsBtn && resultsTipsTooltip) {
+                resultsTipsBtn.addEventListener('click', function() {
+                  resultsTipsTooltip.classList.toggle('open');
+                });
+                resultsTipsTooltip.querySelector('.search-tips-close').addEventListener('click', function() {
+                  resultsTipsTooltip.classList.remove('open');
+                });
+              }
+
       let allResults = [];
       let displayed = 0;
       const perPage = 10;
@@ -193,7 +230,13 @@
         let html = '';
 
         batch.forEach((item, idx) => {
-          const typeClass = item.type.replace(/\s+/g, '-').toLowerCase();
+          const typeMap = {
+                           'Blog Article': 'blog',
+                           'Publication': 'publication',
+                           'Portfolio': 'portfolio',
+                           'Page': 'page'
+                         };
+                         const typeClass = typeMap[item.type] || 'page';
           const description = item.summary ? `<p class="paragraph" style="font-size:var(--font-size-sm); margin-top:2px;">${escapeHTML(item.summary.length > 150 ? item.summary.substring(0,150)+'…' : item.summary)}</p>` : '';
 
           html += `
@@ -230,6 +273,14 @@
         }
       }
 
+      
+     
+     const notFoundBanner = document.getElementById('not-found-banner');
+      if (notFoundBanner) notFoundBanner.style.display = 'block';
+
+
+
+     
       async function init() {
         const params = new URLSearchParams(window.location.search);
         const query = params.get('q') || '';
