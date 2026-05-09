@@ -413,9 +413,9 @@ Fixed issues (central + page‑specific):
           const authorClass = pub.authorship === 'First/Corresponding author' ? 'authorship-first' : 'authorship-coauthor';
           const authorTag = pub.authorship ? `<div class="publication-authorship ${authorClass}">${escapeHTML(pub.authorship)}</div>` : '';
           let btns = '';
-          if (pub.pubmedLink) btns += `<a href="${escapeHTML(pub.pubmedLink)}" class="btn btn-text" target="_blank" rel="noopener" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-external-link-alt mr-xs"></i>PubMed &gt;&gt;</a>`;
-          if (pub.journalLink) btns += `<a href="${escapeHTML(pub.journalLink)}" class="btn btn-text" target="_blank" rel="noopener" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-book-open mr-xs"></i>Journal &gt;&gt;</a>`;
-          if (pub.blogLink) btns += `<a href="${escapeHTML(pub.blogLink)}" class="btn btn-text" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-lightbulb mr-xs"></i>My insights &gt;&gt;</a>`;
+          if (pub.pubmedLink) btns += `<a href="${escapeHTML(pub.pubmedLink)}" class="btn btn-text" target="_blank" rel="noopener" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-external-link-alt mr-xs"></i>PubMed ❯❯;</a>`;
+          if (pub.journalLink) btns += `<a href="${escapeHTML(pub.journalLink)}" class="btn btn-text" target="_blank" rel="noopener" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-book-open mr-xs"></i>Journal ❯❯;</a>`;
+          if (pub.blogLink) btns += `<a href="${escapeHTML(pub.blogLink)}" class="btn btn-text" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-lightbulb mr-xs"></i>My insights ❯❯;</a>`;
 
           html += `
             <div class="publication-item" style="margin-bottom: var(--space-sm);">
