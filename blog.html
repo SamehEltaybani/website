@@ -495,7 +495,7 @@ All data comes from /json/blog-list.json.
             matches.forEach(match => {
               const item = document.createElement('div');
               item.textContent = match;
-              item.style.cssText = 'padding: var(--space-xs) var(--space-sm); cursor: pointer; font-size: var(--font-size-sm); color: var(--color-text-main);';
+              item.style.cssText = 'padding: var(--space-sm) var(--space-md); cursor: pointer; font-size: var(--font-size-base); color: var(--color-text-main);';
               item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--color-bg-alt)');
               item.addEventListener('mouseleave', () => item.style.backgroundColor = '');
               item.addEventListener('click', () => {
