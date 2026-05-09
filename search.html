@@ -1,1 +1,267 @@
+/**
+ * ============================================
+ * SEARCH.HTML – For results of SEARCHING THE WHOLE SITE
+ * ============================================
+ * This page automatically loads data from your four JSON files, builds the search index, and displays results with pagination.
+ */
 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="/website/">
+  <meta name="site-base-path" content="/website/">
+  <title>Dr. Sameh Eltaybani - Search Results</title>
+  <meta name="description" content="Search results for Dr. Sameh Eltaybani's website.">
+  <meta property="og:title" content="Dr. Sameh Eltaybani - Search Results">
+  <meta property="og:description" content="Search results for Dr. Sameh Eltaybani's website.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="search.html">
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body data-page="search.html">
+
+  <nav data-component="navigation" class="navbar">
+    <div class="navbar-container">
+      <div class="navbar-left"></div>
+      <div class="navbar-right">
+        <button id="search-toggle" class="search-icon-btn" aria-label="Search">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+      <button class="hamburger" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <div data-component="breadcrumb" class="breadcrumb-bar"
+       style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
+
+  <main>
+    <section class="section">
+      <div class="container" style="max-width: 800px; margin: 0 auto;">
+        <h1 class="heading-large">Search Results</h1>
+        <p id="search-query-display" class="paragraph text-muted"></p>
+        <div id="search-results-list"></div>
+        <div id="load-more-container" class="text-center mt-md">
+          <button id="load-more-btn" class="btn btn-load-more hidden">Load More</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer data-component="footer"></footer>
+
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/navigation.js"></script>
+  <script src="assets/js/breadcrumbs.js"></script>
+  <script src="assets/js/footer.js"></script>
+  <script src="assets/js/search.js"></script>
+
+  <script>
+    (function() {
+      'use strict';
+
+      const resultsList = document.getElementById('search-results-list');
+      const queryDisplay = document.getElementById('search-query-display');
+      const loadMoreBtn = document.getElementById('load-more-btn');
+      let allResults = [];
+      let displayed = 0;
+      const perPage = 10;
+
+      function escapeHTML(str) {
+        if (typeof SiteUtils !== 'undefined' && SiteUtils.escapeHTML) return SiteUtils.escapeHTML(str);
+        const d = document.createElement('div');
+        d.textContent = str;
+        return d.innerHTML;
+      }
+
+      async function buildIndex() {
+        try {
+          const [site, blog, pubs, portfolios] = await Promise.all([
+            SiteUtils.loadJSON('/json/site-data.json', true),
+            SiteUtils.loadJSON('/json/blog-list.json', true),
+            SiteUtils.loadJSON('/json/publication-list.json', true),
+            SiteUtils.loadJSON('/json/portfolio-list.json', true)
+          ]);
+
+          const index = [];
+
+          // Pages from site-data (breadcrumb entries and navigation pages)
+          if (site && site.breadcrumbHierarchy) {
+            site.breadcrumbHierarchy.forEach(entry => {
+              index.push({
+                title: entry.title || entry.filename,
+                url: entry.filename,
+                type: 'Page',
+                summary: entry.summary || '',
+                categories: []
+              });
+            });
+          }
+
+          // Blog articles
+          if (blog && Array.isArray(blog)) {
+            blog.forEach(post => {
+              index.push({
+                title: post.title || '',
+                url: post.blogfile || '',
+                type: 'Blog Article',
+                summary: post.summary || '',
+                categories: post.categories || []
+              });
+            });
+          }
+
+          // Publications
+          if (pubs && Array.isArray(pubs)) {
+            pubs.forEach(pub => {
+              index.push({
+                title: pub.title || '',
+                url: pub.blogLink || pub.journalLink || pub.pubmedLink || '',
+                type: 'Publication',
+                summary: pub.summary || '',
+                categories: pub.journal ? [pub.journal] : []
+              });
+            });
+          }
+
+          // Portfolios
+          if (portfolios && Array.isArray(portfolios)) {
+            portfolios.forEach(pf => {
+              index.push({
+                title: pf.portfolioname || '',
+                url: pf.portfolioname ? pf.portfolioname.toLowerCase().replace(/\s+/g, '-') + '.html' : '',
+                type: 'Portfolio',
+                summary: pf.summary || '',
+                categories: []
+              });
+              // Map to correct filenames
+              const map = {
+                'Research Portfolio': 'research-portfolio.html',
+                'Teaching Portfolio': 'teaching-portfolio.html',
+                'Data Analysis Portfolio': 'data-analysis-portfolio.html'
+              };
+              if (map[pf.portfolioname]) {
+                index[index.length-1].url = map[pf.portfolioname];
+              }
+            });
+          }
+
+          return index;
+        } catch(e) {
+          console.error('Search index build error:', e);
+          return [];
+        }
+      }
+
+      function search(query, index) {
+        const q = query.toLowerCase().trim();
+        if (!q) return [];
+
+        return index
+          .filter(item => {
+            const inTitle = item.title && item.title.toLowerCase().includes(q);
+            const inSummary = item.summary && item.summary.toLowerCase().includes(q);
+            const inCat = item.categories && item.categories.some(c => c && c.toLowerCase().includes(q));
+            return inTitle || inSummary || inCat;
+          })
+          .sort((a, b) => {
+            // Relevance: exact title match first, then title starts with, then contains
+            const aTitle = (a.title||'').toLowerCase();
+            const bTitle = (b.title||'').toLowerCase();
+            const aExact = aTitle === q;
+            const bExact = bTitle === q;
+            if (aExact !== bExact) return bExact - aExact;
+            const aStarts = aTitle.startsWith(q);
+            const bStarts = bTitle.startsWith(q);
+            if (aStarts !== bStarts) return bStarts - aStarts;
+            return aTitle.localeCompare(bTitle);
+          });
+      }
+
+      function renderBatch() {
+        if (!resultsList) return;
+        const end = Math.min(displayed + perPage, allResults.length);
+        const batch = allResults.slice(displayed, end);
+        let html = '';
+
+        batch.forEach((item, idx) => {
+          const typeClass = item.type.replace(/\s+/g, '-').toLowerCase();
+          const description = item.summary ? `<p class="paragraph" style="font-size:var(--font-size-sm); margin-top:2px;">${escapeHTML(item.summary.length > 150 ? item.summary.substring(0,150)+'…' : item.summary)}</p>` : '';
+
+          html += `
+            <div class="publication-item" style="margin-bottom: var(--space-sm);">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-sm);">
+                <div style="flex:1;">
+                  <a href="${escapeHTML(item.url)}" class="card-title" style="text-decoration:none;">${escapeHTML(item.title)}</a>
+                  ${description}
+                </div>
+                <span class="result-type result-type-${typeClass}">${escapeHTML(item.type)}</span>
+              </div>
+            </div>
+          `;
+
+          // Add batch separator
+          if ((idx + 1) % perPage === 0 && (idx + 1) < (end - displayed)) {
+            const pageNumber = Math.ceil((displayed + idx + 1) / perPage);
+            html += `<div class="page-separator">
+              <span class="page-sep-label">&#x25B2; PAGE ${pageNumber}</span>
+              <div class="page-sep-line"></div>
+              <span class="page-sep-label">&#x25BC; PAGE ${pageNumber + 1}</span>
+            </div>`;
+          }
+        });
+
+        resultsList.innerHTML += html;
+        displayed = end;
+
+        if (displayed >= allResults.length) {
+          loadMoreBtn.classList.add('hidden');
+        } else {
+          loadMoreBtn.classList.remove('hidden');
+          loadMoreBtn.textContent = 'Load More';
+        }
+      }
+
+      async function init() {
+        const params = new URLSearchParams(window.location.search);
+        const query = params.get('q') || '';
+        if (queryDisplay) {
+          queryDisplay.textContent = query ? 'Results for: "' + escapeHTML(query) + '"' : 'Please enter a search term.';
+        }
+
+        if (!query) {
+          resultsList.innerHTML = '<p class="text-center paragraph">No search term provided.</p>';
+          return;
+        }
+
+        const index = await buildIndex();
+        allResults = search(query, index);
+
+        if (allResults.length === 0) {
+          resultsList.innerHTML = '<p class="text-center paragraph">No results found. Please try different keywords.</p>';
+          return;
+        }
+
+        renderBatch();
+
+        loadMoreBtn.addEventListener('click', function() {
+          renderBatch();
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+  </script>
+</body>
+</html>
