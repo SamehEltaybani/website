@@ -61,9 +61,11 @@ All data comes from /json/blog-list.json.
 
         <!-- SEARCH -->
         <div class="search-box" id="search-container">
-          <i class="fas fa-search"></i>
-          <input type="text" id="search-input" placeholder="Search articles..." aria-label="Search articles">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search-input" placeholder="Search articles..." aria-label="Search articles">
         </div>
+        
+        <div id="autocomplete-dropdown" class="hidden" style="position: absolute; top: 100%; left: 0; right: 0; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; max-height: 200px; overflow-y: auto;"></div>
 
         <!-- FILTER BUTTON + DROPDOWN (aligns left on mobile) -->
         <div style="position: relative;">
@@ -442,17 +444,102 @@ All data comes from /json/blog-list.json.
       // ------------------------------------------------------------------
       const debouncedSearch = (typeof SiteUtils !== 'undefined' && SiteUtils.debounce) ?
         SiteUtils.debounce(handleSearchInput, 300) : handleSearchInput;
-      searchInput.addEventListener('input', debouncedSearch);
+        searchInput.addEventListener('input', function(e) {
+              debouncedSearch();
+              handleAutocomplete();
+      });
       resetBtn.addEventListener('click', handleReset);
 
+      
+      
+          // ------------------------------------------------------------------
+          // I. AUTOCOMPLETE FOR SEARCH
+          // ------------------------------------------------------------------
+          const autocompleteDropdown = document.getElementById('autocomplete-dropdown');
+          let suggestionPool = [];      // unique words from titles and categories
+          
+          // Build suggestion pool from all blog entries
+          function buildSuggestionPool() {
+            const words = new Set();
+            state.allItems.forEach(post => {
+              // Add words from title
+              if (post.title) {
+                post.title.toLowerCase().split(/\s+/).forEach(w => {
+                  if (w.length > 1) words.add(w);
+                });
+              }
+              // Add categories as whole phrases
+              if (post.categories && Array.isArray(post.categories)) {
+                post.categories.forEach(cat => {
+                  if (cat) words.add(cat.toLowerCase());
+                });
+              }
+            });
+            suggestionPool = [...words].sort();
+          }
+          
+          function showAutocomplete(matches) {
+            if (!autocompleteDropdown) return;
+            autocompleteDropdown.innerHTML = '';
+            if (matches.length === 0) {
+              autocompleteDropdown.classList.add('hidden');
+              return;
+            }
+            matches.forEach(match => {
+              const item = document.createElement('div');
+              item.textContent = match;
+              item.style.cssText = 'padding: var(--space-xs) var(--space-sm); cursor: pointer; font-size: var(--font-size-sm); color: var(--color-text-main);';
+              item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--color-bg-alt)');
+              item.addEventListener('mouseleave', () => item.style.backgroundColor = '');
+              item.addEventListener('click', () => {
+                searchInput.value = match;
+                autocompleteDropdown.classList.add('hidden');
+                // Trigger the search
+                handleSearchInput();
+              });
+              autocompleteDropdown.appendChild(item);
+            });
+            autocompleteDropdown.classList.remove('hidden');
+          }
+          
+          function handleAutocomplete() {
+            const query = searchInput.value.trim().toLowerCase();
+            if (query.length === 0) {
+              autocompleteDropdown.classList.add('hidden');
+              return;
+            }
+            const matches = suggestionPool.filter(word => word.startsWith(query)).slice(0, 8);
+            showAutocomplete(matches);
+          }
+          
+          // Close dropdown when clicking outside
+          document.addEventListener('click', function(e) {
+            if (autocompleteDropdown && !searchInput.contains(e.target) && !autocompleteDropdown.contains(e.target)) {
+              autocompleteDropdown.classList.add('hidden');
+            }
+          });
+          
+          // Keyboard navigation inside dropdown
+          searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+              autocompleteDropdown.classList.add('hidden');
+            }
+            // (Arrow key navigation can be added later if needed)
+          });
+      
+      
+      
+      
+      
       // ------------------------------------------------------------------
-      // I. INITIALISATION
+      // J. INITIALISATION
       // ------------------------------------------------------------------
       async function initBlog() {
         if (typeof SiteUtils !== 'undefined' && SiteUtils.waitForDOM) {
           await SiteUtils.waitForDOM();
         }
         await loadBlogData();
+        buildSuggestionPool();
         updateActiveSortUI();
         updateControlHighlights();
 
