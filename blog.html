@@ -231,10 +231,17 @@ All data comes from /json/blog-list.json.
         window.scrollTo({ top: 0, behavior: 'smooth' });
         let items = [...state.allItems];
 
-        // Search by title
+        // Search by title, shortTitle, categories, and summary
         if (state.activeSearch) {
           const q = state.activeSearch.toLowerCase();
-          items = items.filter(post => post.title && post.title.toLowerCase().includes(q));
+          items = items.filter(post => {
+            const inTitle = post.title && post.title.toLowerCase().includes(q);
+            const inShortTitle = post.shortTitle && post.shortTitle.toLowerCase().includes(q);
+            const inCategories = post.categories && Array.isArray(post.categories) &&
+              post.categories.some(cat => cat && cat.toLowerCase().includes(q));
+            const inSummary = post.summary && post.summary.toLowerCase().includes(q);
+            return inTitle || inShortTitle || inCategories || inSummary;
+          });
         }
 
         // Filter by category
