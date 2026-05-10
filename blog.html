@@ -504,6 +504,19 @@ All data comes from /json/blog-list.json.
                 // Trigger the search
                 handleSearchInput();
               });
+
+                        item.addEventListener('touchstart', function(e) {
+                        e.preventDefault();    // prevent the browser from doing a delayed click
+                        searchInput.value = match;
+                        autocompleteDropdown.classList.add('hidden');
+                        handleSearchInput();
+                    });
+
+
+
+
+
+              
               autocompleteDropdown.appendChild(item);
             });
             autocompleteDropdown.classList.remove('hidden');
