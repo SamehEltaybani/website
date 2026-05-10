@@ -26,6 +26,13 @@
       
 
       // Input wrapper
+      
+      const scopeSentence = document.createElement('p');
+      scopeSentence.style.cssText = 'font-size: var(--font-size-sm); color: var(--color-text-muted); margin: 0 0 var(--space-sm) 0; text-align: center;';
+      scopeSentence.textContent = 'This search covers key metadata – not full text of every page.';
+      box.appendChild(scopeSentence);
+
+      
       const inputWrapper = document.createElement('div');
       inputWrapper.className = 'search-modal-input-wrapper';
 
@@ -49,25 +56,7 @@
       box.appendChild(submitBtn);
 
 
-            // ---- Compact tips section (static, below the search button) ----
-      const tipsContainer = document.createElement('div');
-      tipsContainer.style.cssText = 'display:flex; align-items:flex-start; gap:var(--space-sm); margin-top:var(--space-md); font-size:var(--font-size-sm); color:var(--color-text-muted); line-height:1.5;';
-
-      const tipsLabel = document.createElement('span');
-      tipsLabel.style.cssText = 'font-weight:600; white-space:nowrap;';
-      tipsLabel.innerHTML = '<i class="fas fa-exclamation-circle"></i>';
-
-      const tipsList = document.createElement('ul');
-      tipsList.style.cssText = 'margin:0; padding-left:var(--space-lg); list-style:disc;';
-      tipsList.innerHTML = `
-        <li>Be specific (eg, “nursing education” instead of “nursing”).</li>
-        <li>Try different terms or synonyms.</li>
-        <li>This search covers key metadata – not full text of every page.</li>
-      `;
-
-      tipsContainer.appendChild(tipsLabel);
-      tipsContainer.appendChild(tipsList);
-      box.appendChild(tipsContainer);
+           
       // -------------------------------------------------------------
 
 
@@ -98,50 +87,81 @@
         }
       });
 
-      // Autocomplete logic
-      input.addEventListener('input', function() {
-        const query = input.value.trim().toLowerCase();
-        if (query.length === 0) {
-          autocompleteDropdown.classList.remove('open');
-          return;
-        }
-        const matches = suggestionPool.filter(word => word.startsWith(query)).slice(0, 8);
-        autocompleteDropdown.innerHTML = '';
-        if (matches.length > 0) {
-          matches.forEach(match => {
-            const item = document.createElement('div');
-            item.className = 'search-modal-autocomplete-item';
-            item.textContent = match;
-            item.addEventListener('click', function() {
-              input.value = match;
-              autocompleteDropdown.classList.remove('open');
-            });
-
-                    item.addEventListener('touchstart', function(e) {
-                      e.preventDefault();
-                      input.value = match;
-                      autocompleteDropdown.classList.remove('open');
-                  });
 
 
-
-
-            
-            autocompleteDropdown.appendChild(item);
-          });
-          autocompleteDropdown.classList.add('open');
-        } else {
-          autocompleteDropdown.classList.remove('open');
-        }
-      });
-
-      // Close dropdown when clicking outside input
+  // Close dropdown when clicking outside input
       document.addEventListener('click', function(e) {
         if (!inputWrapper.contains(e.target)) {
           autocompleteDropdown.classList.remove('open');
         }
       });
 
+
+      
+            // Autocomplete logic (with keyboard)
+            let selectedIndex = -1;
+            input.addEventListener('input', function() {
+                const query = input.value.trim().toLowerCase();
+                if (query.length === 0) {
+                    autocompleteDropdown.classList.remove('open');
+                    return;
+                }
+                const matches = suggestionPool.filter(word => word.startsWith(query)).slice(0, 8);
+                autocompleteDropdown.innerHTML = '';
+                selectedIndex = -1;
+                if (matches.length > 0) {
+                    matches.forEach((match, idx) => {
+                        const item = document.createElement('div');
+                        item.className = 'search-modal-autocomplete-item';
+                        item.textContent = match;
+                        item.addEventListener('click', function() {
+                            input.value = match;
+                            autocompleteDropdown.classList.remove('open');
+                        });
+                        item.addEventListener('mouseenter', function() {
+                            // Remove highlight from all items
+                            autocompleteDropdown.querySelectorAll('.search-modal-autocomplete-item').forEach(el => el.style.backgroundColor = '');
+                            item.style.backgroundColor = 'var(--color-bg-alt)';
+                            selectedIndex = idx;
+                        });
+                        autocompleteDropdown.appendChild(item);
+                    });
+                    autocompleteDropdown.classList.add('open');
+                } else {
+                    autocompleteDropdown.classList.remove('open');
+                }
+            });
+
+            // Keyboard navigation for the dropdown
+            input.addEventListener('keydown', function(e) {
+                if (!autocompleteDropdown.classList.contains('open')) return;
+                const items = autocompleteDropdown.querySelectorAll('.search-modal-autocomplete-item');
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    selectedIndex = Math.min(selectedIndex + 1, items.length - 1);
+                    highlightItem(items, selectedIndex);
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    selectedIndex = Math.max(selectedIndex - 1, 0);
+                    highlightItem(items, selectedIndex);
+                } else if (e.key === 'Enter' && selectedIndex >= 0) {
+                    e.preventDefault();
+                    items[selectedIndex].click();
+                } else if (e.key === 'Escape') {
+                    autocompleteDropdown.classList.remove('open');
+                }
+            });
+
+            function highlightItem(items, index) {
+                items.forEach((item, i) => {
+                    item.style.backgroundColor = i === index ? 'var(--color-bg-alt)' : '';
+                });
+            }
+
+
+      
+
+    
      
       
       // Perform search
@@ -205,8 +225,9 @@ function doSearch() {
   }
 
 
+async function buildSuggestionPool() {
+    if (suggestionPool.length > 0) return;   // CACHE: build only once
 
-  async function buildSuggestionPool() {
     try {
         if (typeof SiteUtils === 'undefined') return;
         const [site, blog, pubs, portfolios] = await Promise.all([
@@ -216,14 +237,17 @@ function doSearch() {
             SiteUtils.loadJSON('/json/portfolio-list.json', true)
         ]);
 
-        const words = new Set();
-        const freqMap = new Map();   // for spell correction – higher frequency = higher priority
+        const freqMap = new Map();   // word -> frequency
         const addWords = (text) => {
             if (typeof SiteUtils.cleanSearchTerm === 'function') {
-                SiteUtils.cleanSearchTerm(text).forEach(w => {
-                    words.add(w);
-                    freqMap.set(w, (freqMap.get(w) || 0) + 1);
-                });
+                const words = SiteUtils.cleanSearchTerm(text);
+                // Single words
+                words.forEach(w => freqMap.set(w, (freqMap.get(w) || 0) + 1));
+                // Bigrams (two‑word phrases)
+                for (let i = 0; i < words.length - 1; i++) {
+                    const bigram = words[i] + ' ' + words[i+1];
+                    freqMap.set(bigram, (freqMap.get(bigram) || 0) + 1);
+                }
             }
         };
 
@@ -232,9 +256,7 @@ function doSearch() {
             addWords(entry.summary);
         };
 
-        if (site && site.breadcrumbHierarchy) {
-            site.breadcrumbHierarchy.forEach(processEntry);
-        }
+        if (site && site.breadcrumbHierarchy) site.breadcrumbHierarchy.forEach(processEntry);
         if (blog && Array.isArray(blog)) {
             blog.forEach(post => {
                 processEntry(post);
@@ -249,19 +271,25 @@ function doSearch() {
             });
         }
         if (portfolios && Array.isArray(portfolios)) {
-            portfolios.forEach(pf => {
-                processEntry(pf);
-            });
+            portfolios.forEach(pf => processEntry(pf));
         }
 
-        // Build frequency‑sorted dictionary
-        spellDictionary = [...freqMap.entries()].sort((a, b) => b[1] - a[1]).map(e => e[0]);
+        // Sort by frequency (highest first)
+        suggestionPool = [...freqMap.entries()]
+            .sort((a, b) => b[1] - a[1])
+            .map(e => e[0]);
 
-        suggestionPool = [...words].sort();
+        // Build spell dictionary from the same frequency map (already done earlier; keep as is)
+        spellDictionary = [...freqMap.entries()]
+            .sort((a, b) => b[1] - a[1])
+            .map(e => e[0]);
     } catch(e) {
         console.warn('Could not build autocomplete pool', e);
     }
 }
+
+
+  
 
 
 
