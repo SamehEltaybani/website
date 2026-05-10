@@ -2,6 +2,8 @@
   'use strict';
 
   let suggestionPool = [];
+  let spellDictionary = [];      // dictionary for spell correction (frequency sorted)
+  const SPELL_THRESHOLD = 2;    // maximum edit distance for a correction to be shown
 
   function initSearch() {
     const toggleBtn = document.getElementById('search-toggle');
@@ -141,13 +143,24 @@
       });
 
       // Perform search
-      function doSearch() {
-        const query = input.value.trim();
-        if (query) {
-          window.location.href = 'search.html?q=' + encodeURIComponent(query);
-        }
-        overlay.classList.remove('open');
-      }
+
+function doSearch() {
+    const query = input.value.trim();
+    if (!query) return;
+    // Apply spell correction
+    const words = query.split(/\s+/);
+    const correctedWords = words.map(w => {
+        const correction = correctWord(w);
+        return correction || w;   // keep original if no correction
+    });
+    const finalQuery = correctedWords.join(' ');
+    window.location.href = 'search.html?q=' + encodeURIComponent(finalQuery);
+    overlay.classList.remove('open');
+}
+
+
+
+      
 
       submitBtn.addEventListener('click', doSearch);
       input.addEventListener('keydown', function(e) {
@@ -160,8 +173,7 @@
 
 
 
-
-async function buildSuggestionPool() {
+  async function buildSuggestionPool() {
     try {
         if (typeof SiteUtils === 'undefined') return;
         const [site, blog, pubs, portfolios] = await Promise.all([
@@ -172,44 +184,101 @@ async function buildSuggestionPool() {
         ]);
 
         const words = new Set();
+        const freqMap = new Map();   // for spell correction – higher frequency = higher priority
         const addWords = (text) => {
             if (typeof SiteUtils.cleanSearchTerm === 'function') {
-                SiteUtils.cleanSearchTerm(text).forEach(w => words.add(w));
+                SiteUtils.cleanSearchTerm(text).forEach(w => {
+                    words.add(w);
+                    freqMap.set(w, (freqMap.get(w) || 0) + 1);
+                });
             }
         };
 
+        const processEntry = (entry) => {
+            addWords(entry.title);
+            addWords(entry.summary);
+        };
+
         if (site && site.breadcrumbHierarchy) {
-            site.breadcrumbHierarchy.forEach(entry => {
-                addWords(entry.title);
-                addWords(entry.summary);
-            });
+            site.breadcrumbHierarchy.forEach(processEntry);
         }
         if (blog && Array.isArray(blog)) {
             blog.forEach(post => {
-                addWords(post.title);
+                processEntry(post);
                 addWords(post.shortTitle);
-                addWords(post.summary);
                 if (post.categories) post.categories.forEach(c => addWords(c));
             });
         }
         if (pubs && Array.isArray(pubs)) {
             pubs.forEach(pub => {
-                addWords(pub.title);
-                addWords(pub.summary);
+                processEntry(pub);
                 addWords(pub.journal);
             });
         }
         if (portfolios && Array.isArray(portfolios)) {
             portfolios.forEach(pf => {
-                addWords(pf.portfolioname);
-                addWords(pf.summary);
+                processEntry(pf);
             });
         }
+
+        // Build frequency‑sorted dictionary
+        spellDictionary = [...freqMap.entries()].sort((a, b) => b[1] - a[1]).map(e => e[0]);
+
         suggestionPool = [...words].sort();
     } catch(e) {
         console.warn('Could not build autocomplete pool', e);
     }
 }
+
+
+
+
+  /**
+ * Levenshtein distance between two strings (edit distance).
+ */
+function editDistance(a, b) {
+    const alen = a.length, blen = b.length;
+    const dp = Array.from({ length: alen + 1 }, () => Array(blen + 1).fill(0));
+    for (let i = 0; i <= alen; i++) dp[i][0] = i;
+    for (let j = 0; j <= blen; j++) dp[0][j] = j;
+    for (let i = 1; i <= alen; i++) {
+        for (let j = 1; j <= blen; j++) {
+            dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1] : Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1;
+        }
+    }
+    return dp[alen][blen];
+}
+
+/**
+ * Returns a corrected word or null if no good match is found.
+ */
+function correctWord(word) {
+    if (!word || word.length < 3) return null;
+    word = word.toLowerCase();
+    // Only suggest if word is not already in the dictionary
+    if (spellDictionary.includes(word)) return null;
+    let bestMatch = null;
+    let bestScore = Infinity;
+    for (const dictWord of spellDictionary) {
+        const dist = editDistance(word, dictWord);
+        if (dist < bestScore && dist <= SPELL_THRESHOLD) {
+            bestScore = dist;
+            bestMatch = dictWord;
+            if (dist === 1) break;   // can't beat distance 1
+        }
+    }
+    return bestMatch;
+}
+
+  
+  
+
+
+  
+
+
+
+  
 
   
 
