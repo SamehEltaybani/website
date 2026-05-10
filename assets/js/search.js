@@ -144,21 +144,35 @@
 
       // Perform search
 
-function doSearch() {
-    const query = input.value.trim();
-    if (!query) return;
-    // Apply spell correction
-    const words = query.split(/\s+/);
-    const correctedWords = words.map(w => {
-        const correction = correctWord(w);
-        return correction || w;   // keep original if no correction
-    });
-    const finalQuery = correctedWords.join(' ');
-    window.location.href = 'search.html?q=' + encodeURIComponent(finalQuery);
-    overlay.classList.remove('open');
-}
-
-
+                  function doSearch() {
+                      const query = input.value.trim();
+                      if (!query) return;
+                      const words = query.split(/\s+/);
+                      let hasCorrection = false;
+                      const correctedWords = words.map(w => {
+                          const correction = correctWord(w);
+                          if (correction) hasCorrection = true;
+                          return correction || w;
+                      });
+                      const finalQuery = correctedWords.join(' ');
+                  
+                      if (hasCorrection) {
+                          // Show a brief "Did you mean?" message before redirecting
+                          const msg = document.createElement('div');
+                          msg.style.cssText = 'margin-top:var(--space-sm); padding:var(--space-sm); background-color:var(--color-gold-light); border-radius:8px; font-size:var(--font-size-sm); text-align:center;';
+                          msg.textContent = 'Did you mean: ' + finalQuery + '?';
+                          box.appendChild(msg);
+                          // Remove the message after 2 seconds and then redirect
+                          setTimeout(function() {
+                              msg.remove();
+                              window.location.href = 'search.html?q=' + encodeURIComponent(finalQuery);
+                              overlay.classList.remove('open');
+                          }, 2000);
+                      } else {
+                          window.location.href = 'search.html?q=' + encodeURIComponent(query);
+                          overlay.classList.remove('open');
+                      }
+                  }
 
       
 
