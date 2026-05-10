@@ -49,6 +49,7 @@
         <h1 class="heading-large">Search Results</h1>
         
        <p id="search-query-display" class="paragraph text-muted"></p>
+       <p id="debug-index-count" style="font-size:0.8rem; color:var(--color-text-muted); margin-bottom:var(--space-sm);"></p>
 
 
 
@@ -360,6 +361,15 @@ ${item.summary ? `<p class="paragraph" style="font-size:var(--font-size-sm); mar
         }
 
         const index = await buildIndex();
+
+          const debugCount = document.getElementById('debug-index-count');
+          if (debugCount) {
+              debugCount.textContent = index.length > 0
+                  ? '(Debug) Search index contains ' + index.length + ' items.'
+                  : '(Debug) Search index is empty.';
+          }
+
+       
         allResults = search(currentQuery, index);
 
         if (allResults.length === 0) {
