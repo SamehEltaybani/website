@@ -304,29 +304,76 @@ const SiteUtils = (function() {
     // PUBLIC API
     // ============================================
     
-    // Return only the functions that should be accessible
-    return {
-        // DOM utilities
-        waitForDOM,
-        
-        // JSON utilities
-        loadJSON,
-        clearJSONCache,
-        
-        // Page identification
-        getCurrentPageFilename,
-        getCurrentPageTitle,
-        
-        // Security
-        escapeHTML,
-        
-        // Performance
-        debounce,
-        throttle,
-        
-        // DOM helpers
-        createElement
-    };
+    // ============================================
+// SIMPLE STEMMER & SEARCH HELPERS
+// ============================================
+
+/**
+ * A very simple English stemmer that removes common suffixes.
+ * It helps match "nursing", "nurse", "nurses" etc.
+ * @param {string} word - The word to stem
+ * @returns {string} The stemmed word
+ */
+function stem(word) {
+    if (!word || word.length < 3) return word;
+    let w = word.toLowerCase();
+    // Remove common suffixes (order matters)
+    const suffixes = ['ing', 'ment', 'ness', 'tion', 'ence', 'ance', 'able', 'ible', 'ly', 'ed', 's'];
+    for (let i = 0; i < suffixes.length; i++) {
+        const suffix = suffixes[i];
+        if (w.endsWith(suffix) && w.length - suffix.length >= 3) {
+            w = w.slice(0, -suffix.length);
+            break;   // stop after first suffix removal to avoid over-stemming
+        }
+    }
+    return w;
+}
+
+/**
+ * Prepares a string for autocomplete suggestions:
+ * - converts to lowercase
+ * - removes punctuation
+ * - splits into words
+ * - ignores short words (< 3 chars) and common stop words
+ * @param {string} text - The raw text
+ * @returns {string[]} Clean array of words
+ */
+function cleanSearchTerm(text) {
+    if (!text) return [];
+    // Remove punctuation (keep only letters, numbers, spaces)
+    const cleaned = text.toLowerCase().replace(/[^\w\s]/g, '');
+    const stopWords = new Set([
+        'the', 'and', 'for', 'are', 'but', 'not', 'you', 'all', 'can',
+        'had', 'her', 'was', 'one', 'our', 'out', 'has', 'have', 'this',
+        'that', 'with', 'from', 'they', 'will', 'their', 'them', 'than',
+        'then', 'about', 'which', 'also', 'into', 'its', 'may', 'such',
+        'over', 'new', 'use', 'been', 'who', 'how', 'what', 'when'
+    ]);
+    return cleaned.split(/\s+/).filter(w => w.length >= 3 && !stopWords.has(w));
+}
+
+return {
+    // DOM utilities
+    waitForDOM,
+    // JSON utilities
+    loadJSON,
+    clearJSONCache,
+    // Page identification
+    getCurrentPageFilename,
+    getCurrentPageTitle,
+    // Security
+    escapeHTML,
+    // Performance
+    debounce,
+    throttle,
+    // DOM helpers
+    createElement,
+    // Search helpers  <-- NEW
+    stem,
+    cleanSearchTerm
+};
+
+    
     
 })();
 
