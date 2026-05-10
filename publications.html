@@ -7,7 +7,6 @@ Fixed issues (central + page‑specific):
   - Mobile breadcrumb shows full path when space allows (via breadcrumbs.js)
   - Filter & sort dropdowns open toward the left on mobile
   - Search box highlights when active
-  - No gap between breadcrumb and controls bar
   - Sticky dropdowns (positioned inside the controls bar)
   - Space between publication cards
   - Active controls buttons highlighted
@@ -188,8 +187,7 @@ Fixed issues (central + page‑specific):
                             matches.forEach(match => {
                               const item = document.createElement('div');
                               item.textContent = match;
-                              item.style.cssText = 'padding: var(--space-sm) var(--space-md); cursor: pointer; font-size: var(--font-size-base); color: var(--color-text-main);';
-                              item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--color-bg-alt)');
+                              item.style.cssText = 'padding: var(--space-sm) var(--space-md); cursor: pointer; font-size: var(--font-size-base); color: var(--color-text-main); min-height: 44px; display: flex; align-items: center;';                                            item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--color-bg-alt)');
                               item.addEventListener('mouseleave', () => item.style.backgroundColor = '');
                               item.addEventListener('click', () => {
                                 searchInput.value = match;
