@@ -1934,6 +1934,9 @@ pre code {
     cursor: pointer;
     font-size: var(--font-size-base);
     color: var(--color-text-main);
+    min-height: 44px;                  /* comfortable tap target */
+    display: flex;
+    align-items: center;
 }
 
 .search-modal-autocomplete-item:hover {
