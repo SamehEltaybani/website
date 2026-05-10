@@ -158,47 +158,60 @@
     }
   }
 
-  async function buildSuggestionPool() {
+
+
+
+async function buildSuggestionPool() {
     try {
-      if (typeof SiteUtils === 'undefined') return;
-      const [site, blog, pubs, portfolios] = await Promise.all([
-        SiteUtils.loadJSON('/json/site-data.json', true),
-        SiteUtils.loadJSON('/json/blog-list.json', true),
-        SiteUtils.loadJSON('/json/publication-list.json', true),
-        SiteUtils.loadJSON('/json/portfolio-list.json', true)
-      ]);
+        if (typeof SiteUtils === 'undefined') return;
+        const [site, blog, pubs, portfolios] = await Promise.all([
+            SiteUtils.loadJSON('/json/site-data.json', true),
+            SiteUtils.loadJSON('/json/blog-list.json', true),
+            SiteUtils.loadJSON('/json/publication-list.json', true),
+            SiteUtils.loadJSON('/json/portfolio-list.json', true)
+        ]);
 
-      const words = new Set();
-      const addWords = (text) => {
-        if (text) text.toLowerCase().split(/\s+/).forEach(w => {
-          if (w.length > 1) words.add(w);
-        });
-      };
+        const words = new Set();
+        const addWords = (text) => {
+            if (typeof SiteUtils.cleanSearchTerm === 'function') {
+                SiteUtils.cleanSearchTerm(text).forEach(w => words.add(w));
+            }
+        };
 
-      if (site && site.breadcrumbHierarchy) {
-        site.breadcrumbHierarchy.forEach(entry => addWords(entry.title));
-      }
-      if (blog && Array.isArray(blog)) {
-        blog.forEach(post => {
-          addWords(post.title);
-          addWords(post.shortTitle);
-          if (post.categories) post.categories.forEach(c => addWords(c));
-        });
-      }
-      if (pubs && Array.isArray(pubs)) {
-        pubs.forEach(pub => {
-          addWords(pub.title);
-          addWords(pub.journal);
-        });
-      }
-      if (portfolios && Array.isArray(portfolios)) {
-        portfolios.forEach(pf => addWords(pf.portfolioname));
-      }
-      suggestionPool = [...words].sort();
+        if (site && site.breadcrumbHierarchy) {
+            site.breadcrumbHierarchy.forEach(entry => {
+                addWords(entry.title);
+                addWords(entry.summary);
+            });
+        }
+        if (blog && Array.isArray(blog)) {
+            blog.forEach(post => {
+                addWords(post.title);
+                addWords(post.shortTitle);
+                addWords(post.summary);
+                if (post.categories) post.categories.forEach(c => addWords(c));
+            });
+        }
+        if (pubs && Array.isArray(pubs)) {
+            pubs.forEach(pub => {
+                addWords(pub.title);
+                addWords(pub.summary);
+                addWords(pub.journal);
+            });
+        }
+        if (portfolios && Array.isArray(portfolios)) {
+            portfolios.forEach(pf => {
+                addWords(pf.portfolioname);
+                addWords(pf.summary);
+            });
+        }
+        suggestionPool = [...words].sort();
     } catch(e) {
-      console.warn('Could not build autocomplete pool', e);
+        console.warn('Could not build autocomplete pool', e);
     }
-  }
+}
+
+  
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initSearch);
