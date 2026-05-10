@@ -142,37 +142,56 @@
         }
       });
 
+     
+      
       // Perform search
 
-                  function doSearch() {
-                      const query = input.value.trim();
-                      if (!query) return;
-                      const words = query.split(/\s+/);
-                      let hasCorrection = false;
-                      const correctedWords = words.map(w => {
-                          const correction = correctWord(w);
-                          if (correction) hasCorrection = true;
-                          return correction || w;
-                      });
-                      const finalQuery = correctedWords.join(' ');
-                  
-                      if (hasCorrection) {
-                          // Show a brief "Did you mean?" message before redirecting
-                          const msg = document.createElement('div');
-                          msg.style.cssText = 'margin-top:var(--space-sm); padding:var(--space-sm); background-color:var(--color-gold-light); border-radius:8px; font-size:var(--font-size-sm); text-align:center;';
-                          msg.textContent = 'Did you mean: ' + finalQuery + '?';
-                          box.appendChild(msg);
-                          // Remove the message after 2 seconds and then redirect
-                          setTimeout(function() {
-                              msg.remove();
-                              window.location.href = 'search.html?q=' + encodeURIComponent(finalQuery);
-                              overlay.classList.remove('open');
-                          }, 2000);
-                      } else {
-                          window.location.href = 'search.html?q=' + encodeURIComponent(query);
-                          overlay.classList.remove('open');
-                      }
-                  }
+function doSearch() {
+    const query = input.value.trim();
+    if (!query) return;
+    const words = query.split(/\s+/);
+    let hasCorrection = false;
+    const correctedWords = words.map(w => {
+        const correction = correctWord(w);
+        if (correction) hasCorrection = true;
+        return correction || w;
+    });
+    const finalQuery = correctedWords.join(' ');
+
+    if (hasCorrection) {
+        // Remove any previous correction message
+        const existing = document.querySelector('.correction-message');
+        if (existing) existing.remove();
+
+        const msg = document.createElement('div');
+        msg.className = 'correction-message';
+        msg.style.cssText = 'margin-top:var(--space-sm); padding:var(--space-sm); background-color:var(--color-gold-light); border-radius:8px; font-size:var(--font-size-sm); text-align:center;';
+        msg.innerHTML = 'Did you mean: <a href="#" class="correction-link" style="font-weight:600; text-decoration:underline; color:var(--color-midnight-blue);">' + finalQuery + '</a> ?';
+        
+        // Clicking the corrected query fills the input and searches
+        msg.querySelector('.correction-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            input.value = finalQuery;
+            msg.remove();
+            doSearch();   // search with corrected query (this time no correction)
+        });
+
+        // Allow dismissing the message
+        const dismiss = document.createElement('button');
+        dismiss.textContent = '✕';
+        dismiss.style.cssText = 'background:none; border:none; margin-left:var(--space-sm); cursor:pointer; font-size:0.9rem;';
+        dismiss.addEventListener('click', function() { msg.remove(); });
+        msg.appendChild(dismiss);
+
+        box.appendChild(msg);
+    } else {
+        // No correction needed – redirect immediately
+        window.location.href = 'search.html?q=' + encodeURIComponent(query);
+        overlay.classList.remove('open');
+    }
+}
+
+      
 
       
 
