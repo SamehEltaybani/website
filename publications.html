@@ -194,6 +194,12 @@ Fixed issues (central + page‑specific):
                                 autocompleteDropdown.classList.add('hidden');
                                 handleSearchInput();   // trigger the actual search
                               });
+                                        item.addEventListener('touchstart', function(e) {
+                                        e.preventDefault();    // prevent the browser from doing a delayed click
+                                        searchInput.value = match;
+                                        autocompleteDropdown.classList.add('hidden');
+                                        handleSearchInput();
+                                    });
                               autocompleteDropdown.appendChild(item);
                             });
                             autocompleteDropdown.classList.remove('hidden');
