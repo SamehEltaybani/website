@@ -352,6 +352,28 @@ function cleanSearchTerm(text) {
     return cleaned.split(/\s+/).filter(w => w.length >= 3 && !stopWords.has(w));
 }
 
+
+
+// ============================================
+// SCROLL TO TOP ON PAGE REFRESH
+// ============================================
+window.addEventListener('beforeunload', function() {
+    // Store the fact we're going to refresh
+    sessionStorage.setItem('scrollToTop', 'true');
+});
+
+// On page load, if the flag is set, scroll to top and remove the flag
+window.addEventListener('load', function() {
+    if (sessionStorage.getItem('scrollToTop') === 'true') {
+        sessionStorage.removeItem('scrollToTop');
+        window.scrollTo(0, 0);
+    }
+});
+
+
+
+    
+
 return {
     // DOM utilities
     waitForDOM,
