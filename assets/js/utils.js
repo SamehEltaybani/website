@@ -26,6 +26,8 @@ const BASE_PATH = SITE_BASE_PATH ? (SITE_BASE_PATH.endsWith('/') ? SITE_BASE_PAT
 
 const SiteUtils = (function() {
     'use strict';
+    
+    history.scrollRestoration = 'manual';   // prevent browser scroll restore
 
     // ============================================
     // PRIVATE VARIABLES (not accessible outside)
@@ -357,23 +359,14 @@ function cleanSearchTerm(text) {
 // ============================================
 // SCROLL TO TOP ON PAGE REFRESH
 // ============================================
-window.addEventListener('beforeunload', function() {
-    // Store the fact we're going to refresh
-    sessionStorage.setItem('scrollToTop', 'true');
-});
-
-// On page load, if the flag is set, scroll to top and remove the flag
-window.addEventListener('load', function() {
-    if (sessionStorage.getItem('scrollToTop') === 'true') {
-        sessionStorage.removeItem('scrollToTop');
-        window.scrollTo(0, 0);
-    }
-});
-
-
 
     
+// Scroll to top on every page load
+window.addEventListener('load', function() {
+    window.scrollTo(0, 0);
+});
 
+    
 return {
     // DOM utilities
     waitForDOM,
