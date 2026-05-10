@@ -500,21 +500,31 @@ All data comes from /json/blog-list.json.
           let suggestionPool = [];      // unique words from titles and categories
           
           // Build suggestion pool from all blog entries
+
+      function buildSuggestionPool() {
+    const freqMap = new Map();
+    const processField = (text) => {
+        if (text && typeof SiteUtils.cleanSearchTerm === 'function') {
+            const words = SiteUtils.cleanSearchTerm(text);
+            words.forEach(w => freqMap.set(w, (freqMap.get(w) || 0) + 1));
+            for (let i = 0; i < words.length - 1; i++) {
+                const bigram = words[i] + ' ' + words[i+1];
+                freqMap.set(bigram, (freqMap.get(bigram) || 0) + 1);
+            }
+        }
+    };
+    state.allItems.forEach(post => {
+        processField(post.title);
+        processField(post.shortTitle);
+        processField(post.summary);
+        if (post.categories) post.categories.forEach(c => processField(c));
+    });
+    suggestionPool = [...freqMap.entries()].sort((a, b) => b[1] - a[1]).map(e => e[0]);
+}
           
 
 
-      function buildSuggestionPool() {
-    const words = new Set();
-    state.allItems.forEach(post => {
-        const fields = [post.title, post.shortTitle, post.summary, ...(post.categories || [])];
-        fields.forEach(field => {
-            if (field && typeof SiteUtils.cleanSearchTerm === 'function') {
-                SiteUtils.cleanSearchTerm(field).forEach(w => words.add(w));
-            }
-        });
-    });
-    suggestionPool = [...words].sort();
-}
+    
 
 
 
@@ -540,6 +550,14 @@ All data comes from /json/blog-list.json.
                 // Trigger the search
                 handleSearchInput();
               });
+
+                    item.addEventListener('mouseenter', function() {
+                    // Remove highlight from all items first
+                    const allItems = autocompleteDropdown.querySelectorAll('div');
+                    allItems.forEach(el => el.style.backgroundColor = '');
+                    // Highlight this item
+                    item.style.backgroundColor = 'var(--color-bg-alt)';
+                });
 
                         item.addEventListener('touchstart', function(e) {
                         e.preventDefault();    // prevent the browser from doing a delayed click
@@ -577,11 +595,32 @@ All data comes from /json/blog-list.json.
           
           // Keyboard navigation inside dropdown
           searchInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-              autocompleteDropdown.classList.add('hidden');
-            }
-            // (Arrow key navigation can be added later if needed)
-          });
+    if (e.key === 'Escape') {
+        autocompleteDropdown.classList.add('hidden');
+        return;
+    }
+    if (!autocompleteDropdown || autocompleteDropdown.classList.contains('hidden')) return;
+    const items = autocompleteDropdown.querySelectorAll('div');
+    let idx = Array.from(items).findIndex(el => el.style.backgroundColor === 'var(--color-bg-alt)' || el.style.backgroundColor === 'rgb(248, 249, 250)');
+    if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        idx = (idx + 1) % items.length;
+        highlightBlogItem(items, idx);
+    } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        idx = (idx - 1 + items.length) % items.length;
+        highlightBlogItem(items, idx);
+    } else if (e.key === 'Enter' && idx >= 0) {
+        e.preventDefault();
+        items[idx].click();
+    }
+});
+
+function highlightBlogItem(items, index) {
+    items.forEach((item, i) => {
+        item.style.backgroundColor = i === index ? 'var(--color-bg-alt)' : '';
+    });
+}
       
       
       
