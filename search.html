@@ -123,6 +123,23 @@
         return d.innerHTML;
       }
 
+
+     function highlight(text, query) {
+    if (!text || !query) return escapeHTML(text);
+    const words = query.split(/\s+/).filter(w => w.length > 0);
+    let result = escapeHTML(text);
+    words.forEach(w => {
+        const escaped = w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(`(${escaped})`, 'gi');
+        result = result.replace(regex, '<mark style="background-color:#FFF3CD; padding:0 2px; border-radius:2px;">$1</mark>');
+    });
+    return result;
+}
+
+
+
+
+     
       async function buildIndex() {
         try {
           const [site, blog, pubs, portfolios] = await Promise.all([
