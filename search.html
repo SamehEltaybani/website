@@ -306,10 +306,13 @@
                <div class="publication-item" style="margin-bottom: var(--space-sm);">
                  <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-sm);">
                    <div style="flex:1;">
+
                      <span class="card-title">${highlight(item.title, currentQuery)}</span>
 ${item.summary ? `<p class="paragraph" style="font-size:var(--font-size-sm); margin-top:2px;">${highlight(item.summary, currentQuery)}</p>` : ''}
-                     ${description}
                    </div>
+                     
+
+                     
                    <span class="result-type result-type-${typeClass}">${escapeHTML(item.type)}</span>
                  </div>
                </div>
@@ -355,7 +358,7 @@ ${item.summary ? `<p class="paragraph" style="font-size:var(--font-size-sm); mar
           queryDisplay.textContent = currentQuery ? 'Results for: "' + escapeHTML(currentQuery) + '"' : 'Please enter a search term.';
         }
 
-        if (!query) {
+        if (!currentQuery) {
           resultsList.innerHTML = '<p class="text-center paragraph">No search term provided.</p>';
           return;
         }
