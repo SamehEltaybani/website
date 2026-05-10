@@ -53,7 +53,7 @@
 
       const tipsLabel = document.createElement('span');
       tipsLabel.style.cssText = 'font-weight:600; white-space:nowrap;';
-      tipsLabel.textContent = 'Search tips:';
+      tipsLabel.innerHTML = '<i class="fas fa-exclamation-circle"></i>';
 
       const tipsList = document.createElement('ul');
       tipsList.style.cssText = 'margin:0; padding-left:var(--space-lg); list-style:disc;';
