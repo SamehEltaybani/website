@@ -53,7 +53,7 @@
 
 
        <!-- "Did not find" toggle button -->
-<div style="text-align: right; margin-bottom: var(--space-sm);">
+<div style="text-align: right; margin-bottom: var(--space-md);">
   <button id="notfound-tips-btn" class="btn btn-text">
     <i class="fas fa-question-circle mr-xs"></i> Did not find what you’re looking for?
   </button>
@@ -96,19 +96,7 @@
       const queryDisplay = document.getElementById('search-query-display');
       const loadMoreBtn = document.getElementById('load-more-btn');
 
-              // --- Tips toggle for results page ---
-              const resultsTipsBtn = document.getElementById('results-tips-btn');
-              const resultsTipsTooltip = document.getElementById('results-tips-tooltip');
-              if (resultsTipsBtn && resultsTipsTooltip) {
-                resultsTipsBtn.addEventListener('click', function() {
-                  resultsTipsTooltip.classList.toggle('open');
-                });
-                resultsTipsTooltip.querySelector('.search-tips-close').addEventListener('click', function() {
-                  resultsTipsTooltip.classList.remove('open');
-                });
-              }
-
-
+              
 
                    // Toggle for "Did not find" tips
               const notfoundTipsBtn = document.getElementById('notfound-tips-btn');
