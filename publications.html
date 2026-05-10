@@ -162,20 +162,23 @@ Fixed issues (central + page‑specific):
                           let suggestionPool = [];      // unique words from titles and summaries
                           
                           // Build suggestion pool from all publication entries
-                          function buildSuggestionPool() {
-                            const words = new Set();
-                            state.allItems.forEach(pub => {
-                              const fields = [pub.title, pub.summary];
-                              fields.forEach(field => {
-                                if (field) {
-                                  field.toLowerCase().split(/\s+/).forEach(w => {
-                                    if (w.length > 1) words.add(w);
-                                  });
-                                }
-                              });
-                            });
-                            suggestionPool = [...words].sort();
-                          }
+                          
+      
+      function buildSuggestionPool() {
+    const words = new Set();
+    state.allItems.forEach(pub => {
+        const fields = [pub.title, pub.summary];
+        fields.forEach(field => {
+            if (field && typeof SiteUtils.cleanSearchTerm === 'function') {
+                SiteUtils.cleanSearchTerm(field).forEach(w => words.add(w));
+            }
+        });
+    });
+    suggestionPool = [...words].sort();
+}
+
+
+      
                           
                           function showAutocomplete(matches) {
                             if (!autocompleteDropdown) return;
@@ -293,18 +296,38 @@ Fixed issues (central + page‑specific):
       // ------------------------------------------------------------------
       // FILTER / SORT / SEARCH
       // ------------------------------------------------------------------
+      
+      
       function applyAllFilters() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         let items = [...state.allItems];
 
-        if (state.activeSearch) {
-          const q = state.activeSearch.toLowerCase();
-          items = items.filter(p => {
-            const inTitle = p.title && p.title.toLowerCase().includes(q);
-            const inSummary = p.summary && p.summary.toLowerCase().includes(q);
-            return inTitle || inSummary;
-          });
-        }
+
+if (state.activeSearch) {
+    const rawQuery = state.activeSearch.toLowerCase().trim();
+    const searchWords = (typeof SiteUtils.cleanSearchTerm === 'function')
+        ? SiteUtils.cleanSearchTerm(state.activeSearch)
+        : rawQuery.split(/\s+/).filter(w => w.length > 0);
+    const finalWords = searchWords.length > 0 ? searchWords : [rawQuery];
+
+    items = items.filter(pub => {
+        const haystack = [
+            pub.title,
+            pub.summary
+        ].join(' ').toLowerCase();
+
+        return finalWords.every(word => {
+            if (haystack.includes(word)) return true;
+            if (typeof SiteUtils.stem === 'function') {
+                const stemmedWord = SiteUtils.stem(word);
+                if (stemmedWord !== word && haystack.includes(stemmedWord)) return true;
+            }
+            return false;
+        });
+    });
+}
+
+        
         
         if (state.activeFilters.year) items = items.filter(p => p.year == state.activeFilters.year);
         if (state.activeFilters.authorship) items = items.filter(p => p.authorship === state.activeFilters.authorship);
