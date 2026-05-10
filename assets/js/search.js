@@ -114,6 +114,17 @@
               input.value = match;
               autocompleteDropdown.classList.remove('open');
             });
+
+                    item.addEventListener('touchstart', function(e) {
+                      e.preventDefault();
+                      input.value = match;
+                      autocompleteDropdown.classList.remove('open');
+                  });
+
+
+
+
+            
             autocompleteDropdown.appendChild(item);
           });
           autocompleteDropdown.classList.add('open');
