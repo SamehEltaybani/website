@@ -19,18 +19,16 @@
 
       // Close button
       const closeBtn = document.createElement('button');
-      closeBtn.className = 'search-modal-close';
+      closeBtn.className = 'search-modal-close-btn';
       closeBtn.innerHTML = '&times;';
+      closeBtn.setAttribute('aria-label', 'Close search');
       box.appendChild(closeBtn);
 
       
 
       // Input wrapper
       
-      const scopeSentence = document.createElement('p');
-      scopeSentence.style.cssText = 'font-size: var(--font-size-sm); color: var(--color-text-muted); margin: 0 0 var(--space-sm) 0; text-align: center;';
-      scopeSentence.textContent = 'This search covers key metadata – not full text of every page.';
-      box.appendChild(scopeSentence);
+     
 
       
       const inputWrapper = document.createElement('div');
@@ -55,6 +53,12 @@
       submitBtn.textContent = 'Search';
       box.appendChild(submitBtn);
 
+
+            // Disclaimer sentence (below the Search button)
+      const scopeSentence = document.createElement('p');
+      scopeSentence.style.cssText = 'font-size: 0.75rem; color: var(--color-text-muted); margin: var(--space-sm) 0 0 0; text-align: center;';
+      scopeSentence.textContent = 'This search covers key metadata – not full text of every page.';
+      box.appendChild(scopeSentence);
 
            
       // -------------------------------------------------------------
