@@ -1838,27 +1838,41 @@ pre code {
 
 .search-modal-box {
     background-color: var(--color-white);
-    border-radius: 12px;
-    padding: var(--space-lg);
+    border-radius: 20px;
+    padding: var(--space-xl);
     width: 90%;
-    max-width: 500px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    max-width: 520px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.12), 0 6px 12px rgba(0,0,0,0.06);
     position: relative;
 }
 
 .search-modal-input {
     width: 100%;
-    padding: var(--space-sm) var(--space-lg);
+    height: 50px;                              /* taller input */
+    padding: 0 var(--space-md) 0 44px;         /* left padding for the icon */
     font-size: 16px;
+    background-color: var(--color-bg-alt);     /* subtle tint */
     border: 2px solid var(--color-border);
-    border-radius: 8px;
+    border-radius: 10px;
     outline: none;
     transition: border-color 0.2s;
     font-family: inherit;
+    box-sizing: border-box;
 }
 
 .search-modal-input:focus {
     border-color: var(--color-gold);
+    background-color: var(--color-white);      /* becomes white when typing */
+}
+
+.search-modal-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    pointer-events: none;        /* so clicks pass through to the input */
 }
 
 .search-modal-close {
@@ -1876,6 +1890,29 @@ pre code {
 .search-modal-submit {
     margin-top: var(--space-md);
     width: 100%;
+}
+
+.search-modal-close-btn {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--color-gold);
+    background-color: var(--color-white);
+    color: var(--color-midnight-blue);
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.search-modal-close-btn:hover {
+    background-color: var(--color-gold);
+    color: var(--color-white);
 }
 
 /* ============================================================================
