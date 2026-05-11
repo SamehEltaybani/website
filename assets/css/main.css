@@ -1875,17 +1875,7 @@ pre code {
     pointer-events: none;        /* so clicks pass through to the input */
 }
 
-.search-modal-close {
-    position: absolute;
-    top: var(--space-sm);
-    right: var(--space-sm);
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--color-text-muted);
-    line-height: 1;
-}
+
 
 .search-modal-submit {
     margin-top: var(--space-md);
