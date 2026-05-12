@@ -342,8 +342,8 @@ function stem(word) {
  */
 function cleanSearchTerm(text) {
     if (!text) return [];
-    // Remove punctuation (keep only letters, numbers, spaces)
-    const cleaned = text.toLowerCase().replace(/[^\w\s]/g, '');
+    // Split on whitespace first
+    const rawWords = text.toLowerCase().split(/\s+/);
     const stopWords = new Set([
         'the', 'and', 'for', 'are', 'but', 'not', 'you', 'all', 'can',
         'had', 'her', 'was', 'one', 'our', 'out', 'has', 'have', 'this',
@@ -351,9 +351,14 @@ function cleanSearchTerm(text) {
         'then', 'about', 'which', 'also', 'into', 'its', 'may', 'such',
         'over', 'new', 'use', 'been', 'who', 'how', 'what', 'when'
     ]);
-    return cleaned.split(/\s+/).filter(w => w.length >= 3 && !stopWords.has(w));
+    const cleaned = rawWords.map(w => {
+        // Remove punctuation only at the start and end of the word, keep hyphens and apostrophes inside
+        let trimmed = w.replace(/^[^\w]+/, '').replace(/[^\w]+$/, '');
+        // Remove words that became empty after trimming
+        return trimmed;
+    }).filter(w => w.length >= 3 && !stopWords.has(w));
+    return cleaned;
 }
-
 
 
 // ============================================
