@@ -35,10 +35,7 @@
       inputWrapper.className = 'search-modal-input-wrapper';
       inputWrapper.style.position = 'relative';
 
-      // Left magnifying glass icon
-      const leftIcon = document.createElement('i');
-      leftIcon.className = 'fas fa-search search-modal-icon';
-      inputWrapper.appendChild(leftIcon);
+     
 
       // Input field
       const input = document.createElement('input');
@@ -51,7 +48,7 @@
       // Right-side submit area (icon + "search")
       const submitArea = document.createElement('button');
       submitArea.className = 'search-modal-submit-area';
-      submitArea.innerHTML = '<i class="fas fa-search submit-icon"></i> <span>search</span>';
+      submitArea.innerHTML = '<i class="fas fa-magnifying-glass-arrow-right submit-icon"></i> <span>search</span>';
       submitArea.setAttribute('aria-label', 'Perform search');
       inputWrapper.appendChild(submitArea);
 
