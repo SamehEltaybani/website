@@ -551,9 +551,20 @@ if (state.activeSearch) {
       // ------------------------------------------------------------------
       // INIT
       // ------------------------------------------------------------------
-      async function initPubs() {
+            async function initPubs() {
         if (typeof SiteUtils !== 'undefined' && SiteUtils.waitForDOM) await SiteUtils.waitForDOM();
         await loadPublications();
+
+        // ---- Auto‑filter if coming from search results ----
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchParam = urlParams.get('search');
+        if (searchParam && searchInput) {
+          searchInput.value = searchParam;
+          handleSearchInput();                 // triggers the filter
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        // -------------------------------------------------
+
         updateActiveSortUI();
         updateControlHighlights();
       }
