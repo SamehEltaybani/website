@@ -240,23 +240,23 @@
             const summary = (item.summary || '').toLowerCase();
             const cats = (item.categories || []).map(c => c.toLowerCase()).join(' ');
 
-            const haystack = title + ' ' + summary + ' ' + cats;
+            const haystack = (title + ' ' + summary + ' ' + cats).replace(/[^\w\s]/g, '');
+            // Also clean punctuation from each search word
+            const cleanedSearchWords = searchWords.map(w => w.replace(/[^\w]/g, ''));
 
             // Every query word must appear somewhere in the haystack
-            return searchWords.every(word => {
-                // Try exact substring first
-                if (haystack.includes(word)) return true;
-                // Try stemmed match
-                if (typeof SiteUtils.stem === 'function') {
-                    const stemmedWord = SiteUtils.stem(word);
-                    if (stemmedWord !== word) {
-                        // search haystack for stemmed version (simple includes)
-                        if (haystack.includes(stemmedWord)) return true;
-                    }
-                    // Also try stemming each haystack word? Too heavy. We'll just rely on substring + stemmed query.
-                }
-                return false;
-            });
+
+               return cleanedSearchWords.every(word => {
+                   if (haystack.includes(word)) return true;
+                   if (typeof SiteUtils.stem === 'function') {
+                       const stemmedWord = SiteUtils.stem(word);
+                       if (stemmedWord !== word && haystack.includes(stemmedWord)) return true;
+                   }
+                   return false;
+               });
+
+
+         
         })
         .sort((a, b) => {
             const aTitle = (a.title || '').toLowerCase();
