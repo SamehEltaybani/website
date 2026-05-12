@@ -153,10 +153,18 @@
             e.preventDefault();
             selectedIndex = Math.max(selectedIndex - 1, 0);
             highlightItem(items, selectedIndex);
-          } else if (e.key === 'Enter' && selectedIndex >= 0) {
-            e.preventDefault();
-            items[selectedIndex].click(); // this will trigger doSearch via click handler
-          } else if (e.key === 'Escape') {
+
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (selectedIndex >= 0) {
+                    // A specific suggestion is selected – use it
+                    items[selectedIndex].click();
+                } else {
+                    // No suggestion selected – search for whatever is typed
+                    autocompleteDropdown.classList.remove('open');
+                    doSearch();
+                }
+            } else if (e.key === 'Escape') {          
             autocompleteDropdown.classList.remove('open');
           }
         } else {
