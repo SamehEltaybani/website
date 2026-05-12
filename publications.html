@@ -362,7 +362,7 @@ if (state.activeSearch) {
         const haystack = [
             pub.title,
             pub.summary
-        ].join(' ').toLowerCase();
+        ].join(' ').toLowerCase().replace(/[^\w\s]/g, '');
 
         return finalWords.every(word => {
             if (haystack.includes(word)) return true;
