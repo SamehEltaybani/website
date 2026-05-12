@@ -2129,10 +2129,10 @@ pre code {
 
 /* FONT SIZE OF THE TEXT OF SEARCH RESULTS */
 #search-results-list .card-title {
-    font-size: 1rem;          
+    font-size: 0.9rem;          
 }
 #search-results-list .paragraph {
-    font-size: 0.85rem;
+    font-size: 0.6rem;
 }
 
 /* ============================================================================
