@@ -276,6 +276,57 @@
      
      
 
+     function renderBatch() {
+    if (!resultsList) return;
+    const end = Math.min(displayed + perPage, allResults.length);
+    const batch = allResults.slice(displayed, end);
+    let html = '';
+
+    // ---- Separator between previous results and the new batch ----
+    if (displayed > 0) {
+        const prevPageNumber = Math.ceil(displayed / perPage);
+        html += `<div class="page-separator">
+          <span class="page-sep-label">&#x25B2; PAGE ${prevPageNumber}</span>
+          <div class="page-sep-line"></div>
+          <span class="page-sep-label">&#x25BC; PAGE ${prevPageNumber + 1}</span>
+        </div>`;
+    }
+    // ----------------------------------------------------------------
+
+    batch.forEach((item) => {
+        const typeMap = {
+            'Blog Article': 'blog',
+            'Publication': 'publication',
+            'Portfolio': 'portfolio',
+            'Page': 'page'
+        };
+        const typeClass = typeMap[item.type] || 'page';
+
+        html += `
+            <a href="${escapeHTML(item.url)}" style="display:block; text-decoration:none; color:inherit;">
+                <div class="publication-item" style="margin-bottom: var(--space-sm);">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-sm);">
+                        <div style="flex:1;">
+                            <span class="card-title">${highlight(item.title, currentQuery)}</span>
+                            ${item.summary ? `<p class="paragraph" style="font-size:var(--font-size-sm); margin-top:2px;">${highlight(item.summary, currentQuery)}</p>` : ''}
+                        </div>
+                        <span class="result-type result-type-${typeClass}">${escapeHTML(item.type)}</span>
+                    </div>
+                </div>
+            </a>
+        `;
+    });
+
+    resultsList.innerHTML += html;
+    displayed = end;
+
+    if (displayed >= allResults.length) {
+        loadMoreBtn.classList.add('hidden');
+    } else {
+        loadMoreBtn.classList.remove('hidden');
+        loadMoreBtn.textContent = 'Load More';
+    }
+}
 
 
      
@@ -283,68 +334,9 @@
 
      
 
-      function renderBatch() {
-        if (!resultsList) return;
-        const end = Math.min(displayed + perPage, allResults.length);
-        const batch = allResults.slice(displayed, end);
-        let html = '';
-
-        batch.forEach((item, idx) => {
-          const typeMap = {
-                           'Blog Article': 'blog',
-                           'Publication': 'publication',
-                           'Portfolio': 'portfolio',
-                           'Page': 'page'
-                         };
-                         const typeClass = typeMap[item.type] || 'page';
 
 
-                    html += `
-             <a href="${escapeHTML(item.url)}" style="display:block; text-decoration:none; color:inherit;">
-               <div class="publication-item" style="margin-bottom: var(--space-sm);">
-                 <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-sm);">
-                   <div style="flex:1;">
-
-                     <span class="card-title">${highlight(item.title, currentQuery)}</span>
-${item.summary ? `<p class="paragraph" style="font-size:var(--font-size-sm); margin-top:2px;">${highlight(item.summary.length > 200 ? item.summary.substring(0,200)+'…' : item.summary, currentQuery)}</p>` : ''}
-                   </div>
-                     
-
-                     
-                   <span class="result-type result-type-${typeClass}">${escapeHTML(item.type)}</span>
-                 </div>
-               </div>
-             </a>
-           `;
-
-
-
-
-
-
-         
-
-          // Add batch separator
-          if ((idx + 1) % perPage === 0 && displayed > 0 && (displayed + idx + 1) < allResults.length) {
-            const pageNumber = Math.ceil((displayed + idx + 1) / perPage);
-            html += `<div class="page-separator">
-              <span class="page-sep-label">&#x25B2; PAGE ${pageNumber}</span>
-              <div class="page-sep-line"></div>
-              <span class="page-sep-label">&#x25BC; PAGE ${pageNumber + 1}</span>
-            </div>`;
-          }
-        });
-
-        resultsList.innerHTML += html;
-        displayed = end;
-
-        if (displayed >= allResults.length) {
-          loadMoreBtn.classList.add('hidden');
-        } else {
-          loadMoreBtn.classList.remove('hidden');
-          loadMoreBtn.textContent = 'Load More';
-        }
-      }
+     
 
       
      
