@@ -2093,21 +2093,19 @@ pre code {
 }
 
 /* Mobile – make modal taller */
+/* Mobile – make the overlay scrollable so nothing is clipped */
 @media (max-width: 992px) {
+    .search-modal-overlay {
+        align-items: flex-start;        /* pin the white box to the top */
+        padding-top: 10vh;              /* leave room from the very top */
+        overflow-y: auto;               /* allow scrolling when content is too tall */
+        -webkit-overflow-scrolling: touch;
+    }
+
     .search-modal-box {
-        max-height: 80vh;                /* slightly smaller to fit screen */
-        overflow-y: auto;                /* make entire modal scrollable */
-        display: flex;
-        flex-direction: column;
-    }
-
-    .search-modal-input-wrapper {
-        flex-shrink: 0;                  /* prevent input from collapsing */
-    }
-
-    .search-modal-autocomplete {
-        max-height: 40vh;               /* dropdown limited to 40% of viewport height */
-        overflow-y: auto;
+        max-height: none;               /* no arbitrary height limit */
+        overflow-y: visible;            /* let everything inside show naturally */
+        margin-bottom: var(--space-xl); /* breathing room at the bottom */
     }
 }
 
