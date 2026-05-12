@@ -2095,7 +2095,18 @@ pre code {
 /* Mobile – make modal taller */
 @media (max-width: 992px) {
     .search-modal-box {
-        max-height: 90vh;
+        max-height: 80vh;                /* slightly smaller to fit screen */
+        overflow-y: auto;                /* make entire modal scrollable */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .search-modal-input-wrapper {
+        flex-shrink: 0;                  /* prevent input from collapsing */
+    }
+
+    .search-modal-autocomplete {
+        max-height: 40vh;               /* dropdown limited to 40% of viewport height */
         overflow-y: auto;
     }
 }
