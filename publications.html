@@ -552,22 +552,35 @@ if (state.activeSearch) {
       // INIT
       // ------------------------------------------------------------------
             async function initPubs() {
-        if (typeof SiteUtils !== 'undefined' && SiteUtils.waitForDOM) await SiteUtils.waitForDOM();
-        await loadPublications();
+    if (typeof SiteUtils !== 'undefined' && SiteUtils.waitForDOM) await SiteUtils.waitForDOM();
+    await loadPublications();
 
-        // ---- Auto‑filter if coming from search results ----
-        const urlParams = new URLSearchParams(window.location.search);
-        const searchParam = urlParams.get('search');
-        if (searchParam && searchInput) {
-          searchInput.value = searchParam;
-          handleSearchInput();                 // triggers the filter
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        // -------------------------------------------------
+    // ---- Auto‑filter if coming from search results ----
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get('search');
+    if (searchParam && searchInput) {
+        // Reset all active filters and sort to defaults
+        state.activeFilters = { year: null, authorship: null, journal: null };
+        state.activeSort    = { field: 'year', direction: 'desc' };
 
-        updateActiveSortUI();
-        updateControlHighlights();
-      }
+        // Also reset the filter‑dropdowns on screen
+        const filterYear = document.getElementById('filter-year');
+        const filterAuthor = document.getElementById('filter-authorship');
+        const filterJournal = document.getElementById('filter-journal');
+        if (filterYear) filterYear.value = '';
+        if (filterAuthor) filterAuthor.value = '';
+        if (filterJournal) filterJournal.value = '';
+
+        // Now apply the search term
+        searchInput.value = searchParam;
+        handleSearchInput();                 // triggers applyAllFilters with fresh state
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    // -------------------------------------------------
+
+    updateActiveSortUI();
+    updateControlHighlights();
+}
 
       if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPubs);
       else initPubs();
