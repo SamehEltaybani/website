@@ -1,8 +1,7 @@
 <!--
  * ============================================
- * SEARCH.HTML – For results of SEARCHING THE WHOLE SITE
+ * SEARCH.HTML – For results of SEARCHING THE WHOLE SITE, loading from JSON files,
  * ============================================
- * This page automatically loads data from your four JSON files, builds the search index, and displays results with pagination.
  -->
 
 
@@ -326,7 +325,7 @@ ${item.summary ? `<p class="paragraph" style="font-size:var(--font-size-sm); mar
          
 
           // Add batch separator
-          if ((idx + 1) % perPage === 0 && (displayed + idx + 1) < allResults.length) {
+          if ((idx + 1) % perPage === 0 && displayed > 0 && (displayed + idx + 1) < allResults.length) {
             const pageNumber = Math.ceil((displayed + idx + 1) / perPage);
             html += `<div class="page-separator">
               <span class="page-sep-label">&#x25B2; PAGE ${pageNumber}</span>
