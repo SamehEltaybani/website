@@ -2126,6 +2126,15 @@ pre code {
     font-weight: 600;
 }
 
+
+/* FONT SIZE OF THE TEXT OF SEARCH RESULTS */
+#search-results-list .card-title {
+    font-size: 1rem;          
+}
+#search-results-list .paragraph {
+    font-size: 0.85rem;
+}
+
 /* ============================================================================
    END OF THE main.css FILE
    ============================================================================ */
