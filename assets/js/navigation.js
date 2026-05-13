@@ -31,6 +31,7 @@
     let currentPage = '';         // Current page filename
     let isMobileMenuOpen = false;  // Track mobile menu state
     let mobileMenuElement = null;   // Reference to mobile menu DOM element
+    let mobileOverlayElement = null; // Dark overlay behind the menu
     
     // ============================================
     // HELPER FUNCTIONS
@@ -217,8 +218,11 @@ function renderMobileMenu(navItems) {
         if (!mobileMenuElement) return;
         mobileMenuElement.classList.add('open');
         isMobileMenuOpen = true;
+         if (mobileOverlayElement) {
+        mobileOverlayElement.style.display = 'block';
+    }
         mobileMenuElement.addEventListener('touchmove', preventPageScroll, { passive: false });
-        //document.body.style.overflow = 'hidden'; // Prevent background scrolling (now, "//" at th begining stopping the code, and therefore, scrolling is OK)
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling (Add "//" at the beginning to stop the code, which will lead to permitting scrolling)
     }
     
     /**
@@ -229,6 +233,9 @@ function renderMobileMenu(navItems) {
         mobileMenuElement.classList.remove('open');
         mobileMenuElement.removeEventListener('touchmove', preventPageScroll);
         isMobileMenuOpen = false;
+        if (mobileOverlayElement) {
+        mobileOverlayElement.style.display = 'none';
+    }
         document.body.style.overflow = ''; // This is related to "prevent background scrolling" above. (it is unchanged [only the above sentence is changed])
     }
     
@@ -247,6 +254,17 @@ function renderMobileMenu(navItems) {
      * Sets up hamburger button event listeners
      */
     function setupHamburgerButton() {
+    // Create the dark overlay behind the menu (once)
+    if (!mobileOverlayElement) {
+        mobileOverlayElement = document.createElement('div');
+        mobileOverlayElement.className = 'mobile-menu-overlay';
+        document.body.appendChild(mobileOverlayElement);
+
+        // Clicking the overlay closes the menu
+        mobileOverlayElement.addEventListener('click', closeMobileMenu);
+    }
+    
+        
         const hamburger = document.querySelector('.hamburger');
         if (!hamburger) return;
         
