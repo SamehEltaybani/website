@@ -44,7 +44,7 @@
 
   <main>
     <section class="section">
-      <div class="container" style="max-width: 800px; margin: 0 auto;">
+            <div class="container">
         <h1 class="heading-large">Search Results</h1>
         
        <p id="search-query-display" class="paragraph text-muted"></p>
@@ -329,7 +329,37 @@
 }
 
 
-     
+
+    async function init() {
+    const params = new URLSearchParams(window.location.search);
+    currentQuery = params.get('q') || '';
+
+    if (!currentQuery) {
+        resultsList.innerHTML = '<p class="text-center paragraph">No search term provided.</p>';
+        return;
+    }
+
+    const index = await buildIndex();
+    allResults = search(currentQuery, index);
+
+    // ---- Show total result count ----
+    if (queryDisplay) {
+        queryDisplay.textContent = currentQuery
+            ? allResults.length + ' results for: "' + escapeHTML(currentQuery) + '"'
+            : 'Please enter a search term.';
+    }
+
+    if (allResults.length === 0) {
+        resultsList.innerHTML = '<p class="text-center paragraph">No results found. Please try different keywords.</p>';
+        return;
+    }
+
+    renderBatch();
+
+    loadMoreBtn.addEventListener('click', function() {
+        renderBatch();
+    });
+}
 
 
      
@@ -341,33 +371,9 @@
       
      
      
-      async function init() {
-        const params = new URLSearchParams(window.location.search);
-        currentQuery = params.get('q') || '';
-        if (queryDisplay) {
-          queryDisplay.textContent = currentQuery ? 'Results for: "' + escapeHTML(currentQuery) + '"' : 'Please enter a search term.';
-        }
 
-        if (!currentQuery) {
-          resultsList.innerHTML = '<p class="text-center paragraph">No search term provided.</p>';
-          return;
-        }
 
-        const index = await buildIndex();
-       
-        allResults = search(currentQuery, index);
-
-        if (allResults.length === 0) {
-          resultsList.innerHTML = '<p class="text-center paragraph">No results found. Please try different keywords.</p>';
-          return;
-        }
-
-        renderBatch();
-
-        loadMoreBtn.addEventListener('click', function() {
-          renderBatch();
-        });
-      }
+     
 
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
