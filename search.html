@@ -240,7 +240,7 @@
             const summary = (item.summary || '').toLowerCase();
             const cats = (item.categories || []).map(c => c.toLowerCase()).join(' ');
 
-            const haystack = (title + ' ' + summary + ' ' + cats).replace(/[^\w\s]/g, '');
+            const haystack = (title + ' ' + summary + ' ' + cats).replace(/[^\w\s-]/g, '');
             // Also clean punctuation from each search word
             const cleanedSearchWords = searchWords.map(w => w.replace(/[^\w]/g, ''));
 
