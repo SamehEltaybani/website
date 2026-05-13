@@ -200,14 +200,23 @@
       function doSearch() {
         const query = input.value.trim();
         if (!query) return;
-        const words = query.split(/\s+/);
-        let hasCorrection = false;
+        
+        
+            const words = query.split(/\s+/);
+    let hasCorrection = false;
+    let finalQuery = query;
+
+    // Only attempt spell correction for queries with 2 or fewer words
+    if (words.length <= 2) {
         const correctedWords = words.map(w => {
-          const correction = correctWord(w);
-          if (correction) hasCorrection = true;
-          return correction || w;
+            const correction = correctWord(w);
+            if (correction) hasCorrection = true;
+            return correction || w;
         });
-        const finalQuery = correctedWords.join(' ');
+        finalQuery = correctedWords.join(' ');
+    }
+
+        
 
         if (hasCorrection) {
           const existing = document.querySelector('.correction-message');
