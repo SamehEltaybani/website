@@ -55,6 +55,7 @@ Fixed issues (central + page‑specific):
   </div>
 
   <main>
+   
     <div class="controls-bar">
       <div class="container" style="display: flex; flex-wrap: nowrap; gap: var(--space-sm); align-items: center; justify-content: space-between;">
 
@@ -111,7 +112,15 @@ Fixed issues (central + page‑specific):
           <span>Reset</span>
         </button>
       </div>
+
+      <div id="results-count-bar" style="flex-basis:100%; text-align:center; padding:2px 0; font-size:0.75rem; color:var(--color-text-muted);"></div>
+     
     </div>
+
+
+    
+
+    
 
     <section class="section">
       <div class="container">
@@ -165,6 +174,7 @@ Fixed issues (central + page‑specific):
                           
       
 function buildSuggestionPool() {
+    if (suggestionPool.length > 0) return;
     const freqMap = new Map();
     const processField = (text) => {
         if (text && typeof SiteUtils.cleanSearchTerm === 'function') {
@@ -176,11 +186,9 @@ function buildSuggestionPool() {
             }
         }
     };
-    state.allItems.forEach(post => {
-        processField(post.title);
-        processField(post.shortTitle);
-        processField(post.summary);
-        if (post.categories) post.categories.forEach(c => processField(c));
+    state.allItems.forEach(pub => {
+        processField(pub.title);
+        processField(pub.summary);
     });
     suggestionPool = [...freqMap.entries()].sort((a, b) => b[1] - a[1]).map(e => e[0]);
 }
@@ -250,12 +258,22 @@ function buildSuggestionPool() {
                           
                           // Keyboard: Escape closes the dropdown
 
+
+
+
 searchInput.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
         autocompleteDropdown.classList.add('hidden');
         return;
     }
-    if (!autocompleteDropdown || autocompleteDropdown.classList.contains('hidden')) return;
+    if (!autocompleteDropdown || autocompleteDropdown.classList.contains('hidden')) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            autocompleteDropdown.classList.add('hidden');
+            handleSearchInput();   // triggers search immediately
+        }
+        return;
+    }
     const items = autocompleteDropdown.querySelectorAll('div');
     let idx = Array.from(items).findIndex(el => el.style.backgroundColor === 'var(--color-bg-alt)' || el.style.backgroundColor === 'rgb(248, 249, 250)');
     if (e.key === 'ArrowDown') {
@@ -266,11 +284,18 @@ searchInput.addEventListener('keydown', function(e) {
         e.preventDefault();
         idx = (idx - 1 + items.length) % items.length;
         highlightBlogItem(items, idx);
-    } else if (e.key === 'Enter' && idx >= 0) {
+    } else if (e.key === 'Enter') {
         e.preventDefault();
-        items[idx].click();
+        if (idx >= 0) {
+            items[idx].click();
+        } else {
+            autocompleteDropdown.classList.add('hidden');
+            handleSearchInput();
+        }
     }
 });
+
+      
 
 function highlightBlogItem(items, index) {
     items.forEach((item, i) => {
@@ -517,6 +542,14 @@ if (state.activeSearch) {
           }
         });
         publicationsContainer.innerHTML = html;
+
+                // Update the result-count bar
+        const countBar = document.getElementById('results-count-bar');
+        if (countBar) {
+            const totalItems = state.filteredItems.length;
+            const shownItems = Math.min(state.currentPage * state.itemsPerPage, totalItems);
+            countBar.innerHTML = '[ Showing <span style="color:var(--color-midnight-blue); font-weight:600;">' + shownItems + '</span> of <span style="color:var(--color-midnight-blue); font-weight:600;">' + totalItems + '</span> ]';
+        }
 
         if (state.filteredItems.length > end) {
           loadMoreBtn.classList.remove('hidden');
