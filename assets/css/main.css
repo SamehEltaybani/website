@@ -1329,13 +1329,14 @@ footer .footer-copyright {
 .blog-title {
     font-size: var(--font-size-xl);
     font-weight: 600;
-    margin-bottom: 18px;
+    margin-bottom: 6px;
 }
 
 .blog-categories {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-xs);
+    margin-top: 8px; 
     margin-bottom: var(--space-sm);
 }
 
