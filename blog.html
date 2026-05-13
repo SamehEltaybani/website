@@ -106,10 +106,10 @@ All data comes from /json/blog-list.json.
           <span>Reset</span>
         </button>
       </div>
+      <div id="results-count-bar" style="flex-basis:100%; text-align:center; padding:2px 0; font-size:0.75rem; color:var(--color-text-muted);"></div>
     </div>
 
-        <div id="results-count-bar" style="position:sticky; top:calc(var(--nav-height-desktop) + var(--breadcrumb-height) + 44px); z-index:996; background-color:var(--color-white); border-bottom:1px solid var(--color-border); text-align:center; padding:2px 0; font-size:0.75rem; color:var(--color-text-muted);">
-    </div>
+       
 
     <!-- BLOG LIST CONTAINER -->
     <section class="section">
@@ -448,7 +448,7 @@ All data comes from /json/blog-list.json.
         if (countBar) {
             const totalItems = state.filteredItems.length;
             const shownItems = Math.min(state.currentPage * state.itemsPerPage, totalItems);
-            countBar.textContent = 'Showing ' + shownItems + ' of ' + totalItems;
+            countBar.innerHTML = '[ Showing <span style="color:var(--color-midnight-blue); font-weight:600;">' + shownItems + '</span> of <span style="color:var(--color-midnight-blue); font-weight:600;">' + totalItems + '</span> ]';
         }
 
     // Attach click handlers to category tags
