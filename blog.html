@@ -59,6 +59,7 @@ All data comes from /json/blog-list.json.
 
   <!-- ========== MAIN CONTENT ========== -->
   <main>
+   
     <!-- CONTROLS BAR (sticky) -->
     <div class="controls-bar">
       <div class="container" style="display: flex; flex-wrap: nowrap; gap: var(--space-sm); align-items: center; justify-content: space-between;">
@@ -105,6 +106,9 @@ All data comes from /json/blog-list.json.
           <span>Reset</span>
         </button>
       </div>
+    </div>
+
+        <div id="results-count-bar" style="position:sticky; top:calc(var(--nav-height-desktop) + var(--breadcrumb-height) + 44px); z-index:996; background-color:var(--color-white); border-bottom:1px solid var(--color-border); text-align:center; padding:2px 0; font-size:0.75rem; color:var(--color-text-muted);">
     </div>
 
     <!-- BLOG LIST CONTAINER -->
@@ -439,6 +443,14 @@ All data comes from /json/blog-list.json.
 
     blogListContainer.innerHTML = html;
 
+                // Update the result-count bar
+        const countBar = document.getElementById('results-count-bar');
+        if (countBar) {
+            const totalItems = state.filteredItems.length;
+            const shownItems = Math.min(state.currentPage * state.itemsPerPage, totalItems);
+            countBar.textContent = 'Showing ' + shownItems + ' of ' + totalItems;
+        }
+
     // Attach click handlers to category tags
     const categoryTags = blogListContainer.querySelectorAll('.blog-category');
     categoryTags.forEach(tag => {
@@ -501,7 +513,10 @@ All data comes from /json/blog-list.json.
           
           // Build suggestion pool from all blog entries
 
+     
+      
       function buildSuggestionPool() {
+    if (suggestionPool.length > 0) return;
     const freqMap = new Map();
     const processField = (text) => {
         if (text && typeof SiteUtils.cleanSearchTerm === 'function') {
@@ -521,7 +536,6 @@ All data comes from /json/blog-list.json.
     });
     suggestionPool = [...freqMap.entries()].sort((a, b) => b[1] - a[1]).map(e => e[0]);
 }
-          
 
 
     
@@ -594,12 +608,21 @@ All data comes from /json/blog-list.json.
           });
           
           // Keyboard navigation inside dropdown
-          searchInput.addEventListener('keydown', function(e) {
+
+
+      searchInput.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
         autocompleteDropdown.classList.add('hidden');
         return;
     }
-    if (!autocompleteDropdown || autocompleteDropdown.classList.contains('hidden')) return;
+    if (!autocompleteDropdown || autocompleteDropdown.classList.contains('hidden')) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            autocompleteDropdown.classList.add('hidden');
+            handleSearchInput();   // triggers search immediately
+        }
+        return;
+    }
     const items = autocompleteDropdown.querySelectorAll('div');
     let idx = Array.from(items).findIndex(el => el.style.backgroundColor === 'var(--color-bg-alt)' || el.style.backgroundColor === 'rgb(248, 249, 250)');
     if (e.key === 'ArrowDown') {
@@ -610,11 +633,24 @@ All data comes from /json/blog-list.json.
         e.preventDefault();
         idx = (idx - 1 + items.length) % items.length;
         highlightBlogItem(items, idx);
-    } else if (e.key === 'Enter' && idx >= 0) {
+    } else if (e.key === 'Enter') {
         e.preventDefault();
-        items[idx].click();
+        if (idx >= 0) {
+            items[idx].click();
+        } else {
+            autocompleteDropdown.classList.add('hidden');
+            handleSearchInput();
+        }
     }
 });
+
+
+
+
+
+
+
+      
 
 function highlightBlogItem(items, index) {
     items.forEach((item, i) => {
