@@ -238,74 +238,69 @@ All data comes from /json/blog-list.json.
       // ------------------------------------------------------------------
       
       
-      function applyAllFilters() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        let items = [...state.allItems];
+function applyAllFilters() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    let items = [...state.allItems];
 
-        // Search by title, shortTitle, categories, and summary
-        if (state.activeSearch) {
-          const q = state.activeSearch.toLowerCase();
-          items = items.filter(post => {
-            const inTitle = post.title && post.title.toLowerCase().includes(q);
-            const inShortTitle = post.shortTitle && post.shortTitle.toLowerCase().includes(q);
-            const inCategories = post.categories && Array.isArray(post.categories) &&
-              post.categories.some(cat => cat && cat.toLowerCase().includes(q));
-            const inSummary = post.summary && post.summary.toLowerCase().includes(q);
-            return inTitle || inShortTitle || inCategories || inSummary;
-          });
-        }
-
-        
-        // Filter by category
-
-
-        if (state.activeSearch) {
-    const rawQuery = state.activeSearch.toLowerCase().trim();
-    const searchWords = (typeof SiteUtils.cleanSearchTerm === 'function')
-        ? SiteUtils.cleanSearchTerm(state.activeSearch)
-        : rawQuery.split(/\s+/).filter(w => w.length > 0);
-    const finalWords = searchWords.length > 0 ? searchWords : [rawQuery];
-
-    items = items.filter(post => {
-        const haystack = [
-            post.title,
-            post.shortTitle,
-            post.summary,
-            ...(post.categories || [])
-        ].join(' ').toLowerCase();
-
-        return finalWords.every(word => {
-            if (haystack.includes(word)) return true;
-            // Stemmed match
-            if (typeof SiteUtils.stem === 'function') {
-                const stemmedWord = SiteUtils.stem(word);
-                if (stemmedWord !== word && haystack.includes(stemmedWord)) return true;
-            }
-            return false;
+    // Filter by category (case‑insensitive, trimmed)
+    if (state.activeCategory) {
+        const catFilter = state.activeCategory.toLowerCase().trim();
+        items = items.filter(post => {
+            if (!post.categories || !Array.isArray(post.categories)) return false;
+            return post.categories.some(cat => cat && cat.toLowerCase().trim() === catFilter);
         });
-    });
-}
+    }
 
-        
+    // Search by title / shortTitle / categories / summary
+    if (state.activeSearch) {
+        const rawQuery = state.activeSearch.toLowerCase().trim();
+        const searchWords = (typeof SiteUtils.cleanSearchTerm === 'function')
+            ? SiteUtils.cleanSearchTerm(state.activeSearch)
+            : rawQuery.split(/\s+/).filter(w => w.length > 0);
+        const finalWords = searchWords.length > 0 ? searchWords : [rawQuery];
 
-        // Sort by date
-        const { field, direction } = state.activeSort;
-        if (field === 'date') {
-          items.sort((a, b) => {
+        items = items.filter(post => {
+            const haystack = [
+                post.title,
+                post.shortTitle,
+                post.summary,
+                ...(post.categories || [])
+            ].join(' ').toLowerCase();
+
+            return finalWords.every(word => {
+                if (haystack.includes(word)) return true;
+                if (typeof SiteUtils.stem === 'function') {
+                    const stemmedWord = SiteUtils.stem(word);
+                    if (stemmedWord !== word && haystack.includes(stemmedWord)) return true;
+                }
+                return false;
+            });
+        });
+    }
+
+    // Sort by date
+    const { field, direction } = state.activeSort;
+    if (field === 'date') {
+        items.sort((a, b) => {
             const dateA = new Date(a.date || '');
             const dateB = new Date(b.date || '');
             const validA = isNaN(dateA.getTime()) ? 0 : dateA.getTime();
             const validB = isNaN(dateB.getTime()) ? 0 : dateB.getTime();
             return direction === 'desc' ? validB - validA : validA - validB;
-          });
-        }
+        });
+    }
 
-        state.filteredItems = items;
-        state.currentPage = 1;   // reset pagination on any change
-        hideLoadMoreButton();
-        renderCurrentPage();
-        updateControlHighlights();
-      }
+    state.filteredItems = items;
+    state.currentPage = 1;
+    hideLoadMoreButton();
+    renderCurrentPage();
+    updateControlHighlights();
+}
+
+
+
+
+      
 
       function updateActiveSortUI() {
         const span = sortBtn.querySelector('span');
