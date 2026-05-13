@@ -230,50 +230,49 @@
         ? SiteUtils.cleanSearchTerm(query)
         : query.split(/\s+/).filter(w => w.length > 0);
 
+
     // If cleaning removes everything, fall back to raw split
     const searchWords = queryWords.length > 0 ? queryWords : query.split(/\s+/).filter(w => w.length > 0);
 
     return index
         .filter(item => {
-            // Build a searchable string for this item (title + summary + categories)
             const title = (item.title || '').toLowerCase();
             const summary = (item.summary || '').toLowerCase();
             const cats = (item.categories || []).map(c => c.toLowerCase()).join(' ');
 
             const haystack = (title + ' ' + summary + ' ' + cats).replace(/[^\w\s-]/g, '');
-            // Also clean punctuation from each search word
-            const cleanedSearchWords = searchWords.map(w => w.replace(/[^\w]/g, ''));
+            // Preserve hyphens in search words as well
+            const cleanedSearchWords = searchWords.map(w => w.replace(/[^\w-]/g, ''));
 
-            // Every query word must appear somewhere in the haystack
-
-               return cleanedSearchWords.every(word => {
-                   if (haystack.includes(word)) return true;
-                   if (typeof SiteUtils.stem === 'function') {
-                       const stemmedWord = SiteUtils.stem(word);
-                       if (stemmedWord !== word && haystack.includes(stemmedWord)) return true;
-                   }
-                   return false;
-               });
-
-
-         
+            return cleanedSearchWords.every(word => {
+                if (haystack.includes(word)) return true;
+                if (typeof SiteUtils.stem === 'function') {
+                    const stemmedWord = SiteUtils.stem(word);
+                    if (stemmedWord !== word && haystack.includes(stemmedWord)) return true;
+                }
+                return false;
+            });
         })
         .sort((a, b) => {
             const aTitle = (a.title || '').toLowerCase();
             const bTitle = (b.title || '').toLowerCase();
             const firstWord = searchWords[0];
-            // Exact title match
             if (aTitle === q && bTitle !== q) return -1;
             if (bTitle === q && aTitle !== q) return 1;
-            // Title starts with first word
             const aStarts = aTitle.startsWith(firstWord);
             const bStarts = bTitle.startsWith(firstWord);
             if (aStarts !== bStarts) return bStarts - aStarts;
-            // Otherwise alphabetical
             return aTitle.localeCompare(bTitle);
         });
-}
-     
+
+
+
+      
+
+
+
+
+
      
 
      function renderBatch() {
