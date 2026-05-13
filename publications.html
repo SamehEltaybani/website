@@ -245,7 +245,7 @@ function buildSuggestionPool() {
                               autocompleteDropdown.classList.add('hidden');
                               return;
                             }
-                            const matches = suggestionPool.filter(word => word.startsWith(query)).slice(0, 8);
+                            const matches = suggestionPool.filter(word => word.includes(query)).slice(0, 8);
                             showAutocomplete(matches);
                           }
                           
