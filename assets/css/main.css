@@ -2135,6 +2135,36 @@ pre code {
     font-size: 0.6rem;
 }
 
+
+
+
+/* Blog card text */
+.blog-title {
+    font-size: var(--font-size-lg);      
+    margin-bottom: 2px;
+}
+.blog-category {
+    font-size: 0.7rem;                  
+    padding: 2px 8px;
+}
+.blog-card .btn-text {
+    font-size: 0.85rem;                 
+}
+
+
+.blog-card > .btn-text {
+    display: block;
+    text-align: right;
+}
+
+
+/* buttons in all featured cards */
+
+.card-content .btn-text {
+    display: block;
+    text-align: right;
+}
+
 /* ============================================================================
    END OF THE main.css FILE
    ============================================================================ */
