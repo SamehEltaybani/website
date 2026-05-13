@@ -112,7 +112,7 @@
           autocompleteDropdown.classList.remove('open');
           return;
         }
-        const matches = suggestionPool.filter(word => word.startsWith(query)).slice(0, 8);
+        const matches = suggestionPool.filter(word => word.includes(query)).slice(0, 8);
         autocompleteDropdown.innerHTML = '';
         selectedIndex = -1;
         if (matches.length > 0) {
