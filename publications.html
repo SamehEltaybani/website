@@ -242,7 +242,7 @@ tipsLink.innerHTML = '[ <i class="fas fa-question-circle"></i> Search tips ]';
         tooltip.style.cssText = 'display:none; position:absolute; top:100%; right:0; background:var(--color-white); border:1px solid var(--color-border); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:var(--space-md); z-index:1101; width:100%; font-size:var(--font-size-sm); line-height:1.6;';
         // Custom tips for the Publications page (edit this HTML directly to change tips)
         tooltip.innerHTML = `
-            <button class="search-tips-close" style="position:absolute; top:var(--space-xs); right:var(--space-xs); background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--color-text-muted);">&times;</button>
+            <button class="search-modal-close-btn">&times;</button>
             <strong>Search Tips for Publications:</strong><br>
             · If results are already filtered, click <i class="fas fa-undo"></i> <strong>Reset</strong> to see all publications.<br>
             · Use the <strong>central search</strong> <i class="fas fa-search"></i> in the navigation bar for a broader search across the whole site.<br>
@@ -264,7 +264,7 @@ tipsLink.innerHTML = '[ <i class="fas fa-question-circle"></i> Search tips ]';
         });
 
         // Close tooltip with the X button
-        tooltip.querySelector('.search-tips-close').addEventListener('click', function() {
+        tooltip.querySelector('.search-modal-close-btn').addEventListener('click', function() {
             tooltip.style.display = 'none';
         });
 
