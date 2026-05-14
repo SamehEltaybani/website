@@ -200,6 +200,9 @@ function buildSuggestionPool() {
 
       function showAutocomplete(directMatches, spellSuggestions) {
     if (!autocompleteDropdown) return;
+            // Remove any previous tooltip from the search container
+    const oldTooltip = document.querySelector('#search-container .search-tips-tooltip');
+    if (oldTooltip) oldTooltip.remove();
     autocompleteDropdown.innerHTML = '';
 
     // If no direct matches and no spell suggestions, close the dropdown
@@ -234,7 +237,8 @@ function buildSuggestionPool() {
 
         // ---- Tooltip (hidden, appears below the link on click) ----
         const tooltip = document.createElement('div');
-        tooltip.style.cssText = 'display:none; position:absolute; top:100%; right:0; background:var(--color-white); border:1px solid var(--color-border); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:var(--space-md); z-index:1101; width:320px; font-size:var(--font-size-sm); line-height:1.6;';
+         tooltip.className = 'search-tips-tooltip';   
+        tooltip.style.cssText = 'display:none; position:absolute; top:100%; right:0; background:var(--color-white); border:1px solid var(--color-border); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:var(--space-md); z-index:1101; width:100%; font-size:var(--font-size-sm); line-height:1.6;';
         // Custom tips for the Publications page (edit this HTML directly to change tips)
         tooltip.innerHTML = `
             <button class="search-tips-close" style="position:absolute; top:var(--space-xs); right:var(--space-xs); background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--color-text-muted);">&times;</button>
@@ -245,7 +249,7 @@ function buildSuggestionPool() {
             · Use <strong>Filter</strong> <i class="fas fa-filter"></i> and <strong>Sort</strong> <i class="fas fa-sort"></i> to narrow by year, journal, or authorship.<br>
             · This search looks at titles and summaries – not the full text of every publication.
         `;
-        tipsWrapper.appendChild(tooltip);
+        
         // -------------------------------------------------
 
         // Show/hide tooltip when clicking "Search tips"
@@ -264,14 +268,16 @@ function buildSuggestionPool() {
         });
 
         // Close tooltip when clicking anywhere outside the dropdown
-        document.addEventListener('click', function closeTooltip(e) {
-            if (!autocompleteDropdown.contains(e.target)) {
+                document.addEventListener('click', function closeTooltip(e) {
+            const searchContainer = document.getElementById('search-container');
+            if (searchContainer && !searchContainer.contains(e.target)) {
                 tooltip.style.display = 'none';
             }
         });
 
         headerRow.appendChild(tipsWrapper);
         autocompleteDropdown.appendChild(headerRow);
+        document.getElementById('search-container').appendChild(tooltip);
         // -------------------------------------------------
 
 
