@@ -2176,6 +2176,16 @@ pre code {
     display: none;
 }
 
+
+
+/* Search tip tooltip */
+.search-tips-tooltip i {
+    position: static;
+    transform: none;
+    color: inherit;
+}
+
+
 /* ============================================================================
    END OF THE main.css FILE
    ============================================================================ */
