@@ -2179,12 +2179,25 @@ pre code {
 
 
 /* Search tip tooltip */
+
 .search-tips-tooltip i {
     position: static;
     transform: none;
     color: inherit;
 }
 
+.search-tips-trigger-link i,
+.search-tips-trigger-link {
+    position: static !important;
+    display: inline;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+.search-tips-trigger-link:hover {
+    color: var(--color-gold);
+    cursor: pointer;
+}
 
 /* ============================================================================
    END OF THE main.css FILE
