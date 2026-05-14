@@ -196,9 +196,9 @@ function buildSuggestionPool() {
 
 
 
-      
 
-function showAutocomplete(directMatches, spellSuggestions) {
+
+      function showAutocomplete(directMatches, spellSuggestions) {
     if (!autocompleteDropdown) return;
     autocompleteDropdown.innerHTML = '';
 
@@ -210,11 +210,60 @@ function showAutocomplete(directMatches, spellSuggestions) {
 
     // Show spell‑correction header when no direct matches
     if (directMatches.length === 0 && spellSuggestions && spellSuggestions.length > 0) {
-        // "No direct matches" line
-        const noMatch = document.createElement('div');
-        noMatch.style.cssText = 'padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm); color: var(--color-text-muted); font-style: italic;';
+        // ---- Row: "No direct matches" + "? Search tips" ----
+        const headerRow = document.createElement('div');
+        headerRow.style.cssText = 'display:flex; align-items:center; gap:var(--space-md); padding: var(--space-xs) var(--space-sm);';
+
+        // Left part: "No direct matches"
+        const noMatch = document.createElement('span');
+        noMatch.style.cssText = 'font-size: var(--font-size-sm); color: var(--color-text-muted); font-style: italic;';
         noMatch.textContent = 'No direct matches';
-        autocompleteDropdown.appendChild(noMatch);
+        headerRow.appendChild(noMatch);
+
+        // Right part: "? Search tips" (clickable)
+        const tipsLink = document.createElement('span');
+        tipsLink.style.cssText = 'font-size: var(--font-size-sm); color: var(--color-midnight-blue); text-decoration: underline; cursor: pointer; white-space: nowrap;';
+        tipsLink.innerHTML = '<i class="fas fa-question-circle"></i> Search tips';
+        headerRow.appendChild(tipsLink);
+        autocompleteDropdown.appendChild(headerRow);
+
+        // ---- Tooltip (hidden, appears on click) ----
+        const tooltip = document.createElement('div');
+        tooltip.style.cssText = 'display:none; position:absolute; background:var(--color-white); border:1px solid var(--color-border); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:var(--space-md); z-index:1101; max-width:320px; font-size:var(--font-size-sm); line-height:1.6;';
+        // Custom tips for the Publications page (edit this HTML directly to change tips)
+        tooltip.innerHTML = `
+            <button class="search-tips-close" style="position:absolute; top:var(--space-xs); right:var(--space-xs); background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--color-text-muted);">&times;</button>
+            <strong>Search Tips for Publications:</strong><br>
+            · If results are already filtered, click <i class="fas fa-undo"></i> <strong>Reset</strong> to see all publications.<br>
+            · Use the <strong>central search</strong> <i class="fas fa-search"></i> in the navigation bar for a broader search across the whole site.<br>
+            · Try different keywords or check your spelling.<br>
+            · Use <strong>Filter</strong> <i class="fas fa-filter"></i> and <strong>Sort</strong> <i class="fas fa-sort"></i> to narrow by year, journal, or authorship.<br>
+            · This search looks at titles and summaries – not the full text of every publication.
+        `;
+        autocompleteDropdown.appendChild(tooltip);
+
+        // Show/hide tooltip when clicking "Search tips"
+        tipsLink.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (tooltip.style.display === 'block') {
+                tooltip.style.display = 'none';
+            } else {
+                tooltip.style.display = 'block';
+            }
+        });
+
+        // Close tooltip with the X button
+        tooltip.querySelector('.search-tips-close').addEventListener('click', function() {
+            tooltip.style.display = 'none';
+        });
+
+        // Close tooltip when clicking anywhere outside the dropdown
+        document.addEventListener('click', function closeTooltip(e) {
+            if (!autocompleteDropdown.contains(e.target)) {
+                tooltip.style.display = 'none';
+            }
+        });
+        // -------------------------------------------------
 
         // "Suggestions:" label
         const label = document.createElement('div');
@@ -270,6 +319,9 @@ function showAutocomplete(directMatches, spellSuggestions) {
     });
     autocompleteDropdown.classList.remove('hidden');
 }
+      
+
+
       
                           
 
