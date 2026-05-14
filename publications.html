@@ -210,6 +210,8 @@ function buildSuggestionPool() {
 
     // Show spell‑correction header when no direct matches
     if (directMatches.length === 0 && spellSuggestions && spellSuggestions.length > 0) {
+       
+      
         // ---- Row: "No direct matches" + "? Search tips" ----
         const headerRow = document.createElement('div');
         headerRow.style.cssText = 'display:flex; align-items:center; gap:var(--space-md); padding: var(--space-xs) var(--space-sm);';
@@ -220,16 +222,19 @@ function buildSuggestionPool() {
         noMatch.textContent = 'No direct matches';
         headerRow.appendChild(noMatch);
 
-        // Right part: "? Search tips" (clickable)
+        // Right part: wrapper around the tips link (so tooltip positions relative to this)
+        const tipsWrapper = document.createElement('span');
+        tipsWrapper.style.cssText = 'position: relative; display: inline-block;';
+
+        // "? Search tips" link
         const tipsLink = document.createElement('span');
         tipsLink.style.cssText = 'font-size: var(--font-size-sm); color: var(--color-midnight-blue); text-decoration: underline; cursor: pointer; white-space: nowrap;';
         tipsLink.innerHTML = '<i class="fas fa-question-circle"></i> Search tips';
-        headerRow.appendChild(tipsLink);
-        autocompleteDropdown.appendChild(headerRow);
+        tipsWrapper.appendChild(tipsLink);
 
-        // ---- Tooltip (hidden, appears on click) ----
+        // ---- Tooltip (hidden, appears below the link on click) ----
         const tooltip = document.createElement('div');
-        tooltip.style.cssText = 'display:none; position:absolute; background:var(--color-white); border:1px solid var(--color-border); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:var(--space-md); z-index:1101; max-width:320px; font-size:var(--font-size-sm); line-height:1.6;';
+        tooltip.style.cssText = 'display:none; position:absolute; top:100%; right:0; background:var(--color-white); border:1px solid var(--color-border); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:var(--space-md); z-index:1101; width:320px; font-size:var(--font-size-sm); line-height:1.6;';
         // Custom tips for the Publications page (edit this HTML directly to change tips)
         tooltip.innerHTML = `
             <button class="search-tips-close" style="position:absolute; top:var(--space-xs); right:var(--space-xs); background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--color-text-muted);">&times;</button>
@@ -240,7 +245,8 @@ function buildSuggestionPool() {
             · Use <strong>Filter</strong> <i class="fas fa-filter"></i> and <strong>Sort</strong> <i class="fas fa-sort"></i> to narrow by year, journal, or authorship.<br>
             · This search looks at titles and summaries – not the full text of every publication.
         `;
-        autocompleteDropdown.appendChild(tooltip);
+        tipsWrapper.appendChild(tooltip);
+        // -------------------------------------------------
 
         // Show/hide tooltip when clicking "Search tips"
         tipsLink.addEventListener('click', function(e) {
@@ -263,7 +269,16 @@ function buildSuggestionPool() {
                 tooltip.style.display = 'none';
             }
         });
+
+        headerRow.appendChild(tipsWrapper);
+        autocompleteDropdown.appendChild(headerRow);
         // -------------------------------------------------
+
+
+
+
+
+      
 
         // "Suggestions:" label
         const label = document.createElement('div');
