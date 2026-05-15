@@ -1974,9 +1974,8 @@ pre code {
 
 .search-modal-close-btn {
     position: absolute;
-    z-index: 10;
-    top: var(--space-md);
-    right: var(--space-md);
+    top: var(--space-md);              /* distance from the top edge of the white box */
+    right: var(--space-md);            /* distance from the right edge of the white box */
     width: 36px;
     height: 36px;
     border-radius: 50%;
@@ -1989,6 +1988,7 @@ pre code {
     align-items: center;
     justify-content: center;
     transition: background-color 0.2s, color 0.2s;
+    z-index: 10;                       /* on top of everything inside the white box */
 }
 
 .search-modal-close-btn:hover {
