@@ -1974,6 +1974,7 @@ pre code {
 
 .search-modal-close-btn {
     position: absolute;
+    z-index: 10;
     top: var(--space-md);
     right: var(--space-md);
     width: 36px;
