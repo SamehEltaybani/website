@@ -2219,6 +2219,16 @@ pre code {
     overflow: visible !important;
 }
 
+
+
+/* Ensure nothing clips the autocomplete dropdown or tooltip */
+.search-modal-box,
+.search-modal-input-wrapper,
+.search-modal-input-wrapper .search-modal-autocomplete {
+    overflow: visible !important;
+}
+
+
 /* ============================================================================
    END OF THE main.css FILE
    ============================================================================ */
