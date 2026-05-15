@@ -1868,10 +1868,7 @@ pre code {
 }
 
 
-.search-modal-box,
-.search-modal-input-wrapper {
-    overflow: visible !important;
-}
+
 
 /* Submit icon + text (right side of input) */
 
@@ -1981,8 +1978,8 @@ pre code {
 
 .search-modal-close-btn {
     position: absolute;
-    top: -18px;              /* distance from the top edge of the white box */
-    right: -18px;            /* distance from the right edge of the white box */
+    top: 12px;              /* distance from the top edge of the white box */
+    right: 12px;            /* distance from the right edge of the white box */
     width: 36px;
     height: 36px;
     border-radius: 50%;
@@ -2211,22 +2208,7 @@ pre code {
 
 
 
-/* Let the search tips tooltip overflow the modal box */
-.search-modal-box {
-    overflow: visible !important;
-}
-.search-modal-autocomplete {
-    overflow: visible !important;
-}
 
-
-
-/* Ensure nothing clips the autocomplete dropdown or tooltip */
-.search-modal-box,
-.search-modal-input-wrapper,
-.search-modal-input-wrapper .search-modal-autocomplete {
-    overflow: visible !important;
-}
 
 
 /* ============================================================================
