@@ -189,8 +189,8 @@ function findSpellSuggestions(query, pool) {
                     headerRow.appendChild(tipsWrapper);
                     autocompleteDropdown.appendChild(headerRow);
 
-                    // Append tooltip to the input wrapper (outside the dropdown)
-                    inputWrapper.appendChild(tooltip);
+                    // Append tooltip to the white modal box (so it can overflow freely)
+                    box.appendChild(tooltip);
 
                     // "Suggestions:" label
                     const label = document.createElement('div');
