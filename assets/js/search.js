@@ -54,7 +54,7 @@
       closeBtn.className = 'search-modal-close-btn';
       closeBtn.innerHTML = '&times;';
       closeBtn.setAttribute('aria-label', 'Close search');
-      box.appendChild(closeBtn);
+      overlay.appendChild(closeBtn);
 
       // Input wrapper (relative for icons)
       const inputWrapper = document.createElement('div');
