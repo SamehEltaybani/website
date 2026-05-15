@@ -79,10 +79,18 @@
       // Autocomplete dropdown
       const autocompleteDropdown = document.createElement('div');
       autocompleteDropdown.className = 'search-modal-autocomplete';
-      // Ensure dropdown doesn't overflow the modal without scrolling
-      autocompleteDropdown.style.maxHeight = '200px';
+      autocompleteDropdown.style.position = 'absolute';
+      autocompleteDropdown.style.top = '100%';
+      autocompleteDropdown.style.left = '0';
+      autocompleteDropdown.style.width = '100%';
+      autocompleteDropdown.style.backgroundColor = '#ffffff';
+      autocompleteDropdown.style.border = '1px solid var(--color-border)';
+      autocompleteDropdown.style.borderRadius = '8px';
+      autocompleteDropdown.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+      autocompleteDropdown.style.maxHeight = '220px';
       autocompleteDropdown.style.overflowY = 'auto';
       autocompleteDropdown.style.overflowX = 'hidden';
+      autocompleteDropdown.style.zIndex = '1100';
       inputWrapper.appendChild(autocompleteDropdown);
 
       box.appendChild(inputWrapper);
