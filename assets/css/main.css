@@ -1831,6 +1831,7 @@ pre code {
     display: none;
     align-items: center;
     justify-content: center;
+    overflow: visible !important;
 }
 
 .search-modal-overlay.open {
@@ -1864,6 +1865,12 @@ pre code {
 .search-modal-input:focus {
     border-color: var(--color-gold);
     /* background stays the same */
+}
+
+
+.search-modal-box,
+.search-modal-input-wrapper {
+    overflow: visible !important;
 }
 
 /* Submit icon + text (right side of input) */
@@ -1974,8 +1981,8 @@ pre code {
 
 .search-modal-close-btn {
     position: absolute;
-    top: 8px;              /* distance from the top edge of the white box */
-    right: var(--space-md);            /* distance from the right edge of the white box */
+    top: 20px;              /* distance from the top edge of the white box */
+    right: 20px;            /* distance from the right edge of the white box */
     width: 36px;
     height: 36px;
     border-radius: 50%;
