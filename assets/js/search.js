@@ -144,8 +144,7 @@
               // Tooltip (central‑search‑specific)
               const tooltip = document.createElement('div');
               tooltip.className = 'search-tips-tooltip';
-              tooltip.style.cssText = 'display:none; position:absolute; top:100%; right:0; background:var(--color-white); border:1px solid var(--color-border); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:var(--space-md); z-index:1101; width:100%; font-size:var(--font-size-sm); line-height:1.6;';
-
+              tooltip.style.cssText = 'display:none; position:absolute; top:100%; left:0; background:var(--color-white); border:1px solid var(--color-border); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:var(--space-md); z-index:1101; width:100%; font-size:var(--font-size-sm); line-height:1.6;';
               // Central‑search‑specific tips (edit this HTML to change tips)
               tooltip.innerHTML = `
                   <button class="search-modal-close-btn">&times;</button>
@@ -157,7 +156,7 @@
                   · For further assistance, <a href="contact.html">contact me</a>.
               `;
 
-              tipsWrapper.appendChild(tooltip);
+              inputWrapper.appendChild(tooltip);
 
               tipsLink.addEventListener('click', function(e) {
                   e.stopPropagation();
