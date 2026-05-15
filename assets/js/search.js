@@ -5,40 +5,35 @@
   let spellDictionary = [];
   const SPELL_THRESHOLD = 2;
 
+  // ------- Spell‑correction helpers -------
+  function editDistance(a, b) {
+      const alen = a.length, blen = b.length;
+      const dp = Array.from({ length: alen + 1 }, () => Array(blen + 1).fill(0));
+      for (let i = 0; i <= alen; i++) dp[i][0] = i;
+      for (let j = 0; j <= blen; j++) dp[0][j] = j;
+      for (let i = 1; i <= alen; i++) {
+          for (let j = 1; j <= blen; j++) {
+              dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1] : Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1;
+          }
+      }
+      return dp[alen][blen];
+  }
 
-
-// ------- Spell‑correction helpers -------
-function editDistance(a, b) {
-    const alen = a.length, blen = b.length;
-    const dp = Array.from({ length: alen + 1 }, () => Array(blen + 1).fill(0));
-    for (let i = 0; i <= alen; i++) dp[i][0] = i;
-    for (let j = 0; j <= blen; j++) dp[0][j] = j;
-    for (let i = 1; i <= alen; i++) {
-        for (let j = 1; j <= blen; j++) {
-            dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1] : Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1;
-        }
-    }
-    return dp[alen][blen];
-}
-
-function findSpellSuggestions(query, pool) {
-    if (!query || query.length < 3) return [];
-    const q = query.toLowerCase().trim();
-    const maxDist = 2;
-    let best = [];
-    for (const word of pool) {
-        const dist = editDistance(q, word);
-        if (dist <= maxDist) {
-            best.push({ word, dist });
-        }
-    }
-    best.sort((a, b) => a.dist - b.dist || a.word.localeCompare(b.word));
-    return best.slice(0, 8).map(item => item.word);
-}
-// -----------------------------------------
-
-
-  
+  function findSpellSuggestions(query, pool) {
+      if (!query || query.length < 3) return [];
+      const q = query.toLowerCase().trim();
+      const maxDist = 2;
+      let best = [];
+      for (const word of pool) {
+          const dist = editDistance(q, word);
+          if (dist <= maxDist) {
+              best.push({ word, dist });
+          }
+      }
+      best.sort((a, b) => a.dist - b.dist || a.word.localeCompare(b.word));
+      return best.slice(0, 8).map(item => item.word);
+  }
+  // -----------------------------------------
 
   function initSearch() {
     const toggleBtn = document.getElementById('search-toggle');
@@ -51,6 +46,8 @@ function findSpellSuggestions(query, pool) {
 
       const box = document.createElement('div');
       box.className = 'search-modal-box';
+      // Prevent the white box from clipping the dropdown/tooltip
+      box.style.overflow = 'visible';
 
       // Circular close button (top-right)
       const closeBtn = document.createElement('button');
@@ -59,15 +56,10 @@ function findSpellSuggestions(query, pool) {
       closeBtn.setAttribute('aria-label', 'Close search');
       box.appendChild(closeBtn);
 
-
-      
-
       // Input wrapper (relative for icons)
       const inputWrapper = document.createElement('div');
       inputWrapper.className = 'search-modal-input-wrapper';
       inputWrapper.style.position = 'relative';
-
-     
 
       // Input field
       const input = document.createElement('input');
@@ -87,15 +79,15 @@ function findSpellSuggestions(query, pool) {
       // Autocomplete dropdown
       const autocompleteDropdown = document.createElement('div');
       autocompleteDropdown.className = 'search-modal-autocomplete';
+      // Ensure dropdown doesn't overflow the modal without scrolling
+      autocompleteDropdown.style.maxHeight = '200px';
+      autocompleteDropdown.style.overflowY = 'auto';
+      autocompleteDropdown.style.overflowX = 'hidden';
       inputWrapper.appendChild(autocompleteDropdown);
 
       box.appendChild(inputWrapper);
       overlay.appendChild(box);
       document.body.appendChild(overlay);
-
-
-
-      
 
       // Update submit area appearance based on input content
       function updateSubmitArea() {
@@ -103,159 +95,140 @@ function findSpellSuggestions(query, pool) {
         submitArea.classList.toggle('active', hasText);
       }
 
+      // Autocomplete logic (with spell correction)
+      let selectedIndex = -1;
+      input.addEventListener('input', function() {
+          const query = input.value.trim().toLowerCase();
+          updateSubmitArea();
+          if (query.length === 0) {
+              autocompleteDropdown.classList.remove('open');
+              return;
+          }
 
+          // 1) Direct suggestions (includes the query)
+          let directMatches = suggestionPool.filter(word => word.includes(query)).slice(0, 8);
 
+          // 2) If no direct matches, try spell‑correction
+          let showSpell = false;
+          let spellSuggestions = [];
+          if (directMatches.length === 0 && query.length >= 3) {
+              spellSuggestions = findSpellSuggestions(query, suggestionPool);
+              if (spellSuggestions.length > 0) {
+                  showSpell = true;
+              }
+          }
 
+          autocompleteDropdown.innerHTML = '';
+          selectedIndex = -1;
 
-      
+          // ---- Build dropdown content ----
+          if (showSpell) {
+              // Row: "No direct matches" + "? Search tips"
+              const headerRow = document.createElement('div');
+              headerRow.style.cssText = 'display:flex; align-items:center; gap:var(--space-md); padding: var(--space-xs) var(--space-sm);';
 
-                  // Autocomplete logic (with spell correction)
-            let selectedIndex = -1;
-            input.addEventListener('input', function() {
-                const query = input.value.trim().toLowerCase();
-                updateSubmitArea();
-                if (query.length === 0) {
-                    autocompleteDropdown.classList.remove('open');
-                    return;
-                }
+              const noMatch = document.createElement('span');
+              noMatch.style.cssText = 'font-size: var(--font-size-sm); color: var(--color-text-muted); font-style: italic;';
+              noMatch.textContent = 'No direct matches';
+              headerRow.appendChild(noMatch);
 
-                // 1) Direct suggestions (includes the query)
-                let directMatches = suggestionPool.filter(word => word.includes(query)).slice(0, 8);
+              const tipsWrapper = document.createElement('span');
+              tipsWrapper.style.cssText = 'position: relative; display: inline-block;';
 
-                // 2) If no direct matches, try spell‑correction
-                let showSpell = false;
-                let spellSuggestions = [];
-                if (directMatches.length === 0 && query.length >= 3) {
-                    spellSuggestions = findSpellSuggestions(query, suggestionPool);
-                    if (spellSuggestions.length > 0) {
-                        showSpell = true;
-                    }
-                }
+              const tipsLink = document.createElement('span');
+              tipsLink.className = 'search-tips-trigger-link';
+              tipsLink.style.cssText = 'font-size: var(--font-size-sm); color: var(--color-midnight-blue); text-decoration: underline; cursor: pointer; white-space: nowrap;';
+              tipsLink.innerHTML = '[ <i class="fas fa-question-circle"></i> Search tips ]';
+              tipsWrapper.appendChild(tipsLink);
 
-                autocompleteDropdown.innerHTML = '';
-                selectedIndex = -1;
+              // Tooltip (central‑search‑specific)
+              const tooltip = document.createElement('div');
+              tooltip.className = 'search-tips-tooltip';
+              tooltip.style.cssText = 'display:none; position:absolute; top:100%; right:0; background:var(--color-white); border:1px solid var(--color-border); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:var(--space-md); z-index:1101; width:100%; font-size:var(--font-size-sm); line-height:1.6;';
 
-                // ---- Build dropdown content ----
-                if (showSpell) {
-                    // Row: "No direct matches" + "? Search tips"
-                    const headerRow = document.createElement('div');
-                    headerRow.style.cssText = 'display:flex; align-items:center; gap:var(--space-md); padding: var(--space-xs) var(--space-sm);';
+              // Central‑search‑specific tips (edit this HTML to change tips)
+              tooltip.innerHTML = `
+                  <button class="search-modal-close-btn">&times;</button>
+                  <strong>Search Tips:</strong><br><br>
+                  · This search covers titles, summaries, and key metadata across the site – not full text.<br>
+                  · Use specific words like “nursing education” rather than just “nursing”.<br>
+                  · Try different terms or synonyms.<br>
+                  · For full article content, browse the <a href="blog.html">Blog</a> and filter by categories, or <a href="publications.html">search Publications</a> by year, journal, and keywords.<br>
+                  · For further assistance, <a href="contact.html">contact me</a>.
+              `;
 
-                    const noMatch = document.createElement('span');
-                    noMatch.style.cssText = 'font-size: var(--font-size-sm); color: var(--color-text-muted); font-style: italic;';
-                    noMatch.textContent = 'No direct matches';
-                    headerRow.appendChild(noMatch);
+              tipsWrapper.appendChild(tooltip);
 
-                    const tipsWrapper = document.createElement('span');
-                    tipsWrapper.style.cssText = 'position: relative; display: inline-block;';
+              tipsLink.addEventListener('click', function(e) {
+                  e.stopPropagation();
+                  tooltip.style.display = (tooltip.style.display === 'block') ? 'none' : 'block';
+              });
+              tooltip.querySelector('.search-modal-close-btn').addEventListener('click', function() {
+                  tooltip.style.display = 'none';
+              });
+              document.addEventListener('click', function closeTooltip(e) {
+                  if (!tipsWrapper.contains(e.target)) {
+                      tooltip.style.display = 'none';
+                  }
+              });
 
-                    const tipsLink = document.createElement('span');
-                    tipsLink.className = 'search-tips-trigger-link';
-                    tipsLink.style.cssText = 'font-size: var(--font-size-sm); color: var(--color-midnight-blue); text-decoration: underline; cursor: pointer; white-space: nowrap;';
-                    tipsLink.innerHTML = '[ <i class="fas fa-question-circle"></i> Search tips ]';
-                    tipsWrapper.appendChild(tipsLink);
+              headerRow.appendChild(tipsWrapper);
+              autocompleteDropdown.appendChild(headerRow);
 
-                    // Tooltip (central‑search‑specific)
-                    const tooltip = document.createElement('div');
-                    tooltip.className = 'search-tips-tooltip';
-                    tooltip.style.cssText = 'display:none; position:absolute; top:100%; right:0; background:var(--color-white); border:1px solid var(--color-border); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:var(--space-md); z-index:1101; width:100%; font-size:var(--font-size-sm); line-height:1.6;';
+              // "Suggestions:" label
+              const label = document.createElement('div');
+              label.style.cssText = 'padding: 2px var(--space-sm); font-size: 0.7rem; color: var(--color-gold); font-weight: 600; text-transform: uppercase;';
+              label.textContent = 'Suggestions:';
+              autocompleteDropdown.appendChild(label);
 
-                    // Central‑search‑specific tips (edit this HTML to change tips)
-                    tooltip.innerHTML = `
-                        <button class="search-modal-close-btn">&times;</button>
-                        <strong>Search Tips:</strong><br><br>
-                        · This search covers titles, summaries, and key metadata across the site – not full text.<br>
-                        · Use specific words like “nursing education” rather than just “nursing”.<br>
-                        · Try different terms or synonyms.<br>
-                        · For full article content, browse the <a href="blog.html">Blog</a> and filter by categories, or <a href="publications.html">search Publications</a> by year, journal, and keywords.<br>
-                        · For further assistance, <a href="contact.html">contact me</a>.
-                    `;
-
-                    tipsWrapper.appendChild(tooltip);
-
-                    tipsLink.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        tooltip.style.display = (tooltip.style.display === 'block') ? 'none' : 'block';
-                    });
-                    tooltip.querySelector('.search-modal-close-btn').addEventListener('click', function() {
-                        tooltip.style.display = 'none';
-                    });
-                    document.addEventListener('click', function closeTooltip(e) {
-                        if (!tipsWrapper.contains(e.target)) {
-                            tooltip.style.display = 'none';
-                        }
-                    });
-
-                    headerRow.appendChild(tipsWrapper);
-                    autocompleteDropdown.appendChild(headerRow);
-
-                    // Append tooltip to the white modal box (so it can overflow freely)
-                    box.appendChild(tooltip);
-
-                    // "Suggestions:" label
-                    const label = document.createElement('div');
-                    label.style.cssText = 'padding: 2px var(--space-sm); font-size: 0.7rem; color: var(--color-gold); font-weight: 600; text-transform: uppercase;';
-                    label.textContent = 'Suggestions:';
-                    autocompleteDropdown.appendChild(label);
-
-                    // Spell‑corrected suggestions
-                    spellSuggestions.forEach(sug => {
-                        const item = document.createElement('div');
-                        item.className = 'search-modal-autocomplete-item';
-                        item.textContent = sug;
-                        item.addEventListener('click', function() {
-                            input.value = sug;
-                            autocompleteDropdown.classList.remove('open');
-                            updateSubmitArea();
-                            doSearch();
-                        });
-                        item.addEventListener('mouseenter', function() {
-                            const items = autocompleteDropdown.querySelectorAll('.search-modal-autocomplete-item');
-                            items.forEach(el => el.style.backgroundColor = '');
-                            item.style.backgroundColor = 'var(--color-bg-alt)';
-                            selectedIndex = -1;  // spell items don't participate in keyboard nav
-                        });
-                        autocompleteDropdown.appendChild(item);
-                    });
-                    autocompleteDropdown.classList.add('open');
-                } else if (directMatches.length > 0) {
-                    // Normal direct matches
-                    directMatches.forEach((match, idx) => {
-                        const item = document.createElement('div');
-                        item.className = 'search-modal-autocomplete-item';
-                        item.textContent = match;
-                        item.addEventListener('click', function() {
-                            input.value = match;
-                            autocompleteDropdown.classList.remove('open');
-                            updateSubmitArea();
-                            doSearch();
-                        });
-                        item.addEventListener('mouseenter', function() {
-                            const items = autocompleteDropdown.querySelectorAll('.search-modal-autocomplete-item');
-                            items.forEach(el => el.style.backgroundColor = '');
-                            item.style.backgroundColor = 'var(--color-bg-alt)';
-                            selectedIndex = idx;
-                        });
-                        autocompleteDropdown.appendChild(item);
-                    });
-                    autocompleteDropdown.classList.add('open');
-                } else {
-                    autocompleteDropdown.classList.remove('open');
-                }
-            });
-      
-
-
-
-
-
-
-
-      
+              // Spell‑corrected suggestions
+              spellSuggestions.forEach(sug => {
+                  const item = document.createElement('div');
+                  item.className = 'search-modal-autocomplete-item';
+                  item.textContent = sug;
+                  item.addEventListener('click', function() {
+                      input.value = sug;
+                      autocompleteDropdown.classList.remove('open');
+                      updateSubmitArea();
+                      doSearch();
+                  });
+                  item.addEventListener('mouseenter', function() {
+                      const items = autocompleteDropdown.querySelectorAll('.search-modal-autocomplete-item');
+                      items.forEach(el => el.style.backgroundColor = '');
+                      item.style.backgroundColor = 'var(--color-bg-alt)';
+                      selectedIndex = -1;  // spell items don't participate in keyboard nav
+                  });
+                  autocompleteDropdown.appendChild(item);
+              });
+              autocompleteDropdown.classList.add('open');
+          } else if (directMatches.length > 0) {
+              // Normal direct matches
+              directMatches.forEach((match, idx) => {
+                  const item = document.createElement('div');
+                  item.className = 'search-modal-autocomplete-item';
+                  item.textContent = match;
+                  item.addEventListener('click', function() {
+                      input.value = match;
+                      autocompleteDropdown.classList.remove('open');
+                      updateSubmitArea();
+                      doSearch();
+                  });
+                  item.addEventListener('mouseenter', function() {
+                      const items = autocompleteDropdown.querySelectorAll('.search-modal-autocomplete-item');
+                      items.forEach(el => el.style.backgroundColor = '');
+                      item.style.backgroundColor = 'var(--color-bg-alt)';
+                      selectedIndex = idx;
+                  });
+                  autocompleteDropdown.appendChild(item);
+              });
+              autocompleteDropdown.classList.add('open');
+          } else {
+              autocompleteDropdown.classList.remove('open');
+          }
+      });
 
       // Keyboard navigation
       input.addEventListener('keydown', function(e) {
-        // If typing Enter and the dropdown is open, let the dropdown handler handle it
         if (autocompleteDropdown.classList.contains('open')) {
           const items = autocompleteDropdown.querySelectorAll('.search-modal-autocomplete-item');
           if (e.key === 'ArrowDown') {
@@ -266,18 +239,17 @@ function findSpellSuggestions(query, pool) {
             e.preventDefault();
             selectedIndex = Math.max(selectedIndex - 1, 0);
             highlightItem(items, selectedIndex);
-
-            } else if (e.key === 'Enter') {
-                e.preventDefault();
-                if (selectedIndex >= 0) {
-                    // A specific suggestion is selected – use it
-                    items[selectedIndex].click();
-                } else {
-                    // No suggestion selected – search for whatever is typed
-                    autocompleteDropdown.classList.remove('open');
-                    doSearch();
-                }
-            } else if (e.key === 'Escape') {          
+          } else if (e.key === 'Enter') {
+              e.preventDefault();
+              if (selectedIndex >= 0) {
+                  // A specific suggestion is selected – use it
+                  items[selectedIndex].click();
+              } else {
+                  // No suggestion selected – search for whatever is typed
+                  autocompleteDropdown.classList.remove('open');
+                  doSearch();
+              }
+          } else if (e.key === 'Escape') {          
             autocompleteDropdown.classList.remove('open');
           }
         } else {
@@ -309,55 +281,13 @@ function findSpellSuggestions(query, pool) {
         }
       });
 
-      // ---- Spell correction and search execution ----
+      // ---- Search execution ----
       function doSearch() {
         const query = input.value.trim();
         if (!query) return;
-        
-        
-            const words = query.split(/\s+/);
-    let hasCorrection = false;
-    let finalQuery = query;
-
-    // Only attempt spell correction for queries with 2 or fewer words
-    if (words.length <= 2) {
-        const correctedWords = words.map(w => {
-            const correction = correctWord(w);
-            if (correction) hasCorrection = true;
-            return correction || w;
-        });
-        finalQuery = correctedWords.join(' ');
-    }
-
-        
-
-        if (hasCorrection) {
-          const existing = document.querySelector('.correction-message');
-          if (existing) existing.remove();
-
-          const msg = document.createElement('div');
-          msg.className = 'correction-message';
-          msg.style.cssText = 'margin-top:var(--space-sm); padding:var(--space-sm); background-color:var(--color-gold-light); border-radius:8px; font-size:var(--font-size-sm); text-align:center;';
-          msg.innerHTML = 'Did you mean: <a href="#" class="correction-link" style="font-weight:600; text-decoration:underline; color:var(--color-midnight-blue);">' + finalQuery + '</a> ?';
-
-          msg.querySelector('.correction-link').addEventListener('click', function(e) {
-            e.preventDefault();
-            input.value = finalQuery;
-            msg.remove();
-            doSearch();
-          });
-
-          const dismiss = document.createElement('button');
-          dismiss.textContent = '✕';
-          dismiss.style.cssText = 'background:none; border:none; margin-left:var(--space-sm); cursor:pointer; font-size:0.9rem;';
-          dismiss.addEventListener('click', function() { msg.remove(); });
-          msg.appendChild(dismiss);
-
-          box.appendChild(msg);
-        } else {
-          window.location.href = 'search.html?q=' + encodeURIComponent(query);
-          overlay.classList.remove('open');
-        }
+        // Directly redirect to results page – no spell‑correction popup
+        window.location.href = 'search.html?q=' + encodeURIComponent(query);
+        overlay.classList.remove('open');
       }
 
       // Modal open/close behaviour
@@ -378,7 +308,7 @@ function findSpellSuggestions(query, pool) {
       });
 
       document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && overlay.classList.contains('open') && !tipsOverlay.classList.contains('open')) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) {
           overlay.classList.remove('open');
         }
       });
@@ -442,19 +372,6 @@ function findSpellSuggestions(query, pool) {
   }
 
   // ---- Spell checking helpers ----
-  function editDistance(a, b) {
-    const alen = a.length, blen = b.length;
-    const dp = Array.from({ length: alen + 1 }, () => Array(blen + 1).fill(0));
-    for (let i = 0; i <= alen; i++) dp[i][0] = i;
-    for (let j = 0; j <= blen; j++) dp[0][j] = j;
-    for (let i = 1; i <= alen; i++) {
-      for (let j = 1; j <= blen; j++) {
-        dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1] : Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1;
-      }
-    }
-    return dp[alen][blen];
-  }
-
   function correctWord(word) {
     if (!word || word.length < 3) return null;
     word = word.toLowerCase();
@@ -472,7 +389,7 @@ function findSpellSuggestions(query, pool) {
     return bestMatch;
   }
 
-  // Boostrap
+  // Bootstrap
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initSearch);
   } else {
