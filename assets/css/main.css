@@ -2199,6 +2199,18 @@ pre code {
     cursor: pointer;
 }
 
+
+
+
+
+/* Let the search tips tooltip overflow the modal box */
+.search-modal-box {
+    overflow: visible !important;
+}
+.search-modal-autocomplete {
+    overflow: visible !important;
+}
+
 /* ============================================================================
    END OF THE main.css FILE
    ============================================================================ */
