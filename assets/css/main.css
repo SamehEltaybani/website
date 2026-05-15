@@ -1974,7 +1974,7 @@ pre code {
 
 .search-modal-close-btn {
     position: absolute;
-    top: var(--space-md);              /* distance from the top edge of the white box */
+    top: 8px;              /* distance from the top edge of the white box */
     right: var(--space-md);            /* distance from the right edge of the white box */
     width: 36px;
     height: 36px;
