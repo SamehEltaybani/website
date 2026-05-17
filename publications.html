@@ -433,6 +433,9 @@ function highlightBlogItem(items, index) {
     items.forEach((item, i) => {
         item.style.backgroundColor = i === index ? 'var(--color-hover-bg)' : '';
     });
+    if (items[index]) {
+        items[index].scrollIntoView({ block: 'nearest' });
+    }
 }
 
       
