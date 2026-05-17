@@ -2241,6 +2241,11 @@ pre code {
     margin-bottom: 4px;
 }
 
+
+#share-btn-bottom {
+    margin-bottom: 0;
+}
+
 .share-trigger {
     display: inline-flex;
     align-items: center;
@@ -2283,7 +2288,7 @@ pre code {
     display: flex;
     justify-content: center;
     gap: var(--space-md);
-    margin-bottom: var(--space-sm);
+    margin-bottom: 0;
 }
 
 .share-social-icons a {
@@ -2299,7 +2304,7 @@ pre code {
 .share-divider {
     border: none;
     border-top: 1px solid var(--color-border);
-    margin: var(--space-xs) 0;
+    margin: 2px 0;
 }
 
 .share-action-item {
