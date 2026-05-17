@@ -298,7 +298,7 @@ tipsLink.innerHTML = '[ <i class="fas fa-question-circle"></i> Search tips ]';
             const item = document.createElement('div');
             item.className = 'search-modal-autocomplete-item';
             item.textContent = sug;
-            item.style.cssText = 'padding: var(--space-sm) var(--space-md); cursor: pointer; font-size: var(--font-size-base); color: var(--color-text-main); min-height: 44px; display: flex; align-items: center;';
+            item.style.cssText = 'padding: var(--space-sm) var(--space-md); cursor: pointer; font-size: var(--font-size-base); color: var(--color-text-main); min-height: 44px; display: flex; align-items: center; touch-action: manipulation;';
             item.addEventListener('click', () => {
                 searchInput.value = sug;
                 autocompleteDropdown.classList.add('hidden');
@@ -308,12 +308,7 @@ tipsLink.innerHTML = '[ <i class="fas fa-question-circle"></i> Search tips ]';
             item.addEventListener('mouseleave', () => item.style.backgroundColor = '');
             
           
-          item.addEventListener('touchstart', function(e) {
-                searchInput.value = sug;
-                autocompleteDropdown.classList.add('hidden');
-                handleSearchInput();
-            });
-
+          
 
           
             autocompleteDropdown.appendChild(item);
@@ -327,7 +322,7 @@ tipsLink.innerHTML = '[ <i class="fas fa-question-circle"></i> Search tips ]';
         const item = document.createElement('div');
         item.className = 'search-modal-autocomplete-item';
         item.textContent = match;
-        item.style.cssText = 'padding: var(--space-sm) var(--space-md); cursor: pointer; font-size: var(--font-size-base); color: var(--color-text-main); min-height: 44px; display: flex; align-items: center;';
+        item.style.cssText = 'padding: var(--space-sm) var(--space-md); cursor: pointer; font-size: var(--font-size-base); color: var(--color-text-main); min-height: 44px; display: flex; align-items: center; touch-action: manipulation;';
         item.addEventListener('click', () => {
             searchInput.value = match;
             autocompleteDropdown.classList.add('hidden');
@@ -335,11 +330,6 @@ tipsLink.innerHTML = '[ <i class="fas fa-question-circle"></i> Search tips ]';
         });
         item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--color-hover-bg)');
         item.addEventListener('mouseleave', () => item.style.backgroundColor = '');
-        item.addEventListener('touchstart', function(e) {
-            searchInput.value = match;
-            autocompleteDropdown.classList.add('hidden');
-            handleSearchInput();
-        });
         autocompleteDropdown.appendChild(item);
     });
     autocompleteDropdown.classList.remove('hidden');
