@@ -306,12 +306,16 @@ tipsLink.innerHTML = '[ <i class="fas fa-question-circle"></i> Search tips ]';
             });
             item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--color-hover-bg)');
             item.addEventListener('mouseleave', () => item.style.backgroundColor = '');
-            item.addEventListener('touchstart', function(e) {
-                e.preventDefault();
+            
+          
+          item.addEventListener('touchstart', function(e) {
                 searchInput.value = sug;
                 autocompleteDropdown.classList.add('hidden');
                 handleSearchInput();
             });
+
+
+          
             autocompleteDropdown.appendChild(item);
         });
         autocompleteDropdown.classList.remove('hidden');
@@ -332,7 +336,6 @@ tipsLink.innerHTML = '[ <i class="fas fa-question-circle"></i> Search tips ]';
         item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--color-hover-bg)');
         item.addEventListener('mouseleave', () => item.style.backgroundColor = '');
         item.addEventListener('touchstart', function(e) {
-            e.preventDefault();
             searchInput.value = match;
             autocompleteDropdown.classList.add('hidden');
             handleSearchInput();
