@@ -1978,12 +1978,21 @@ pre code {
 
 
 
-..search-modal-close-btn {
-    align-self: flex-end; 
+.search-modal-close-btn {
+    /* 1. Layout: Push to the right, don't stretch */
+    align-self: flex-end;
+    flex: 0 0 auto; 
     margin-bottom: var(--space-sm);
+    
+    /* 2. Shape: Lock it as a circle */
     width: 36px;
     height: 36px;
-    border-radius: 50%;
+    min-width: 36px;   /* Prevents shrinking */
+    aspect-ratio: 1/1; /* Guarantees a square */
+    border-radius: 50% !important;
+    padding: 0;
+    
+    /* 3. Appearance */
     border: 2px solid var(--color-gold);
     background-color: var(--color-white);
     color: var(--color-midnight-blue);
