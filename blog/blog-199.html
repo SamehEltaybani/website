@@ -50,6 +50,10 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
   #search-toggle, .hamburger, .mobile-menu, .mobile-menu-overlay {
     display: none !important;
   }
+  #recommended-section .btn-primary,
+  .btn-primary:not(.search-modal-submit):not(.share-dropdown .btn-primary) {
+    display: none !important;
+  }
 
   /* ----- Smaller fonts for print ----- */
   body {
@@ -72,19 +76,22 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
     page-break-after: avoid;
   }
 
+   .callout {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
   /* ----- Print‑only header (every page) ----- */
-  .print-header {
+    .print-header {
     display: block !important;
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
     border-bottom: 1px solid #ccc;
     padding: 8pt 0;
-    background: white;
+    margin-bottom: 12pt;
     text-align: left;
     font-size: 10pt;
   }
+ 
   .print-header img {
     width: 28pt;
     height: 28pt;
@@ -148,13 +155,15 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
 
   /* ----- Link icons (show only the external‑link icon after links) ----- */
   a::after {
-    content: " 🔗";
+    content: " 🔗"; !important;
     font-size: 0.8em;
   }
   /* Remove icon for links that are not meaningful in print (like internal anchors) */
   a[href^="#"]::after {
     content: none;
   }
+
+ 
   /* Note at the end of the article */
   .print-links-note {
     display: block !important;
@@ -164,6 +173,9 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
     border-top: 1px solid #ccc;
     padding-top: 6pt;
   }
+
+  #article-title { display: block !important; }
+ 
 </style>
 
 
@@ -173,14 +185,9 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
 
 
 
-<!-- Print‑only header (hidden on screen) -->
-<div class="print-header" style="display:none;">
-  <img src="assets/img/profile.webp" alt="Dr. Sameh Eltaybani">
-  <span>Dr. Sameh Eltaybani</span>
-</div>
 
 <!-- Print‑only footer (hidden on screen) -->
-<div class="print-footer" style="display:none;">
+<div class="print-footer">
   <div class="page-number"></div>
   <div>Printed from: <span id="print-url"></span></div>
   <div>&copy; <span id="print-year"></span> Dr. Sameh Eltaybani. All rights reserved.</div>
@@ -230,7 +237,7 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
 
        
        <!-- Permanent QR code (visible on screen and in print) -->
-<div class="print-qr" style="display:block; text-align:right; margin-bottom:4px;">
+<div class="print-qr" style="display:none; text-align:right; margin-bottom:4px;">
   <img id="static-qr-image" src="" alt="QR Code" style="display:none; width:100px; height:auto;">
 </div>
        
@@ -242,6 +249,14 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
        
        <!-- === ARTICLE CONTENT (edit freely) === -->
         <div id="article-content">
+
+         <!-- Print‑only header (hidden on screen) -->
+<div class="print-header" style="display:none;">
+  <img src="assets/img/profile.webp" alt="Dr. Sameh Eltaybani">
+  <span>Dr. Sameh Eltaybani</span>
+</div>
+
+         
 <!--
  ============================================================
           REPLICABLE CONTENT BLOCKS
@@ -506,7 +521,7 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
 
 
        <!-- Print‑only links note -->
-<div class="print-links-note" style="display:none;">
+<div class="print-links-note">
   This article contains hyperlinks. Please visit the online version to access all linked resources.
 </div>
 
