@@ -416,6 +416,10 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
           articleData = entry;
 
           document.getElementById('article-title').textContent = entry.title || 'Article';
+           
+         // Create share buttons with the real title
+            createShareButton(shareContainerTop);
+            createShareButton(shareContainerBottom);
             
          const catContainer = document.getElementById('article-categories');
             catContainer.innerHTML = '';
@@ -558,6 +562,7 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
       { icon: 'fab fa-bluesky', url: 'https://bsky.app/intent/compose?text=' + encodeURIComponent(articleTitle + ' ' + articleUrl) },
       { icon: 'fab fa-telegram-plane', url: 'https://t.me/share/url?url=' + encodeURIComponent(articleUrl) + '&text=' + encodeURIComponent(articleTitle) },
       { icon: 'fab fa-whatsapp', url: 'https://wa.me/?text=' + encodeURIComponent(articleTitle + ' ' + articleUrl) },
+      { icon: 'fab fa-facebook-messenger', url: 'https://www.facebook.com/dialog/send?link=' + encodeURIComponent(articleUrl) + '&app_id=291494149107498' },
       { icon: 'fas fa-envelope', url: 'mailto:?subject=' + encodeURIComponent('Interesting article: ' + articleTitle) + '&body=' + encodeURIComponent(articleTitle + '\n\n' + articleUrl) }
     ];
    
@@ -633,9 +638,7 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
      
      
      
-  // Create both share buttons (top and bottom)
-  createShareButton(shareContainerTop);
-  createShareButton(shareContainerBottom);
+
 
   // ---- QR CODE FUNCTION (one API, fallback text) ----
   // Configuration for future QR customization
