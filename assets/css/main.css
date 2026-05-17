@@ -70,6 +70,7 @@ main {
     /* ===== COLORS - Roles ===== */
     --color-bg-main: var(--color-white);       /* The background space outside the container area [any space beyond the navigation bar, readcrumb, footer, etc.] */
     --color-bg-alt: #F8F9FA;
+    --color-hover-bg: #E9ECEF;
     --color-bg-breadcrumb: #E9ECEF;
     --color-text-main: #333333;
     --color-text-muted: #6C757D;
@@ -2072,7 +2073,7 @@ pre code {
 }
 
 .search-modal-autocomplete-item:hover {
-    background-color: var(--color-bg-alt);
+    background-color: var(--color-hover-bg);
 }
 
 /* Tips tooltip */
