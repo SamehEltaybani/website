@@ -80,6 +80,8 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
           </div>
         </header>
 
+       <div id="share-btn-top" class="share-btn-wrapper"></div>
+       
        <hr style="border: none; border-top: 2px solid var(--color-border); margin: var(--space-lg) 0;">
 
         <!-- === ARTICLE CONTENT (edit freely) === -->
@@ -337,8 +339,12 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
 
        
 
-        <!-- POST-CONTENT LEGAL LINE -->
-        <div class="footer-legal" style="margin-top: var(--space-xl); padding-top: var(--space-md); border-top: 1px solid var(--color-border);">
+        <!-- POST-CONTENT LEGAL LINE AND SHARING BUTTON-->
+        
+       
+       <div id="share-btn-bottom" class="share-btn-wrapper"></div>
+       
+       <div class="footer-legal" style="margin-top: var(--space-xl); padding-top: var(--space-md); border-top: 1px solid var(--color-border);">
           <p>© Dr. Sameh Eltaybani. Content is for informational purposes only and represents personal views. <a href="legal.html">Read more &gt;&gt;</a></p>
         </div>
 
@@ -513,7 +519,205 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
       } else {
         initArticle();
       }
+
+
+
+  // ---- SOCIAL SHARING BUTTONS ----
+  const shareContainerTop = document.getElementById('share-btn-top');
+  const shareContainerBottom = document.getElementById('share-btn-bottom');
+  const articleUrl = window.location.href;
+  const articleTitle = document.title.split(' - ')[1] || document.title;
+
+  // Build a single share button with dropdown
+  function createShareButton(container) {
+    if (!container) return;
+
+    // Wrapper with relative position for dropdown
+    const wrapper = document.createElement('div');
+    wrapper.style.position = 'relative';
+    wrapper.style.display = 'inline-block';
+
+    // Trigger button
+    const trigger = document.createElement('button');
+    trigger.className = 'share-trigger';
+    trigger.innerHTML = '<i class="fas fa-share-alt"></i> Share this article';
+    trigger.setAttribute('aria-label', 'Share this article');
+
+    // Dropdown
+    const dropdown = document.createElement('div');
+    dropdown.className = 'share-dropdown';
+
+    // ---- Social icons (no text) ----
+    const socialRow = document.createElement('div');
+    socialRow.className = 'share-social-icons';
+
+    const socials = [
+      { icon: 'fab fa-facebook', url: 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(articleUrl) },
+      { icon: 'fab fa-x-twitter', url: 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(articleUrl) + '&text=' + encodeURIComponent(articleTitle) },
+      { icon: 'fab fa-linkedin', url: 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(articleUrl) },
+      { icon: 'fab fa-bluesky', url: 'https://bsky.app/intent/compose?text=' + encodeURIComponent(articleTitle + ' ' + articleUrl) }
+    ];
+    socials.forEach(s => {
+      const a = document.createElement('a');
+      a.href = s.url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.innerHTML = '<i class="' + s.icon + '"></i>';
+      a.title = s.icon.replace('fab fa-', '').replace('-', ' '); // rough
+      socialRow.appendChild(a);
+    });
+    dropdown.appendChild(socialRow);
+
+    // Divider
+    const divider = document.createElement('hr');
+    divider.className = 'share-divider';
+    dropdown.appendChild(divider);
+
+    // ---- Action items (icon + text) ----
+    function addActionItem(label, iconClass, onClick) {
+      const btn = document.createElement('button');
+      btn.className = 'share-action-item';
+      btn.innerHTML = '<i class="' + iconClass + '"></i> <span>' + label + '</span>';
+      btn.addEventListener('click', onClick);
+      dropdown.appendChild(btn);
+    }
+
+    // Copy link
+    addActionItem('Copy link', 'fas fa-copy', function() {
+      navigator.clipboard.writeText(articleUrl).then(() => {
+        alert('Link copied to clipboard!');
+      }).catch(() => {
+        prompt('Copy this link:', articleUrl);
+      });
+    });
+
+    // Print
+    addActionItem('Print', 'fas fa-print', function() {
+      window.print();
+    });
+
+    // QR Code
+    addActionItem('QR code', 'fas fa-qrcode', function() {
+      showQRCode(articleUrl);
+    });
+
+    // Copyright
+    addActionItem('Copyright', 'fas fa-copyright', function() {
+      window.location.href = 'legal.html';
+    });
+
+    // Toggle dropdown
+    trigger.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dropdown.classList.toggle('open');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!wrapper.contains(e.target)) {
+        dropdown.classList.remove('open');
+      }
+    });
+
+    wrapper.appendChild(trigger);
+    wrapper.appendChild(dropdown);
+    container.appendChild(wrapper);
+  }
+
+ 
+     
+     
+     
+     
+  // Create both share buttons (top and bottom)
+  createShareButton(shareContainerTop);
+  createShareButton(shareContainerBottom);
+
+  // ---- QR CODE FUNCTION (one API, fallback text) ----
+  // Configuration for future QR customization
+  const QR_API = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=';
+  const QR_FALLBACK_MESSAGE = 'QR code service is currently unavailable.';
+
+  function showQRCode(url) {
+    const overlay = document.getElementById('qr-overlay');
+    const qrImg = document.getElementById('qr-image');
+    const qrMsg = document.getElementById('qr-message');
+
+    if (!overlay || !qrImg || !qrMsg) return;
+
+    // Reset
+    qrImg.style.display = 'none';
+    qrMsg.textContent = '';
+
+    overlay.classList.add('open');
+
+    // Try primary API
+    const apiUrl = QR_API + encodeURIComponent(url);
+    qrImg.onload = function() {
+      qrImg.style.display = 'block';
+    };
+    qrImg.onerror = function() {
+      qrImg.style.display = 'none';
+      qrMsg.textContent = QR_FALLBACK_MESSAGE;
+    };
+    qrImg.src = apiUrl;
+
+    // Close button
+    const closeBtn = overlay.querySelector('.qr-overlay-close');
+    if (closeBtn) {
+      closeBtn.onclick = function() {
+        overlay.classList.remove('open');
+      };
+    }
+
+    // Click overlay background to close
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) {
+        overlay.classList.remove('open');
+      }
+    });
+  }
+
+  // Also close QR overlay with Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      const overlay = document.getElementById('qr-overlay');
+      if (overlay) overlay.classList.remove('open');
+    }
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+     
     })();
   </script>
+
+
+
+
+ 
+
+
+<div id="qr-overlay" class="qr-overlay">
+  <div class="qr-overlay-box">
+    <button class="qr-overlay-close">&times;</button>
+    <p id="qr-message" style="font-size: var(--font-size-sm);"></p>
+    <img id="qr-image" src="" alt="QR Code" style="display:none;">
+  </div>
+</div>
+
+ 
+ 
 </body>
 </html>
