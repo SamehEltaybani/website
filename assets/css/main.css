@@ -2315,7 +2315,7 @@ pre code {
 }
 
 .share-action-item:hover {
-    background-color: var(--color-bg-alt);
+    background-color: var(--color-hover-bg);
 }
 
 .share-action-item i {
@@ -2362,11 +2362,6 @@ pre code {
     position: absolute;
     top: var(--space-xs);
     right: var(--space-xs);
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--color-text-muted);
 }
 
 
