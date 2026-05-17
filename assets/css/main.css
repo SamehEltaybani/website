@@ -693,9 +693,6 @@ main ol {
        
 
 
-.mobile-nav-link i {
-    font-size: 1.25rem;   /* adjust to your liking */
-}
 
 /* ============================================================================
    RESPONSIVE NAVIGATION (Mobile)
@@ -2330,8 +2327,8 @@ pre code {
 
 .share-action-item i.fas,
 .share-action-item i.fab {
-    font-size: 1.8rem;
-    width: 1.8rem;
+    font-size: 1.5rem;
+    width: 1.2rem;
     text-align: center;
     color: var(--color-midnight-blue);
 }
