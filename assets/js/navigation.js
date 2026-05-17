@@ -201,38 +201,7 @@ function renderMobileMenu(navItems) {
     });
 
 
-        // ---- Dark mode toggle inside hamburger menu ----
-    const themeToggle = document.createElement('button');
-    themeToggle.id = 'theme-toggle-mobile';
-    themeToggle.className = 'mobile-nav-link';
-    themeToggle.style.cssText = 'background:none; border:none; width:100%; text-align:left; cursor:pointer; font-size:inherit;';
-    themeToggle.innerHTML = document.body.getAttribute('data-theme') === 'dark'
-        ? '<i class="fas fa-sun"></i> Light mode'
-        : '<i class="fas fa-moon"></i> Dark mode';
-    themeToggle.addEventListener('click', function() {
-        const isDark = document.body.getAttribute('data-theme') === 'dark';
-        if (isDark) {
-            document.body.removeAttribute('data-theme');
-            localStorage.setItem('site-theme', 'light');
-        } else {
-            document.body.setAttribute('data-theme', 'dark');
-            localStorage.setItem('site-theme', 'dark');
-        }
-        // Update both buttons
-        const newIsDark = document.body.getAttribute('data-theme') === 'dark';
-        themeToggle.innerHTML = newIsDark
-            ? '<i class="fas fa-sun"></i> Light mode'
-            : '<i class="fas fa-moon"></i> Dark mode';
-        const desktopBtn = document.getElementById('theme-toggle-desktop');
-        if (desktopBtn) {
-            desktopBtn.innerHTML = newIsDark
-                ? '<i class="fas fa-sun"></i>'
-                : '<i class="fas fa-moon"></i>';
-        }
-    });
-    mobileMenu.appendChild(themeToggle);
-    // ---------------------------------------------
-
+       
     // Add some padding at the bottom so the last item isn’t hidden behind the address bar
     const spacer = document.createElement('div');
     spacer.style.paddingBottom = 'var(--space-md)';
