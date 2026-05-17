@@ -663,6 +663,7 @@ main ol {
         .mobile-nav-link.active {
              color: var(--color-gold);
              background-color: var(--color-hover-bg);
+             border-radius: 0px 0px 0px 0px;
              position: relative;
              padding-left: 1.8rem;                      /* extra room for the arrow */
          }
