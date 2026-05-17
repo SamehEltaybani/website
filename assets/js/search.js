@@ -202,7 +202,7 @@
                   item.addEventListener('mouseenter', function() {
                       const items = autocompleteDropdown.querySelectorAll('.search-modal-autocomplete-item');
                       items.forEach(el => el.style.backgroundColor = '');
-                      item.style.backgroundColor = 'var(--color-bg-alt)';
+                      item.style.backgroundColor = 'var(--color-hover-bg)';
                       selectedIndex = -1;  // spell items don't participate in keyboard nav
                   });
                   autocompleteDropdown.appendChild(item);
@@ -223,7 +223,7 @@
                   item.addEventListener('mouseenter', function() {
                       const items = autocompleteDropdown.querySelectorAll('.search-modal-autocomplete-item');
                       items.forEach(el => el.style.backgroundColor = '');
-                      item.style.backgroundColor = 'var(--color-bg-alt)';
+                      item.style.backgroundColor = 'var(--color-hover-bg)';
                       selectedIndex = idx;
                   });
                   autocompleteDropdown.appendChild(item);
@@ -270,7 +270,7 @@
 
       function highlightItem(items, index) {
         items.forEach((item, i) => {
-          item.style.backgroundColor = i === index ? 'var(--color-bg-alt)' : '';
+          item.style.backgroundColor = i === index ? 'var(--color-hover-bg)' : '';
         });
       }
 
