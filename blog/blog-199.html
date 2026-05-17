@@ -417,6 +417,7 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
           articleData = entry;
 
           document.getElementById('article-title').textContent = entry.title || 'Article';
+          document.title = 'Dr. Sameh Eltaybani - ' + (entry.title || 'Article');
            
          // Create share buttons with the real title
             createShareButton(shareContainerTop);
@@ -531,11 +532,12 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
   const shareContainerTop = document.getElementById('share-btn-top');
   const shareContainerBottom = document.getElementById('share-btn-bottom');
   const articleUrl = window.location.href;
-  const articleTitle = document.title.split(' - ')[1] || document.title;
 
   // Build a single share button with dropdown
   function createShareButton(container) {
     if (!container) return;
+
+    const articleTitle = document.title.split(' - ')[1] || document.title;
 
     // Wrapper with relative position for dropdown
     const wrapper = document.createElement('div');
