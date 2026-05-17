@@ -1841,11 +1841,13 @@ pre code {
 .search-modal-box {
     background-color: var(--color-white);
     border-radius: 20px;
-    padding: var(--space-lg) var(--space-md);   /* less horizontal padding */
+    padding: var(--space-md); 
     width: 90%;
     max-width: 520px;
     box-shadow: 0 20px 50px rgba(0,0,0,0.12), 0 6px 12px rgba(0,0,0,0.06);
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .search-modal-input {
@@ -1976,10 +1978,9 @@ pre code {
 
 
 
-.search-modal-close-btn {
-    position: absolute;
-    top: 12px;              /* distance from the top edge of the white box */
-    right: 12px;            /* distance from the right edge of the white box */
+..search-modal-close-btn {
+    align-self: flex-end; 
+    margin-bottom: var(--space-sm);
     width: 36px;
     height: 36px;
     border-radius: 50%;
@@ -1992,7 +1993,7 @@ pre code {
     align-items: center;
     justify-content: center;
     transition: background-color 0.2s, color 0.2s;
-    z-index: 10;                       /* on top of everything inside the white box */
+    z-index: 10;
 }
 
 .search-modal-close-btn:hover {
