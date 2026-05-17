@@ -664,7 +664,7 @@ function showAutocomplete(directMatches, spellSuggestions) {
                 autocompleteDropdown.classList.add('hidden');
                 handleSearchInput();
             });
-            item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--color-bg-alt)');
+            item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--color-hover-bg)');
             item.addEventListener('mouseleave', () => item.style.backgroundColor = '');
             item.addEventListener('touchstart', function(e) {
                 e.preventDefault();
@@ -689,7 +689,7 @@ function showAutocomplete(directMatches, spellSuggestions) {
             autocompleteDropdown.classList.add('hidden');
             handleSearchInput();
         });
-        item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--color-bg-alt)');
+        item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--color-hover-bg)');
         item.addEventListener('mouseleave', () => item.style.backgroundColor = '');
         item.addEventListener('touchstart', function(e) {
             e.preventDefault();
@@ -762,7 +762,7 @@ function showAutocomplete(directMatches, spellSuggestions) {
         return;
     }
     const items = autocompleteDropdown.querySelectorAll('div');
-    let idx = Array.from(items).findIndex(el => el.style.backgroundColor === 'var(--color-bg-alt)' || el.style.backgroundColor === 'rgb(248, 249, 250)');
+    let idx = Array.from(items).findIndex(el => el.style.backgroundColor === 'var(--color-hover-bg)' || el.style.backgroundColor === 'rgb(248, 249, 250)');
     if (e.key === 'ArrowDown') {
         e.preventDefault();
         idx = (idx + 1) % items.length;
@@ -792,7 +792,7 @@ function showAutocomplete(directMatches, spellSuggestions) {
 
 function highlightBlogItem(items, index) {
     items.forEach((item, i) => {
-        item.style.backgroundColor = i === index ? 'var(--color-bg-alt)' : '';
+        item.style.backgroundColor = i === index ? 'var(--color-hover-bg)' : '';
     });
 }
       
