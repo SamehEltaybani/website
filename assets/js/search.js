@@ -269,11 +269,13 @@
       });
 
       function highlightItem(items, index) {
-        items.forEach((item, i) => {
-          item.style.backgroundColor = i === index ? 'var(--color-hover-bg)' : '';
-        });
-      }
-
+    items.forEach((item, i) => {
+        item.style.backgroundColor = i === index ? 'var(--color-hover-bg)' : '';
+    });
+    if (items[index]) {
+        items[index].scrollIntoView({ block: 'nearest' });
+    }
+}
       // Submit area click
       submitArea.addEventListener('click', function() {
         if (input.value.trim().length > 0) {
