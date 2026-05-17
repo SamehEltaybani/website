@@ -39,8 +39,154 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
   <!-- MAIN CSS -->
   <link rel="stylesheet" href="assets/css/main.css">
+
+
+<style media="print">
+  /* ----- HIDE unwanted elements ----- */
+  nav, .breadcrumb-bar, footer, .progress-container,
+  #recommended-section, #share-btn-top, #share-btn-bottom,
+  .share-dropdown, .qr-overlay, .search-icon-btn,
+  #theme-toggle-desktop, #theme-toggle-mobile,
+  #search-toggle, .hamburger, .mobile-menu, .mobile-menu-overlay {
+    display: none !important;
+  }
+
+  /* ----- Smaller fonts for print ----- */
+  body {
+    font-size: 12pt;
+    color: #000;
+  }
+  .heading-large { font-size: 18pt; }
+  .heading-medium { font-size: 14pt; }
+  .heading-small { font-size: 12pt; }
+
+  /* ----- Keep images with their captions, avoid breaks before them ----- */
+  figure, img {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  h2, h3, h4 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  /* ----- Print‑only header (every page) ----- */
+  .print-header {
+    display: block !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    padding: 8pt 0;
+    background: white;
+    text-align: left;
+    font-size: 10pt;
+  }
+  .print-header img {
+    width: 28pt;
+    height: 28pt;
+    border-radius: 50%;
+    object-fit: cover;
+    vertical-align: middle;
+    margin-right: 8pt;
+    border: 1px solid var(--color-gold);
+  }
+  .print-header span {
+    font-weight: 600;
+    color: #1A2530;
+  }
+
+  /* ----- Print‑only footer (every page) ----- */
+  .print-footer {
+    display: block !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-top: 1px solid #ccc;
+    padding: 6pt 0;
+    background: white;
+    font-size: 8pt;
+    color: #555;
+    text-align: center;
+  }
+  .print-footer .page-number {
+    text-align: right;
+    margin-bottom: 2pt;
+    font-size: 8pt;
+  }
+
+  /* ----- Article content margins (leave room for header/footer) ----- */
+  @page {
+    margin-top: 60pt;
+    margin-bottom: 50pt;
+    margin-left: 36pt;
+    margin-right: 36pt;
+  }
+
+  /* ----- QR code ----- */
+  .print-qr {
+    display: block !important;
+    text-align: right;
+    margin: 12pt 0 4pt 0;
+  }
+  .print-qr img {
+    width: 100pt;
+    height: auto;
+  }
+  .print-qr .qr-name {
+    font-size: 8pt;
+    color: #333;
+    margin-top: 2pt;
+  }
+
+  /* ----- Hide the QR overlay and keep only the static QR container ----- */
+  .qr-overlay { display: none !important; }
+
+  /* ----- Link icons (show only the external‑link icon after links) ----- */
+  a::after {
+    content: " 🔗";
+    font-size: 0.8em;
+  }
+  /* Remove icon for links that are not meaningful in print (like internal anchors) */
+  a[href^="#"]::after {
+    content: none;
+  }
+  /* Note at the end of the article */
+  .print-links-note {
+    display: block !important;
+    font-size: 8pt;
+    color: #555;
+    margin-top: 12pt;
+    border-top: 1px solid #ccc;
+    padding-top: 6pt;
+  }
+</style>
+
+
 </head>
 <body data-page="blog.html">
+
+
+
+
+<!-- Print‑only header (hidden on screen) -->
+<div class="print-header" style="display:none;">
+  <img src="assets/img/profile.webp" alt="Dr. Sameh Eltaybani">
+  <span>Dr. Sameh Eltaybani</span>
+</div>
+
+<!-- Print‑only footer (hidden on screen) -->
+<div class="print-footer" style="display:none;">
+  <div class="page-number"></div>
+  <div>Printed from: <span id="print-url"></span></div>
+  <div>&copy; <span id="print-year"></span> Dr. Sameh Eltaybani. All rights reserved.</div>
+</div>
+
+ 
 
   <!-- ========== NAVIGATION BAR ========== -->
   <nav data-component="navigation" class="navbar">
@@ -79,20 +225,29 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
           <div id="article-meta" class="text-muted" style="margin-bottom: var(--space-md);">
             <span id="article-date">Month Day, Year</span> &bull; <span id="article-read-time">X min. read</span>
           </div>
+         
         </header>
 
+       
+       <!-- Permanent QR code (visible on screen and in print) -->
+<div class="print-qr" style="display:block; text-align:right; margin-bottom:4px;">
+  <img id="static-qr-image" src="" alt="QR Code" style="display:none; width:100px; height:auto;">
+</div>
+       
        <div id="share-btn-top" class="share-btn-wrapper"></div>
        
        <hr style="border: none; border-top: 2px solid var(--color-border); margin: 4px 0 var(--space-lg) 0;">
 
-        <!-- === ARTICLE CONTENT (edit freely) === -->
+       
+       
+       <!-- === ARTICLE CONTENT (edit freely) === -->
         <div id="article-content">
-          <!--
-          ============================================================
+<!--
+ ============================================================
           REPLICABLE CONTENT BLOCKS
           Copy, delete, or reorder any block below as needed.
           All blocks are optional – unused ones leave no gap.
-          ============================================================
+ ============================================================
           -->
 
           
@@ -349,6 +504,16 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
           <p>© Dr. Sameh Eltaybani. Content is for informational purposes only and represents personal views. <a href="legal.html">Read more &gt;&gt;</a></p>
         </div>
 
+
+       <!-- Print‑only links note -->
+<div class="print-links-note" style="display:none;">
+  This article contains hyperlinks. Please visit the online version to access all linked resources.
+</div>
+
+
+
+       
+
         <!-- "READ MORE INSIGHTS" BUTTON -->
         <div style="text-align: right; margin: var(--space-lg) 0;">
           <a href="blog.html" class="btn btn-primary">Read More Insights</a>
@@ -516,6 +681,33 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
 
         initProgressBar();
         await displayMetadata();
+
+
+  // ---- Fill static QR code for print and screen ----
+  const qrApiUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(window.location.href);
+  const staticQrImg = document.getElementById('static-qr-image');
+  if (staticQrImg) {
+    staticQrImg.src = qrApiUrl;
+    staticQrImg.onload = function() {
+      staticQrImg.style.display = 'block';
+    };
+    staticQrImg.onerror = function() {
+      staticQrImg.style.display = 'none';
+    };
+  }
+
+  // ---- Print header/footer dynamic content ----
+  const printUrlSpan = document.getElementById('print-url');
+  if (printUrlSpan) {
+    printUrlSpan.textContent = window.location.href;
+  }
+  const printYearSpan = document.getElementById('print-year');
+  if (printYearSpan) {
+    printYearSpan.textContent = new Date().getFullYear();
+  }
+
+
+       
         highlightBlogNav();
         await renderRecommended();
       }
