@@ -155,7 +155,7 @@
               tooltip.style.cssText = 'display:none; position:absolute; top:100%; left:0; background:var(--color-white); border:1px solid var(--color-border); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:var(--space-md); z-index:1101; width:100%; font-size:var(--font-size-sm); line-height:1.6;';
               // Central‑search‑specific tips (edit this HTML to change tips)
               tooltip.innerHTML = `
-                  <button class="search-modal-close-btn" style="position: absolute; top: 8px; right: 8px;">&times;</button>
+                  <button class="search-modal-close-btn" style="position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border-radius: 50%;">&times;</button>
                   <strong>Search Tips:</strong><br><br>
                   · This search covers titles, summaries, and key metadata across the site – not full text.<br>
                   · Use specific words like “nursing education” rather than just “nursing”.<br>
