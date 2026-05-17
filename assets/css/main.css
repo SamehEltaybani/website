@@ -2217,7 +2217,11 @@ pre code {
 
 
 
-
+/* Fast tap response without breaking scroll */
+.search-modal-autocomplete-item,
+.blog-category {
+    touch-action: manipulation;
+}
 
 
 
