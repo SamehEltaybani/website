@@ -738,10 +738,12 @@ function showAutocomplete(directMatches, spellSuggestions) {
           
           // Close dropdown when clicking outside
           document.addEventListener('click', function(e) {
-            if (autocompleteDropdown && !searchInput.contains(e.target) && !autocompleteDropdown.contains(e.target)) {
-              autocompleteDropdown.classList.add('hidden');
-            }
-          });
+    const tooltip = document.querySelector('.search-tips-tooltip');
+    if (autocompleteDropdown && !searchInput.contains(e.target) && !autocompleteDropdown.contains(e.target)) {
+        if (tooltip && tooltip.contains(e.target)) return;   // allow clicks inside the tooltip
+        autocompleteDropdown.classList.add('hidden');
+    }
+});
           
           // Keyboard navigation inside dropdown
 
