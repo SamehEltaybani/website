@@ -691,7 +691,11 @@ main ol {
          align-self: center;                /* center it inside the flex column */
 }
        
-       
+
+
+.mobile-nav-link i {
+    font-size: 1.25rem;   /* adjust to your liking */
+}
 
 /* ============================================================================
    RESPONSIVE NAVIGATION (Mobile)
@@ -2318,11 +2322,16 @@ pre code {
     background-color: var(--color-hover-bg);
 }
 
-.share-action-item i {
+
+.share-action-item i.fas,
+.share-action-item i.fab {
+    font-size: 1.8rem;
     width: 1.8rem;
     text-align: center;
     color: var(--color-midnight-blue);
 }
+
+
 
 /* QR Code overlay */
 .qr-overlay {
