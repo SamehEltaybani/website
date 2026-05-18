@@ -79,11 +79,18 @@ Before using:
 
 
   /* ----- Page margins (leave room for fixed header and footer) ----- */
-  @page {
-    margin-top: 25pt;
-    margin-bottom: 25pt;
-    margin-left: 25pt;
-    margin-right: 25pt;
+    @page {
+    margin-top: 40pt;
+    margin-bottom: 40pt;     /* extra space for the page number */
+    margin-left: 30pt;
+    margin-right: 30pt;
+
+    @bottom-center {
+      content: "Page " counter(page) " of " counter(pages);
+      font-size: 8pt;
+      color: #555;
+      font-family: inherit;
+    }
   }
 
   /* ----- QR code (right‑aligned) ----- */
@@ -141,7 +148,7 @@ Before using:
     gap: 12pt;
   }
   .print-qr-img {
-    width: 100pt;
+    width: 80pt;
     height: auto;
     flex-shrink: 0;
   }
@@ -273,10 +280,10 @@ Before using:
       </div>
       <div class="print-callout-right">
         <p><strong>Printed from:</strong> <span id="print-url-span"></span></p>
-        <p><strong>🔗</strong> This article contains hyperlinks. Look for the <span class="link-icon">🔗</span> symbol after links throughout the text.</p>
+        <p>This article contains hyperlinks (<span class="link-icon">🔗</span>). Visit the online version to access all linked resources</p>
         <p>Content is updated regularly. For the latest version, visit the article online.</p>
-        <p>This work is licensed under <a href="legal.html">CC BY‑NC‑ND 4.0</a>. Refer to the <a href="legal.html">legal page</a> for details.</p>
-        <p class="print-settings-note">This article was designed for web viewing. This is an optimized printable version, but your browser may override some settings. For best results, use: Portrait layout, Default margins, Show background graphics, Paper size A4, and disable browser headers/footers.</p>
+        <p>This work is licensed under <a href="legal.html">CC BY‑NC‑ND 4.0</a>. Refer to the <a href="legal.html">Legal page</a> for details.</p>
+        <p class="print-settings-note">This article was designed for web viewing. This is an optimized printable version, but your browser may override some settings. For best results, scrol down through the article at least once before printing and use: Portrait layout, Default margins, Paper size A4, Show background graphics, and disable browser headers/footers.</p>
       </div>
     </div>
   </div>
