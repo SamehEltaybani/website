@@ -41,6 +41,16 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
   <link rel="stylesheet" href="assets/css/main.css">
 
 
+<style>
+  /* Hide print‑only elements on screen */
+  .print-header,
+  .print-footer,
+  .print-links-note,
+  .print-qr {
+    display: none !important;
+  }
+</style>
+ 
 <style media="print">
   /* ----- HIDE unwanted elements ----- */
   nav, .breadcrumb-bar, footer, .progress-container,
@@ -107,19 +117,17 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
   }
 
   /* ----- Print‑only footer (every page) ----- */
-  .print-footer {
+    .print-footer {
     display: block !important;
-    position: fixed;
-    bottom: 0;
-    left: 0;
     width: 100%;
     border-top: 1px solid #ccc;
     padding: 6pt 0;
-    background: white;
+    margin-top: 12pt;
     font-size: 8pt;
     color: #555;
     text-align: center;
   }
+ 
   .print-footer .page-number {
     text-align: right;
     margin-bottom: 2pt;
@@ -127,19 +135,22 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
   }
 
   /* ----- Article content margins (leave room for header/footer) ----- */
-  @page {
+    @page {
     margin-top: 60pt;
-    margin-bottom: 50pt;
+    margin-bottom: 36pt;
     margin-left: 36pt;
     margin-right: 36pt;
   }
 
   /* ----- QR code ----- */
-  .print-qr {
+ 
+    .print-qr {
     display: block !important;
+    width: 100%;
     text-align: right;
     margin: 12pt 0 4pt 0;
   }
+ 
   .print-qr img {
     width: 100pt;
     height: auto;
@@ -154,10 +165,15 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
   .qr-overlay { display: none !important; }
 
   /* ----- Link icons (show only the external‑link icon after links) ----- */
-  a::after {
-    content: " 🔗"; !important;
+    
+ a::after,
+  .btn::after,
+  .btn-text::after,
+  .callout a::after {
+    content: " 🔗" !important;
     font-size: 0.8em;
   }
+ 
   /* Remove icon for links that are not meaningful in print (like internal anchors) */
   a[href^="#"]::after {
     content: none;
