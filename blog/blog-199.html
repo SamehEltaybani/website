@@ -58,14 +58,21 @@ Before using:
     display: none !important;
   }
 
+.no-print { display: none !important; }
+  
   /* ----- Smaller fonts for print ----- */
-  body {
+    body {
     font-size: 12pt;
     color: #000;
   }
-  .heading-large { font-size: 18pt; }
-  .heading-medium { font-size: 14pt; }
-  .heading-small { font-size: 12pt; }
+  #article-content,
+  #article-content p,
+  #article-content li {
+    font-size: 11pt;
+  }
+  .heading-large { font-size: 16pt; }
+  .heading-medium { font-size: 13pt; }
+  .heading-small { font-size: 11pt; }
 
   /* ----- Keep images and callouts together ----- */
   figure, img, .callout {
@@ -134,14 +141,16 @@ Before using:
   }
 
   /* ----- QR code (right‑aligned) ----- */
-  .print-qr {
+    .print-qr {
     display: block !important;
-    width: 100% !important;
+    margin-left: auto;
+    width: auto !important;
     text-align: right !important;
-    margin: 12pt 0 4pt 0;
+    margin-top: 12pt;
+    margin-bottom: 4pt;
   }
   .print-qr img {
-    width: 100pt;
+    width: 80pt;
     height: auto;
   }
 
@@ -226,7 +235,14 @@ Before using:
       <div class="container" style="max-width: 800px; margin: 0 auto;">
 
         <!-- TITLE METADATA BLOCK (populated by JS) -->
-        <header id="article-header">
+        
+        <!-- Print‑only header (hidden on screen) -->
+<div class="print-header" style="display:none;">
+  <img src="assets/img/profile.webp" alt="Dr. Sameh Eltaybani">
+  <span>Dr. Sameh Eltaybani</span>
+</div>
+       
+       <header id="article-header">
           <h1 id="article-title" class="heading-large">Article Title</h1>
           <div id="article-categories" class="blog-categories" style="margin-bottom: var(--space-sm);"></div>
           <div id="article-meta" class="text-muted" style="margin-bottom: var(--space-md);">
@@ -246,11 +262,7 @@ Before using:
        <hr style="border: none; border-top: 2px solid var(--color-border); margin: 4px 0 var(--space-lg) 0;">
 
        
-       <!-- Print‑only header (hidden on screen) -->
-<div class="print-header" style="display:none;">
-  <img src="assets/img/profile.webp" alt="Dr. Sameh Eltaybani">
-  <span>Dr. Sameh Eltaybani</span>
-</div>
+      
        
        <!-- === ARTICLE CONTENT (edit freely) === -->
         <div id="article-content">
@@ -531,7 +543,7 @@ Before using:
 
         <!-- "READ MORE INSIGHTS" BUTTON -->
         <div style="text-align: right; margin: var(--space-lg) 0;">
-          <a href="blog.html" class="btn btn-primary">Read More Insights</a>
+          <a href="blog.html" class="btn btn-primary no-print">Read More Insights</a>
         </div>
 
         <!-- RECOMMENDED FOR YOU -->
