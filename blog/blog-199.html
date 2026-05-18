@@ -710,6 +710,14 @@ Before using:
         }
 
         initProgressBar();
+
+// Force lazy images to load before printing
+        window.addEventListener('beforeprint', function() {
+          document.querySelectorAll('img[loading="lazy"]').forEach(function(img) {
+            img.setAttribute('loading', 'eager');
+          });
+        });
+       
         await displayMetadata();
 
 
