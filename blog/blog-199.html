@@ -80,19 +80,16 @@ Before using:
   }
 
   /* ----- Print‑only header (fixed at top of every page) ----- */
+  
   .print-header {
     display: block !important;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
     border-bottom: 1px solid #ccc;
-    padding: 8pt 36pt;
-    background: white;
+    padding: 8pt 0;
+    margin-bottom: 12pt;
     text-align: left;
     font-size: 10pt;
-    z-index: 1000;
   }
+  
   .print-header img {
     width: 28pt;
     height: 28pt;
@@ -131,7 +128,7 @@ Before using:
   /* ----- Page margins (leave room for fixed header and footer) ----- */
   @page {
     margin-top: 60pt;
-    margin-bottom: 50pt;
+    margin-bottom: 40pt;
     margin-left: 36pt;
     margin-right: 36pt;
   }
@@ -152,13 +149,17 @@ Before using:
   .qr-overlay { display: none !important; }
 
   /* ----- Link icon after every hyperlink ----- */
-  a::after,
+    a::after,
   .btn::after,
   .btn-text::after,
-  .callout a::after {
+  .callout a::after,
+  .callout .btn::after,
+  .callout .btn-text::after {
     content: " 🔗" !important;
     font-size: 0.8em;
+    display: inline;
   }
+  
   a[href^="#"]::after { content: none !important; }
 
   /* ----- Links note at the end ----- */
@@ -172,7 +173,7 @@ Before using:
   }
 
   /* ----- Ensure article title is visible ----- */
-  #article-title { display: block !important; }
+    #article-title { display: block !important; font-size: 18pt; font-weight: 700; color: #1A2530; margin-bottom: 8pt; }
 </style>
 
  
@@ -184,11 +185,13 @@ Before using:
  <body data-page="blog.html">
 
 
-   <!-- Print‑only header (hidden on screen) -->
-<div class="print-header" style="display:none;">
-  <img src="assets/img/profile.webp" alt="Dr. Sameh Eltaybani">
-  <span>Dr. Sameh Eltaybani</span>
+  <!-- Print‑only footer (hidden on screen) -->
+<div class="print-footer">
+  <div class="page-number"></div>
+  <div>Printed from: <span id="print-url"></span></div>
+  <div>&copy; <span id="print-year"></span> Dr. Sameh Eltaybani. All rights reserved.</div>
 </div>
+  
 
 
 
@@ -243,6 +246,11 @@ Before using:
        <hr style="border: none; border-top: 2px solid var(--color-border); margin: 4px 0 var(--space-lg) 0;">
 
        
+       <!-- Print‑only header (hidden on screen) -->
+<div class="print-header" style="display:none;">
+  <img src="assets/img/profile.webp" alt="Dr. Sameh Eltaybani">
+  <span>Dr. Sameh Eltaybani</span>
+</div>
        
        <!-- === ARTICLE CONTENT (edit freely) === -->
         <div id="article-content">
@@ -537,12 +545,7 @@ Before using:
       </div>
     </article>
 
-<!-- Print‑only footer (hidden on screen) -->
-<div class="print-footer">
-  <div class="page-number"></div>
-  <div>Printed from: <span id="print-url"></span></div>
-  <div>&copy; <span id="print-year"></span> Dr. Sameh Eltaybani. All rights reserved.</div>
-</div>
+
    
   </main>
 
