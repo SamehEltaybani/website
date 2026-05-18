@@ -36,19 +36,10 @@ Before using:
   <link rel="stylesheet" href="assets/css/main.css">
 
 
-
- <style>
-  /* Hide print‑only elements on screen */
-  .print-header,
-  .print-footer,
-  .print-links-note,
-  .print-qr {
-    display: none !important;
-  }
-</style>
  
 
  <style media="print">
+  
   /* ----- HIDE unwanted elements ----- */
   nav, .breadcrumb-bar, footer:not(.print-footer), .progress-container,
   #recommended-section, #share-btn-top, #share-btn-bottom,
@@ -86,58 +77,13 @@ Before using:
     page-break-after: avoid !important;
   }
 
-  /* ----- Print‑only header (fixed at top of every page) ----- */
-  
-  .print-header {
-    display: block !important;
-    border-bottom: 1px solid #ccc;
-    padding: 8pt 0;
-    margin-bottom: 12pt;
-    text-align: left;
-    font-size: 10pt;
-  }
-  
-  .print-header img {
-    width: 28pt;
-    height: 28pt;
-    border-radius: 50%;
-    object-fit: cover;
-    vertical-align: middle;
-    margin-right: 8pt;
-    border: 1px solid var(--color-gold, #D4AF37);
-  }
-  .print-header span {
-    font-weight: 600;
-    color: #1A2530;
-  }
-
-  /* ----- Print‑only footer (fixed at bottom of every page) ----- */
-  .print-footer {
-    display: block !important;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    border-top: 1px solid #ccc;
-    padding: 6pt 36pt;
-    background: white;
-    font-size: 8pt;
-    color: #555;
-    text-align: center;
-    z-index: 1000;
-  }
-  .print-footer .page-number {
-    text-align: right;
-    margin-bottom: 2pt;
-    font-size: 8pt;
-  }
 
   /* ----- Page margins (leave room for fixed header and footer) ----- */
   @page {
-    margin-top: 60pt;
-    margin-bottom: 40pt;
-    margin-left: 36pt;
-    margin-right: 36pt;
+    margin-top: 25pt;
+    margin-bottom: 25pt;
+    margin-left: 25pt;
+    margin-right: 25pt;
   }
 
   /* ----- QR code (right‑aligned) ----- */
@@ -183,7 +129,70 @@ Before using:
 
   /* ----- Ensure article title is visible ----- */
     #article-title { display: block !important; font-size: 18pt; font-weight: 700; color: #1A2530; margin-bottom: 8pt; }
-</style>
+
+   /* ===== PRINT‑ONLY INFORMATION BLOCK ===== */
+  .print-info-block {
+    display: block !important;
+    margin-bottom: 20pt;
+  }
+  .print-info-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 12pt;
+  }
+  .print-qr-img {
+    width: 100pt;
+    height: auto;
+    flex-shrink: 0;
+  }
+  .print-callout {
+    display: flex;
+    gap: 10pt;
+    background-color: #f8f9fa;
+    border-left: 4pt solid #D4AF37;
+    padding: 10pt;
+    border-radius: 4pt;
+    flex: 1;
+  }
+  .print-callout-left {
+    flex-shrink: 0;
+  }
+  .print-profile-pic {
+    width: 36pt;
+    height: 36pt;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2pt solid #D4AF37;
+  }
+  .print-callout-right {
+    flex: 1;
+    font-size: 9pt;
+    line-height: 1.5;
+    color: #333;
+  }
+  .print-callout-right p {
+    margin: 0 0 4pt 0;
+  }
+  .print-callout-right a {
+    color: #1A2530;
+    font-weight: 600;
+  }
+  .link-icon {
+    font-size: 1em;
+  }
+  .print-settings-note {
+    font-style: italic;
+    color: #555;
+    margin-top: 6pt;
+  }
+
+  /* Remove the old QR rule if any */
+  .print-qr { display: none !important; }
+ 
+ 
+ 
+ 
+ </style>
 
  
 
@@ -194,13 +203,6 @@ Before using:
  <body data-page="blog.html">
 
 
-  <!-- Print‑only footer (hidden on screen) -->
-<div class="print-footer">
-  <div class="page-number"></div>
-  <div>Printed from: <span id="print-url"></span></div>
-  <div>&copy; <span id="print-year"></span> Dr. Sameh Eltaybani. All rights reserved.</div>
-</div>
-  
 
 
 
@@ -235,13 +237,7 @@ Before using:
       <div class="container" style="max-width: 800px; margin: 0 auto;">
 
         <!-- TITLE METADATA BLOCK (populated by JS) -->
-        
-        <!-- Print‑only header (hidden on screen) -->
-<div class="print-header" style="display:none;">
-  <img src="assets/img/profile.webp" alt="Dr. Sameh Eltaybani">
-  <span>Dr. Sameh Eltaybani</span>
-</div>
-       
+            
        <header id="article-header">
           <h1 id="article-title" class="heading-large">Article Title</h1>
           <div id="article-categories" class="blog-categories" style="margin-bottom: var(--space-sm);"></div>
@@ -261,8 +257,32 @@ Before using:
        
        <hr style="border: none; border-top: 2px solid var(--color-border); margin: 4px 0 var(--space-lg) 0;">
 
+
+
        
-      
+      <!-- Print‑only information block (hidden on screen) -->
+       
+<div class="print-info-block" style="display:none;">
+  <div class="print-info-container">
+    <!-- Left: QR code -->
+    <img id="print-qr-image" src="" alt="QR Code" class="print-qr-img">
+    <!-- Right: callout with info -->
+    <div class="print-callout">
+      <div class="print-callout-left">
+        <img src="assets/img/profile.webp" alt="Dr. Sameh Eltaybani" class="print-profile-pic">
+      </div>
+      <div class="print-callout-right">
+        <p><strong>Printed from:</strong> <span id="print-url-span"></span></p>
+        <p><strong>🔗</strong> This article contains hyperlinks. Look for the <span class="link-icon">🔗</span> symbol after links throughout the text.</p>
+        <p>Content is updated regularly. For the latest version, visit the article online.</p>
+        <p>This work is licensed under <a href="legal.html">CC BY‑NC‑ND 4.0</a>. Refer to the <a href="legal.html">legal page</a> for details.</p>
+        <p class="print-settings-note">This article was designed for web viewing. This is an optimized printable version, but your browser may override some settings. For best results, use: Portrait layout, Default margins, Show background graphics, Paper size A4, and disable browser headers/footers.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+       
        
        <!-- === ARTICLE CONTENT (edit freely) === -->
         <div id="article-content">
@@ -721,21 +741,15 @@ Before using:
         await displayMetadata();
 
 
-  // ---- Fill static QR code for print and screen ----
-  const qrApiUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(window.location.href);
-  const staticQrImg = document.getElementById('static-qr-image');
-  if (staticQrImg) {
-    staticQrImg.src = qrApiUrl;
-    staticQrImg.onload = function() {
-      staticQrImg.style.display = 'block';
-    };
-    staticQrImg.onerror = function() {
-      staticQrImg.style.display = 'none';
-    };
-  }
+          // Fill the print QR code image
+        const qrApiUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(window.location.href);
+        const printQrImg = document.getElementById('print-qr-image');
+        if (printQrImg) {
+          printQrImg.src = qrApiUrl;
+        }
 
   // ---- Print header/footer dynamic content ----
-  const printUrlSpan = document.getElementById('print-url');
+  const printUrlSpan = document.getElementById('print-url-span');
   if (printUrlSpan) {
     printUrlSpan.textContent = window.location.href;
   }
