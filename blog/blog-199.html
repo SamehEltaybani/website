@@ -6,12 +6,7 @@ Copy this file to create a new article (e.g., blog-1.html).
 Before using:
  - Change the <title> and meta description in the <head>.
  - Edit the content inside <div id="article-content">.
- - Add an entry in /json/blog-list.json with:
-     "blogfile": "blog/your-file.html",
-     "shortTitle": "...",
-     "categories": ["...", "..."],
-     "date": "YYYY-MM-DD"
-All links, CSS, JS, and images now use plain relative paths (no ../).
+ - Add an entry in /json/blog-list.json
 ============================================================================
 -->
 <!DOCTYPE html>
@@ -41,7 +36,8 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
   <link rel="stylesheet" href="assets/css/main.css">
 
 
-<style>
+
+ <style>
   /* Hide print‑only elements on screen */
   .print-header,
   .print-footer,
@@ -51,17 +47,14 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
   }
 </style>
  
-<style media="print">
+
+ <style media="print">
   /* ----- HIDE unwanted elements ----- */
-  nav, .breadcrumb-bar, footer, .progress-container,
+  nav, .breadcrumb-bar, footer:not(.print-footer), .progress-container,
   #recommended-section, #share-btn-top, #share-btn-bottom,
   .share-dropdown, .qr-overlay, .search-icon-btn,
   #theme-toggle-desktop, #theme-toggle-mobile,
   #search-toggle, .hamburger, .mobile-menu, .mobile-menu-overlay {
-    display: none !important;
-  }
-  #recommended-section .btn-primary,
-  .btn-primary:not(.search-modal-submit):not(.share-dropdown .btn-primary) {
     display: none !important;
   }
 
@@ -74,34 +67,32 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
   .heading-medium { font-size: 14pt; }
   .heading-small { font-size: 12pt; }
 
-  /* ----- Keep images with their captions, avoid breaks before them ----- */
-  figure, img {
-    break-inside: avoid;
-    page-break-inside: avoid;
+  /* ----- Keep images and callouts together ----- */
+  figure, img, .callout {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
     max-width: 100% !important;
     height: auto !important;
   }
   h2, h3, h4 {
-    break-after: avoid;
-    page-break-after: avoid;
+    break-after: avoid !important;
+    page-break-after: avoid !important;
   }
 
-   .callout {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-
-  /* ----- Print‑only header (every page) ----- */
-    .print-header {
+  /* ----- Print‑only header (fixed at top of every page) ----- */
+  .print-header {
     display: block !important;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     border-bottom: 1px solid #ccc;
-    padding: 8pt 0;
-    margin-bottom: 12pt;
+    padding: 8pt 36pt;
+    background: white;
     text-align: left;
     font-size: 10pt;
+    z-index: 1000;
   }
- 
   .print-header img {
     width: 28pt;
     height: 28pt;
@@ -109,78 +100,68 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
     object-fit: cover;
     vertical-align: middle;
     margin-right: 8pt;
-    border: 1px solid var(--color-gold);
+    border: 1px solid var(--color-gold, #D4AF37);
   }
   .print-header span {
     font-weight: 600;
     color: #1A2530;
   }
 
-  /* ----- Print‑only footer (every page) ----- */
-    .print-footer {
+  /* ----- Print‑only footer (fixed at bottom of every page) ----- */
+  .print-footer {
     display: block !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
     width: 100%;
     border-top: 1px solid #ccc;
-    padding: 6pt 0;
-    margin-top: 12pt;
+    padding: 6pt 36pt;
+    background: white;
     font-size: 8pt;
     color: #555;
     text-align: center;
+    z-index: 1000;
   }
- 
   .print-footer .page-number {
     text-align: right;
     margin-bottom: 2pt;
     font-size: 8pt;
   }
 
-  /* ----- Article content margins (leave room for header/footer) ----- */
-    @page {
+  /* ----- Page margins (leave room for fixed header and footer) ----- */
+  @page {
     margin-top: 60pt;
-    margin-bottom: 36pt;
+    margin-bottom: 50pt;
     margin-left: 36pt;
     margin-right: 36pt;
   }
 
-  /* ----- QR code ----- */
- 
-    .print-qr {
+  /* ----- QR code (right‑aligned) ----- */
+  .print-qr {
     display: block !important;
-    width: 100%;
-    text-align: right;
+    width: 100% !important;
+    text-align: right !important;
     margin: 12pt 0 4pt 0;
   }
- 
   .print-qr img {
     width: 100pt;
     height: auto;
   }
-  .print-qr .qr-name {
-    font-size: 8pt;
-    color: #333;
-    margin-top: 2pt;
-  }
 
-  /* ----- Hide the QR overlay and keep only the static QR container ----- */
+  /* ----- Hide the QR overlay (only the static one remains) ----- */
   .qr-overlay { display: none !important; }
 
-  /* ----- Link icons (show only the external‑link icon after links) ----- */
-    
- a::after,
+  /* ----- Link icon after every hyperlink ----- */
+  a::after,
   .btn::after,
   .btn-text::after,
   .callout a::after {
     content: " 🔗" !important;
     font-size: 0.8em;
   }
- 
-  /* Remove icon for links that are not meaningful in print (like internal anchors) */
-  a[href^="#"]::after {
-    content: none;
-  }
+  a[href^="#"]::after { content: none !important; }
 
- 
-  /* Note at the end of the article */
+  /* ----- Links note at the end ----- */
   .print-links-note {
     display: block !important;
     font-size: 8pt;
@@ -190,26 +171,26 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
     padding-top: 6pt;
   }
 
+  /* ----- Ensure article title is visible ----- */
   #article-title { display: block !important; }
- 
 </style>
+
+ 
 
 
 </head>
-<body data-page="blog.html">
-
-
-
-
-
-<!-- Print‑only footer (hidden on screen) -->
-<div class="print-footer">
-  <div class="page-number"></div>
-  <div>Printed from: <span id="print-url"></span></div>
-  <div>&copy; <span id="print-year"></span> Dr. Sameh Eltaybani. All rights reserved.</div>
-</div>
 
  
+ <body data-page="blog.html">
+
+
+   <!-- Print‑only header (hidden on screen) -->
+<div class="print-header" style="display:none;">
+  <img src="assets/img/profile.webp" alt="Dr. Sameh Eltaybani">
+  <span>Dr. Sameh Eltaybani</span>
+</div>
+
+
 
   <!-- ========== NAVIGATION BAR ========== -->
   <nav data-component="navigation" class="navbar">
@@ -266,12 +247,7 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
        <!-- === ARTICLE CONTENT (edit freely) === -->
         <div id="article-content">
 
-         <!-- Print‑only header (hidden on screen) -->
-<div class="print-header" style="display:none;">
-  <img src="assets/img/profile.webp" alt="Dr. Sameh Eltaybani">
-  <span>Dr. Sameh Eltaybani</span>
-</div>
-
+       
          
 <!--
  ============================================================
@@ -560,6 +536,14 @@ All links, CSS, JS, and images now use plain relative paths (no ../).
 
       </div>
     </article>
+
+<!-- Print‑only footer (hidden on screen) -->
+<div class="print-footer">
+  <div class="page-number"></div>
+  <div>Printed from: <span id="print-url"></span></div>
+  <div>&copy; <span id="print-year"></span> Dr. Sameh Eltaybani. All rights reserved.</div>
+</div>
+   
   </main>
 
   <!-- ========== FOOTER ========== -->
