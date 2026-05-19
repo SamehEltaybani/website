@@ -817,11 +817,42 @@ Before using:
     wrapper.style.position = 'relative';
     wrapper.style.display = 'inline-block';
 
-    // Trigger button
-    const trigger = document.createElement('button');
-    trigger.className = 'share-trigger';
-    trigger.innerHTML = '<i class="fas fa-share-alt"></i> Share this article';
-    trigger.setAttribute('aria-label', 'Share this article');
+
+
+    // ---- Icon group (share, print, pdf, qr, copy, copyright) ----
+   
+    const iconGroup = document.createElement('div');
+    iconGroup.className = 'share-icons-group';
+    iconGroup.setAttribute('aria-label', 'Share and article tools');
+
+    const iconList = [
+      { icon: 'fas fa-share-alt', title: 'Share' },
+      { icon: 'fas fa-print', title: 'Print' },
+      { icon: 'fas fa-file-pdf', title: 'PDF' },
+      { icon: 'fas fa-qrcode', title: 'QR Code' },
+      { icon: 'fas fa-copy', title: 'Copy link' },
+      { icon: 'fas fa-copyright', title: 'Copyright' }
+    ];
+
+    iconList.forEach(function(item) {
+      const btn = document.createElement('span');
+      btn.className = 'share-icon-item';
+      btn.innerHTML = '<i class="' + item.icon + '"></i>';
+      btn.setAttribute('title', item.title);
+      iconGroup.appendChild(btn);
+    });
+
+    // Make the whole group clickable to toggle the dropdown
+    iconGroup.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dropdown.classList.toggle('open');
+    });
+
+    wrapper.appendChild(iconGroup);
+   
+    // -----------------------------------------------------------
+
+   
 
     // Dropdown
     const dropdown = document.createElement('div');
