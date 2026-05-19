@@ -2267,6 +2267,36 @@ pre code {
     color: var(--color-gold);
 }
 
+
+
+/* Share icon group (replaces the old text trigger) */
+.share-icons-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.share-icon-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: transparent;
+    color: var(--color-midnight-blue);
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.share-icons-group:hover .share-icon-item {
+    color: var(--color-gold);
+    background-color: var(--color-gold-light);
+}
+
+
 .share-dropdown {
     position: absolute;
     top: 100%;
@@ -2280,8 +2310,8 @@ pre code {
     min-width: 220px;
     display: none;
     flex-direction: column;
-    gap: var(--space-xs);
-    padding-top: 2.5rem;
+    gap: var(--space-sm);
+    padding-top: 3rem;
 }
 
 .share-dropdown.open {
