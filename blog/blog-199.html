@@ -203,7 +203,7 @@ Before using:
   .print-info-container {
     display: flex;
     align-items: flex-start;
-    gap: 12pt;
+    gap: 6pt;   /* control spacing between left and right side */
   }
 
   /* Hide the old QR rule if present */
@@ -288,8 +288,9 @@ Before using:
   <div class="print-info-container">
     <!-- Left column: QR code + profile photo -->
     <div class="print-info-left">
-      <img id="print-qr-image" src="" alt="QR Code" class="print-qr-img">
-      <img src="assets/img/profile.webp" alt="Dr. Sameh Eltaybani" class="print-profile-pic">
+          <p class="qr-caption" style="font-size:7pt; color:#555; text-align:center; margin:0 0 4pt 0;">Scan for the latest and online version of this article.</p>
+          <img id="print-qr-image" src="" alt="QR Code" class="print-qr-img">
+          <img src="assets/img/profile.webp" alt="Dr. Sameh Eltaybani" class="print-profile-pic">
     </div>
     <!-- Right column: text callout -->
     <div class="print-callout">
@@ -299,7 +300,7 @@ Before using:
         <p>This article contains hyperlinks (<span class="link-icon">🔗</span>). Visit the online version to access all linked resources</p>
         <p>Content is updated regularly. For the latest version, visit the article online.</p>
         <p>This work is licensed under <a href="legal.html">CC BY‑NC‑ND 4.0</a>. Refer to the <a href="legal.html">Legal page</a> for details.</p>
-        <p class="print-settings-note"><i class="fas fa-file-circle-exclamation" style="margin-right: 2pt;"></i>This article was designed for web viewing. This is an optimized printable version, but your browser may override some settings. For best results, scroll down through the article at least once before printing and use the following print setting: Layout: Portrait; Margins: Default; Paper size: A4; Show background graphics, and disable browser headers/footers.</p>
+        <p class="print-settings-note"><i class="fas fa-lightbulb" style="margin-right: 2pt;"></i>This article was designed for web viewing. This is an optimized printable version, but your browser may override some settings. For best results, scroll down through the article at least once before printing and use the following print setting: Layout: Portrait; Margins: Default; Paper size: A4; Show background graphics, and disable browser headers/footers.</p>
       </div>
     </div>
   </div>
