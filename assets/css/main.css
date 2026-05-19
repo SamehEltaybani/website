@@ -2288,9 +2288,11 @@ pre code {
 }
 
 .share-social-icons {
-    display: flex;
-    justify-content: center;
-    gap: var(--space-md);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xs) var(--space-md);
+    justify-items: center;
+    align-items: center;
     margin-bottom: 0;
 }
 
