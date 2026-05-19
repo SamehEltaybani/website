@@ -2270,7 +2270,7 @@ pre code {
 
 
 
-/* Share icon group (replaces the old text trigger) */
+/* Share icon group */
 .share-icons-group {
     display: inline-flex;
     align-items: center;
@@ -2343,7 +2343,7 @@ pre code {
 }
 
 .share-social-icons a:hover {
-    background-color: var(--color-gold-light);
+    background-color: var(--color-gold);
     color: var(--color-midnight-blue);
 }
 
