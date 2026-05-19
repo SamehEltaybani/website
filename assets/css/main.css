@@ -2281,6 +2281,7 @@ pre code {
     display: none;
     flex-direction: column;
     gap: var(--space-xs);
+    padding-top: 2.5rem;
 }
 
 .share-dropdown.open {
