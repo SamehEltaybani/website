@@ -668,12 +668,17 @@ Before using:
           // Categories
           const catContainer = document.getElementById('article-categories');
           catContainer.innerHTML = '';
-          if (entry.categories && Array.isArray(entry.categories)) {
-            entry.categories.forEach(cat => {
-              const span = document.createElement('span');
-              span.className = 'blog-category';
-              span.textContent = cat;
-              catContainer.appendChild(span);
+             if (entry.categories && Array.isArray(entry.categories)) {
+            // Remove duplicate categories
+            const uniqueCategories = [...new Set(entry.categories)];
+            uniqueCategories.forEach(cat => {
+              const a = document.createElement('a');
+              a.href = 'blog.html?category=' + encodeURIComponent(cat);
+              a.className = 'blog-category';
+              a.textContent = cat;
+              a.style.textDecoration = 'none';
+              a.style.color = 'inherit';
+              catContainer.appendChild(a);
             });
           }
 
@@ -776,7 +781,6 @@ Before using:
         const iconList = [
           { icon: 'fas fa-share-alt', title: 'Share' },
           { icon: 'fas fa-print', title: 'Print' },
-          { icon: 'fas fa-file-pdf', title: 'PDF' },
           { icon: 'fas fa-qrcode', title: 'QR Code' },
           { icon: 'fas fa-copy', title: 'Copy link' },
           { icon: 'fas fa-copyright', title: 'Copyright' }
