@@ -80,8 +80,8 @@ Before using:
 
   /* ----- Page margins (leave room for fixed header and footer) ----- */
     @page {
-    margin-top: 40pt;
-    margin-bottom: 40pt;     /* extra space for the page number */
+    margin-top: 45pt;
+    margin-bottom: 45pt;     /* extra space for the page number */
     margin-left: 30pt;
     margin-right: 30pt;
 
@@ -142,59 +142,74 @@ Before using:
     display: block !important;
     margin-bottom: 20pt;
   }
-  .print-info-container {
+
+  /* ===== NEW LEFT COLUMN (QR + photo) ===== */
+  .print-info-left {
     display: flex;
-    align-items: flex-start;
-    gap: 12pt;
-  }
-  .print-qr-img {
-    width: 80pt;
-    height: auto;
+    flex-direction: column;
+    align-items: center;
+    gap: 8pt;
     flex-shrink: 0;
   }
+
+  .print-qr-img {
+    width: 80pt;                /* adjust as you like */
+    height: auto;
+  }
+
+  .print-profile-pic {
+    width: 36pt;
+    height: 36pt;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1pt solid #D4AF37;
+  }
+
+  /* ===== RIGHT CALLOUT (text only) ===== */
   .print-callout {
-    display: flex;
-    gap: 10pt;
     background-color: #f8f9fa;
     border-left: 4pt solid #D4AF37;
     padding: 10pt;
     border-radius: 4pt;
     flex: 1;
   }
-  .print-callout-left {
-    flex-shrink: 0;
-  }
-  .print-profile-pic {
-    width: 36pt;
-    height: 36pt;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2pt solid #D4AF37;
-  }
-  .print-callout-right {
-    flex: 1;
+
+  .print-callout-text {
     font-size: 9pt;
     line-height: 1.5;
     color: #333;
   }
-  .print-callout-right p {
+
+  .print-callout-text p {
     margin: 0 0 4pt 0;
   }
-  .print-callout-right a {
+
+  .print-callout-text a {
     color: #1A2530;
     font-weight: 600;
   }
+
   .link-icon {
     font-size: 1em;
   }
+
   .print-settings-note {
     font-style: italic;
     color: #555;
     margin-top: 6pt;
   }
 
-  /* Remove the old QR rule if any */
+  /* Keep the main container as flex row */
+  .print-info-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 12pt;
+  }
+
+  /* Hide the old QR rule if present */
   .print-qr { display: none !important; }
+  
+
  
  
  
@@ -271,14 +286,14 @@ Before using:
        
 <div class="print-info-block" style="display:none;">
   <div class="print-info-container">
-    <!-- Left: QR code -->
-    <img id="print-qr-image" src="" alt="QR Code" class="print-qr-img">
-    <!-- Right: callout with info -->
+    <!-- Left column: QR code + profile photo -->
+    <div class="print-info-left">
+      <img id="print-qr-image" src="" alt="QR Code" class="print-qr-img">
+      <img src="assets/img/profile.webp" alt="Dr. Sameh Eltaybani" class="print-profile-pic">
+    </div>
+    <!-- Right column: text callout -->
     <div class="print-callout">
-      <div class="print-callout-left">
-        <img src="assets/img/profile.webp" alt="Dr. Sameh Eltaybani" class="print-profile-pic">
-      </div>
-      <div class="print-callout-right">
+      <div class="print-callout-text">
         <p><strong>Printed from:</strong> <span id="print-url-span"></span></p>
         <p>This article contains hyperlinks (<span class="link-icon">🔗</span>). Visit the online version to access all linked resources</p>
         <p>Content is updated regularly. For the latest version, visit the article online.</p>
@@ -288,6 +303,10 @@ Before using:
     </div>
   </div>
 </div>
+
+
+
+       
 
        
        
@@ -549,12 +568,6 @@ Before using:
        <div class="footer-legal" style="margin-top: var(--space-sm); padding-top: var(--space-md); border-top: 1px solid var(--color-border);">
           <p>© Dr. Sameh Eltaybani. Content is for informational purposes only and represents personal views. <a href="legal.html">Read more &gt;&gt;</a></p>
         </div>
-
-
-       <!-- Print‑only links note -->
-<div class="print-links-note">
-  This article contains hyperlinks. Please visit the online version to access all linked resources.
-</div>
 
 
 
