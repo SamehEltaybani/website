@@ -1094,6 +1094,7 @@ footer .footer-copyright {
 .callout-highlight-no-btn {
     background-color: rgba(13, 235, 58, 0.06);
     border-left-color: var(--color-gold);
+    border-right-color: var(--color-gold);
 }
 
 .callout-highlight-btn .callout-title{
@@ -1106,6 +1107,7 @@ footer .footer-copyright {
 .callout-tip-no-btn {
     background-color: rgba(212, 175, 55, 0.1);
     border-left-color: var(--color-gold);
+    border-right-color: var(--color-gold);
 }
 
 .callout-tip-btn .callout-title,
@@ -1118,6 +1120,7 @@ footer .footer-copyright {
 .callout-warning-no-btn {
     background-color: rgba(220, 53, 69, 0.07);
     border-left-color: #dc3545;
+    border-right-color: #dc3545;
 }
 
 .callout-warning-btn .callout-title,
@@ -1130,6 +1133,7 @@ footer .footer-copyright {
 .callout-note-no-btn {
     background-color: rgba(177, 128, 49, 0.14);
     border-left-color: var(--color-midnight-light);
+    border-right-color: var(--color-midnight-light);
 }
 
 .callout-note-btn .callout-title,
@@ -1141,6 +1145,7 @@ footer .footer-copyright {
 .callout-quote {
     background-color: var(--color-bg-alt);
     border-left-color: var(--color-midnight-blue);
+    border-right-color: var(--color-midnight-blue);
     font-style: italic;
     position: relative;
     padding: var(--space-lg);
