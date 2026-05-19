@@ -2291,9 +2291,10 @@ pre code {
     transition: all 0.2s;
 }
 
-.share-icons-group:hover .share-icon-item {
-    color: var(--color-gold);
+.share-icon-item:hover {
+    color: var(--color-midnight-blue);
     background-color: var(--color-gold-light);
+    transform: scale(1.1);
 }
 
 
@@ -2330,11 +2331,19 @@ pre code {
 .share-social-icons a {
     color: var(--color-midnight-blue);
     font-size: 1.5rem;
-    transition: color 0.2s;
+    transition: background-color 0.2s, color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-decoration: none;
 }
 
 .share-social-icons a:hover {
-    color: var(--color-gold);
+    background-color: var(--color-gold-light);
+    color: var(--color-midnight-blue);
 }
 
 .share-divider {
