@@ -295,6 +295,7 @@ Before using:
     <div class="print-callout">
       <div class="print-callout-text">
         <p><strong>Printed from:</strong> <span id="print-url-span"></span></p>
+        <p><strong>Printed on:</strong> <span id="print-date-span"></span></p>
         <p>This article contains hyperlinks (<span class="link-icon">🔗</span>). Visit the online version to access all linked resources</p>
         <p>Content is updated regularly. For the latest version, visit the article online.</p>
         <p>This work is licensed under <a href="legal.html">CC BY‑NC‑ND 4.0</a>. Refer to the <a href="legal.html">Legal page</a> for details.</p>
@@ -760,11 +761,27 @@ Before using:
           printQrImg.src = qrApiUrl;
         }
 
-  // ---- Print header/footer dynamic content ----
+  // ---- Print header/footer/callout dynamic content ----
   const printUrlSpan = document.getElementById('print-url-span');
   if (printUrlSpan) {
     printUrlSpan.textContent = window.location.href;
   }
+
+   // Fill the printed date and time (user's local time zone)
+        const printDateSpan = document.getElementById('print-date-span');
+        if (printDateSpan) {
+          const now = new Date();
+          printDateSpan.textContent = now.toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            timeZoneName: 'short'
+          });
+        }
+       
   const printYearSpan = document.getElementById('print-year');
   if (printYearSpan) {
     printYearSpan.textContent = new Date().getFullYear();
@@ -809,6 +826,21 @@ Before using:
     // Dropdown
     const dropdown = document.createElement('div');
     dropdown.className = 'share-dropdown';
+
+
+       // Close button (top‑right corner of dropdown)
+    const closeShareBtn = document.createElement('button');
+    closeShareBtn.className = 'search-modal-close-btn';
+    closeShareBtn.innerHTML = '&times;';
+    closeShareBtn.setAttribute('aria-label', 'Close share menu');
+    closeShareBtn.style.position = 'absolute';
+    closeShareBtn.style.top = '6px';
+    closeShareBtn.style.right = '6px';
+    closeShareBtn.addEventListener('click', function() {
+      dropdown.classList.remove('open');
+    });
+    dropdown.appendChild(closeShareBtn);
+   
 
     // ---- Social icons (no text) ----
     const socialRow = document.createElement('div');
