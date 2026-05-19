@@ -1351,7 +1351,7 @@ footer .footer-copyright {
 
 .blog-category {
     font-size: var(--font-size-xs);
-    background-color: rgba(212, 175, 55, 0.1);
+    background-color: #f4df94;
     padding: 2px var(--space-sm);
     border-radius: 20px;
     color: #253b7a;          
