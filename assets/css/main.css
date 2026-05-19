@@ -2290,7 +2290,7 @@ pre code {
 .share-social-icons {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-xs) var(--space-md);
+    gap: var(--space-xs) var(--space-xs);
     justify-items: center;
     align-items: center;
     margin-bottom: 0;
