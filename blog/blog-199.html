@@ -814,15 +814,19 @@ Before using:
     const socialRow = document.createElement('div');
     socialRow.className = 'share-social-icons';
 
-        const socials = [
+    const socials = [
+      // Row 1
       { icon: 'fab fa-facebook-f', url: 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(articleUrl) },
       { icon: 'fab fa-x-twitter', url: 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(articleUrl) + '&text=' + encodeURIComponent(articleTitle) },
       { icon: 'fab fa-linkedin', url: 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(articleUrl) },
+      // Row 2
       { icon: 'fab fa-bluesky', url: 'https://bsky.app/intent/compose?text=' + encodeURIComponent(articleTitle + ' ' + articleUrl) },
       { icon: 'fab fa-telegram-plane', url: 'https://t.me/share/url?url=' + encodeURIComponent(articleUrl) + '&text=' + encodeURIComponent(articleTitle) },
       { icon: 'fab fa-whatsapp', url: 'https://wa.me/?text=' + encodeURIComponent(articleTitle + ' ' + articleUrl) },
+      // Row 3
       { icon: 'fab fa-facebook-messenger', url: 'https://www.facebook.com/dialog/send?link=' + encodeURIComponent(articleUrl) + '&app_id=291494149107498' },
-      { icon: 'fas fa-envelope', url: 'mailto:?subject=' + encodeURIComponent('Interesting article: ' + articleTitle) + '&body=' + encodeURIComponent(articleTitle + '\n\n' + articleUrl) }
+      { icon: 'fas fa-envelope', url: 'mailto:?subject=' + encodeURIComponent('Interesting article: ' + articleTitle) + '&body=' + encodeURIComponent(articleTitle + '\n\n' + articleUrl) },
+      { icon: 'fab fa-line', url: 'https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(articleUrl) }
     ];
    
     socials.forEach(s => {
