@@ -430,7 +430,7 @@ main {
 
 .card-lift:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(212, 175, 55, 0.6);   /* old style to be deleted rgba(0,0,0,0.14); */
+    box-shadow: 0 10px 22px rgba(212, 175, 55, 0.3);   /* old style to be deleted rgba(0,0,0,0.14); */
 }
 
 /* Card hover variant 2: Border (gold border appears) */
