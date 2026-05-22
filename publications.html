@@ -113,7 +113,7 @@ Fixed issues (central + page‑specific):
         </button>
       </div>
 
-      <div id="results-count-bar" style="flex-basis:100%; text-align:center; padding:2px 0; font-size:0.75rem; color:var(--color-text-muted);"></div>
+      <div id="results-count-bar" style="flex-basis:100%; display:flex; justify-content:space-between; padding:2px 0; font-size:0.75rem; color:var(--color-text-muted);"></div>
      
     </div>
 
@@ -715,13 +715,19 @@ if (state.activeSearch) {
         });
         publicationsContainer.innerHTML = html;
 
-                // Update the result-count bar
+                       // Update the result-count bar
         const countBar = document.getElementById('results-count-bar');
         if (countBar) {
             const totalItems = state.filteredItems.length;
             const shownItems = Math.min(state.currentPage * state.itemsPerPage, totalItems);
-            countBar.innerHTML = '[ Showing <span style="color:var(--color-midnight-blue); font-weight:600;">' + shownItems + '</span> of <span style="color:var(--color-midnight-blue); font-weight:600;">' + totalItems + '</span> ]';
+            const totalPages = Math.max(1, Math.ceil(totalItems / state.itemsPerPage));
+            const pageWord = totalPages === 1 ? 'page' : 'pages';
+
+            countBar.innerHTML =
+                '<span>[ Showing <span style="color:var(--color-midnight-blue); font-weight:600;">' + shownItems + '</span> of <span style="color:var(--color-midnight-blue); font-weight:600;">' + totalItems + '</span> ]</span>' +
+                '<span>( <span style="color:var(--color-midnight-blue); font-weight:600;">' + state.currentPage + '</span> ' + pageWord + ' of <span style="color:var(--color-midnight-blue); font-weight:600;">' + totalPages + '</span> )</span>';
         }
+        
 
         if (state.filteredItems.length > end) {
           loadMoreBtn.classList.remove('hidden');
