@@ -1629,11 +1629,13 @@ pre code {
     border-radius: 12px;
     background: transparent;
     transition: var(--transition-base);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.10);  
 }
 
 .btn-feature:hover {
     background-color: rgba(212, 175, 55, 0.12);
     border-color: var(--color-gold);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.14); /* <-- deeper shadow on hover */
 }
 
 .btn-feature:hover .btn-feature-arrow {
@@ -1647,7 +1649,7 @@ pre code {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--color-bg-alt);
+    background-color: rgba(212, 175, 55, 0.37);
     border-radius: 50%;
     color: var(--color-midnight-blue);
     font-size: 1.6rem;
