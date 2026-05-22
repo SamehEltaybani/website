@@ -70,38 +70,32 @@
 
 
 
-    <section class="values-container">
+   <section class="values-grid-container">
   <h2 class="section-title">Our Core Values</h2>
   
-  <!-- Navigation Tabs -->
-  <div class="tabs-nav">
-    <button class="tab-btn active" onclick="openValue(event, 'value1')">Value 1</button>
-    <button class="tab-btn" onclick="openValue(event, 'value2')">Value 2</button>
-    <button class="tab-btn" onclick="openValue(event, 'value3')">Value 3</button>
-    <button class="tab-btn" onclick="openValue(event, 'value4')">Value 4</button>
-    <button class="tab-btn" onclick="openValue(event, 'value5')">Value 5</button>
-  </div>
+  <div class="values-grid">
+    <!-- Value Card 1 -->
+    <div class="value-card" onclick="showDetails(this)">
+      <div class="card-header">Value 1</div>
+      <div class="card-details">
+        <p><strong>Slogan:</strong> Building the future.</p>
+        <p>Brief description goes here.</p>
+        <ul><li>Point A</li><li>Point B</li></ul>
+      </div>
+    </div>
 
-  <!-- Content Panels -->
-  <div id="value1" class="tab-content active">
-    <h3>Value 1: The Slogan Here</h3>
-    <p>Brief description of this core value goes here.</p>
-    <ul>
-      <li>Detail point 1</li>
-      <li>Detail point 2</li>
-    </ul>
+    <!-- Repeat for Values 2-5 -->
+    <div class="value-card" onclick="showDetails(this)">
+      <div class="card-header">Value 2</div>
+      <div class="card-details">
+        <p><strong>Slogan:</strong> Innovation first.</p>
+        <p>Brief description goes here.</p>
+        <ul><li>Point A</li><li>Point B</li></ul>
+      </div>
+    </div>
+    
+    <!-- Add 3 more similar blocks here -->
   </div>
-
-  <div id="value2" class="tab-content">
-    <h3>Value 2: The Slogan Here</h3>
-    <p>Brief description of this core value goes here.</p>
-    <ul>
-      <li>Detail point 1</li>
-      <li>Detail point 2</li>
-    </ul>
-  </div>
-  
-  <!-- Repeat for value3, value4, value5 -->
 </section>
 
 
@@ -330,29 +324,22 @@
 
 
 
-
-
-
 <script>
-function openValue(evt, valueId) {
-  // Hide all content
-  const contents = document.getElementsByClassName("tab-content");
-  for (let content of contents) {
-    content.classList.remove("active");
-  }
+function showDetails(element) {
+  // Check if this specific card is already active
+  const isActive = element.classList.contains('active');
   
-  // Deactivate all buttons
-  const buttons = document.getElementsByClassName("tab-btn");
-  for (let btn of buttons) {
-    btn.classList.remove("active");
-  }
+  // Close all other cards first
+  document.querySelectorAll('.value-card').forEach(card => {
+    card.classList.remove('active');
+  });
   
-  // Show selected content and activate button
-  document.getElementById(valueId).classList.add("active");
-  evt.currentTarget.classList.add("active");
+  // If it wasn't already active, open it
+  if (!isActive) {
+    element.classList.add('active');
+  }
 }
 </script>
-
 
 
 
