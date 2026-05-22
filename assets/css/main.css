@@ -2434,22 +2434,31 @@ pre code {
 
 
 
-.values-container { max-width: 800px; margin: 40px auto; padding: 20px; }
-.tabs-nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-.tab-btn { padding: 10px 20px; cursor: pointer; border: 1px solid #ddd; background: #f9f9f9; border-radius: 25px; transition: 0.3s; }
-.tab-btn.active { background: #333; color: #fff; border-color: #333; }
-.tab-content { display: none; padding: 20px; border: 1px solid #eee; border-radius: 8px; animation: fadeIn 0.5s; }
-.tab-content.active { display: block; }
 
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* Mobile Optimization */
-@media (max-width: 600px) {
-  .tabs-nav { gap: 5px; }
-  .tab-btn { padding: 8px 12px; font-size: 14px; }
+
+.values-grid-container { max-width: 1000px; margin: 40px auto; padding: 20px; }
+.values-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+  gap: 15px; 
 }
 
+.value-card { 
+  padding: 20px; 
+  border: 1px solid #ddd; 
+  border-radius: 12px; 
+  cursor: pointer; 
+  background: #fff;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
 
+.value-card:hover { border-color: #333; transform: translateY(-5px); }
+.value-card.active { border-color: #333; background: #f0f0f0; }
+
+.card-details { display: none; margin-top: 15px; border-top: 1px solid #ccc; padding-top: 15px; }
+.value-card.active .card-details { display: block; }
 
 
 
