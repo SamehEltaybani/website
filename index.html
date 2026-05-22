@@ -70,34 +70,20 @@
 
 
 
-   <section class="values-grid-container">
+   <section class="values-section">
   <h2 class="section-title">Our Core Values</h2>
-  
-  <div class="values-grid">
-    <!-- Value Card 1 -->
-    <div class="value-card" onclick="showDetails(this)">
-      <div class="card-header">Value 1</div>
-      <div class="card-details">
-        <p><strong>Slogan:</strong> Building the future.</p>
-        <p>Brief description goes here.</p>
-        <ul><li>Point A</li><li>Point B</li></ul>
+  <div class="values-wrapper">
+    <div class="value-card">
+      <div class="value-number">01</div>
+      <h3>Integrity</h3>
+      <p class="slogan">Honesty in every action.</p>
+      <div class="details">
+        <p>We believe in transparency and doing the right thing, even when no one is watching.</p>
+        <ul><li>Ethical decision making</li><li>Consistent transparency</li></ul>
       </div>
     </div>
-
-    <!-- Repeat for Values 2-5 -->
-    <div class="value-card" onclick="showDetails(this)">
-      <div class="card-header">Value 2</div>
-      <div class="card-details">
-        <p><strong>Slogan:</strong> Innovation first.</p>
-        <p>Brief description goes here.</p>
-        <ul><li>Point A</li><li>Point B</li></ul>
-      </div>
     </div>
-    
-    <!-- Add 3 more similar blocks here -->
-  </div>
 </section>
-
 
 
 
@@ -306,44 +292,6 @@
       }
     })();
   </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script>
-function showDetails(element) {
-  // Check if this specific card is already active
-  const isActive = element.classList.contains('active');
-  
-  // Close all other cards first
-  document.querySelectorAll('.value-card').forEach(card => {
-    card.classList.remove('active');
-  });
-  
-  // If it wasn't already active, open it
-  if (!isActive) {
-    element.classList.add('active');
-  }
-}
-</script>
-
-
-
-
 
 
 
