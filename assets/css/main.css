@@ -425,7 +425,7 @@ main {
 
 /* Card hover variant 1: Lift (shadow and translate) */
 .card-lift {
-    box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
 }
 
 .card-lift:hover {
