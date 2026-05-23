@@ -449,8 +449,11 @@ function applyAllFilters() {
             categoriesHtml += '</div>';
         }
 
-        html += `
-            <div class="blog-card">
+     
+            const globalIndex = (state.currentPage - 1) * state.itemsPerPage + index;
+            <div class="blog-card ${globalIndex % 2 === 0 ? 'row-even' : 'row-odd'}">
+
+      html += `
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-sm);">
                     <div class="blog-title" style="flex: 1;">${escapeHTML(post.title)}</div>
                     <div class="blog-date" style="white-space: nowrap; font-size: var(--font-size-sm); color: var(--color-text-muted); padding-top: 2px;">${escapeHTML(dateFormatted)}</div>
