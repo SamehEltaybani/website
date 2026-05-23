@@ -1239,9 +1239,7 @@ footer .footer-copyright {
     transition: var(--transition-fast);
 }
 
-.publication-item:hover {
-    background-color: var(--color-bg-alt);
-}
+
 
 .publication-header {
     display: flex;
@@ -1329,7 +1327,11 @@ footer .footer-copyright {
 
 /* Alternating subtle background on publication rows */
 .publication-item:nth-child(even) {
-    background-color: #FFFDF7;     /* extremely faint cream */
+    background-color: #FFFEF9;     
+}
+
+.publication-item:nth-child(odd) {
+    background-color: #F6F8FA;            /* whisper‑light grey */
 }
 
 
@@ -1378,7 +1380,11 @@ footer .footer-copyright {
 
 /* Alternating subtle background on blog rows */
 .blog-card:nth-child(even) {
-    background-color: #FFFDF7;
+    background-color: #FFFEF9;
+}
+
+.blog-card:nth-child(odd) {
+    background-color: #F6F8FA;
 }
 
 /* ============================================================================
