@@ -451,8 +451,11 @@ function applyAllFilters() {
 
      
            
-       html += `
+       
       const globalIndex = (state.currentPage - 1) * state.itemsPerPage + index;
+
+      html += `
+      
             <div class="blog-card ${globalIndex % 2 === 0 ? 'row-even' : 'row-odd'}">
 
      
