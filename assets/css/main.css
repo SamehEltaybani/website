@@ -1006,7 +1006,7 @@ footer .footer-copyright {
     position: sticky;
     top: calc(var(--nav-height-desktop) + var(--breadcrumb-height));
     z-index: 997;
-    background-color: #FFFDF5;
+    background-color: #FFFFFF;
     border-bottom: 1px solid var(--color-border);
     padding: var(--space-sm) 0;
     display: flex;
