@@ -39,6 +39,9 @@ Before using:
  
 
  <style media="print">
+ 
+  /* ----- HIDE the background image ----- */
+    body { background: none !important; }
   
   /* ----- HIDE unwanted elements ----- */
   nav, .breadcrumb-bar, footer:not(.print-footer), .progress-container,
@@ -229,7 +232,7 @@ Background image (immediately before the closing HEAD tag
 
 <style>
   body {
-    background: linear-gradient(rgba(255,255,255,0.93), rgba(255,255,255,0.93)), url('assets/img/david-edelstein-N4DbvTUDikw-unsplash.jpg') fixed;
+    background: linear-gradient(rgba(255,255,255,0.92), rgba(255,255,255,0.92)), url('assets/img/david-edelstein-N4DbvTUDikw-unsplash.jpg') fixed;
     background-size: cover;
     background-position: center;
   }
@@ -275,7 +278,7 @@ Background image (immediately before the closing HEAD tag
   <!-- ========== MAIN CONTENT ========== -->
   <main>
     <article class="section">
-      <div class="container" style="max-width: 800px; margin: 0 auto;">
+  <div class="container" style="max-width: 800px; margin: 0 auto; background-color: #ffffff;">
 
         <!-- TITLE METADATA BLOCK (populated by JS) -->
             
