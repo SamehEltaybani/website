@@ -1006,7 +1006,7 @@ footer .footer-copyright {
     position: sticky;
     top: calc(var(--nav-height-desktop) + var(--breadcrumb-height));
     z-index: 997;
-    background-color: var(--color-white);
+    background-color: #FFFDF5;
     border-bottom: 1px solid var(--color-border);
     padding: var(--space-sm) 0;
     display: flex;
@@ -1326,6 +1326,14 @@ footer .footer-copyright {
     line-height: 1.4;
 }
 
+
+/* Alternating subtle background on publication rows */
+.publication-item:nth-child(even) {
+    background-color: #FFFDF7;     /* extremely faint cream */
+}
+
+
+
 /* ============================================================================
    BLOG LIST (Specific styles)
    ============================================================================ */
@@ -1365,6 +1373,12 @@ footer .footer-copyright {
     color: var(--color-midnight-blue);                    
     background-color: #ecc53a;   
     text-decoration: underline;
+}
+
+
+/* Alternating subtle background on blog rows */
+.blog-card:nth-child(even) {
+    background-color: #FFFDF7;
 }
 
 /* ============================================================================
