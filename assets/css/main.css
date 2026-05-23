@@ -1325,13 +1325,12 @@ footer .footer-copyright {
 }
 
 
-/* Alternating subtle background on publication rows */
-.publication-item:nth-child(even) {
-    background-color: #FFFEF9;     
+/* Alternating row backgrounds for Publication cards and Blog cards */
+.row-even {
+    background-color: #F6F8FA;            /* light grey */
 }
-
-.publication-item:nth-child(odd) {
-    background-color: #F6F8FA;            /* whisper‑light grey */
+.row-odd {
+    background-color: #FFFDF7;            /* cream */
 }
 
 
@@ -1378,14 +1377,7 @@ footer .footer-copyright {
 }
 
 
-/* Alternating subtle background on blog rows */
-.blog-card:nth-child(even) {
-    background-color: #FFFEF9;
-}
 
-.blog-card:nth-child(odd) {
-    background-color: #F6F8FA;
-}
 
 /* ============================================================================
    FEATURED CARDS (Home page)
