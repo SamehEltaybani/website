@@ -723,7 +723,7 @@ function renderCurrentPage() {
         const rowClass = globalIndex % 2 === 0 ? 'row-even' : 'row-odd';
 
                   html += `
-            <div class="publication-item ${rowClass}" style="margin-bottom: 0;">
+            <div class="publication-item ${rowClass}">
                 <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px;">
                     ${authorTag}
                     <span class="publication-year">${escapeHTML(pub.year)}</span>
