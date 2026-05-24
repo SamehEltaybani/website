@@ -683,6 +683,8 @@ main ol {
        /* Mobile newsletter button (gold filled - no shadow, saves space) */
        .mobile-nav-link-highlight {
         color: var(--color-midnight-blue);
+        border-bottom: 2px solid var(--color-gold);
+        padding-bottom: 2px;
      }
        
 
@@ -1324,7 +1326,7 @@ footer .footer-copyright {
 
 /* Alternating row backgrounds for Publication cards and Blog cards */
 .row-even {
-    background-color: #FFFDF7;            
+    background-color: #F6F4FA;            
 }
 .row-odd {
     background-color: #F6F8FA;       
