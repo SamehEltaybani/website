@@ -1236,7 +1236,7 @@ footer .footer-copyright {
     border-bottom: none;
     margin-bottom: 6px;            /* Space between cards */
     transition: var(--transition-fast);
-    box-shadow: -2px -2px 6px rgba(0,0,0,0.05);
+    box-shadow: -2px -2px 6px rgba(0,0,0,0.1);
 }
 
 
@@ -1359,10 +1359,10 @@ footer .footer-copyright {
 /* Alternating row backgrounds for Publication cards and Blog cards */
 
 .row-even {
-    background-color: #F0F5F1;            
+    background-color: #FFFFFF;            
 }
 .row-odd {
-    background-color: #F6F4FA;       
+    background-color: #FFFFFF;       
 }
 
 
@@ -1376,7 +1376,7 @@ footer .footer-copyright {
     padding: var(--space-md);
     border-bottom: none;
     margin-bottom: 6px;          /* Space between cards */
-    box-shadow: -2px -2px 6px rgba(0,0,0,0.05);
+    box-shadow: -2px -2px 6px rgba(0,0,0,0.1);
 }
 
 .blog-title {
