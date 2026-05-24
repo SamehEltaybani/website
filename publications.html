@@ -723,18 +723,14 @@ function renderCurrentPage() {
         const rowClass = globalIndex % 2 === 0 ? 'row-even' : 'row-odd';
 
         html += `
-            <div class="publication-item ${rowClass}" style="margin-bottom: 0;">
-              <div class="publication-header">
-                <div style="flex: 1;">
-                  ${authorTag}
-                  <div class="publication-title" style="margin-top: 2px;">${escapeHTML(pub.title)}</div>
-                </div>
-                <div class="publication-year">${escapeHTML(pub.year)}</div>
-              </div>
-              <div class="publication-journal">${escapeHTML(pub.journal || '')}</div>
-              ${btns ? `<div class="publication-buttons" style="flex-wrap: nowrap; gap: var(--space-xs);">${btns}</div>` : ''}
-            </div>
-        `;
+    <div class="publication-item ${rowClass}" style="margin-bottom: 0;">
+        <div class="publication-year" style="text-align: right; margin-bottom: 2px;">${escapeHTML(pub.year)}</div>
+        ${authorTag}
+        <div class="publication-title">${escapeHTML(pub.title)}</div>
+        <div class="publication-journal">${escapeHTML(pub.journal || '')}</div>
+        ${btns ? `<div class="publication-buttons">${btns}</div>` : ''}
+    </div>
+`;
 
         if ((i + 1) % state.itemsPerPage === 0 && (i + 1) < itemsToShow.length) {
             const pageNumber = Math.ceil((i + 1) / state.itemsPerPage);
