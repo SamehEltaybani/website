@@ -543,6 +543,7 @@ main ol {
     justify-content: space-between;
     align-items: center;
     min-height: var(--nav-height-desktop);
+    gap: var(--space-lg);          /* gap between left part (profile and name) and right part (tabs) */
 }
 
 /* Left side - Profile */
@@ -578,21 +579,22 @@ main ol {
     color: var(--color-text-inverted);
     font-weight: 400;
     font-size: 0.85rem;
-    padding: var(--space-xs) var(--space-sm);
+    padding: var(--space-sm) var(--space-sm);
     transition: var(--transition-fast);
     border-radius: 4px;
 }
 
-.nav-link:hover {
+.nav-link:hover {      
     color: var(--color-gold);
-    font-weight: 700;
+    background-color: rgba(255, 255, 255, 0.15);
 }
 
 .nav-link.active {
     color: var(--color-gold);
     border-bottom: 2px solid var(--color-gold);
-    font-weight: 700;
-    }
+    background-color: rgba(255, 255, 255, 0.25);   
+    font-weight: 400;
+}
 
 
 /* Special newsletter button (pill with shadow - DESKTOP) */
