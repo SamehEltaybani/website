@@ -1327,12 +1327,14 @@ footer .footer-copyright {
 
 
 /* Alternating row backgrounds for Publication cards and Blog cards */
+
 .row-even {
-    background-color: #FDF7F0;            
+    background-color: #F0F5F1;            
 }
 .row-odd {
-    background-color: #F6F8FA;       
+    background-color: #F6F4FA;       
 }
+
 
 
 
