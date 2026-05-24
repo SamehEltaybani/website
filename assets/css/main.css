@@ -1234,8 +1234,9 @@ footer .footer-copyright {
 .publication-item {
     padding: var(--space-md);
     border-bottom: none;
-    margin-bottom: var(--space-xs);
+    margin-bottom: 6px;            /* Space between cards */
     transition: var(--transition-fast);
+    box-shadow: -2px -2px 6px rgba(0,0,0,0.05);
 }
 
 
@@ -1251,6 +1252,7 @@ footer .footer-copyright {
 .publication-title {
     font-weight: 600;
     font-size: var(--font-size-lg);
+    letter-spacing: 0.3px;
     color: var(--color-midnight-blue);
     flex: 1;
 }
@@ -1326,6 +1328,34 @@ footer .footer-copyright {
 }
 
 
+/* Fading top and left gold borders on publication and blog cards */
+.blog-card,
+.publication-item {
+    position: relative;
+}
+
+.blog-card::before,
+.publication-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, var(--color-gold) 0%, transparent 70%);
+}
+
+.blog-card::after,
+.publication-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--color-gold) 0%, transparent 70%);
+}
+
 /* Alternating row backgrounds for Publication cards and Blog cards */
 
 .row-even {
@@ -1345,13 +1375,16 @@ footer .footer-copyright {
 .blog-card {
     padding: var(--space-md);
     border-bottom: none;
-    margin-bottom: var(--space-xs);   /* tiny gap between cards */
+    margin-bottom: 6px;          /* Space between cards */
+    box-shadow: -2px -2px 6px rgba(0,0,0,0.05);
 }
 
 .blog-title {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-lg);
     font-weight: 600;
-    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+    margin-bottom: 2px;
+    color: var(--color-midnight-blue);
 }
 
 .blog-categories {
