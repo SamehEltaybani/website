@@ -682,14 +682,8 @@ main ol {
               
        /* Mobile newsletter button (gold filled - no shadow, saves space) */
        .mobile-nav-link-highlight {
-         background-color: var(--color-gold);
-         color: var(--color-midnight-blue);
-         border-radius: 0px;                 /* it was 8px */
-         margin-left: var(--space-md);      /* space on the left */
-         margin-right: var(--space-md);     /* space on the right */
-         width: auto;                       /* only as wide as its content */
-         /*align-self: center;  */              /* center it inside the flex column */
-}
+        color: var(--color-midnight-blue);
+     }
        
 
 
