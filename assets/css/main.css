@@ -561,7 +561,7 @@ main ol {
 }
 
 .profile-name {
-    font-weight: 600;
+    font-weight: 500;
     font-size: var(--font-size-lg);
     color: var(--color-text-inverted);
 }
@@ -569,7 +569,7 @@ main ol {
 /* Right side - Desktop navigation */
 .navbar-right {
     display: flex;
-    gap: var(--space-md);
+    gap: 1.5rem;      /* breathing room between tabs */
     align-items: center;
 }
 
@@ -585,11 +585,13 @@ main ol {
 
 .nav-link:hover {
     color: var(--color-gold);
+    font-weight: 700;
 }
 
 .nav-link.active {
     color: var(--color-gold);
     border-bottom: 2px solid var(--color-gold);
+    font-weight: 700;
     }
 
 
