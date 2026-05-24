@@ -684,11 +684,11 @@ main ol {
        .mobile-nav-link-highlight {
          background-color: var(--color-gold);
          color: var(--color-midnight-blue);
-         border-radius: 8px;
+         border-radius: 0px;                 /* it was 8px */
          margin-left: var(--space-md);      /* space on the left */
          margin-right: var(--space-md);     /* space on the right */
          width: auto;                       /* only as wide as its content */
-         align-self: center;                /* center it inside the flex column */
+         /*align-self: center;  */              /* center it inside the flex column */
 }
        
 
@@ -1235,7 +1235,8 @@ footer .footer-copyright {
 
 .publication-item {
     padding: var(--space-md);
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: none;
+    margin-bottom: var(--space-xs);
     transition: var(--transition-fast);
 }
 
@@ -1292,9 +1293,11 @@ footer .footer-copyright {
 .publication-buttons {
     display: flex;
     gap: var(--space-sm);
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     margin-top: var(--space-sm);
+    justify-content: flex-end;       /* pushes buttons to the right */
 }
+
 
 /* Page separator for load more */
 
@@ -1327,10 +1330,10 @@ footer .footer-copyright {
 
 /* Alternating row backgrounds for Publication cards and Blog cards */
 .row-even {
-    background-color: #F6F8FA;            /* light grey */
+    background-color: #FFFDF7;            
 }
 .row-odd {
-    background-color: #FFFDF7;            /* cream */
+    background-color: #F6F8FA;       
 }
 
 
@@ -1341,7 +1344,8 @@ footer .footer-copyright {
 
 .blog-card {
     padding: var(--space-md);
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: none;
+    margin-bottom: var(--space-xs);   /* tiny gap between cards */
 }
 
 .blog-title {
@@ -2187,8 +2191,12 @@ pre code {
     font-size: 0.7rem;                  
     padding: 2px 8px;
 }
+
+
 .blog-card .btn-text {
-    font-size: 0.85rem;                 
+    font-size: 0.85rem;
+    display: block;
+    text-align: right;
 }
 
 
