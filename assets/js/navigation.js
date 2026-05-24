@@ -353,8 +353,17 @@ function renderMobileMenu(navItems) {
         
         // Add truncation for mobile (handled by CSS)
         
-        navbarLeft.appendChild(profileImg);
-        navbarLeft.appendChild(profileName);
+        // Wrap the image and name in a clickable link to the Home page
+const homeLink = document.createElement('a');
+homeLink.href = 'index.html';
+homeLink.style.textDecoration = 'none';
+homeLink.style.color = 'inherit';
+homeLink.style.display = 'flex';
+homeLink.style.alignItems = 'center';
+homeLink.style.gap = 'var(--space-sm)';
+homeLink.appendChild(profileImg);
+homeLink.appendChild(profileName);
+navbarLeft.appendChild(homeLink);
     }
     
     /**
