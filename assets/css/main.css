@@ -736,7 +736,7 @@ main ol {
     top: calc(var(--nav-height-desktop) + 0px);
     z-index: 999;
     background-color: #F0EDE6;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid var(--color-border);
     padding: var(--space-sm) 0;      /* vertical padding only */
 }
 
@@ -745,7 +745,7 @@ main ol {
         top: calc(var(--nav-height-mobile) + 0px);
         padding: 0;
         background-color: #F0EDE6;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        border-bottom: 1px solid var(--color-border);
     }
 }
 
@@ -794,7 +794,7 @@ main ol {
 .breadcrumb-separator {
     margin: 0 var(--space-xs);
     color: var(--color-gold);
-    font-size: 1.1rem;
+    font-size: 1.5rem;
 }
 
 /* Mobile breadcrumb - single line with back arrow */
