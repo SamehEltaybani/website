@@ -94,7 +94,6 @@ Background image (immediately before the closing HEAD tag
         display: grid; 
         grid-template-columns: repeat(3, 1fr); 
         gap: 12px; 
-        max-width: 1200px; 
         margin: 0 auto;">
       </div>
   </div>
@@ -214,28 +213,35 @@ Background image (immediately before the closing HEAD tag
 
 
 function renderInsightsGrid() {
-        const container = document.getElementById('insights-grid');
-        if (!container) return;
-        container.innerHTML = '';
+    const container = document.getElementById('insights-grid');
+    if (!container) return;
+    container.innerHTML = '';
 
-        insightsList.forEach(text => {
-          const item = document.createElement('div');
-          item.style.padding = '12px 15px'; // Tighter padding
-          item.style.borderRadius = '50px';
-          item.style.border = '1px solid rgba(224, 224, 224, 0.3)';
-          item.style.backgroundColor = 'rgba(252, 252, 252, 0.5)'; // More transparent
-          item.style.boxShadow = '0 2px 4px rgba(0,0,0,0.03)'; // Subtle shadow
-          item.style.display = 'flex';
-          item.style.alignItems = 'center';
-          item.style.justifyContent = 'center';
-          item.style.textAlign = 'center';
-          item.style.fontWeight = '500';
-          item.style.color = 'var(--color-midnight-blue)';
-          
-          item.textContent = text;
-          container.appendChild(item);
-        });
-      }
+    insightsList.forEach(text => {
+        const item = document.createElement('div');
+        item.className = 'insight-pill';                         // class for CSS
+        item.style.padding = '12px 15px';
+        item.style.borderRadius = '50px';
+        item.style.border = '1px solid rgba(224, 224, 224, 0.3)';
+        item.style.backgroundColor = 'rgba(252, 252, 252, 0.5)';
+        item.style.boxShadow = '0 2px 4px rgba(0,0,0,0.03)';
+        item.style.display = 'flex';
+        item.style.alignItems = 'center';
+        item.style.justifyContent = 'center';
+        item.style.textAlign = 'center';
+        item.style.fontWeight = '500';
+        item.style.color = 'var(--color-midnight-blue)';
+        item.style.position = 'relative';    // needed for the corner lines
+
+        // Inner wrapper for the text (gives us extra pseudo‑elements)
+        const inner = document.createElement('span');
+        inner.className = 'insight-pill-inner';
+        inner.textContent = text;
+
+        item.appendChild(inner);
+        container.appendChild(item);
+    });
+}
 
 
 
