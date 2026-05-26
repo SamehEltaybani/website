@@ -69,33 +69,36 @@ Background image (immediately before the closing HEAD tag
 
   <main>
    
+   
+    
     <!-- PART 1: TITLE, PARAGRAPH, INSIGHTS GRID -->
-    <section class="section">
-      <div class="container" style="text-align: center; max-width: 900px; margin: 0 auto;">
-        
-        <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 20px;">
-          <h1 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; margin: 0; color: #000000;">Teaching</h1>
-          <div style="width: 2px; height: 60px; background-color: var(--color-gold);"></div>
-          <div style="text-align: left; font-weight: 600; color: var(--color-gold); line-height: 1.4;">
-            Reliable<br>Accurate<br>Actionable
-          </div>
-        </div>
 
-        <p class="paragraph" style="margin: 0 auto 40px auto; max-width: 700px;">
-          I am passionate about equipping healthcare professionals with the knowledge and skills
-          they need to deliver evidence‑based, compassionate care. My teaching spans undergraduate
-          and postgraduate levels, blending theory with hands‑on clinical application.
-        </p>
+<div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 20px;">
+  <h1 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; margin: 0; color: #000000;">Teaching</h1>
+  <div style="width: 2px; height: 60px; background-color: var(--color-gold);"></div>
+  <div style="text-align: left; font-weight: 700; color: var(--color-gold); line-height: 1.4; font-size: 1.2rem;">
+    Reliable<br>Accurate<br>Actionable
+  </div>
+</div>
 
-        <div id="insights-grid" style="
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 15px; 
-            margin-top: var(--space-lg);
-           ">
-          </div>
-      </div>
-    </section>
+<p class="paragraph" style="margin: 0 auto 40px auto; max-width: 700px;">
+  I am passionate about equipping healthcare professionals with the knowledge and skills
+  they need to deliver evidence‑based, compassionate care. My teaching spans undergraduate
+  and postgraduate levels, blending theory with hands‑on clinical application.
+</p>
+
+<div id="insights-grid" style="
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px; 
+    max-width: 1100px; 
+    margin: 0 auto; 
+    padding: 0 20px;">
+  </div>
+
+
+
+    
 
     <!-- THIN GOLD SEPARATOR -->
     <div class="container">
@@ -211,18 +214,20 @@ Background image (immediately before the closing HEAD tag
         'Assessment & Feedback Strategies'
       ];
 
-      function renderInsightsGrid() {
+
+function renderInsightsGrid() {
         const container = document.getElementById('insights-grid');
         if (!container) return;
         container.innerHTML = '';
 
         insightsList.forEach(text => {
           const item = document.createElement('div');
-          // Pill card styling
+          // Pill card styling with transparency and shadow
           item.style.padding = '15px 20px';
           item.style.borderRadius = '50px';
-          item.style.border = '1px solid #e0e0e0';
-          item.style.backgroundColor = '#fcfcfc';
+          item.style.border = '1px solid rgba(224, 224, 224, 0.5)';
+          item.style.backgroundColor = 'rgba(252, 252, 252, 0.8)';
+          item.style.boxShadow = '0 4px 6px rgba(0,0,0,0.05)';
           item.style.display = 'flex';
           item.style.alignItems = 'center';
           item.style.justifyContent = 'center';
@@ -234,6 +239,11 @@ Background image (immediately before the closing HEAD tag
           container.appendChild(item);
         });
       }
+
+
+
+
+      
 
       // ------------------------------------------------------------------
       // B. FEATURE BUTTONS
