@@ -1459,6 +1459,28 @@ footer .footer-copyright {
     width: var(--space-md);
 }
 
+
+/* ============================================================================
+   INSIGHT PILLS GRID (in the top part of Teaching / Data Analysis pages)
+   ============================================================================ */
+#insights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);   /* 3 equal columns on desktop */
+    gap: 12px;                                /* spacing between pills */
+    width: 100%;
+    max-width: 1200px;                        /* doesn't stretch too wide */
+    margin: 0 auto;                           /* centered */
+}
+
+/* Mobile: stack pills in one column, limit width to 700px */
+@media (max-width: 992px) {
+    #insights-grid {
+        grid-template-columns: 1fr;
+        max-width: 700px;
+    }
+}
+
+
 /* ============================================================================
    THREE BUTTONS BLOCK (Research, Data Analysis, Teaching pages)
    ============================================================================ */
