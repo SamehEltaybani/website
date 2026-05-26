@@ -1468,10 +1468,10 @@ footer .footer-copyright {
 .insight-pill::after {
     content: '';
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 15%;
     width: 70%;
-    height: 1px;
+    height: 0.6px;
     background: linear-gradient(to right, transparent 0%, var(--color-gold) 25%, var(--color-gold) 75%, transparent 100%);
     border-radius: 1px;
 }
