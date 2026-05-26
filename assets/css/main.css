@@ -1507,6 +1507,28 @@ footer .footer-copyright {
     }
 }
 
+
+
+/* ============================================================================
+   Insights grid (Research, Data Analysis, Teaching pages)
+   ============================================================================ */
+
+/* Ensure the grid expands on desktop but stays centered */
+#insights-grid {
+  width: 100%;
+}
+
+/* Mobile adjustments: Stack items and limit width */
+@media (max-width: 992px) {
+  #insights-grid {
+    grid-template-columns: 1fr !important;
+    max-width: 700px !important; /* Limit width on phone */
+    margin: 0 auto !important;
+  }
+}
+
+
+
 /* ============================================================================
    PORTFOLIO PAGE (Individual - 25% / 75% split)
    ============================================================================ */
@@ -2490,16 +2512,6 @@ pre code {
 
 
 
-
-
-
-
-
-@media (max-width: 992px) {
-  #insights-grid {
-    grid-template-columns: 1fr !important;
-  }
-}
 
 
 
