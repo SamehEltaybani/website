@@ -90,11 +90,7 @@ Background image (immediately before the closing HEAD tag
       and postgraduate levels, blending theory with hands‑on clinical application.
     </p>
 
-    <div id="insights-grid" style="
-        display: grid; 
-        grid-template-columns: repeat(3, 1fr); 
-        gap: 12px; 
-        margin: 0 auto;">
+    <div id="insights-grid">
       </div>
   </div>
 </section>
@@ -219,7 +215,7 @@ function renderInsightsGrid() {
 
     insightsList.forEach(text => {
         const item = document.createElement('div');
-        item.className = 'insight-pill';                         // class for CSS
+        item.className = 'insight-pill';                         // class used for the top line
         item.style.padding = '12px 15px';
         item.style.borderRadius = '50px';
         item.style.border = '1px solid rgba(224, 224, 224, 0.3)';
@@ -231,14 +227,8 @@ function renderInsightsGrid() {
         item.style.textAlign = 'center';
         item.style.fontWeight = '500';
         item.style.color = 'var(--color-midnight-blue)';
-        item.style.position = 'relative';    // needed for the corner lines
-
-        // Inner wrapper for the text (gives us extra pseudo‑elements)
-        const inner = document.createElement('span');
-        inner.className = 'insight-pill-inner';
-        inner.textContent = text;
-
-        item.appendChild(inner);
+        item.style.position = 'relative';    // required for the ::before line
+        item.textContent = text;
         container.appendChild(item);
     });
 }
