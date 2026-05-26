@@ -71,21 +71,28 @@ Background image (immediately before the closing HEAD tag
    
     <!-- PART 1: TITLE, PARAGRAPH, INSIGHTS GRID -->
     <section class="section">
-      <div class="container">
+      <div class="container" style="text-align: center; max-width: 900px; margin: 0 auto;">
         
-        <h1 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; line-height: 1.2; margin-bottom: 20px; color: #000000; letter-spacing: -0.5px; text-align: left">Teaching</h1>
-        <h2 class="heading-small" style="color:#B88A1B; margin-bottom: var(--space-md);">Reliable, Accurate, Actionable</h2>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 20px;">
+          <h1 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; margin: 0; color: #000000;">Teaching</h1>
+          <div style="width: 2px; height: 60px; background-color: var(--color-gold);"></div>
+          <div style="text-align: left; font-weight: 600; color: var(--color-gold); line-height: 1.4;">
+            Reliable<br>Accurate<br>Actionable
+          </div>
+        </div>
 
-        <p class="paragraph">
+        <p class="paragraph" style="margin: 0 auto 40px auto; max-width: 700px;">
           I am passionate about equipping healthcare professionals with the knowledge and skills
           they need to deliver evidence‑based, compassionate care. My teaching spans undergraduate
           and postgraduate levels, blending theory with hands‑on clinical application.
         </p>
 
-        <!-- Grid of teaching insights (editable array) -->
-        <div id="insights-grid" class="grid-data-analysis mt-lg" style="--da-grid-columns: 3;">
-          <!-- Rendered by JavaScript -->
-        </div>
+        <div id="insights-grid" style="
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 15px; 
+            margin-top: var(--space-lg);">
+          </div>
       </div>
     </section>
 
@@ -210,22 +217,19 @@ Background image (immediately before the closing HEAD tag
 
         insightsList.forEach(text => {
           const item = document.createElement('div');
+          // Pill card styling
+          item.style.padding = '15px 20px';
+          item.style.borderRadius = '50px';
+          item.style.border = '1px solid #e0e0e0';
+          item.style.backgroundColor = '#fcfcfc';
           item.style.display = 'flex';
-          item.style.alignItems = 'baseline';
-          item.style.gap = 'var(--space-xs)';
-
-          const symbol = document.createElement('span');
-          symbol.textContent = '|';
-          symbol.style.color = 'var(--color-gold)';
-          symbol.style.fontWeight = 'bold';
-          symbol.style.fontSize = '1.2rem';
-
-          const sentence = document.createElement('span');
-          sentence.textContent = text;
-          sentence.style.color = 'var(--color-text-main)';
-
-          item.appendChild(symbol);
-          item.appendChild(sentence);
+          item.style.alignItems = 'center';
+          item.style.justifyContent = 'center';
+          item.style.textAlign = 'center';
+          item.style.fontWeight = '500';
+          item.style.color = 'var(--color-midnight-blue)';
+          
+          item.textContent = text;
           container.appendChild(item);
         });
       }
