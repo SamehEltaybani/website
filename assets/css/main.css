@@ -1463,6 +1463,20 @@ footer .footer-copyright {
 /* ============================================================================
    INSIGHT PILLS GRID (in the top part of Teaching / Data Analysis pages)
    ============================================================================ */
+
+/* Single gold top bar on insight pills (70% wide, fades at edges) */
+.insight-pill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 15%;
+    width: 70%;
+    height: 2px;
+    background: linear-gradient(to right, transparent 0%, var(--color-gold) 25%, var(--color-gold) 75%, transparent 100%);
+    border-radius: 1px;
+}
+
+
 #insights-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);   /* 3 equal columns on desktop */
@@ -1476,7 +1490,7 @@ footer .footer-copyright {
 @media (max-width: 992px) {
     #insights-grid {
         grid-template-columns: 1fr;
-        max-width: 700px;
+        max-width: 400px;
     }
 }
 
