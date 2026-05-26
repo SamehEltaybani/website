@@ -2495,7 +2495,7 @@ pre code {
 
 
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   #insights-grid {
     grid-template-columns: 1fr !important;
   }
