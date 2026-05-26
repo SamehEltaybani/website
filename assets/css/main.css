@@ -1518,13 +1518,18 @@ footer .footer-copyright {
   width: 100%;
 }
 
-/* Mobile adjustments: Stack items and limit width */
 @media (max-width: 992px) {
   #insights-grid {
     grid-template-columns: 1fr !important;
-    max-width: 700px !important; /* Limit width on phone */
+    gap: 10px !important;           /* Tighter vertical spacing on phone */
+    max-width: 600px !important;    /* Limit width on phone */
     margin: 0 auto !important;
   }
+}
+
+/* Ensure the container doesn't touch screen borders on phone */
+.container {
+  box-sizing: border-box;
 }
 
 
