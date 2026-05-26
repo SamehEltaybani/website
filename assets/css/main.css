@@ -1516,13 +1516,15 @@ footer .footer-copyright {
 /* Ensure the grid expands on desktop but stays centered */
 #insights-grid {
   width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 @media (max-width: 992px) {
   #insights-grid {
     grid-template-columns: 1fr !important;
     gap: 10px !important;           /* Tighter vertical spacing on phone */
-    max-width: 500px !important;    /* Limit width on phone */
+    max-width: 700px !important;    /* Limit width on phone */
     margin: 0 auto !important;
   }
 }
@@ -1533,6 +1535,65 @@ footer .footer-copyright {
 }
 
 
+/* ============================================================================
+   INSIGHT PILLS – fading corner accents
+   ============================================================================ */
+.insight-pill {
+    position: relative;
+}
+
+/* ---- Top‑left corner: gold line fading right (top) + fading down (left) ---- */
+.insight-pill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, var(--color-gold) 0%, transparent 70%);
+    border-radius: 50px 50px 0 0;      /* follow the pill's curve at the edges */
+}
+
+/* Left vertical line, fading down */
+.insight-pill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--color-gold) 0%, transparent 70%);
+    border-radius: 50px 0 0 50px;
+}
+
+/* ---- Bottom‑right corner: gold line fading left (bottom) + fading up (right) ---- */
+.insight-pill-inner {
+    position: relative;
+    display: block;       /* ensures it fills the pill */
+    width: 100%;
+}
+
+.insight-pill-inner::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to left, var(--color-gold) 0%, transparent 70%);
+    border-radius: 0 0 50px 50px;
+}
+
+.insight-pill-inner::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to top, var(--color-gold) 0%, transparent 70%);
+    border-radius: 0 50px 50px 0;
+}
 
 /* ============================================================================
    PORTFOLIO PAGE (Individual - 25% / 75% split)
