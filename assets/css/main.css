@@ -1522,7 +1522,7 @@ footer .footer-copyright {
   #insights-grid {
     grid-template-columns: 1fr !important;
     gap: 10px !important;           /* Tighter vertical spacing on phone */
-    max-width: 600px !important;    /* Limit width on phone */
+    max-width: 500px !important;    /* Limit width on phone */
     margin: 0 auto !important;
   }
 }
