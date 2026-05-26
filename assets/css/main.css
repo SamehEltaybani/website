@@ -1532,11 +1532,6 @@ footer .footer-copyright {
   }
 }
 
-/* Ensure the container doesn't touch screen borders on phone */
-.container {
-  box-sizing: border-box;
-}
-
 .insight-pill {
     position: relative;
 
