@@ -794,7 +794,7 @@ main ol {
 .breadcrumb-separator {
     margin: 0 var(--space-xs);
     color: var(--color-gold);
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 
 /* Mobile breadcrumb - single line with back arrow */
