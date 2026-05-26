@@ -1464,14 +1464,14 @@ footer .footer-copyright {
    INSIGHT PILLS GRID (in the top part of Teaching / Data Analysis pages)
    ============================================================================ */
 
-/* Single gold top bar on insight pills (70% wide, fades at edges) */
-.insight-pill::before {
+/* Single gold bottom bar on insight pills (70% wide, fades at edges) */
+.insight-pill::after {
     content: '';
     position: absolute;
     top: 0;
     left: 15%;
     width: 70%;
-    height: 2px;
+    height: 1px;
     background: linear-gradient(to right, transparent 0%, var(--color-gold) 25%, var(--color-gold) 75%, transparent 100%);
     border-radius: 1px;
 }
