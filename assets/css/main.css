@@ -1573,7 +1573,7 @@ footer .footer-copyright {
 #external-buttons-container .btn {
     padding: 10px 10px;
     justify-content: flex-start;        /* left‑align the icon and text */
-     min-height: 50px;
+     
 }
 
 
