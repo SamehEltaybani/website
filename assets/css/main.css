@@ -1562,8 +1562,8 @@ footer .footer-copyright {
 /* On phones and tablets, stack the buttons in a single column */
 @media (max-width: 992px) {
     #external-buttons-container {
-        grid-template-columns: 1fr;           /* one column */
-        max-width: 200px;                     /* a comfortable width on small screens */
+        grid-template-columns: repeat(2, 1fr);          
+        max-width: 400px;                     /* a comfortable width on small screens */
         width: auto;                          /* prevents stretching beyond max-width */
         margin: 0 auto;
     }
@@ -1571,7 +1571,7 @@ footer .footer-copyright {
 
 /* Give the buttons inside this container a little extra breathing room */
 #external-buttons-container .btn {
-    padding: var(--space-md) var(--space-md);
+    padding: 10px 10px;
     justify-content: flex-start;        /* left‑align the icon and text */
      min-height: 50px;
 }
