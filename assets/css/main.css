@@ -1555,7 +1555,7 @@ footer .footer-copyright {
     grid-template-columns: repeat(4, 1fr);    /* 4 equal columns on desktop */
     row-gap: 12px;                      /* vertical space */
     column-gap: var(--space-md);        /* horizontal space */
-    max-width: 1000px;                         /* prevents the grid from stretching too wide */
+    max-width: 800px;                         /* prevents the grid from stretching too wide */
     margin: 0 auto;                           /* centers the whole grid */
 }
 
@@ -1563,7 +1563,7 @@ footer .footer-copyright {
 @media (max-width: 992px) {
     #external-buttons-container {
         grid-template-columns: repeat(2, 1fr);          
-        max-width: 400px;                     /* a comfortable width on small screens */
+        max-width: 300px;                     /* a comfortable width on small screens */
         width: auto;                          /* prevents stretching beyond max-width */
         margin: 0 auto;
     }
@@ -1571,8 +1571,9 @@ footer .footer-copyright {
 
 /* Give the buttons inside this container a little extra breathing room */
 #external-buttons-container .btn {
-    padding: 10px 10px;
+    padding: 15px 15px;
     justify-content: flex-start;        /* left‑align the icon and text */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);  
      
 }
 
