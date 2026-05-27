@@ -1543,6 +1543,18 @@ footer .footer-copyright {
     }
 }
 
+
+
+/* External resource buttons (Research page) – centered with max width */
+
+#external-buttons-container {
+    max-width: 700px;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+
+
 /* ============================================================================
    PORTFOLIO PAGE (Individual - 25% / 75% split)
    ============================================================================ */
