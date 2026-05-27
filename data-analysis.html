@@ -75,27 +75,27 @@ Background image (immediately before the closing HEAD tag
     
     
     <!-- PART 1: TITLE, PARAGRAPH, INSIGHTS GRID -->
-    <section class="section">
-      <div class="container">
-        <h1 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; line-height: 1.2; margin-bottom: 20px; color: #000000; letter-spacing: -0.5px; text-align: left">Data Analysis</h1>
-        <h2 class="heading-small" style="color: #B88A1B; margin-bottom: var(--space-md);">Reliable, Accurate, Actionable</h2>
-        <p class="paragraph">
-          I translate complex clinical data into clear, actionable insights that improve patient outcomes
-          and inform healthcare decisions. My approach combines rigorous statistical methods with a
-          deep understanding of the clinical context.
-        </p>
-
-        <!-- Grid of clinical insights (editable array) -->
-        <div id="insights-grid" class="grid-data-analysis mt-lg" style="--da-grid-columns: 3;">
-          <!-- Rendered by JavaScript -->
-        </div>
+    
+    <section class="section" style="padding-top: var(--space-lg); padding-bottom: var(--space-lg);">
+  <div class="container" style="margin: 0 auto; padding: 0 20px;">
+    
+    <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-top: 20px; margin-bottom: 30px;">
+      <h1 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; margin: 0; color: #000000;">Data Analysis</h1>
+      <div style="width: 2px; height: 80px; background-color: var(--color-gold);"></div>
+      <div style="text-align: left; font-weight: 700; color: var(--color-gold); line-height: 1.4; font-size: 1.2rem;">
+        Reliable<br>Accurate<br>Actionable
       </div>
-    </section>
-
-    <!-- THIN GOLD SEPARATOR -->
-    <div class="container">
-      <hr style="border: none; border-top: 3px solid var(--color-gold); margin: 0;">
     </div>
+
+    <p class="paragraph" style="text-align: center; margin: 0 auto 50px auto; max-width: 700px; padding: 0 10px;">
+I translate complex clinical data into clear, actionable insights that improve patient outcomes and inform healthcare decisions. My approach combines rigorous statistical methods with a deep understanding of the clinical context.
+    </p>
+
+    <div id="insights-grid">
+      </div>
+  </div>
+</section>
+
 
 
 
@@ -201,32 +201,32 @@ Background image (immediately before the closing HEAD tag
         'Predictive Analytics for Readmission'
       ];
 
-      function renderInsightsGrid() {
-        const container = document.getElementById('insights-grid');
-        if (!container) return;
-        container.innerHTML = '';
+     function renderInsightsGrid() {
+    const container = document.getElementById('insights-grid');
+    if (!container) return;
+    container.innerHTML = '';
 
-        insightsList.forEach(text => {
-          const item = document.createElement('div');
-          item.style.display = 'flex';
-          item.style.alignItems = 'baseline';
-          item.style.gap = 'var(--space-xs)';
+    insightsList.forEach(text => {
+        const item = document.createElement('div');
+        item.className = 'insight-pill';                         // class used for the top line
+        item.style.padding = '12px 15px';
+        item.style.borderRadius = '50px';
+        item.style.border = '1px solid rgba(224, 224, 224, 0.3)';
+        item.style.backgroundColor = 'rgba(252, 252, 252, 0.5)';
+        item.style.boxShadow = '0 2px 4px rgba(0,0,0,0.03)';
+        item.style.display = 'flex';
+        item.style.alignItems = 'center';
+        item.style.justifyContent = 'center';
+        item.style.textAlign = 'center';
+        item.style.fontWeight = '500';
+        item.style.color = 'var(--color-midnight-blue)';
+        item.style.position = 'relative';    // required for the ::after line
+        item.textContent = text;
+        container.appendChild(item);
+    });
+}
 
-          const symbol = document.createElement('span');
-          symbol.textContent = '|';
-          symbol.style.color = 'var(--color-gold)';
-          symbol.style.fontWeight = 'bold';
-          symbol.style.fontSize = '1.2rem';
 
-          const sentence = document.createElement('span');
-          sentence.textContent = text;
-          sentence.style.color = 'var(--color-text-main)';
-
-          item.appendChild(symbol);
-          item.appendChild(sentence);
-          container.appendChild(item);
-        });
-      }
 
       // ------------------------------------------------------------------
       // B. FEATURE BUTTONS
