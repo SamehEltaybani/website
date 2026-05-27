@@ -1545,14 +1545,31 @@ footer .footer-copyright {
 
 
 
-/* External resource buttons (Research page) – centered with max width */
+
+/* ============================================================================
+   RESEARCH EXTERNAL BUTTONS – 2x4 grid (desktop) / stacked (mobile)
+   ============================================================================ */
 
 #external-buttons-container {
-    max-width: 700px;
-    margin: 0 auto;
-    justify-content: center;
+    display: grid !important;                 
+    grid-template-columns: repeat(4, 1fr);    /* 4 equal columns on desktop */
+    gap: 12px;                                /* space between buttons */
+    max-width: 700px;                         /* prevents the grid from stretching too wide */
+    margin: 0 auto;                           /* centers the whole grid */
 }
 
+/* On phones and tablets, stack the buttons in a single column */
+@media (max-width: 992px) {
+    #external-buttons-container {
+        grid-template-columns: 1fr;           /* one column */
+        max-width: 400px;                     /* a comfortable width on small screens */
+    }
+}
+
+/* Give the buttons inside this container a little extra breathing room */
+#external-buttons-container .btn {
+    padding: var(--space-sm) var(--space-md); /* vertical and horizontal space */
+}
 
 
 /* ============================================================================
