@@ -1922,10 +1922,11 @@ pre code {
     .navbar-right {
         display: none;          /* hide desktop nav links */
     }
+ 
     .search-icon-btn {
         order: 2;               /* appears before hamburger in the flex order */
         margin-left: auto;      /* pushes to the right, next to hamburger */
-        margin-right: var(--space-md);
+        margin-right: 8px;       /* gap between centra search icon and hamburger */
     }
     .hamburger {
         display: block;         /* ensure hamburger is visible */
