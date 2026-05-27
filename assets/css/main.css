@@ -1553,8 +1553,9 @@ footer .footer-copyright {
 #external-buttons-container {
     display: grid !important;                 
     grid-template-columns: repeat(4, 1fr);    /* 4 equal columns on desktop */
-    gap: 16px;                                /* space between buttons */
-    max-width: 1200px;                         /* prevents the grid from stretching too wide */
+    row-gap: 12px;                      /* vertical space */
+    column-gap: var(--space-md);        /* horizontal space */
+    max-width: 1000px;                         /* prevents the grid from stretching too wide */
     margin: 0 auto;                           /* centers the whole grid */
 }
 
@@ -1562,7 +1563,7 @@ footer .footer-copyright {
 @media (max-width: 992px) {
     #external-buttons-container {
         grid-template-columns: 1fr;           /* one column */
-        max-width: 300px;                     /* a comfortable width on small screens */
+        max-width: 200px;                     /* a comfortable width on small screens */
         width: auto;                          /* prevents stretching beyond max-width */
         margin: 0 auto;
     }
@@ -1570,8 +1571,9 @@ footer .footer-copyright {
 
 /* Give the buttons inside this container a little extra breathing room */
 #external-buttons-container .btn {
-    padding: var(--space-sm) var(--space-md);
+    padding: var(--space-md) var(--space-md);
     justify-content: flex-start;        /* left‑align the icon and text */
+     min-height: 50px;
 }
 
 
