@@ -958,92 +958,64 @@ footer .footer-copyright {
 
 
 /* ============================================================================
-   BACK‑TO‑TOP CIRCLE (injected by footer.js)
+   BACK‑TO‑TOP FIXED BUTTON (small circle, bottom‑right)
    ============================================================================ */
 .back-to-top {
-    position: absolute;
-    top: -45px;                      /* half sits above the footer */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90px;
-    height: 90px;
+    position: fixed;
+    bottom: var(--space-lg);
+    right: var(--space-lg);
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     background-color: var(--color-white);
     border: 2px solid var(--color-gold);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    display: flex;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    display: none;                      /* hidden until scroll */
     flex-direction: column;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.2s;
-    z-index: 10;
+    z-index: 200;
+    padding: 4px 0;
 }
 
-.back-to-top-arrow {
-    font-size: 1.6rem;
+.back-to-top-icon {
+    font-size: 1.3rem;
     color: var(--color-gold);
     line-height: 1;
 }
 
 .back-to-top-text {
-    font-size: 0.55rem;
+    font-size: 0.5rem;
     font-weight: 700;
     color: var(--color-midnight-blue);
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    text-transform: lowercase;
     line-height: 1;
-    margin-top: 2px;
+    margin-top: 1px;
 }
 
 .back-to-top:hover {
     background-color: var(--color-gold-light);
     border-color: var(--color-gold);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
 
 /* Slightly smaller on mobile */
 @media (max-width: 992px) {
     .back-to-top {
-        width: 72px;
-        height: 72px;
-        top: -36px;
+        width: 48px;
+        height: 48px;
+        bottom: var(--space-md);
+        right: var(--space-md);
     }
-    .back-to-top-arrow {
-        font-size: 1.3rem;
+    .back-to-top-icon {
+        font-size: 1.1rem;
     }
     .back-to-top-text {
-        font-size: 0.5rem;
+        font-size: 0.45rem;
     }
-}
-
-
-
-/* ============================================================================
-   PROGRESS BAR (For blog articles)
-   ============================================================================ */
-
-.progress-container {
-    position: sticky;
-    top: calc(var(--nav-height-desktop) + var(--breadcrumb-height));
-    z-index: 998;
-    width: 100%;
-    height: 3px;
-    background-color: rgba(212, 175, 55, 0.2); 
-    border-radius: 8px 8px 0 0;
- }
-
-@media (max-width: 992px) {
-    .progress-container {
-        top: calc(var(--nav-height-mobile) + var(--breadcrumb-height));
-    }
-}
-
-.progress-bar {
-    height: 100%;
-    width: 0%;
-    background-color: var(--color-gold);
-    transition: width 0.25s ease-out;
 }
 
 /* ============================================================================
