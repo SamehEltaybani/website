@@ -367,6 +367,27 @@ main {
     pointer-events: none;
 }
 
+
+/* Light button */
+
+.btn-light {
+    background-color: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-midnight-blue);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    transition: var(--transition-base);
+}
+
+.btn-light:hover {
+    background-color: rgba(212, 175, 55, 0.12);
+    border-color: var(--color-gold);
+    color: var(--color-midnight-blue);
+}
+
+
+
+
+
 /* ============================================================================
    ICON STYLES (3 sizes + 3 colors)
    ============================================================================ */
