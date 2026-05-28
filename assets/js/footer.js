@@ -257,7 +257,19 @@
           // ===== 3. COPYRIGHT (centred) =====
           const copyrightSection = createCopyrightSection();
           footer.appendChild(copyrightSection);
-        
+
+
+    // ---- Back‑to‑top circle ----
+    const backBtn = document.createElement('div');
+    backBtn.className = 'back-to-top';
+    backBtn.innerHTML = '<span class="back-to-top-arrow">&#x2191;</span><span class="back-to-top-text">Back to Top</span>';
+    backBtn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    footer.appendChild(backBtn);
+    // ---------------------------
+
+         
           footerContainer.appendChild(footer);
         }
 
@@ -305,6 +317,18 @@
            footer.appendChild(socialBar);
            footer.appendChild(columnsWrapper);
            footer.appendChild(copyrightSection);
+
+               // ---- Back‑to‑top circle ----
+    const backBtn = document.createElement('div');
+    backBtn.className = 'back-to-top';
+    backBtn.innerHTML = '<span class="back-to-top-arrow">&#x2191;</span><span class="back-to-top-text">Back to Top</span>';
+    backBtn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    footer.appendChild(backBtn);
+    // ---------------------------
+           
+          
            footerContainer.appendChild(footer);
          }
 
