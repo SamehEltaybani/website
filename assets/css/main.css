@@ -991,7 +991,6 @@ footer .footer-copyright {
     font-weight: 700;
     color: var(--color-midnight-blue);
     letter-spacing: 0.3px;
-    text-transform: lowercase;
     line-height: 1;
     margin-top: 1px;
 }
