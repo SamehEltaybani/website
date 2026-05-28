@@ -328,7 +328,7 @@
                   // ---- Back‑to‑top circle (fixed, appears on scroll) ----
     const backBtn = document.createElement('div');
     backBtn.className = 'back-to-top';
-    backBtn.innerHTML = '<span class="back-to-top-icon"><i class="fas fa-circle-up"></i></span><span class="back-to-top-text">to top</span>';
+    backBtn.innerHTML = '<span class="back-to-top-icon"><i class="fas fa-circle-up"></i></span><span class="back-to-top-text">To Top</span>';
     backBtn.addEventListener('pointerdown', function() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
