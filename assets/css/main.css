@@ -967,17 +967,17 @@ footer .footer-copyright {
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background-color: var(--color-white);
-    border: 2px solid var(--color-gold);
+    background-color: rgba(255, 255, 255, 0.65);   /* more transparent */
+    border: 1px solid var(--color-gold);            /* thinner border */
     box-shadow: 0 4px 14px rgba(0,0,0,0.12);
-    display: none;                      /* hidden until scroll */
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.2s;
-    z-index: 200;
-    padding: 4px 0;
+    z-index: 999;
+    padding: 0;                                     /* no extra inside space */
 }
 
 .back-to-top-icon {
@@ -997,12 +997,11 @@ footer .footer-copyright {
 }
 
 .back-to-top:hover {
-    background-color: var(--color-gold-light);
+    background-color: rgba(212, 175, 55, 0.25);     /* subtle gold tint on hover */
     border-color: var(--color-gold);
     box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
 
-/* Slightly smaller on mobile */
 @media (max-width: 992px) {
     .back-to-top {
         width: 48px;
