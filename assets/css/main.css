@@ -967,7 +967,7 @@ footer .footer-copyright {
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.65);   /* more transparent */
+    background-color: rgba(255, 255, 255, 0.75);   /* more transparent */
     border: 1px solid var(--color-gold);            /* thinner border */
     box-shadow: 0 4px 14px rgba(0,0,0,0.12);
     display: none;
