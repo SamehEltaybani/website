@@ -259,16 +259,23 @@
           footer.appendChild(copyrightSection);
 
 
-    // ---- Back‑to‑top circle ----
+       // ---- Back‑to‑top circle (fixed, appears on scroll) ----
     const backBtn = document.createElement('div');
     backBtn.className = 'back-to-top';
-    backBtn.innerHTML = '<span class="back-to-top-arrow">&#x2191;</span><span class="back-to-top-text">Back to Top</span>';
+    backBtn.innerHTML = '<span class="back-to-top-icon"><i class="fas fa-circle-up"></i></span><span class="back-to-top-text">to top</span>';
     backBtn.addEventListener('click', function() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
     footer.appendChild(backBtn);
-    // ---------------------------
-
+    // --------------------------------------------------------
+    // Show/hide the button based on scroll position
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            backBtn.style.display = 'flex';
+        } else {
+            backBtn.style.display = 'none';
+        }
+    });
          
           footerContainer.appendChild(footer);
         }
@@ -318,15 +325,24 @@
            footer.appendChild(columnsWrapper);
            footer.appendChild(copyrightSection);
 
-               // ---- Back‑to‑top circle ----
+                  // ---- Back‑to‑top circle (fixed, appears on scroll) ----
     const backBtn = document.createElement('div');
     backBtn.className = 'back-to-top';
-    backBtn.innerHTML = '<span class="back-to-top-arrow">&#x2191;</span><span class="back-to-top-text">Back to Top</span>';
+    backBtn.innerHTML = '<span class="back-to-top-icon"><i class="fas fa-circle-up"></i></span><span class="back-to-top-text">to top</span>';
     backBtn.addEventListener('click', function() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
     footer.appendChild(backBtn);
-    // ---------------------------
+    // --------------------------------------------------------
+
+    // Show/hide the button based on scroll position
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            backBtn.style.display = 'flex';
+        } else {
+            backBtn.style.display = 'none';
+        }
+    });
            
           
            footerContainer.appendChild(footer);
