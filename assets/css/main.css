@@ -967,8 +967,8 @@ footer .footer-copyright {
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.75);   /* more transparent */
-    border: 1px solid var(--color-gold);            /* thinner border */
+    background-color: rgba(255, 255, 255, 0.75);   /* and transparency */
+    border: 1px solid var(--color-gold);            
     box-shadow: 0 4px 14px rgba(0,0,0,0.12);
     display: none;
     flex-direction: column;
@@ -978,7 +978,7 @@ footer .footer-copyright {
     touch-action: manipulation;
     transition: all 0.2s;
     z-index: 999;
-    padding: 0;                                     /* no extra inside space */
+    padding: 2px;                                     /* inside space */
 }
 
 .back-to-top-icon {
@@ -1298,7 +1298,7 @@ footer .footer-copyright {
     border-bottom: none;
     margin-bottom: 10px;            /* Space between cards */
     transition: var(--transition-fast);
-        box-shadow: -6px -6px 8px rgba(0,0,0,0.04), 0 0 0 transparent;
+    box-shadow: -6px -6px 8px rgba(0,0,0,0.04), 0 0 0 transparent;
 }
 
 
@@ -1350,13 +1350,15 @@ footer .footer-copyright {
 }
 
 .authorship-first {
-    background-color: #f6c593;
+    background-color: #F0F5F1;
     color: var(--color-midnight-blue);
+    border: 0.5px solid #e4ede6;
 }
 
 .authorship-coauthor {
-    background-color: #add8e6;
+    background-color: #F6F4FA;
     color: var(--color-midnight-blue);
+    border: 0.5px solid #ebe7f4;
 }
 
 .publication-buttons {
