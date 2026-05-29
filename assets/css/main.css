@@ -975,6 +975,7 @@ footer .footer-copyright {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    touch-action: manipulation;
     transition: all 0.2s;
     z-index: 999;
     padding: 0;                                     /* no extra inside space */
@@ -1295,9 +1296,9 @@ footer .footer-copyright {
 .publication-item {
     padding: var(--space-md);
     border-bottom: none;
-    margin-bottom: 6px;            /* Space between cards */
+    margin-bottom: 10px;            /* Space between cards */
     transition: var(--transition-fast);
-    box-shadow: -2px -2px 6px rgba(0,0,0,0.1);
+        box-shadow: -6px -6px 8px rgba(0,0,0,0.04), 0 0 0 transparent;
 }
 
 
@@ -1336,9 +1337,16 @@ footer .footer-copyright {
     display: inline-block;
     font-size: 0.75rem;
     padding: 2px var(--space-xs);
-    border-radius: 4px;
+    border-radius: 10px;
     margin-bottom: var(--space-xs);
     font-weight: 400;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.publication-authorship:hover {
+    text-decoration: underline;
+    opacity: 0.85;
 }
 
 .authorship-first {
@@ -1402,7 +1410,7 @@ footer .footer-copyright {
     top: 0;
     left: 0;
     width: 100%;
-    height: 2px;
+    height: 1px;
     background: linear-gradient(to right, var(--color-gold) 0%, transparent 70%);
 }
 
@@ -1412,7 +1420,7 @@ footer .footer-copyright {
     position: absolute;
     top: 0;
     left: 0;
-    width: 2px;
+    width: 1px;
     height: 100%;
     background: linear-gradient(to bottom, var(--color-gold) 0%, transparent 70%);
 }
@@ -1436,8 +1444,8 @@ footer .footer-copyright {
 .blog-card {
     padding: var(--space-md);
     border-bottom: none;
-    margin-bottom: 6px;          /* Space between cards */
-    box-shadow: -2px -2px 6px rgba(0,0,0,0.1);
+    margin-bottom: 10px;          /* Space between cards */
+    box-shadow: -6px -6px 8px rgba(0,0,0,0.04), 0 0 0 transparent;
 }
 
 .blog-title {
