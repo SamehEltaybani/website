@@ -1296,9 +1296,21 @@ footer .footer-copyright {
     border: 0.5px solid #e4ede6;
 }
 
+.authorship-first:hover {
+    background-color: #cdddd0;
+    color: #000000;
+    border: 0.5px solid #e4ede6;
+}
+
 .authorship-coauthor {
     background-color: #F6F4FA;
     color: var(--color-midnight-blue);
+    border: 0.5px solid #ebe7f4;
+}
+
+.authorship-coauthor:hover {
+    background-color: #d5cce8;
+    color: #000000;
     border: 0.5px solid #ebe7f4;
 }
 
@@ -1409,10 +1421,10 @@ footer .footer-copyright {
 
 .blog-category {
     font-size: var(--font-size-xs);
-    background-color: #f4df94;
+    background-color: #F0F7FA;
     padding: 2px var(--space-sm);
     border-radius: 20px;
-    color: #F0F7FA;          
+    color: var(--color-midnight-blue);          
     text-decoration: underline;         
     cursor: pointer;
     transition: var(--transition-fast);
