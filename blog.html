@@ -422,12 +422,16 @@ function applyAllFilters() {
         e.stopPropagation();
         closeSortDropdown();
         filterDropdown.classList.toggle('hidden');
+        e.target.blur();
       });
       sortBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         closeFilterDropdown();
         sortDropdown.classList.toggle('hidden');
+        e.target.blur();
       });
+
+      
       document.addEventListener('click', (event) => {
         if (!filterDropdown.contains(event.target) && event.target !== filterBtn && !filterBtn.contains(event.target)) {
           closeFilterDropdown();
@@ -437,7 +441,10 @@ function applyAllFilters() {
         }
       });
 
-      applyFilterBtn.addEventListener('click', handleFilterApply);
+            applyFilterBtn.addEventListener('click', function(e) {
+        handleFilterApply();
+        e.target.blur();
+      });
       sortDropdown.addEventListener('click', (e) => {
         const btn = e.target.closest('button[data-sort]');
         if (btn) handleSortOption(btn.dataset.sort);
@@ -562,7 +569,10 @@ function applyAllFilters() {
               debouncedSearch();
               handleAutocomplete();
       });
-      resetBtn.addEventListener('click', handleReset);
+            resetBtn.addEventListener('click', function(e) {
+        handleReset();
+        e.target.blur();
+      });
 
       
       
