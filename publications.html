@@ -746,6 +746,28 @@ function renderCurrentPage() {
 
     publicationsContainer.innerHTML = html;
 
+
+    // Make authorship tags clickable (filter by authorship)
+    const authorTags = publicationsContainer.querySelectorAll('.publication-authorship');
+    authorTags.forEach(tag => {
+        tag.addEventListener('click', function() {
+            const authorshipValue = this.textContent.trim();
+            // Set the filter dropdown and apply
+            const authorshipSelect = document.getElementById('filter-authorship');
+            if (authorshipSelect) {
+                authorshipSelect.value = authorshipValue;
+                state.activeFilters.authorship = authorshipValue;
+                closeFilterDropdown();   // if the filter dropdown is open
+                applyAllFilters();
+            }
+        });
+    });
+
+
+
+
+
+  
     // Update result-count bar
     const countBar = document.getElementById('results-count-bar');
     if (countBar) {
