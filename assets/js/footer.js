@@ -257,25 +257,6 @@
           // ===== 3. COPYRIGHT (centred) =====
           const copyrightSection = createCopyrightSection();
           footer.appendChild(copyrightSection);
-
-
-       // ---- Back‑to‑top circle (fixed, appears on scroll) ----
-    const backBtn = document.createElement('div');
-    backBtn.className = 'back-to-top';
-    backBtn.innerHTML = '<span class="back-to-top-icon"><i class="fas fa-circle-up"></i></span><span class="back-to-top-text">To Top</span>';
-    backBtn.addEventListener('pointerdown', function() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-    footer.appendChild(backBtn);
-    // --------------------------------------------------------
-    // Show/hide the button based on scroll position
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 300) {
-            backBtn.style.display = 'flex';
-        } else {
-            backBtn.style.display = 'none';
-        }
-    });
          
           footerContainer.appendChild(footer);
         }
@@ -324,26 +305,6 @@
            footer.appendChild(socialBar);
            footer.appendChild(columnsWrapper);
            footer.appendChild(copyrightSection);
-
-                  // ---- Back‑to‑top circle (fixed, appears on scroll) ----
-    const backBtn = document.createElement('div');
-    backBtn.className = 'back-to-top';
-    backBtn.innerHTML = '<span class="back-to-top-icon"><i class="fas fa-circle-up"></i></span><span class="back-to-top-text">To Top</span>';
-    backBtn.addEventListener('pointerdown', function() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-    footer.appendChild(backBtn);
-    // --------------------------------------------------------
-
-    // Show/hide the button based on scroll position
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 300) {
-            backBtn.style.display = 'flex';
-        } else {
-            backBtn.style.display = 'none';
-        }
-    });
-           
           
            footerContainer.appendChild(footer);
          }
