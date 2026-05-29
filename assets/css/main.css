@@ -957,65 +957,6 @@ footer .footer-copyright {
 
 
 
-/* ============================================================================
-   BACK‑TO‑TOP FIXED BUTTON (small circle, bottom‑right)
-   ============================================================================ */
-.back-to-top {
-    position: fixed;
-    bottom: var(--space-lg);
-    right: var(--space-lg);
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.75);   /* and transparency */
-    border: 1px solid var(--color-gold);            
-    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    touch-action: manipulation;
-    transition: all 0.2s;
-    z-index: 999;
-    padding: 2px;                                     /* inside space */
-}
-
-.back-to-top-icon {
-    font-size: 1.3rem;
-    color: var(--color-gold);
-    line-height: 1;
-}
-
-.back-to-top-text {
-    font-size: 0.5rem;
-    font-weight: 700;
-    color: var(--color-midnight-blue);
-    letter-spacing: 0.3px;
-    line-height: 1;
-    margin-top: 1px;
-}
-
-.back-to-top:hover {
-    background-color: rgba(212, 175, 55, 0.25);     /* subtle gold tint on hover */
-    border-color: var(--color-gold);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
-}
-
-@media (max-width: 992px) {
-    .back-to-top {
-        width: 48px;
-        height: 48px;
-        bottom: var(--space-md);
-        right: var(--space-md);
-    }
-    .back-to-top-icon {
-        font-size: 1.1rem;
-    }
-    .back-to-top-text {
-        font-size: 0.45rem;
-    }
-}
 
 /* ============================================================================
    FORMS & INPUTS
@@ -1340,12 +1281,12 @@ footer .footer-copyright {
     border-radius: 10px;
     margin-bottom: var(--space-xs);
     font-weight: 400;
+    text-decoration: underline;
     cursor: pointer;
     transition: var(--transition-fast);
 }
 
 .publication-authorship:hover {
-    text-decoration: underline;
     opacity: 0.85;
 }
 
@@ -1471,16 +1412,16 @@ footer .footer-copyright {
     background-color: #f4df94;
     padding: 2px var(--space-sm);
     border-radius: 20px;
-    color: #253b7a;          
+    color: #F0F7FA;          
     text-decoration: underline;         
     cursor: pointer;
     transition: var(--transition-fast);
 }
 
 .blog-category:hover {
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
     color: var(--color-midnight-blue);                    
-    background-color: #ecc53a;   
+    background-color: #d3e7f0;   
     text-decoration: underline;
 }
 
