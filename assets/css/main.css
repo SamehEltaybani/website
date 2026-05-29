@@ -1430,7 +1430,7 @@ footer .footer-copyright {
 /* Alternating row backgrounds for Publication cards and Blog cards */
 
 .row-even {
-    background-color: #FFFFFF;            
+    background-color: rgba(255, 255, 255, 0.5);            
 }
 .row-odd {
     background-color: #FFFFFF;       
