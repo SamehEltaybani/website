@@ -371,6 +371,38 @@ window.addEventListener('load', function() {
     window.scrollTo(0, 0);
 });
 
+
+
+// ============================================
+// BACK TO TOP BUTTON (created once, works everywhere)
+// ============================================
+
+    (function() {
+    var btn = document.getElementById('backToTop');
+    if (!btn) {
+        btn = document.createElement('div');
+        btn.id = 'backToTop';
+        btn.className = 'back-to-top';
+        btn.innerHTML = '<span class="back-to-top-icon"><i class="fas fa-circle-up"></i></span><span class="back-to-top-text">To Top</span>';
+        document.body.appendChild(btn);
+
+        btn.addEventListener('pointerdown', function(e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        window.addEventListener('scroll', SiteUtils.throttle(function() {
+            if (window.scrollY > 300) {
+                btn.style.display = 'flex';
+            } else {
+                btn.style.display = 'none';
+            }
+        }, 100));
+    }
+})();
+// ============================================
+
+
     
 return {
     // DOM utilities
@@ -388,7 +420,7 @@ return {
     throttle,
     // DOM helpers
     createElement,
-    // Search helpers  <-- NEW
+    // Search helpers  
     stem,
     cleanSearchTerm
 };
