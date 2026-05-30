@@ -156,20 +156,23 @@ Background image (immediately before the closing HEAD tag
   <script src="assets/js/search.js"></script>
 
   <!-- PAGE-SPECIFIC SCRIPTS -->
-  <script>
+ 
+  
+
+<script>
     (function() {
       'use strict';
 
       // ------------------------------------------------------------------
-      // A. GLOBALS & STATE (Blog)
+      // GLOBALS & STATE (Blog)
       // ------------------------------------------------------------------
       const state = {
-        allItems: [],              // masterData from blog-list.json
-        filteredItems: [],        // current display subset
+        allItems: [],
+        filteredItems: [],
         currentPage: 1,
         itemsPerPage: 10,
-        activeCategory: null,     // category filter (null = all)
-        activeSort: { field: 'date', direction: 'desc' }, // newest first default
+        activeCategory: null,
+        activeSort: { field: 'date', direction: 'desc' },
         activeSearch: ''
       };
 
@@ -187,64 +190,51 @@ Background image (immediately before the closing HEAD tag
       const filterCategorySelect = document.getElementById('filter-category');
       const blogListContainer = document.getElementById('blog-list');
       const loadMoreBtn = document.getElementById('load-more-btn');
+      const autocompleteDropdown = document.getElementById('autocomplete-dropdown');
+      let suggestionPool = [];
 
+      // ------- Spell‑correction helpers -------
+      function editDistance(a, b) {
+          const alen = a.length, blen = b.length;
+          const dp = Array.from({ length: alen + 1 }, () => Array(blen + 1).fill(0));
+          for (let i = 0; i <= alen; i++) dp[i][0] = i;
+          for (let j = 0; j <= blen; j++) dp[0][j] = j;
+          for (let i = 1; i <= alen; i++) {
+              for (let j = 1; j <= blen; j++) {
+                  dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1] : Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1;
+              }
+          }
+          return dp[alen][blen];
+      }
 
+      function findSpellSuggestions(query, pool) {
+          if (!query || query.length < 3) return [];
+          const q = query.toLowerCase().trim();
+          const maxDist = 2;
+          let best = [];
+          for (const word of pool) {
+              const dist = editDistance(q, word);
+              if (dist <= maxDist) {
+                  best.push({ word, dist });
+              }
+          }
+          best.sort((a, b) => a.dist - b.dist || a.word.localeCompare(b.word));
+          return best.slice(0, 8).map(item => item.word);
+      }
+      // -----------------------------------------
 
-
-
-// ------- Spell‑correction helpers -------
-function editDistance(a, b) {
-    const alen = a.length, blen = b.length;
-    const dp = Array.from({ length: alen + 1 }, () => Array(blen + 1).fill(0));
-    for (let i = 0; i <= alen; i++) dp[i][0] = i;
-    for (let j = 0; j <= blen; j++) dp[0][j] = j;
-    for (let i = 1; i <= alen; i++) {
-        for (let j = 1; j <= blen; j++) {
-            dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1] : Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1;
-        }
-    }
-    return dp[alen][blen];
-}
-
-function findSpellSuggestions(query, pool) {
-    if (!query || query.length < 3) return [];
-    const q = query.toLowerCase().trim();
-    const maxDist = 2;
-    let best = [];
-    for (const word of pool) {
-        const dist = editDistance(q, word);
-        if (dist <= maxDist) {
-            best.push({ word, dist });
-        }
-    }
-    best.sort((a, b) => a.dist - b.dist || a.word.localeCompare(b.word));
-    return best.slice(0, 8).map(item => item.word);
-}
-// -----------------------------------------
-
-
-      
-
-      // ------------------------------------------------------------------
-      // B. UTILITY
-      // ------------------------------------------------------------------
       function escapeHTML(text) {
-        if (typeof SiteUtils !== 'undefined' && SiteUtils.escapeHTML) {
-          return SiteUtils.escapeHTML(text);
-        }
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
+        if (typeof SiteUtils !== 'undefined' && SiteUtils.escapeHTML) return SiteUtils.escapeHTML(text);
+        const div = document.createElement('div'); div.textContent = text; return div.innerHTML;
       }
 
       // ------------------------------------------------------------------
-      // C. HIGHLIGHT CONTROLS
+      // HIGHLIGHT CONTROLS
       // ------------------------------------------------------------------
       function updateControlHighlights() {
         const hasFilter = state.activeCategory !== null;
         const isDefaultSort = (state.activeSort.field === 'date' && state.activeSort.direction === 'desc');
         const hasChanges = hasFilter || !isDefaultSort || state.activeSearch !== '';
-
         filterBtn.classList.toggle('active', hasFilter);
         sortBtn.classList.toggle('active', !isDefaultSort);
         resetBtn.classList.toggle('active', hasChanges);
@@ -256,7 +246,7 @@ function findSpellSuggestions(query, pool) {
       }
 
       // ------------------------------------------------------------------
-      // D. LOAD DATA FROM blog-list.json
+      // LOAD DATA FROM blog-list.json
       // ------------------------------------------------------------------
       async function loadBlogData() {
         try {
@@ -267,7 +257,6 @@ function findSpellSuggestions(query, pool) {
             return;
           }
           state.allItems = data;
-          // Extract all unique categories
           const catSet = new Set();
           data.forEach(post => {
             if (Array.isArray(post.categories)) {
@@ -276,7 +265,8 @@ function findSpellSuggestions(query, pool) {
           });
           allCategories = [...catSet].sort();
           populateFilterDropdown();
-          applyAllFilters(); // initial render
+          buildSuggestionPool();
+          applyAllFilters();
         } catch (e) {
           console.error('[Blog] Failed to load blog-list.json:', e);
           showEmptyState('No content available. Check back later.');
@@ -291,576 +281,466 @@ function findSpellSuggestions(query, pool) {
       }
 
       // ------------------------------------------------------------------
-      // E. FILTER / SORT / SEARCH LOGIC
+      // FILTER / SORT / SEARCH LOGIC
       // ------------------------------------------------------------------
-      
-      
-function applyAllFilters() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    let items = [...state.allItems];
+      function applyAllFilters() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          let items = [...state.allItems];
 
-    // Filter by category (case‑insensitive, trimmed)
-    if (state.activeCategory) {
-        const catFilter = state.activeCategory.toLowerCase().trim();
-        items = items.filter(post => {
-            if (!post.categories || !Array.isArray(post.categories)) return false;
-            return post.categories.some(cat => cat && cat.toLowerCase().trim() === catFilter);
-        });
-    }
+          if (state.activeCategory) {
+              const catFilter = state.activeCategory.toLowerCase().trim();
+              items = items.filter(post => {
+                  if (!post.categories || !Array.isArray(post.categories)) return false;
+                  return post.categories.some(cat => cat && cat.toLowerCase().trim() === catFilter);
+              });
+          }
 
-    // Search by title / shortTitle / categories / summary
-    if (state.activeSearch) {
-        const rawQuery = state.activeSearch.toLowerCase().trim();
-        const searchWords = (typeof SiteUtils.cleanSearchTerm === 'function')
-            ? SiteUtils.cleanSearchTerm(state.activeSearch)
-            : rawQuery.split(/\s+/).filter(w => w.length > 0);
-        const finalWords = searchWords.length > 0 ? searchWords : [rawQuery];
+          if (state.activeSearch) {
+              const rawQuery = state.activeSearch.toLowerCase().trim();
+              const searchWords = (typeof SiteUtils.cleanSearchTerm === 'function')
+                  ? SiteUtils.cleanSearchTerm(state.activeSearch)
+                  : rawQuery.split(/\s+/).filter(w => w.length > 0);
+              const finalWords = searchWords.length > 0 ? searchWords : [rawQuery];
+              items = items.filter(post => {
+                  const haystack = [
+                      post.title,
+                      post.shortTitle,
+                      post.summary,
+                      ...(post.categories || [])
+                  ].join(' ').toLowerCase();
+                  return finalWords.every(word => {
+                      if (haystack.includes(word)) return true;
+                      if (typeof SiteUtils.stem === 'function') {
+                          const stemmedWord = SiteUtils.stem(word);
+                          if (stemmedWord !== word && haystack.includes(stemmedWord)) return true;
+                      }
+                      return false;
+                  });
+              });
+          }
 
-        items = items.filter(post => {
-            const haystack = [
-                post.title,
-                post.shortTitle,
-                post.summary,
-                ...(post.categories || [])
-            ].join(' ').toLowerCase();
+          const { field, direction } = state.activeSort;
+          if (field === 'date') {
+              items.sort((a, b) => {
+                  const dateA = new Date(a.date || '');
+                  const dateB = new Date(b.date || '');
+                  const validA = isNaN(dateA.getTime()) ? 0 : dateA.getTime();
+                  const validB = isNaN(dateB.getTime()) ? 0 : dateB.getTime();
+                  return direction === 'desc' ? validB - validA : validA - validB;
+              });
+          }
 
-            return finalWords.every(word => {
-                if (haystack.includes(word)) return true;
-                if (typeof SiteUtils.stem === 'function') {
-                    const stemmedWord = SiteUtils.stem(word);
-                    if (stemmedWord !== word && haystack.includes(stemmedWord)) return true;
-                }
-                return false;
-            });
-        });
-    }
-
-    // Sort by date
-    const { field, direction } = state.activeSort;
-    if (field === 'date') {
-        items.sort((a, b) => {
-            const dateA = new Date(a.date || '');
-            const dateB = new Date(b.date || '');
-            const validA = isNaN(dateA.getTime()) ? 0 : dateA.getTime();
-            const validB = isNaN(dateB.getTime()) ? 0 : dateB.getTime();
-            return direction === 'desc' ? validB - validA : validA - validB;
-        });
-    }
-
-    state.filteredItems = items;
-    state.currentPage = 1;
-    hideLoadMoreButton();
-    renderCurrentPage();
-    updateControlHighlights();
-}
-
-
-
-
-      
+          state.filteredItems = items;
+          state.currentPage = 1;
+          hideLoadMoreButton();
+          renderCurrentPage();
+          updateControlHighlights();
+      }
 
       function updateActiveSortUI() {
-        const span = sortBtn.querySelector('span');
-        if (!span) return;
-        span.textContent = state.activeSort.direction === 'desc' ? 'Sort: Newest' : 'Sort: Oldest';
+          const span = sortBtn.querySelector('span');
+          if (!span) return;
+          span.textContent = state.activeSort.direction === 'desc' ? 'Sort: Newest' : 'Sort: Oldest';
       }
 
       function handleSearchInput() {
-        state.activeSearch = searchInput.value.trim();
-        updateSearchHighlight();
-        applyAllFilters();
+          state.activeSearch = searchInput.value.trim();
+          updateSearchHighlight();
+          applyAllFilters();
       }
 
       function handleFilterApply() {
-        state.activeCategory = filterCategorySelect.value || null;
-        closeFilterDropdown();
-        applyAllFilters();
+          state.activeCategory = filterCategorySelect.value || null;
+          closeFilterDropdown();
+          applyAllFilters();
       }
 
-      // Called when clicking a category tag inside a blog card
       function quickFilterByCategory(category) {
-        filterCategorySelect.value = category;
-        state.activeCategory = category;
-        closeFilterDropdown();
-        applyAllFilters();
+          filterCategorySelect.value = category;
+          state.activeCategory = category;
+          closeFilterDropdown();
+          applyAllFilters();
       }
 
       function handleSortOption(opt) {
-        if (opt === 'date-desc') state.activeSort = { field: 'date', direction: 'desc' };
-        else if (opt === 'date-asc') state.activeSort = { field: 'date', direction: 'asc' };
-        updateActiveSortUI();
-        closeSortDropdown();
-        applyAllFilters();
+          if (opt === 'date-desc') state.activeSort = { field: 'date', direction: 'desc' };
+          else if (opt === 'date-asc') state.activeSort = { field: 'date', direction: 'asc' };
+          updateActiveSortUI();
+          closeSortDropdown();
+          applyAllFilters();
       }
 
       function handleReset() {
-        searchInput.value = '';
-        state.activeSearch = '';
-        state.activeCategory = null;
-        filterCategorySelect.value = '';
-        state.activeSort = { field: 'date', direction: 'desc' };
-        updateActiveSortUI();
-        updateSearchHighlight();
-        applyAllFilters();
+          searchInput.value = '';
+          state.activeSearch = '';
+          state.activeCategory = null;
+          filterCategorySelect.value = '';
+          state.activeSort = { field: 'date', direction: 'desc' };
+          updateActiveSortUI();
+          updateSearchHighlight();
+          applyAllFilters();
       }
 
       // ------------------------------------------------------------------
-      // F. DROPDOWN MANAGEMENT
+      // DROPDOWN MANAGEMENT
       // ------------------------------------------------------------------
       function populateFilterDropdown() {
-        filterCategorySelect.innerHTML = '<option value="">All categories</option>';
-        allCategories.forEach(cat => {
-          const opt = new Option(cat, cat);
-          filterCategorySelect.add(opt);
-        });
+          filterCategorySelect.innerHTML = '<option value="">All categories</option>';
+          allCategories.forEach(cat => {
+              const opt = new Option(cat, cat);
+              filterCategorySelect.add(opt);
+          });
       }
 
       function closeFilterDropdown() { filterDropdown.classList.add('hidden'); }
       function closeSortDropdown() { sortDropdown.classList.add('hidden'); }
 
-      filterBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        closeSortDropdown();
-        filterDropdown.classList.toggle('hidden');
-        e.target.blur();
-      });
-      sortBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        closeFilterDropdown();
-        sortDropdown.classList.toggle('hidden');
-        e.target.blur();
-      });
-
-      
-      document.addEventListener('click', (event) => {
-        if (!filterDropdown.contains(event.target) && event.target !== filterBtn && !filterBtn.contains(event.target)) {
-          closeFilterDropdown();
-        }
-        if (!sortDropdown.contains(event.target) && event.target !== sortBtn && !sortBtn.contains(event.target)) {
+      filterBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
           closeSortDropdown();
-        }
+          filterDropdown.classList.toggle('hidden');
+          const btn = this;
+          setTimeout(() => btn.blur(), 0);
       });
-
-            applyFilterBtn.addEventListener('click', function(e) {
-        handleFilterApply();
-        e.target.blur();
+      sortBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          closeFilterDropdown();
+          sortDropdown.classList.toggle('hidden');
+          const btn = this;
+          setTimeout(() => btn.blur(), 0);
+      });
+      document.addEventListener('click', (event) => {
+          if (!filterDropdown.contains(event.target) && event.target !== filterBtn && !filterBtn.contains(event.target)) closeFilterDropdown();
+          if (!sortDropdown.contains(event.target) && event.target !== sortBtn && !sortBtn.contains(event.target)) closeSortDropdown();
+      });
+      applyFilterBtn.addEventListener('click', function(e) {
+          handleFilterApply();
+          const btn = this;
+          setTimeout(() => btn.blur(), 0);
       });
       sortDropdown.addEventListener('click', (e) => {
-        const btn = e.target.closest('button[data-sort]');
-        if (btn) handleSortOption(btn.dataset.sort);
+          const btn = e.target.closest('button[data-sort]');
+          if (btn) handleSortOption(btn.dataset.sort);
       });
 
       // ------------------------------------------------------------------
-      // G. RENDER BLOG LIST (with clickable categories)
+      // RENDER BLOG LIST
       // ------------------------------------------------------------------
-    
       function renderCurrentPage() {
-    if (!blogListContainer) return;
-    const end = state.currentPage * state.itemsPerPage;
-    const itemsToShow = state.filteredItems.slice(0, end);
+          if (!blogListContainer) return;
+          const end = state.currentPage * state.itemsPerPage;
+          const itemsToShow = state.filteredItems.slice(0, end);
+          let html = '';
+          itemsToShow.forEach((post, index) => {
+              const dateObj = new Date(post.date);
+              const dateFormatted = isNaN(dateObj.getTime())
+                  ? post.date
+                  : dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).replace(/(\w+)\s/, '$1. ');
 
-    let html = '';
-    itemsToShow.forEach((post, index) => {
-        // Format the full date
-        const dateObj = new Date(post.date);
-        const dateFormatted = isNaN(dateObj.getTime())
-            ? post.date
-            : dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).replace(/(\w+)\s/, '$1. ');
+              let categoriesHtml = '';
+              if (post.categories && Array.isArray(post.categories)) {
+                  categoriesHtml = '<div class="blog-categories">';
+                  post.categories.forEach(cat => {
+                      const safeCat = escapeHTML(cat);
+                      categoriesHtml += `<span class="blog-category" data-category="${safeCat}" style="cursor: pointer;">${safeCat}</span>`;
+                  });
+                  categoriesHtml += '</div>';
+              }
 
-        // Categories as clickable tags
-        let categoriesHtml = '';
-        if (post.categories && Array.isArray(post.categories)) {
-            categoriesHtml = '<div class="blog-categories">';
-            post.categories.forEach(cat => {
-                const safeCat = escapeHTML(cat);
-                categoriesHtml += `<span class="blog-category" data-category="${safeCat}" style="cursor: pointer;">${safeCat}</span>`;
-            });
-            categoriesHtml += '</div>';
-        }
+              const globalIndex = (state.currentPage - 1) * state.itemsPerPage + index;
+              html += `
+                  <div class="blog-card ${globalIndex % 2 === 0 ? 'row-even' : 'row-odd'}">
+                      <div class="blog-date" style="text-align: right; font-size: var(--font-size-sm); color: var(--color-text-muted); margin-bottom: 2px;">${escapeHTML(dateFormatted)}</div>
+                      <div class="blog-title">${escapeHTML(post.title)}</div>
+                      ${categoriesHtml}
+                      <a href="${escapeHTML(post.blogfile)}" class="btn btn-text" style="margin-top: var(--space-sm);"><i class="fas fa-newspaper mr-xs"></i> Read article ❯</a>
+                  </div>
+              `;
 
-     
-           
-       
-      const globalIndex = (state.currentPage - 1) * state.itemsPerPage + index;
+              if ((index + 1) % state.itemsPerPage === 0 && (index + 1) < itemsToShow.length) {
+                  const pageNumber = Math.ceil((index + 1) / state.itemsPerPage);
+                  html += `<div class="page-separator">
+                      <span class="page-sep-label">&#x25B2; PAGE ${pageNumber}</span>
+                      <div class="page-sep-line"></div>
+                      <span class="page-sep-label">&#x25BC; PAGE ${pageNumber + 1}</span>
+                  </div>`;
+              }
+          });
+          blogListContainer.innerHTML = html;
 
-      html += `
-    <div class="blog-card ${globalIndex % 2 === 0 ? 'row-even' : 'row-odd'}">
-        <div class="blog-date" style="text-align: right; font-size: var(--font-size-sm); color: var(--color-text-muted); margin-bottom: 2px;">${escapeHTML(dateFormatted)}</div>
-        <div class="blog-title">${escapeHTML(post.title)}</div>
-        ${categoriesHtml}
-        <a href="${escapeHTML(post.blogfile)}" class="btn btn-text" style="margin-top: var(--space-sm);"><i class="fas fa-newspaper mr-xs"></i> Read article ❯</a>
-    </div>
-`;
+          // Result-count bar
+          const countBar = document.getElementById('results-count-bar');
+          if (countBar) {
+              const totalItems = state.filteredItems.length;
+              const shownItems = Math.min(state.currentPage * state.itemsPerPage, totalItems);
+              const totalPages = Math.max(1, Math.ceil(totalItems / state.itemsPerPage));
+              const pageWord = state.currentPage === 1 ? 'page' : 'pages';
+              countBar.innerHTML =
+                  '<span>Showing <span style="color:var(--color-midnight-blue); font-weight:600;">' + shownItems + '</span> of <span style="color:var(--color-midnight-blue); font-weight:600;">' + totalItems + '</span> articles</span>' +
+                  ' <span>( <span style="color:var(--color-midnight-blue); font-weight:600;">' + state.currentPage + '</span> ' + pageWord + ' of <span style="color:var(--color-midnight-blue); font-weight:600;">' + totalPages + '</span> )</span>';
+          }
 
-        // Batch separator
-        if ((index + 1) % state.itemsPerPage === 0 && (index + 1) < itemsToShow.length) {
-            const pageNumber = Math.ceil((index + 1) / state.itemsPerPage);
-            html += `<div class="page-separator">
-              <span class="page-sep-label">&#x25B2; PAGE ${pageNumber}</span>
-              <div class="page-sep-line"></div>
-              <span class="page-sep-label">&#x25BC; PAGE ${pageNumber + 1}</span>
-            </div>`;
-        }
-    });
+          // Category tag clicks
+          const categoryTags = blogListContainer.querySelectorAll('.blog-category');
+          categoryTags.forEach(tag => {
+              tag.addEventListener('click', function() {
+                  const cat = this.getAttribute('data-category');
+                  if (cat) quickFilterByCategory(cat);
+              });
+          });
 
-    blogListContainer.innerHTML = html;
-
-        // Update the result-count bar
-        const countBar = document.getElementById('results-count-bar');
-        if (countBar) {
-            const totalItems = state.filteredItems.length;
-            const shownItems = Math.min(state.currentPage * state.itemsPerPage, totalItems);
-            const totalPages = Math.max(1, Math.ceil(totalItems / state.itemsPerPage));
-            const pageWord = state.currentPage === 1 ? 'page' : 'pages';
-
-            countBar.innerHTML =
-                '<span>Showing <span style="color:var(--color-midnight-blue); font-weight:600;">' + shownItems + '</span> of <span style="color:var(--color-midnight-blue); font-weight:600;">' + totalItems + '</span> articles</span>' +
-                 ' <span>( <span style="color:var(--color-midnight-blue); font-weight:600;">' + state.currentPage + '</span> ' + pageWord + ' of <span style="color:var(--color-midnight-blue); font-weight:600;">' + totalPages + '</span> )</span>';
-        }
-        
-
-    // Attach click handlers to category tags
-    const categoryTags = blogListContainer.querySelectorAll('.blog-category');
-    categoryTags.forEach(tag => {
-        tag.addEventListener('click', function() {
-            const cat = this.getAttribute('data-category');
-            if (cat) quickFilterByCategory(cat);
-        });
-    });
-
-    // Load More button visibility
-    if (state.filteredItems.length > end) {
-        loadMoreBtn.classList.remove('hidden');
-        if (isLoadingMore) {
-            loadMoreBtn.disabled = true;
-            loadMoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-sm"></i>Loading...';
-        } else {
-            loadMoreBtn.disabled = false;
-            loadMoreBtn.textContent = 'Load More';
-        }
-    } else {
-        hideLoadMoreButton();
-    }
-}
-      
-         
-      function hideLoadMoreButton() {
-        if (loadMoreBtn) loadMoreBtn.classList.add('hidden');
+          if (state.filteredItems.length > end) {
+              loadMoreBtn.classList.remove('hidden');
+              if (isLoadingMore) {
+                  loadMoreBtn.disabled = true;
+                  loadMoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-sm"></i>Loading...';
+              } else {
+                  loadMoreBtn.disabled = false;
+                  loadMoreBtn.textContent = 'Load More';
+              }
+          } else {
+              hideLoadMoreButton();
+          }
       }
 
-      // Load More click handler
+      function hideLoadMoreButton() { if (loadMoreBtn) loadMoreBtn.classList.add('hidden'); }
+
       loadMoreBtn.addEventListener('click', async () => {
-        if (isLoadingMore || loadMoreBtn.disabled) return;
-        isLoadingMore = true;
-        loadMoreBtn.disabled = true;
-        loadMoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-sm"></i>Loading...';
-        await new Promise(r => setTimeout(r, 100));
-        state.currentPage++;
-        isLoadingMore = false;
-        renderCurrentPage();
+          if (isLoadingMore || loadMoreBtn.disabled) return;
+          isLoadingMore = true;
+          loadMoreBtn.disabled = true;
+          loadMoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-sm"></i>Loading...';
+          await new Promise(r => setTimeout(r, 100));
+          state.currentPage++;
+          isLoadingMore = false;
+          renderCurrentPage();
       });
 
       // ------------------------------------------------------------------
-      // H. EVENT LISTENERS
+      // EVENT LISTENERS
       // ------------------------------------------------------------------
-      const debouncedSearch = (typeof SiteUtils !== 'undefined' && SiteUtils.debounce) ?
-        SiteUtils.debounce(handleSearchInput, 300) : handleSearchInput;
-        searchInput.addEventListener('input', function(e) {
-              debouncedSearch();
-              handleAutocomplete();
+      const debouncedSearch = (typeof SiteUtils !== 'undefined' && SiteUtils.debounce) ? SiteUtils.debounce(handleSearchInput, 300) : handleSearchInput;
+      searchInput.addEventListener('input', function(e) {
+          debouncedSearch();
+          handleAutocomplete();
       });
-            resetBtn.addEventListener('click', function(e) {
-        handleReset();
-        e.target.blur();
+      resetBtn.addEventListener('click', function(e) {
+          handleReset();
+          const btn = this;
+          setTimeout(() => btn.blur(), 0);
       });
 
-      
-      
-          // ------------------------------------------------------------------
-          // I. AUTOCOMPLETE FOR SEARCH
-          // ------------------------------------------------------------------
-          const autocompleteDropdown = document.getElementById('autocomplete-dropdown');
-          let suggestionPool = [];      // unique words from titles and categories
-          
-          // Build suggestion pool from all blog entries
-
-     
-      
+      // ------------------------------------------------------------------
+      // AUTOCOMPLETE FOR SEARCH
+      // ------------------------------------------------------------------
       function buildSuggestionPool() {
-    if (suggestionPool.length > 0) return;
-    const freqMap = new Map();
-    const processField = (text) => {
-        if (text && typeof SiteUtils.cleanSearchTerm === 'function') {
-            const words = SiteUtils.cleanSearchTerm(text);
-            words.forEach(w => freqMap.set(w, (freqMap.get(w) || 0) + 1));
-            for (let i = 0; i < words.length - 1; i++) {
-                const bigram = words[i] + ' ' + words[i+1];
-                freqMap.set(bigram, (freqMap.get(bigram) || 0) + 1);
-            }
-        }
-    };
-    state.allItems.forEach(post => {
-        processField(post.title);
-        processField(post.shortTitle);
-        processField(post.summary);
-        if (post.categories) post.categories.forEach(c => processField(c));
-    });
-    suggestionPool = [...freqMap.entries()].sort((a, b) => b[1] - a[1]).map(e => e[0]);
-}
+          if (suggestionPool.length > 0) return;
+          const freqMap = new Map();
+          const processField = (text) => {
+              if (text && typeof SiteUtils.cleanSearchTerm === 'function') {
+                  const words = SiteUtils.cleanSearchTerm(text);
+                  words.forEach(w => freqMap.set(w, (freqMap.get(w) || 0) + 1));
+                  for (let i = 0; i < words.length - 1; i++) {
+                      const bigram = words[i] + ' ' + words[i+1];
+                      freqMap.set(bigram, (freqMap.get(bigram) || 0) + 1);
+                  }
+              }
+          };
+          state.allItems.forEach(post => {
+              processField(post.title);
+              processField(post.shortTitle);
+              processField(post.summary);
+              if (post.categories) post.categories.forEach(c => processField(c));
+          });
+          suggestionPool = [...freqMap.entries()].sort((a, b) => b[1] - a[1]).map(e => e[0]);
+      }
 
+      function showAutocomplete(directMatches, spellSuggestions) {
+          if (!autocompleteDropdown) return;
+          const oldTooltip = document.querySelector('#search-container .search-tips-tooltip');
+          if (oldTooltip) oldTooltip.remove();
+          autocompleteDropdown.innerHTML = '';
+          if (directMatches.length === 0 && (!spellSuggestions || spellSuggestions.length === 0)) {
+              autocompleteDropdown.classList.add('hidden');
+              return;
+          }
+          if (directMatches.length === 0 && spellSuggestions && spellSuggestions.length > 0) {
+              const headerRow = document.createElement('div');
+              headerRow.style.cssText = 'display:flex; align-items:center; gap:var(--space-md); padding: var(--space-xs) var(--space-sm);';
+              const noMatch = document.createElement('span');
+              noMatch.style.cssText = 'font-size: var(--font-size-sm); color: var(--color-text-muted); font-style: italic;';
+              noMatch.textContent = 'No direct matches';
+              headerRow.appendChild(noMatch);
+              const tipsWrapper = document.createElement('span');
+              tipsWrapper.style.cssText = 'position: relative; display: inline-block;';
+              const tipsLink = document.createElement('span');
+              tipsLink.className = 'search-tips-trigger-link';
+              tipsLink.style.cssText = 'font-size: var(--font-size-sm); color: var(--color-midnight-blue); text-decoration: underline; cursor: pointer; white-space: nowrap;';
+              tipsLink.innerHTML = '[ <i class="fas fa-question-circle"></i> Search tips ]';
+              tipsWrapper.appendChild(tipsLink);
+              const tooltip = document.createElement('div');
+              tooltip.className = 'search-tips-tooltip';
+              tooltip.style.cssText = 'display:none; position:absolute; top:100%; right:0; background:var(--color-white); border:1px solid var(--color-border); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:var(--space-md); z-index:1101; width:100%; font-size:var(--font-size-sm); line-height:1.6;';
+              tooltip.innerHTML = `
+                  <button class="search-modal-close-btn" style="position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border-radius: 50%;">&times;</button>
+                  <strong>Search Tips for Blog:</strong><br><br>
+                  · If a category filter is active, click <i class="fas fa-undo"></i> <strong>Reset</strong> to see all articles.<br>
+                  · The <strong>category labels</strong> below each title are clickable – tap one to filter by that category.<br>
+                  · Use the <strong>Filter</strong> <i class="fas fa-filter"></i> dropdown to choose a category directly.<br>
+                  · You can also use the <strong>central search</strong> <i class="fas fa-search"></i> in the navigation bar to search across the whole site.<br>
+                  · Try different keywords or check your spelling.
+              `;
+              tipsLink.addEventListener('click', function(e) {
+                  e.stopPropagation();
+                  tooltip.style.display = (tooltip.style.display === 'block') ? 'none' : 'block';
+              });
+              tooltip.querySelector('.search-modal-close-btn').addEventListener('click', function() {
+                  tooltip.style.display = 'none';
+              });
+              document.addEventListener('click', function closeTooltip(e) {
+                  const searchContainer = document.getElementById('search-container');
+                  if (searchContainer && !searchContainer.contains(e.target)) {
+                      tooltip.style.display = 'none';
+                  }
+              });
+              headerRow.appendChild(tipsWrapper);
+              autocompleteDropdown.appendChild(headerRow);
+              document.getElementById('search-container').appendChild(tooltip);
+              const label = document.createElement('div');
+              label.style.cssText = 'padding: 2px var(--space-sm); font-size: 0.7rem; color: var(--color-gold); font-weight: 600; text-transform: uppercase;';
+              label.textContent = 'Suggestions:';
+              autocompleteDropdown.appendChild(label);
+              spellSuggestions.forEach(sug => {
+                  const item = document.createElement('div');
+                  item.className = 'search-modal-autocomplete-item';
+                  item.textContent = sug;
+                  item.style.cssText = 'padding: var(--space-sm) var(--space-md); cursor: pointer; font-size: var(--font-size-base); color: var(--color-text-main); min-height: 44px; display: flex; align-items: center; touch-action: manipulation;';
+                  item.addEventListener('click', () => {
+                      searchInput.value = sug;
+                      autocompleteDropdown.classList.add('hidden');
+                      handleSearchInput();
+                  });
+                  item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--color-hover-bg)');
+                  item.addEventListener('mouseleave', () => item.style.backgroundColor = '');
+                  autocompleteDropdown.appendChild(item);
+              });
+              autocompleteDropdown.classList.remove('hidden');
+              return;
+          }
+          directMatches.forEach(match => {
+              const item = document.createElement('div');
+              item.className = 'search-modal-autocomplete-item';
+              item.textContent = match;
+              item.style.cssText = 'padding: var(--space-sm) var(--space-md); cursor: pointer; font-size: var(--font-size-base); color: var(--color-text-main); min-height: 44px; display: flex; align-items: center; touch-action: manipulation;';
+              item.addEventListener('click', () => {
+                  searchInput.value = match;
+                  autocompleteDropdown.classList.add('hidden');
+                  handleSearchInput();
+              });
+              item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--color-hover-bg)');
+              item.addEventListener('mouseleave', () => item.style.backgroundColor = '');
+              autocompleteDropdown.appendChild(item);
+          });
+          autocompleteDropdown.classList.remove('hidden');
+      }
 
-
-
-      
-
-function showAutocomplete(directMatches, spellSuggestions) {
-    if (!autocompleteDropdown) return;
-
-    // Remove any previous tooltip from the search container
-    const oldTooltip = document.querySelector('#search-container .search-tips-tooltip');
-    if (oldTooltip) oldTooltip.remove();
-
-    autocompleteDropdown.innerHTML = '';
-
-    if (directMatches.length === 0 && (!spellSuggestions || spellSuggestions.length === 0)) {
-        autocompleteDropdown.classList.add('hidden');
-        return;
-    }
-
-    if (directMatches.length === 0 && spellSuggestions && spellSuggestions.length > 0) {
-        // ---- Row: "No direct matches" + "? Search tips" ----
-        const headerRow = document.createElement('div');
-        headerRow.style.cssText = 'display:flex; align-items:center; gap:var(--space-md); padding: var(--space-xs) var(--space-sm);';
-
-        const noMatch = document.createElement('span');
-        noMatch.style.cssText = 'font-size: var(--font-size-sm); color: var(--color-text-muted); font-style: italic;';
-        noMatch.textContent = 'No direct matches';
-        headerRow.appendChild(noMatch);
-
-        const tipsWrapper = document.createElement('span');
-        tipsWrapper.style.cssText = 'position: relative; display: inline-block;';
-
-        const tipsLink = document.createElement('span');
-        tipsLink.className = 'search-tips-trigger-link';
-        tipsLink.style.cssText = 'font-size: var(--font-size-sm); color: var(--color-midnight-blue); text-decoration: underline; cursor: pointer; white-space: nowrap;';
-        tipsLink.innerHTML = '[ <i class="fas fa-question-circle"></i> Search tips ]';
-        tipsWrapper.appendChild(tipsLink);
-
-        // Tooltip (same style, different content)
-        const tooltip = document.createElement('div');
-        tooltip.className = 'search-tips-tooltip';
-        tooltip.style.cssText = 'display:none; position:absolute; top:100%; right:0; background:var(--color-white); border:1px solid var(--color-border); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:var(--space-md); z-index:1101; width:100%; font-size:var(--font-size-sm); line-height:1.6;';
-
-        // ---- Blog‑specific tips (edit here if needed) ----
-        tooltip.innerHTML = `
-            <button class="search-modal-close-btn" style="position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border-radius: 50%;">&times;</button>
-            <strong>Search Tips for Blog:</strong><br><br>
-            · If a category filter is active, click <i class="fas fa-undo"></i> <strong>Reset</strong> to see all articles.<br>
-            · The <strong>category labels</strong> below each title are clickable – tap one to filter by that category.<br>
-            · Use the <strong>Filter</strong> <i class="fas fa-filter"></i> dropdown to choose a category directly.<br>
-            · You can also use the <strong>central search</strong> <i class="fas fa-search"></i> in the navigation bar to search across the whole site.<br>
-            · Try different keywords or check your spelling.
-        `;
-        // ------------------------------------------------
-
-        tipsWrapper.appendChild(tooltip);
-
-        tipsLink.addEventListener('click', function(e) {
-            e.stopPropagation();
-            tooltip.style.display = (tooltip.style.display === 'block') ? 'none' : 'block';
-        });
-
-        tooltip.querySelector('.search-modal-close-btn').addEventListener('click', function() {
-            tooltip.style.display = 'none';
-        });
-
-        document.addEventListener('click', function closeTooltip(e) {
-            const searchContainer = document.getElementById('search-container');
-            if (searchContainer && !searchContainer.contains(e.target)) {
-                tooltip.style.display = 'none';
-            }
-        });
-
-        headerRow.appendChild(tipsWrapper);
-        autocompleteDropdown.appendChild(headerRow);
-
-        // Append tooltip to the search container (outside the dropdown)
-        document.getElementById('search-container').appendChild(tooltip);
-
-        // "Suggestions:" label
-        const label = document.createElement('div');
-        label.style.cssText = 'padding: 2px var(--space-sm); font-size: 0.7rem; color: var(--color-gold); font-weight: 600; text-transform: uppercase;';
-        label.textContent = 'Suggestions:';
-        autocompleteDropdown.appendChild(label);
-
-        spellSuggestions.forEach(sug => {
-            const item = document.createElement('div');
-            item.className = 'search-modal-autocomplete-item';
-            item.textContent = sug;
-            item.style.cssText = 'padding: var(--space-sm) var(--space-md); cursor: pointer; font-size: var(--font-size-base); color: var(--color-text-main); min-height: 44px; display: flex; align-items: center; touch-action: manipulation;';
-            item.addEventListener('click', () => {
-                searchInput.value = sug;
-                autocompleteDropdown.classList.add('hidden');
-                handleSearchInput();
-            });
-            item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--color-hover-bg)');
-            item.addEventListener('mouseleave', () => item.style.backgroundColor = '');
-            
-            autocompleteDropdown.appendChild(item);
-        });
-        autocompleteDropdown.classList.remove('hidden');
-        return;
-    }
-
-    // Normal direct matches
-    directMatches.forEach(match => {
-        const item = document.createElement('div');
-        item.className = 'search-modal-autocomplete-item';
-        item.textContent = match;
-        item.style.cssText = 'padding: var(--space-sm) var(--space-md); cursor: pointer; font-size: var(--font-size-base); color: var(--color-text-main); min-height: 44px; display: flex; align-items: center; touch-action: manipulation;';
-        item.addEventListener('click', () => {
-            searchInput.value = match;
-            autocompleteDropdown.classList.add('hidden');
-            handleSearchInput();
-        });
-        item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--color-hover-bg)');
-        item.addEventListener('mouseleave', () => item.style.backgroundColor = '');
-        autocompleteDropdown.appendChild(item);
-    });
-    autocompleteDropdown.classList.remove('hidden');
-}
-
-
-      
-
-      
-          
-         
-      
-
-
-
-      
-          
-        
-      
       function handleAutocomplete() {
-    const query = searchInput.value.trim().toLowerCase();
-    if (query.length === 0) {
-        autocompleteDropdown.classList.add('hidden');
-        return;
-    }
-    const directMatches = suggestionPool.filter(word => word.includes(query)).slice(0, 8);
-    let spellSugg = [];
-    if (directMatches.length === 0) {
-        spellSugg = findSpellSuggestions(query, suggestionPool);
-    }
-    showAutocomplete(directMatches, spellSugg);
-}
-     
+          const query = searchInput.value.trim().toLowerCase();
+          if (query.length === 0) {
+              autocompleteDropdown.classList.add('hidden');
+              return;
+          }
+          const directMatches = suggestionPool.filter(word => word.includes(query)).slice(0, 8);
+          let spellSugg = [];
+          if (directMatches.length === 0) {
+              spellSugg = findSpellSuggestions(query, suggestionPool);
+          }
+          showAutocomplete(directMatches, spellSugg);
+      }
 
-
-
-
-      
-          
-          // Close dropdown when clicking outside
-          document.addEventListener('click', function(e) {
-    const tooltip = document.querySelector('.search-tips-tooltip');
-    if (autocompleteDropdown && !searchInput.contains(e.target) && !autocompleteDropdown.contains(e.target)) {
-        if (tooltip && tooltip.contains(e.target)) return;   // allow clicks inside the tooltip
-        autocompleteDropdown.classList.add('hidden');
-    }
-});
-          
-          // Keyboard navigation inside dropdown
-
+      document.addEventListener('click', function(e) {
+          const tooltip = document.querySelector('.search-tips-tooltip');
+          if (autocompleteDropdown && !searchInput.contains(e.target) && !autocompleteDropdown.contains(e.target)) {
+              if (tooltip && tooltip.contains(e.target)) return;
+              autocompleteDropdown.classList.add('hidden');
+          }
+      });
 
       searchInput.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        autocompleteDropdown.classList.add('hidden');
-        return;
-    }
-    if (!autocompleteDropdown || autocompleteDropdown.classList.contains('hidden')) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            autocompleteDropdown.classList.add('hidden');
-            handleSearchInput();   // triggers search immediately
-        }
-        return;
-    }
-    const items = autocompleteDropdown.querySelectorAll('div');
-    let idx = Array.from(items).findIndex(el => el.style.backgroundColor === 'var(--color-hover-bg)' || el.style.backgroundColor === 'rgb(248, 249, 250)');
-    if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        idx = (idx + 1) % items.length;
-        highlightBlogItem(items, idx);
-    } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        idx = (idx - 1 + items.length) % items.length;
-        highlightBlogItem(items, idx);
-    } else if (e.key === 'Enter') {
-        e.preventDefault();
-        if (idx >= 0) {
-            items[idx].click();
-        } else {
-            autocompleteDropdown.classList.add('hidden');
-            handleSearchInput();
-        }
-    }
-});
+          if (e.key === 'Escape') {
+              autocompleteDropdown.classList.add('hidden');
+              return;
+          }
+          if (!autocompleteDropdown || autocompleteDropdown.classList.contains('hidden')) {
+              if (e.key === 'Enter') {
+                  e.preventDefault();
+                  autocompleteDropdown.classList.add('hidden');
+                  handleSearchInput();
+              }
+              return;
+          }
+          const items = autocompleteDropdown.querySelectorAll('div');
+          let idx = Array.from(items).findIndex(el => el.style.backgroundColor === 'var(--color-hover-bg)' || el.style.backgroundColor === 'rgb(248, 249, 250)');
+          if (e.key === 'ArrowDown') {
+              e.preventDefault();
+              idx = (idx + 1) % items.length;
+              highlightBlogItem(items, idx);
+          } else if (e.key === 'ArrowUp') {
+              e.preventDefault();
+              idx = (idx - 1 + items.length) % items.length;
+              highlightBlogItem(items, idx);
+          } else if (e.key === 'Enter') {
+              e.preventDefault();
+              if (idx >= 0) {
+                  items[idx].click();
+              } else {
+                  autocompleteDropdown.classList.add('hidden');
+                  handleSearchInput();
+              }
+          }
+      });
 
+      function highlightBlogItem(items, index) {
+          items.forEach((item, i) => {
+              item.style.backgroundColor = i === index ? 'var(--color-hover-bg)' : '';
+          });
+          if (items[index]) {
+              items[index].scrollIntoView({ block: 'nearest' });
+          }
+      }
 
-
-
-
-
-
-      
-
-function highlightBlogItem(items, index) {
-    items.forEach((item, i) => {
-        item.style.backgroundColor = i === index ? 'var(--color-hover-bg)' : '';
-    });
-    if (items[index]) {
-        items[index].scrollIntoView({ block: 'nearest' });
-    }
-} 
-      
-      
-      
-      
       // ------------------------------------------------------------------
-      // J. INITIALISATION
+      // INITIALISATION
       // ------------------------------------------------------------------
       async function initBlog() {
-        if (typeof SiteUtils !== 'undefined' && SiteUtils.waitForDOM) {
-          await SiteUtils.waitForDOM();
-        }
-        await loadBlogData();
-        buildSuggestionPool();
-        updateActiveSortUI();
-        updateControlHighlights();
+          if (typeof SiteUtils !== 'undefined' && SiteUtils.waitForDOM) await SiteUtils.waitForDOM();
+          await loadBlogData();
+          buildSuggestionPool();
+          updateActiveSortUI();
+          updateControlHighlights();
 
-// Auto‑apply category filter from URL (e.g., blog.html?category=AI)
-const urlParams = new URLSearchParams(window.location.search);
-const catParam = urlParams.get('category');
-if (catParam) {
-    if (filterCategorySelect) {
-        filterCategorySelect.value = catParam;
-    }
-    state.activeCategory = catParam;
-    applyAllFilters();
-    updateControlHighlights();
-}
+          // Auto‑apply category filter from URL (e.g., blog.html?category=AI)
+          const urlParams = new URLSearchParams(window.location.search);
+          const catParam = urlParams.get('category');
+          if (catParam) {
+              if (filterCategorySelect) {
+                  filterCategorySelect.value = catParam;
+              }
+              state.activeCategory = catParam;
+              applyAllFilters();
+              updateControlHighlights();
+          }
       }
 
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initBlog);
+          document.addEventListener('DOMContentLoaded', initBlog);
       } else {
-        initBlog();
+          initBlog();
       }
     })();
-  </script>
+</script>
+
+
+  
 </body>
 </html>
