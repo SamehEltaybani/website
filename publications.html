@@ -87,10 +87,11 @@ Background image (immediately before the closing HEAD tag
 
         <!-- SEARCH -->
         <div class="search-box" id="search-container">
-        <i class="fas fa-search"></i>
-        <input type="text" id="search-input" placeholder="Search publications..." aria-label="Search publications">
-        <div id="autocomplete-dropdown" class="hidden" style="position: absolute; top: 100%; left: 0; right: 0; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; max-height: 200px; overflow-y: auto;"></div>
-      </div>
+    <i class="fas fa-search"></i>
+    <span class="search-badge" id="search-badge" style="display: none;">1</span>
+    <input type="text" id="search-input" placeholder="Search publications..." aria-label="Search publications">
+    <div id="autocomplete-dropdown" class="hidden" style="position: absolute; top: 100%; left: 0; right: 0; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; max-height: 200px; overflow-y: auto;"></div>
+</div>
 
         <!-- FILTER (dropdown opens to the left) -->
         <div style="position: relative;">
@@ -190,6 +191,7 @@ Background image (immediately before the closing HEAD tag
       let allJournals = [];
 
       const searchInput = document.getElementById('search-input');
+      const searchBadge = document.getElementById('search-badge');
       const autocompleteDropdown = document.getElementById('autocomplete-dropdown');
       let suggestionPool = [];
 
@@ -499,9 +501,19 @@ Background image (immediately before the closing HEAD tag
       }
 
       function updateSearchHighlight() {
-          const box = document.getElementById('search-container');
-          if (box) box.classList.toggle('active', searchInput.value.trim().length > 0);
-      }
+    const box = document.getElementById('search-container');
+    if (box) box.classList.toggle('active', searchInput.value.trim().length > 0);
+
+    // Show/hide the search badge
+    if (searchBadge) {
+        if (state.activeSearch) {
+            searchBadge.style.display = 'flex';
+            searchBadge.textContent = '1';   // one search term is active
+        } else {
+            searchBadge.style.display = 'none';
+        }
+    }
+}
 
       function handleSearchInput() {
           state.activeSearch = searchInput.value.trim();
