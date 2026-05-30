@@ -339,11 +339,12 @@ main {
 /* ============================================================================
    SEARCH BADGE (superscript number on search icon)
    ============================================================================ */
+
 .search-badge {
     position: absolute;
     top: -6px;
-    left: 18px;
-    background-color: #E07B39;       /* soft orange – change to any colour */
+    right: -6px;
+    background-color: #E07B39;       /* soft orange  */
     color: #fff;
     font-size: 0.6rem;
     font-weight: 700;
@@ -355,6 +356,13 @@ main {
     justify-content: center;
     line-height: 1;
     z-index: 2;
+}
+
+/* Reset button – same colour as the badge when any badge is active */
+.btn-filter.badge-active {
+    background-color: #E07B39 !important;
+    border-color: #E07B39 !important;
+    color: #fff !important;
 }
 
 
