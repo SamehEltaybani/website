@@ -566,13 +566,13 @@ Background image (immediately before the closing HEAD tag
           e.stopPropagation();
           closeSortDropdown();
           filterDropdown.classList.toggle('hidden');
-          e.target.blur();
+          setTimeout(() => e.target.blur(), 50);
       });
       sortBtn.addEventListener('click', (e) => {
           e.stopPropagation();
           closeFilterDropdown();
           sortDropdown.classList.toggle('hidden');
-          e.target.blur();
+          setTimeout(() => e.target.blur(), 50);
       });
       document.addEventListener('click', (event) => {
           if (!filterDropdown.contains(event.target) && event.target !== filterBtn && !filterBtn.contains(event.target)) closeFilterDropdown();
@@ -580,7 +580,7 @@ Background image (immediately before the closing HEAD tag
       });
       applyFiltersBtn.addEventListener('click', function(e) {
           handleFilterApply();
-          e.target.blur();
+          setTimeout(() => e.target.blur(), 50);
       });
       sortDropdown.addEventListener('click', (e) => {
           const btn = e.target.closest('button[data-sort]');
@@ -688,9 +688,9 @@ Background image (immediately before the closing HEAD tag
           debouncedSearch();
           handleAutocomplete();
       });
-      resetBtn.addEventListener('click', function(e) {
-          handleReset();
-          e.target.blur();
+            resetBtn.addEventListener('click', function(e) {
+        handleReset();
+        setTimeout(() => e.target.blur(), 50);   
       });
 
       // ------------------------------------------------------------------
