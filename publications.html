@@ -584,7 +584,7 @@ filterBtn.addEventListener('click', function(e) {
           if (!sortDropdown.contains(event.target) && event.target !== sortBtn && !sortBtn.contains(event.target)) closeSortDropdown();
       });
 
-     applyFilterBtn.addEventListener('click', function(e) {
+     applyFiltersBtn.addEventListener('click', function(e) {
     handleFilterApply();
     const btn = this;
     setTimeout(() => btn.blur(), 0);
