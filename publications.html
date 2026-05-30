@@ -504,13 +504,15 @@ Background image (immediately before the closing HEAD tag
     const box = document.getElementById('search-container');
     if (box) box.classList.toggle('active', searchInput.value.trim().length > 0);
 
-    // Show/hide the search badge
-    if (searchBadge) {
+    // Show/hide the search badge and colour the Reset button
+    if (searchBadge && resetBtn) {
         if (state.activeSearch) {
             searchBadge.style.display = 'flex';
-            searchBadge.textContent = '1';   // one search term is active
+            searchBadge.textContent = '1';
+            resetBtn.classList.add('badge-active');
         } else {
             searchBadge.style.display = 'none';
+            resetBtn.classList.remove('badge-active');
         }
     }
 }
