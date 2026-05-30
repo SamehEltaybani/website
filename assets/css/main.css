@@ -313,10 +313,12 @@ main {
     border: 1px solid var(--color-border);
 }
 
-.btn-filter:hover {
-    background-color: var(--color-gold-light);
-    color: var(--color-midnight-blue);
-    border-color: var(--color-gold);
+@media (hover: hover) {
+    .btn-filter:hover {
+        background-color: var(--color-gold-light);
+        color: var(--color-midnight-blue);
+        border-color: var(--color-gold);
+    }
 }
 
 /* Active state for filters (added by JavaScript) */
