@@ -327,6 +327,11 @@ main {
     font-weight: 600;
 }
 
+/* Prevent sticky focus outline on mobile after tapping */
+.btn-filter:focus {
+    outline: none;
+}
+
 /* Load More button */
 .btn-load-more {
     background-color: transparent;
