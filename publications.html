@@ -167,6 +167,8 @@ Background image (immediately before the closing HEAD tag
   <script src="assets/js/search.js"></script>
 
 
+
+
   <script>
     (function() {
       'use strict';
@@ -189,278 +191,9 @@ Background image (immediately before the closing HEAD tag
       let allJournals = [];
 
       const searchInput = document.getElementById('search-input');
+      const autocompleteDropdown = document.getElementById('autocomplete-dropdown');
+      let suggestionPool = [];
 
-                          // ------------------------------------------------------------------
-                          // AUTOCOMPLETE FOR SEARCH
-                          // ------------------------------------------------------------------
-                          const autocompleteDropdown = document.getElementById('autocomplete-dropdown');
-                          let suggestionPool = [];      // unique words from titles and summaries
-                          
-                          // Build suggestion pool from all publication entries
-                          
-      
-function buildSuggestionPool() {
-    if (suggestionPool.length > 0) return;
-    const freqMap = new Map();
-    const processField = (text) => {
-        if (text && typeof SiteUtils.cleanSearchTerm === 'function') {
-            const words = SiteUtils.cleanSearchTerm(text);
-            words.forEach(w => freqMap.set(w, (freqMap.get(w) || 0) + 1));
-            for (let i = 0; i < words.length - 1; i++) {
-                const bigram = words[i] + ' ' + words[i+1];
-                freqMap.set(bigram, (freqMap.get(bigram) || 0) + 1);
-            }
-        }
-    };
-    state.allItems.forEach(pub => {
-        processField(pub.title);
-        processField(pub.summary);
-    });
-    suggestionPool = [...freqMap.entries()].sort((a, b) => b[1] - a[1]).map(e => e[0]);
-}
-
-
-
-
-
-
-      function showAutocomplete(directMatches, spellSuggestions) {
-    if (!autocompleteDropdown) return;
-            // Remove any previous tooltip from the search container
-    const oldTooltip = document.querySelector('#search-container .search-tips-tooltip');
-    if (oldTooltip) oldTooltip.remove();
-    autocompleteDropdown.innerHTML = '';
-
-    // If no direct matches and no spell suggestions, close the dropdown
-    if (directMatches.length === 0 && (!spellSuggestions || spellSuggestions.length === 0)) {
-        autocompleteDropdown.classList.add('hidden');
-        return;
-    }
-
-    // Show spell‑correction header when no direct matches
-    if (directMatches.length === 0 && spellSuggestions && spellSuggestions.length > 0) {
-       
-      
-        // ---- Row: "No direct matches" + "? Search tips" ----
-        const headerRow = document.createElement('div');
-        headerRow.style.cssText = 'display:flex; align-items:center; gap:var(--space-md); padding: var(--space-xs) var(--space-sm);';
-
-        // Left part: "No direct matches"
-        const noMatch = document.createElement('span');
-        noMatch.style.cssText = 'font-size: var(--font-size-sm); color: var(--color-text-muted); font-style: italic;';
-        noMatch.textContent = 'No direct matches';
-        headerRow.appendChild(noMatch);
-
-        // Right part: wrapper around the tips link (so tooltip positions relative to this)
-        const tipsWrapper = document.createElement('span');
-        tipsWrapper.style.cssText = 'position: relative; display: inline-block;';
-
-        // "? Search tips" link
-        const tipsLink = document.createElement('span');
-tipsLink.className = 'search-tips-trigger-link';
-tipsLink.style.cssText = 'font-size: var(--font-size-sm); color: var(--color-midnight-blue); text-decoration: underline; cursor: pointer; white-space: nowrap;';
-tipsLink.innerHTML = '[ <i class="fas fa-question-circle"></i> Search tips ]';
-              tipsWrapper.appendChild(tipsLink);
-
-        // ---- Tooltip (hidden, appears below the link on click) ----
-        const tooltip = document.createElement('div');
-         tooltip.className = 'search-tips-tooltip';   
-        tooltip.style.cssText = 'display:none; position:absolute; top:100%; right:0; background:var(--color-white); border:1px solid var(--color-border); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:var(--space-md); z-index:1101; width:100%; font-size:var(--font-size-sm); line-height:1.6;';
-        // Custom tips for the Publications page (edit this HTML directly to change tips)
-        tooltip.innerHTML = `
-            <button class="search-modal-close-btn" style="position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border-radius: 50%;">&times;</button>
-            <strong>Search Tips:</strong><br><br>
-            · If results are already filtered, click <i class="fas fa-undo"></i> <strong>Reset</strong> to see all publications.<br>
-            · Use the <strong>central search</strong> <i class="fas fa-search"></i> in the navigation bar for a broader search across the whole site.<br>
-            · Try different keywords or check your spelling.<br>
-            · Use <strong>Filter</strong> <i class="fas fa-filter"></i> and <strong>Sort</strong> <i class="fas fa-sort"></i> to narrow by year, journal, or authorship.<br>
-            · This search looks at titles and summaries – not the full text of every publication.
-        `;
-        
-        // -------------------------------------------------
-
-        // Show/hide tooltip when clicking "Search tips"
-        tipsLink.addEventListener('click', function(e) {
-            e.stopPropagation();
-            if (tooltip.style.display === 'block') {
-                tooltip.style.display = 'none';
-            } else {
-                tooltip.style.display = 'block';
-            }
-        });
-
-        // Close tooltip with the X button
-        tooltip.querySelector('.search-modal-close-btn').addEventListener('click', function() {
-            tooltip.style.display = 'none';
-        });
-
-        // Close tooltip when clicking anywhere outside the dropdown
-                document.addEventListener('click', function closeTooltip(e) {
-            const searchContainer = document.getElementById('search-container');
-            if (searchContainer && !searchContainer.contains(e.target)) {
-                tooltip.style.display = 'none';
-            }
-        });
-
-        headerRow.appendChild(tipsWrapper);
-        autocompleteDropdown.appendChild(headerRow);
-        document.getElementById('search-container').appendChild(tooltip);
-        // -------------------------------------------------
-
-
-
-
-
-      
-
-        // "Suggestions:" label
-        const label = document.createElement('div');
-        label.style.cssText = 'padding: 2px var(--space-sm); font-size: 0.7rem; color: var(--color-gold); font-weight: 600; text-transform: uppercase;';
-        label.textContent = 'Suggestions:';
-        autocompleteDropdown.appendChild(label);
-
-        // Add each corrected suggestion
-        spellSuggestions.forEach(sug => {
-            const item = document.createElement('div');
-            item.className = 'search-modal-autocomplete-item';
-            item.textContent = sug;
-            item.style.cssText = 'padding: var(--space-sm) var(--space-md); cursor: pointer; font-size: var(--font-size-base); color: var(--color-text-main); min-height: 44px; display: flex; align-items: center; touch-action: manipulation;';
-            item.addEventListener('click', () => {
-                searchInput.value = sug;
-                autocompleteDropdown.classList.add('hidden');
-                handleSearchInput();
-            });
-            item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--color-hover-bg)');
-            item.addEventListener('mouseleave', () => item.style.backgroundColor = '');
-            
-          
-          
-
-          
-            autocompleteDropdown.appendChild(item);
-        });
-        autocompleteDropdown.classList.remove('hidden');
-        return;
-    }
-
-    // Normal direct matches
-    directMatches.forEach(match => {
-        const item = document.createElement('div');
-        item.className = 'search-modal-autocomplete-item';
-        item.textContent = match;
-        item.style.cssText = 'padding: var(--space-sm) var(--space-md); cursor: pointer; font-size: var(--font-size-base); color: var(--color-text-main); min-height: 44px; display: flex; align-items: center; touch-action: manipulation;';
-        item.addEventListener('click', () => {
-            searchInput.value = match;
-            autocompleteDropdown.classList.add('hidden');
-            handleSearchInput();
-        });
-        item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--color-hover-bg)');
-        item.addEventListener('mouseleave', () => item.style.backgroundColor = '');
-        autocompleteDropdown.appendChild(item);
-    });
-    autocompleteDropdown.classList.remove('hidden');
-}
-      
-
-
-      
-                          
-
-
-
-
-
-
-
-      
-                        
-      function handleAutocomplete() {
-    const query = searchInput.value.trim().toLowerCase();
-    if (query.length === 0) {
-        autocompleteDropdown.classList.add('hidden');
-        return;
-    }
-    const directMatches = suggestionPool.filter(word => word.includes(query)).slice(0, 8);
-    let spellSugg = [];
-    if (directMatches.length === 0) {
-        spellSugg = findSpellSuggestions(query, suggestionPool);
-    }
-    showAutocomplete(directMatches, spellSugg);
-}
-      
-
-
-
-
-
-      
-                          
-                          // Close dropdown when clicking outside
-                          document.addEventListener('click', function(e) {
-    const tooltip = document.querySelector('.search-tips-tooltip');
-    if (autocompleteDropdown && !searchInput.contains(e.target) && !autocompleteDropdown.contains(e.target)) {
-        if (tooltip && tooltip.contains(e.target)) return;   // allow clicks inside the tooltip
-        autocompleteDropdown.classList.add('hidden');
-    }
-});
-                          
-                         
-      
-      
-      // Keyboard: Escape closes the dropdown
-
-
-
-
-searchInput.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        autocompleteDropdown.classList.add('hidden');
-        return;
-    }
-    if (!autocompleteDropdown || autocompleteDropdown.classList.contains('hidden')) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            autocompleteDropdown.classList.add('hidden');
-            handleSearchInput();   // triggers search immediately
-        }
-        return;
-    }
-    const items = autocompleteDropdown.querySelectorAll('div');
-    let idx = Array.from(items).findIndex(el => el.style.backgroundColor === 'var(--color-hover-bg)' || el.style.backgroundColor === 'rgb(248, 249, 250)');
-    if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        idx = (idx + 1) % items.length;
-        highlightBlogItem(items, idx);
-    } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        idx = (idx - 1 + items.length) % items.length;
-        highlightBlogItem(items, idx);
-    } else if (e.key === 'Enter') {
-        e.preventDefault();
-        if (idx >= 0) {
-            items[idx].click();
-        } else {
-            autocompleteDropdown.classList.add('hidden');
-            handleSearchInput();
-        }
-    }
-});
-
-      
-
-function highlightBlogItem(items, index) {
-    items.forEach((item, i) => {
-        item.style.backgroundColor = i === index ? 'var(--color-hover-bg)' : '';
-    });
-    if (items[index]) {
-        items[index].scrollIntoView({ block: 'nearest' });
-    }
-}
-
-      
-
-
-      
       const filterBtn = document.getElementById('filter-btn');
       const sortBtn = document.getElementById('sort-btn');
       const resetBtn = document.getElementById('reset-btn');
@@ -470,49 +203,35 @@ function highlightBlogItem(items, index) {
       const publicationsContainer = document.getElementById('publications-list');
       const loadMoreBtn = document.getElementById('load-more-btn');
 
+      // ------- Spell‑correction helpers -------
+      function editDistance(a, b) {
+          const alen = a.length, blen = b.length;
+          const dp = Array.from({ length: alen + 1 }, () => Array(blen + 1).fill(0));
+          for (let i = 0; i <= alen; i++) dp[i][0] = i;
+          for (let j = 0; j <= blen; j++) dp[0][j] = j;
+          for (let i = 1; i <= alen; i++) {
+              for (let j = 1; j <= blen; j++) {
+                  dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1] : Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1;
+              }
+          }
+          return dp[alen][blen];
+      }
 
-
-
-
-      
-      
-     // ------- Spell‑correction helpers -------
-function editDistance(a, b) {
-    const alen = a.length, blen = b.length;
-    const dp = Array.from({ length: alen + 1 }, () => Array(blen + 1).fill(0));
-    for (let i = 0; i <= alen; i++) dp[i][0] = i;
-    for (let j = 0; j <= blen; j++) dp[0][j] = j;
-    for (let i = 1; i <= alen; i++) {
-        for (let j = 1; j <= blen; j++) {
-            dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1] : Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1;
-        }
-    }
-    return dp[alen][blen];
-}
-
-function findSpellSuggestions(query, pool) {
-    if (!query || query.length < 3) return [];
-    const q = query.toLowerCase().trim();
-    const maxDist = 2;
-    let best = [];
-    for (const word of pool) {
-        const dist = editDistance(q, word);
-        if (dist <= maxDist) {
-            best.push({ word, dist });
-        }
-    }
-    best.sort((a, b) => a.dist - b.dist || a.word.localeCompare(b.word));
-    return best.slice(0, 8).map(item => item.word);
-}
-// -----------------------------------------
-
-
-
-
-      
-
-
-      
+      function findSpellSuggestions(query, pool) {
+          if (!query || query.length < 3) return [];
+          const q = query.toLowerCase().trim();
+          const maxDist = 2;
+          let best = [];
+          for (const word of pool) {
+              const dist = editDistance(q, word);
+              if (dist <= maxDist) {
+                  best.push({ word, dist });
+              }
+          }
+          best.sort((a, b) => a.dist - b.dist || a.word.localeCompare(b.word));
+          return best.slice(0, 8).map(item => item.word);
+      }
+      // -----------------------------------------
 
       function escapeHTML(text) {
         if (typeof SiteUtils !== 'undefined' && SiteUtils.escapeHTML) return SiteUtils.escapeHTML(text);
@@ -520,304 +239,445 @@ function findSpellSuggestions(query, pool) {
       }
 
       // ------------------------------------------------------------------
-      // HIGHLIGHT FUNCTIONS
+      // AUTOCOMPLETE POOL
       // ------------------------------------------------------------------
-      function updateControlHighlights() {
-        const hasFilters = state.activeFilters.year || state.activeFilters.authorship || state.activeFilters.journal;
-        const isDefaultSort = (state.activeSort.field === 'year' && state.activeSort.direction === 'desc');
-        const hasChanges = hasFilters || !isDefaultSort || state.activeSearch !== '';
-        filterBtn.classList.toggle('active', hasFilters);
-        sortBtn.classList.toggle('active', !isDefaultSort);
-        resetBtn.classList.toggle('active', hasChanges);
+      function buildSuggestionPool() {
+          if (suggestionPool.length > 0) return;
+          const freqMap = new Map();
+          const processField = (text) => {
+              if (text && typeof SiteUtils.cleanSearchTerm === 'function') {
+                  const words = SiteUtils.cleanSearchTerm(text);
+                  words.forEach(w => freqMap.set(w, (freqMap.get(w) || 0) + 1));
+                  for (let i = 0; i < words.length - 1; i++) {
+                      const bigram = words[i] + ' ' + words[i+1];
+                      freqMap.set(bigram, (freqMap.get(bigram) || 0) + 1);
+                  }
+              }
+          };
+          state.allItems.forEach(pub => {
+              processField(pub.title);
+              processField(pub.summary);
+          });
+          suggestionPool = [...freqMap.entries()].sort((a, b) => b[1] - a[1]).map(e => e[0]);
       }
 
-      function updateSearchHighlight() {
-        const box = document.getElementById('search-container');
-        if (box) box.classList.toggle('active', searchInput.value.trim().length > 0);
+      function showAutocomplete(directMatches, spellSuggestions) {
+          if (!autocompleteDropdown) return;
+          const oldTooltip = document.querySelector('#search-container .search-tips-tooltip');
+          if (oldTooltip) oldTooltip.remove();
+          autocompleteDropdown.innerHTML = '';
+          if (directMatches.length === 0 && (!spellSuggestions || spellSuggestions.length === 0)) {
+              autocompleteDropdown.classList.add('hidden');
+              return;
+          }
+          if (directMatches.length === 0 && spellSuggestions && spellSuggestions.length > 0) {
+              const headerRow = document.createElement('div');
+              headerRow.style.cssText = 'display:flex; align-items:center; gap:var(--space-md); padding: var(--space-xs) var(--space-sm);';
+              const noMatch = document.createElement('span');
+              noMatch.style.cssText = 'font-size: var(--font-size-sm); color: var(--color-text-muted); font-style: italic;';
+              noMatch.textContent = 'No direct matches';
+              headerRow.appendChild(noMatch);
+              const tipsWrapper = document.createElement('span');
+              tipsWrapper.style.cssText = 'position: relative; display: inline-block;';
+              const tipsLink = document.createElement('span');
+              tipsLink.className = 'search-tips-trigger-link';
+              tipsLink.style.cssText = 'font-size: var(--font-size-sm); color: var(--color-midnight-blue); text-decoration: underline; cursor: pointer; white-space: nowrap;';
+              tipsLink.innerHTML = '[ <i class="fas fa-question-circle"></i> Search tips ]';
+              tipsWrapper.appendChild(tipsLink);
+              const tooltip = document.createElement('div');
+              tooltip.className = 'search-tips-tooltip';
+              tooltip.style.cssText = 'display:none; position:absolute; top:100%; right:0; background:var(--color-white); border:1px solid var(--color-border); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:var(--space-md); z-index:1101; width:100%; font-size:var(--font-size-sm); line-height:1.6;';
+              tooltip.innerHTML = `
+                  <button class="search-modal-close-btn" style="position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border-radius: 50%;">&times;</button>
+                  <strong>Search Tips:</strong><br><br>
+                  · If results are already filtered, click <i class="fas fa-undo"></i> <strong>Reset</strong> to see all publications.<br>
+                  · Use the <strong>central search</strong> <i class="fas fa-search"></i> in the navigation bar for a broader search across the whole site.<br>
+                  · Try different keywords or check your spelling.<br>
+                  · Use <strong>Filter</strong> <i class="fas fa-filter"></i> and <strong>Sort</strong> <i class="fas fa-sort"></i> to narrow by year, journal, or authorship.<br>
+                  · This search looks at titles and summaries – not the full text of every publication.
+              `;
+              tipsLink.addEventListener('click', function(e) {
+                  e.stopPropagation();
+                  tooltip.style.display = (tooltip.style.display === 'block') ? 'none' : 'block';
+              });
+              tooltip.querySelector('.search-modal-close-btn').addEventListener('click', function() {
+                  tooltip.style.display = 'none';
+              });
+              document.addEventListener('click', function closeTooltip(e) {
+                  const searchContainer = document.getElementById('search-container');
+                  if (searchContainer && !searchContainer.contains(e.target)) {
+                      tooltip.style.display = 'none';
+                  }
+              });
+              headerRow.appendChild(tipsWrapper);
+              autocompleteDropdown.appendChild(headerRow);
+              document.getElementById('search-container').appendChild(tooltip);
+              const label = document.createElement('div');
+              label.style.cssText = 'padding: 2px var(--space-sm); font-size: 0.7rem; color: var(--color-gold); font-weight: 600; text-transform: uppercase;';
+              label.textContent = 'Suggestions:';
+              autocompleteDropdown.appendChild(label);
+              spellSuggestions.forEach(sug => {
+                  const item = document.createElement('div');
+                  item.className = 'search-modal-autocomplete-item';
+                  item.textContent = sug;
+                  item.style.cssText = 'padding: var(--space-sm) var(--space-md); cursor: pointer; font-size: var(--font-size-base); color: var(--color-text-main); min-height: 44px; display: flex; align-items: center; touch-action: manipulation;';
+                  item.addEventListener('click', () => {
+                      searchInput.value = sug;
+                      autocompleteDropdown.classList.add('hidden');
+                      handleSearchInput();
+                  });
+                  item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--color-hover-bg)');
+                  item.addEventListener('mouseleave', () => item.style.backgroundColor = '');
+                  autocompleteDropdown.appendChild(item);
+              });
+              autocompleteDropdown.classList.remove('hidden');
+              return;
+          }
+          directMatches.forEach(match => {
+              const item = document.createElement('div');
+              item.className = 'search-modal-autocomplete-item';
+              item.textContent = match;
+              item.style.cssText = 'padding: var(--space-sm) var(--space-md); cursor: pointer; font-size: var(--font-size-base); color: var(--color-text-main); min-height: 44px; display: flex; align-items: center; touch-action: manipulation;';
+              item.addEventListener('click', () => {
+                  searchInput.value = match;
+                  autocompleteDropdown.classList.add('hidden');
+                  handleSearchInput();
+              });
+              item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--color-hover-bg)');
+              item.addEventListener('mouseleave', () => item.style.backgroundColor = '');
+              autocompleteDropdown.appendChild(item);
+          });
+          autocompleteDropdown.classList.remove('hidden');
+      }
+
+      function handleAutocomplete() {
+          const query = searchInput.value.trim().toLowerCase();
+          if (query.length === 0) {
+              autocompleteDropdown.classList.add('hidden');
+              return;
+          }
+          const directMatches = suggestionPool.filter(word => word.includes(query)).slice(0, 8);
+          let spellSugg = [];
+          if (directMatches.length === 0) {
+              spellSugg = findSpellSuggestions(query, suggestionPool);
+          }
+          showAutocomplete(directMatches, spellSugg);
+      }
+
+      document.addEventListener('click', function(e) {
+          const tooltip = document.querySelector('.search-tips-tooltip');
+          if (autocompleteDropdown && !searchInput.contains(e.target) && !autocompleteDropdown.contains(e.target)) {
+              if (tooltip && tooltip.contains(e.target)) return;
+              autocompleteDropdown.classList.add('hidden');
+          }
+      });
+
+      searchInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') {
+              autocompleteDropdown.classList.add('hidden');
+              return;
+          }
+          if (!autocompleteDropdown || autocompleteDropdown.classList.contains('hidden')) {
+              if (e.key === 'Enter') {
+                  e.preventDefault();
+                  autocompleteDropdown.classList.add('hidden');
+                  handleSearchInput();
+              }
+              return;
+          }
+          const items = autocompleteDropdown.querySelectorAll('div');
+          let idx = Array.from(items).findIndex(el => el.style.backgroundColor === 'var(--color-hover-bg)' || el.style.backgroundColor === 'rgb(248, 249, 250)');
+          if (e.key === 'ArrowDown') {
+              e.preventDefault();
+              idx = (idx + 1) % items.length;
+              highlightItem(items, idx);
+          } else if (e.key === 'ArrowUp') {
+              e.preventDefault();
+              idx = (idx - 1 + items.length) % items.length;
+              highlightItem(items, idx);
+          } else if (e.key === 'Enter') {
+              e.preventDefault();
+              if (idx >= 0) {
+                  items[idx].click();
+              } else {
+                  autocompleteDropdown.classList.add('hidden');
+                  handleSearchInput();
+              }
+          }
+      });
+
+      function highlightItem(items, index) {
+          items.forEach((item, i) => {
+              item.style.backgroundColor = i === index ? 'var(--color-hover-bg)' : '';
+          });
+          if (items[index]) {
+              items[index].scrollIntoView({ block: 'nearest' });
+          }
       }
 
       // ------------------------------------------------------------------
       // LOAD DATA
       // ------------------------------------------------------------------
       async function loadPublications() {
-        try {
-          if (typeof SiteUtils === 'undefined') throw new Error('utils.js not loaded');
-          const data = await SiteUtils.loadJSON('/json/publication-list.json', true);
-          if (!data || !Array.isArray(data) || data.length === 0) {
-            showEmptyState('No content available. Check back later.');
-            return;
+          try {
+              if (typeof SiteUtils === 'undefined') throw new Error('utils.js not loaded');
+              const data = await SiteUtils.loadJSON('/json/publication-list.json', true);
+              if (!data || !Array.isArray(data) || data.length === 0) {
+                  showEmptyState('No content available. Check back later.');
+                  return;
+              }
+              state.allItems = data;
+              allYears = [...new Set(data.map(p => p.year))].filter(Boolean).sort();
+              allJournals = [...new Set(data.map(p => p.journal))].filter(Boolean).sort();
+              buildSuggestionPool();
+              populateFilterDropdowns();
+              applyAllFilters();
+          } catch (e) {
+              console.error(e);
+              showEmptyState('No content available. Check back later.');
           }
-          state.allItems = data;
-          allYears = [...new Set(data.map(p => p.year))].filter(Boolean).sort();
-          allJournals = [...new Set(data.map(p => p.journal))].filter(Boolean).sort();
-          buildSuggestionPool(); 
-          populateFilterDropdowns();
-          applyAllFilters();
-        } catch (e) {
-          console.error(e);
-          showEmptyState('No content available. Check back later.');
-        }
       }
 
       function showEmptyState(msg) {
-        if (publicationsContainer) publicationsContainer.innerHTML = `<p class="text-center paragraph">${escapeHTML(msg)}</p>`;
-        if (loadMoreBtn) loadMoreBtn.classList.add('hidden');
+          if (publicationsContainer) publicationsContainer.innerHTML = `<p class="text-center paragraph">${escapeHTML(msg)}</p>`;
+          if (loadMoreBtn) loadMoreBtn.classList.add('hidden');
       }
 
       // ------------------------------------------------------------------
       // FILTER / SORT / SEARCH
       // ------------------------------------------------------------------
-      
-      
       function applyAllFilters() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        let items = [...state.allItems];
-
-
-if (state.activeSearch) {
-    const rawQuery = state.activeSearch.toLowerCase().trim();
-    const searchWords = (typeof SiteUtils.cleanSearchTerm === 'function')
-        ? SiteUtils.cleanSearchTerm(state.activeSearch)
-        : rawQuery.split(/\s+/).filter(w => w.length > 0);
-    const finalWords = searchWords.length > 0 ? searchWords : [rawQuery];
-
-    items = items.filter(pub => {
-        const haystack = [
-            pub.title,
-            pub.summary
-        ].join(' ').toLowerCase().replace(/[^\w\s-]/g, '');
-
-        return finalWords.every(word => {
-            if (haystack.includes(word)) return true;
-            if (typeof SiteUtils.stem === 'function') {
-                const stemmedWord = SiteUtils.stem(word);
-                if (stemmedWord !== word && haystack.includes(stemmedWord)) return true;
-            }
-            return false;
-        });
-    });
-}
-
-        
-        
-        if (state.activeFilters.year) items = items.filter(p => p.year == state.activeFilters.year);
-        if (state.activeFilters.authorship) items = items.filter(p => p.authorship === state.activeFilters.authorship);
-        if (state.activeFilters.journal) items = items.filter(p => p.journal === state.activeFilters.journal);
-
-        const { field, direction } = state.activeSort;
-        if (field === 'year') {
-          items.sort((a, b) => ((parseInt(b.year)||0) - (parseInt(a.year)||0)) * (direction === 'desc' ? 1 : -1));
-        } else if (field === 'authorship') {
-          items.sort((a, b) => {
-            if (a.authorship === 'First/Corresponding author' && b.authorship !== 'First/Corresponding author') return -1;
-            if (a.authorship !== 'First/Corresponding author' && b.authorship === 'First/Corresponding author') return 1;
-            return 0;
-          });
-        }
-
-        state.filteredItems = items;
-        state.currentPage = 1;
-        hideLoadMoreButton();
-        renderCurrentPage();
-        updateControlHighlights();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          let items = [...state.allItems];
+          if (state.activeSearch) {
+              const rawQuery = state.activeSearch.toLowerCase().trim();
+              const searchWords = (typeof SiteUtils.cleanSearchTerm === 'function')
+                  ? SiteUtils.cleanSearchTerm(state.activeSearch)
+                  : rawQuery.split(/\s+/).filter(w => w.length > 0);
+              const finalWords = searchWords.length > 0 ? searchWords : [rawQuery];
+              items = items.filter(pub => {
+                  const haystack = [
+                      pub.title,
+                      pub.summary
+                  ].join(' ').toLowerCase().replace(/[^\w\s-]/g, '');
+                  return finalWords.every(word => {
+                      if (haystack.includes(word)) return true;
+                      if (typeof SiteUtils.stem === 'function') {
+                          const stemmedWord = SiteUtils.stem(word);
+                          if (stemmedWord !== word && haystack.includes(stemmedWord)) return true;
+                      }
+                      return false;
+                  });
+              });
+          }
+          if (state.activeFilters.year) items = items.filter(p => p.year == state.activeFilters.year);
+          if (state.activeFilters.authorship) items = items.filter(p => p.authorship === state.activeFilters.authorship);
+          if (state.activeFilters.journal) items = items.filter(p => p.journal === state.activeFilters.journal);
+          const { field, direction } = state.activeSort;
+          if (field === 'year') {
+              items.sort((a, b) => ((parseInt(b.year)||0) - (parseInt(a.year)||0)) * (direction === 'desc' ? 1 : -1));
+          } else if (field === 'authorship') {
+              items.sort((a, b) => {
+                  if (a.authorship === 'First/Corresponding author' && b.authorship !== 'First/Corresponding author') return -1;
+                  if (a.authorship !== 'First/Corresponding author' && b.authorship === 'First/Corresponding author') return 1;
+                  return 0;
+              });
+          }
+          state.filteredItems = items;
+          state.currentPage = 1;
+          hideLoadMoreButton();
+          renderCurrentPage();
+          updateControlHighlights();
       }
 
-      function updateActiveSortUI() {
-        const span = sortBtn.querySelector('span');
-        if (!span) return;
-        if (state.activeSort.field === 'year') span.textContent = state.activeSort.direction === 'desc' ? 'Sort: Newest' : 'Sort: Oldest';
-        else span.textContent = 'Sort: Authorship';
+      function updateControlHighlights() {
+          const hasFilters = state.activeFilters.year || state.activeFilters.authorship || state.activeFilters.journal;
+          const isDefaultSort = (state.activeSort.field === 'year' && state.activeSort.direction === 'desc');
+          const hasChanges = hasFilters || !isDefaultSort || state.activeSearch !== '';
+          filterBtn.classList.toggle('active', hasFilters);
+          sortBtn.classList.toggle('active', !isDefaultSort);
+          resetBtn.classList.toggle('active', hasChanges);
+      }
+
+      function updateSearchHighlight() {
+          const box = document.getElementById('search-container');
+          if (box) box.classList.toggle('active', searchInput.value.trim().length > 0);
       }
 
       function handleSearchInput() {
-        state.activeSearch = searchInput.value.trim();
-        updateSearchHighlight();
-        applyAllFilters();
+          state.activeSearch = searchInput.value.trim();
+          updateSearchHighlight();
+          applyAllFilters();
       }
 
       function handleFilterApply() {
-        state.activeFilters.year = document.getElementById('filter-year').value || null;
-        state.activeFilters.authorship = document.getElementById('filter-authorship').value || null;
-        state.activeFilters.journal = document.getElementById('filter-journal').value || null;
-        closeFilterDropdown();
-        applyAllFilters();
+          state.activeFilters.year = document.getElementById('filter-year').value || null;
+          state.activeFilters.authorship = document.getElementById('filter-authorship').value || null;
+          state.activeFilters.journal = document.getElementById('filter-journal').value || null;
+          closeFilterDropdown();
+          applyAllFilters();
       }
 
       function handleSortOption(opt) {
-        if (opt === 'year-desc') state.activeSort = { field: 'year', direction: 'desc' };
-        else if (opt === 'year-asc') state.activeSort = { field: 'year', direction: 'asc' };
-        else state.activeSort = { field: 'authorship', direction: 'asc' };
-        updateActiveSortUI();
-        closeSortDropdown();
-        applyAllFilters();
+          if (opt === 'year-desc') state.activeSort = { field: 'year', direction: 'desc' };
+          else if (opt === 'year-asc') state.activeSort = { field: 'year', direction: 'asc' };
+          else state.activeSort = { field: 'authorship', direction: 'asc' };
+          updateActiveSortUI();
+          closeSortDropdown();
+          applyAllFilters();
       }
 
       function handleReset() {
-        searchInput.value = '';
-        state.activeSearch = '';
-        state.activeFilters = { year: null, authorship: null, journal: null };
-        state.activeSort = { field: 'year', direction: 'desc' };
-        document.getElementById('filter-year').value = '';
-        document.getElementById('filter-authorship').value = '';
-        document.getElementById('filter-journal').value = '';
-        updateActiveSortUI();
-        updateSearchHighlight();
-        applyAllFilters();
+          searchInput.value = '';
+          state.activeSearch = '';
+          state.activeFilters = { year: null, authorship: null, journal: null };
+          state.activeSort = { field: 'year', direction: 'desc' };
+          document.getElementById('filter-year').value = '';
+          document.getElementById('filter-authorship').value = '';
+          document.getElementById('filter-journal').value = '';
+          updateActiveSortUI();
+          updateSearchHighlight();
+          applyAllFilters();
+      }
+
+      function updateActiveSortUI() {
+          const span = sortBtn.querySelector('span');
+          if (!span) return;
+          if (state.activeSort.field === 'year') span.textContent = state.activeSort.direction === 'desc' ? 'Sort: Newest' : 'Sort: Oldest';
+          else span.textContent = 'Sort: Authorship';
       }
 
       // ------------------------------------------------------------------
       // DROPDOWNS
       // ------------------------------------------------------------------
       function populateFilterDropdowns() {
-        const yearSel = document.getElementById('filter-year');
-        const jSel = document.getElementById('filter-journal');
-        yearSel.innerHTML = '<option value="">All years</option>';
-        allYears.forEach(y => yearSel.add(new Option(y, y)));
-        jSel.innerHTML = '<option value="">All journals</option>';
-        allJournals.forEach(j => jSel.add(new Option(j, j)));
+          const yearSel = document.getElementById('filter-year');
+          const jSel = document.getElementById('filter-journal');
+          yearSel.innerHTML = '<option value="">All years</option>';
+          allYears.forEach(y => yearSel.add(new Option(y, y)));
+          jSel.innerHTML = '<option value="">All journals</option>';
+          allJournals.forEach(j => jSel.add(new Option(j, j)));
       }
 
       function closeFilterDropdown() { filterDropdown.classList.add('hidden'); }
       function closeSortDropdown() { sortDropdown.classList.add('hidden'); }
 
-            filterBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        closeSortDropdown();
-        filterDropdown.classList.toggle('hidden');
-        e.target.blur();
+      filterBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          closeSortDropdown();
+          filterDropdown.classList.toggle('hidden');
+          e.target.blur();
       });
       sortBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        closeFilterDropdown();
-        sortDropdown.classList.toggle('hidden');
-        e.target.blur();
+          e.stopPropagation();
+          closeFilterDropdown();
+          sortDropdown.classList.toggle('hidden');
+          e.target.blur();
       });
-
-      
       document.addEventListener('click', (event) => {
-        if (!filterDropdown.contains(event.target) && event.target !== filterBtn && !filterBtn.contains(event.target)) closeFilterDropdown();
-        if (!sortDropdown.contains(event.target) && event.target !== sortBtn && !sortBtn.contains(event.target)) closeSortDropdown();
+          if (!filterDropdown.contains(event.target) && event.target !== filterBtn && !filterBtn.contains(event.target)) closeFilterDropdown();
+          if (!sortDropdown.contains(event.target) && event.target !== sortBtn && !sortBtn.contains(event.target)) closeSortDropdown();
       });
-
-      applyFilterBtn.addEventListener('click', function(e) {
-        handleFilterApply();
-        e.target.blur();
+      applyFiltersBtn.addEventListener('click', function(e) {
+          handleFilterApply();
+          e.target.blur();
       });
       sortDropdown.addEventListener('click', (e) => {
-        const btn = e.target.closest('button[data-sort]');
-        if (btn) handleSortOption(btn.dataset.sort);
+          const btn = e.target.closest('button[data-sort]');
+          if (btn) handleSortOption(btn.dataset.sort);
       });
 
       // ------------------------------------------------------------------
       // RENDER
       // ------------------------------------------------------------------
-function renderCurrentPage() {
-    if (!publicationsContainer) return;
-    const end = state.currentPage * state.itemsPerPage;
-    const itemsToShow = state.filteredItems.slice(0, end);
+      function renderCurrentPage() {
+          if (!publicationsContainer) return;
+          const end = state.currentPage * state.itemsPerPage;
+          const itemsToShow = state.filteredItems.slice(0, end);
+          let html = '';
+          itemsToShow.forEach((pub, i) => {
+              const authorClass = pub.authorship === 'First/Corresponding author' ? 'authorship-first' : 'authorship-coauthor';
+              const authorTag = pub.authorship ? `<div class="publication-authorship ${authorClass}" style="margin-bottom: 0;">${escapeHTML(pub.authorship)}</div>` : '';
+              let btns = '';
+              if (pub.pubmedLink) btns += `<a href="${escapeHTML(pub.pubmedLink)}" class="btn btn-text" target="_blank" rel="noopener" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-external-link-alt mr-xs"></i>PubMed </a>`;
+              if (pub.journalLink) btns += `<a href="${escapeHTML(pub.journalLink)}" class="btn btn-text" target="_blank" rel="noopener" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-external-link-alt mr-xs"></i>Journal </a>`;
+              if (pub.blogLink) btns += `<a href="${escapeHTML(pub.blogLink)}" class="btn btn-text" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-lightbulb mr-xs"></i>My insights ❯</a>`;
+              const globalIndex = (state.currentPage - 1) * state.itemsPerPage + i;
+              const rowClass = globalIndex % 2 === 0 ? 'row-even' : 'row-odd';
+              html += `
+                  <div class="publication-item ${rowClass}">
+                      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px;">
+                          ${authorTag}
+                          <span class="publication-year">${escapeHTML(pub.year)}</span>
+                      </div>
+                      <div class="publication-title">${escapeHTML(pub.title)}</div>
+                      <div class="publication-journal">${escapeHTML(pub.journal || '')}</div>
+                      ${btns ? `<div class="publication-buttons">${btns}</div>` : ''}
+                  </div>
+              `;
+              if ((i + 1) % state.itemsPerPage === 0 && (i + 1) < itemsToShow.length) {
+                  const pageNumber = Math.ceil((i + 1) / state.itemsPerPage);
+                  html += `<div class="page-separator">
+                      <span class="page-sep-label">&#x25B2; PAGE ${pageNumber}</span>
+                      <div class="page-sep-line"></div>
+                      <span class="page-sep-label">&#x25BC; PAGE ${pageNumber + 1}</span>
+                  </div>`;
+              }
+          });
+          publicationsContainer.innerHTML = html;
 
-    let html = '';
-    itemsToShow.forEach((pub, i) => {
-        const authorClass = pub.authorship === 'First/Corresponding author' ? 'authorship-first' : 'authorship-coauthor';
-        const authorTag = pub.authorship ? `<div class="publication-authorship ${authorClass}" style="margin-bottom: 0;">${escapeHTML(pub.authorship)}</div>` : '';
+          // Authorship tag clickability
+          const authorTags = publicationsContainer.querySelectorAll('.publication-authorship');
+          authorTags.forEach(tag => {
+              tag.addEventListener('click', function() {
+                  const authorshipValue = this.textContent.trim();
+                  const authorshipSelect = document.getElementById('filter-authorship');
+                  if (authorshipSelect) {
+                      authorshipSelect.value = authorshipValue;
+                      state.activeFilters.authorship = authorshipValue;
+                      closeFilterDropdown();
+                      applyAllFilters();
+                  }
+              });
+          });
 
-        let btns = '';
-        if (pub.pubmedLink) btns += `<a href="${escapeHTML(pub.pubmedLink)}" class="btn btn-text" target="_blank" rel="noopener" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-external-link-alt mr-xs"></i>PubMed </a>`;
-        if (pub.journalLink) btns += `<a href="${escapeHTML(pub.journalLink)}" class="btn btn-text" target="_blank" rel="noopener" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-external-link-alt mr-xs"></i>Journal </a>`;
-        if (pub.blogLink) btns += `<a href="${escapeHTML(pub.blogLink)}" class="btn btn-text" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-lightbulb mr-xs"></i>My insights ❯</a>`;
+          // Result-count bar
+          const countBar = document.getElementById('results-count-bar');
+          if (countBar) {
+              const totalItems = state.filteredItems.length;
+              const shownItems = Math.min(state.currentPage * state.itemsPerPage, totalItems);
+              const totalPages = Math.max(1, Math.ceil(totalItems / state.itemsPerPage));
+              const pageWord = state.currentPage === 1 ? 'page' : 'pages';
+              countBar.innerHTML =
+                  '<span>Showing <span style="color:var(--color-midnight-blue); font-weight:600;">' + shownItems + '</span> of <span style="color:var(--color-midnight-blue); font-weight:600;">' + totalItems + '</span> publications</span>' +
+                  ' <span>( <span style="color:var(--color-midnight-blue); font-weight:600;">' + state.currentPage + '</span> ' + pageWord + ' of <span style="color:var(--color-midnight-blue); font-weight:600;">' + totalPages + '</span> )</span>';
+          }
 
-        // Determine alternating row class based on global index
-        const globalIndex = (state.currentPage - 1) * state.itemsPerPage + i;
-        const rowClass = globalIndex % 2 === 0 ? 'row-even' : 'row-odd';
-
-                  html += `
-            <div class="publication-item ${rowClass}">
-                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px;">
-                    ${authorTag}
-                    <span class="publication-year">${escapeHTML(pub.year)}</span>
-                </div>
-                <div class="publication-title">${escapeHTML(pub.title)}</div>
-                <div class="publication-journal">${escapeHTML(pub.journal || '')}</div>
-                ${btns ? `<div class="publication-buttons">${btns}</div>` : ''}
-            </div>
-          `;
-
-        if ((i + 1) % state.itemsPerPage === 0 && (i + 1) < itemsToShow.length) {
-            const pageNumber = Math.ceil((i + 1) / state.itemsPerPage);
-            html += `<div class="page-separator">
-                <span class="page-sep-label">&#x25B2; PAGE ${pageNumber}</span>
-                <div class="page-sep-line"></div>
-                <span class="page-sep-label">&#x25BC; PAGE ${pageNumber + 1}</span>
-            </div>`;
-        }
-    });
-
-    publicationsContainer.innerHTML = html;
-
-
-    // Make authorship tags clickable (filter by authorship)
-    const authorTags = publicationsContainer.querySelectorAll('.publication-authorship');
-    authorTags.forEach(tag => {
-        tag.addEventListener('click', function() {
-            const authorshipValue = this.textContent.trim();
-            // Set the filter dropdown and apply
-            const authorshipSelect = document.getElementById('filter-authorship');
-            if (authorshipSelect) {
-                authorshipSelect.value = authorshipValue;
-                state.activeFilters.authorship = authorshipValue;
-                closeFilterDropdown();   // if the filter dropdown is open
-                applyAllFilters();
-            }
-        });
-    });
-
-
-
-
-
-  
-    // Update result-count bar
-    const countBar = document.getElementById('results-count-bar');
-    if (countBar) {
-        const totalItems = state.filteredItems.length;
-        const shownItems = Math.min(state.currentPage * state.itemsPerPage, totalItems);
-        const totalPages = Math.max(1, Math.ceil(totalItems / state.itemsPerPage));
-        const pageWord = state.currentPage === 1 ? 'page' : 'pages';
-
-        countBar.innerHTML =
-            '<span>Showing <span style="color:var(--color-midnight-blue); font-weight:600;">' + shownItems + '</span> of <span style="color:var(--color-midnight-blue); font-weight:600;">' + totalItems + '</span> publications</span>' +
-            ' <span>( <span style="color:var(--color-midnight-blue); font-weight:600;">' + state.currentPage + '</span> ' + pageWord + ' of <span style="color:var(--color-midnight-blue); font-weight:600;">' + totalPages + '</span> )</span>';
-    }
-
-    // Load More button visibility
-    if (state.filteredItems.length > end) {
-        loadMoreBtn.classList.remove('hidden');
-        if (isLoadingMore) {
-            loadMoreBtn.disabled = true;
-            loadMoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-sm"></i>Loading...';
-        } else {
-            loadMoreBtn.disabled = false;
-            loadMoreBtn.textContent = 'Load More';
-        }
-    } else {
-        hideLoadMoreButton();
-    }
-}
-
-
-      
+          if (state.filteredItems.length > end) {
+              loadMoreBtn.classList.remove('hidden');
+              if (isLoadingMore) {
+                  loadMoreBtn.disabled = true;
+                  loadMoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-sm"></i>Loading...';
+              } else {
+                  loadMoreBtn.disabled = false;
+                  loadMoreBtn.textContent = 'Load More';
+              }
+          } else {
+              hideLoadMoreButton();
+          }
+      }
 
       function hideLoadMoreButton() { if (loadMoreBtn) loadMoreBtn.classList.add('hidden'); }
 
       loadMoreBtn.addEventListener('click', async () => {
-        if (isLoadingMore || loadMoreBtn.disabled) return;
-        isLoadingMore = true;
-        loadMoreBtn.disabled = true;
-        loadMoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-sm"></i>Loading...';
-        await new Promise(r => setTimeout(r, 100));
-        state.currentPage++;
-        isLoadingMore = false;
-        renderCurrentPage();
+          if (isLoadingMore || loadMoreBtn.disabled) return;
+          isLoadingMore = true;
+          loadMoreBtn.disabled = true;
+          loadMoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-sm"></i>Loading...';
+          await new Promise(r => setTimeout(r, 100));
+          state.currentPage++;
+          isLoadingMore = false;
+          renderCurrentPage();
       });
 
       // ------------------------------------------------------------------
@@ -825,51 +685,49 @@ function renderCurrentPage() {
       // ------------------------------------------------------------------
       const debouncedSearch = (typeof SiteUtils !== 'undefined' && SiteUtils.debounce) ? SiteUtils.debounce(handleSearchInput, 300) : handleSearchInput;
       searchInput.addEventListener('input', function(e) {
-        debouncedSearch();
-        handleAutocomplete();
+          debouncedSearch();
+          handleAutocomplete();
       });
-            resetBtn.addEventListener('click', function(e) {
-        handleReset();
-        e.target.blur();
+      resetBtn.addEventListener('click', function(e) {
+          handleReset();
+          e.target.blur();
       });
 
       // ------------------------------------------------------------------
       // INIT
       // ------------------------------------------------------------------
-            async function initPubs() {
-    if (typeof SiteUtils !== 'undefined' && SiteUtils.waitForDOM) await SiteUtils.waitForDOM();
-    await loadPublications();
-
-    // ---- Auto‑filter if coming from search results ----
-    const urlParams = new URLSearchParams(window.location.search);
-    const searchParam = urlParams.get('search');
-    if (searchParam && searchInput) {
-        // Reset all active filters and sort to defaults
-        state.activeFilters = { year: null, authorship: null, journal: null };
-        state.activeSort    = { field: 'year', direction: 'desc' };
-
-        // Also reset the filter‑dropdowns on screen
-        const filterYear = document.getElementById('filter-year');
-        const filterAuthor = document.getElementById('filter-authorship');
-        const filterJournal = document.getElementById('filter-journal');
-        if (filterYear) filterYear.value = '';
-        if (filterAuthor) filterAuthor.value = '';
-        if (filterJournal) filterJournal.value = '';
-
-        // Now apply the search term
-        searchInput.value = searchParam;
-        handleSearchInput();                 // triggers applyAllFilters with fresh state
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-    // -------------------------------------------------
-
-    updateActiveSortUI();
-    updateControlHighlights();
-}
+      async function initPubs() {
+          if (typeof SiteUtils !== 'undefined' && SiteUtils.waitForDOM) await SiteUtils.waitForDOM();
+          await loadPublications();
+          const urlParams = new URLSearchParams(window.location.search);
+          const searchParam = urlParams.get('search');
+          if (searchParam && searchInput) {
+              state.activeFilters = { year: null, authorship: null, journal: null };
+              state.activeSort    = { field: 'year', direction: 'desc' };
+              const filterYear = document.getElementById('filter-year');
+              const filterAuthor = document.getElementById('filter-authorship');
+              const filterJournal = document.getElementById('filter-journal');
+              if (filterYear) filterYear.value = '';
+              if (filterAuthor) filterAuthor.value = '';
+              if (filterJournal) filterJournal.value = '';
+              searchInput.value = searchParam;
+              handleSearchInput();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+          updateActiveSortUI();
+          updateControlHighlights();
+      }
 
       if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPubs);
       else initPubs();
     })();
-  </script>
+</script>
+
+
+
+
+  
+
+  
 </body>
 </html>
