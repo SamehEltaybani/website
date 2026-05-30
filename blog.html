@@ -480,14 +480,17 @@ Background image (immediately before the closing HEAD tag
                   ' <span>( <span style="color:var(--color-midnight-blue); font-weight:600;">' + state.currentPage + '</span> ' + pageWord + ' of <span style="color:var(--color-midnight-blue); font-weight:600;">' + totalPages + '</span> )</span>';
           }
 
-          // Category tag clicks
-          const categoryTags = blogListContainer.querySelectorAll('.blog-category');
-          categoryTags.forEach(tag => {
-              tag.addEventListener('click', function() {
-                  const cat = this.getAttribute('data-category');
-                  if (cat) quickFilterByCategory(cat);
-              });
-          });
+              // Attach click handlers to category tags
+    const categoryTags = blogListContainer.querySelectorAll('.blog-category');
+    categoryTags.forEach(tag => {
+        tag.addEventListener('click', function() {
+            const cat = this.getAttribute('data-category');
+            if (cat) {
+                quickFilterByCategory(cat);
+                setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
+            }
+        });
+    });
 
           if (state.filteredItems.length > end) {
               loadMoreBtn.classList.remove('hidden');
