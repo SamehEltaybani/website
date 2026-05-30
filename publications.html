@@ -563,25 +563,33 @@ Background image (immediately before the closing HEAD tag
       function closeSortDropdown() { sortDropdown.classList.add('hidden'); }
 
       filterBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          closeSortDropdown();
-          filterDropdown.classList.toggle('hidden');
-          setTimeout(() => e.target.blur(), 50);
-      });
+    e.stopPropagation();
+    closeSortDropdown();
+    filterDropdown.classList.toggle('hidden');
+    e.target.style.pointerEvents = 'none';
+    setTimeout(() => { e.target.style.pointerEvents = ''; }, 10);
+});
+      
       sortBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          closeFilterDropdown();
-          sortDropdown.classList.toggle('hidden');
-          setTimeout(() => e.target.blur(), 50);
-      });
+    e.stopPropagation();
+    closeFilterDropdown();
+    sortDropdown.classList.toggle('hidden');
+    e.target.style.pointerEvents = 'none';
+    setTimeout(() => { e.target.style.pointerEvents = ''; }, 10);
+});
+      
       document.addEventListener('click', (event) => {
           if (!filterDropdown.contains(event.target) && event.target !== filterBtn && !filterBtn.contains(event.target)) closeFilterDropdown();
           if (!sortDropdown.contains(event.target) && event.target !== sortBtn && !sortBtn.contains(event.target)) closeSortDropdown();
       });
-      applyFiltersBtn.addEventListener('click', function(e) {
-          handleFilterApply();
-          setTimeout(() => e.target.blur(), 50);
-      });
+
+      applyFilterBtn.addEventListener('click', function(e) {
+    handleFilterApply();
+    e.target.style.pointerEvents = 'none';
+    setTimeout(() => { e.target.style.pointerEvents = ''; }, 10);
+});
+
+      
       sortDropdown.addEventListener('click', (e) => {
           const btn = e.target.closest('button[data-sort]');
           if (btn) handleSortOption(btn.dataset.sort);
@@ -689,9 +697,10 @@ Background image (immediately before the closing HEAD tag
           handleAutocomplete();
       });
             resetBtn.addEventListener('click', function(e) {
-        handleReset();
-        setTimeout(() => e.target.blur(), 50);   
-      });
+    handleReset();
+    e.target.style.pointerEvents = 'none';
+    setTimeout(() => { e.target.style.pointerEvents = ''; }, 10);
+});
 
       // ------------------------------------------------------------------
       // INIT
