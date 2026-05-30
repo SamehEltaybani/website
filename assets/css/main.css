@@ -1293,8 +1293,12 @@ footer .footer-copyright {
     transition: var(--transition-fast);
 }
 
-.publication-authorship:hover {
-    opacity: 0.85;
+
+@media (hover: hover) {
+    .publication-authorship:hover {
+        opacity: 0.85;
+      font-size: 1.0rem;
+    }
 }
 
 .authorship-first {
@@ -1437,14 +1441,14 @@ footer .footer-copyright {
     transition: var(--transition-fast);
 }
 
-.blog-category:hover {
-    font-size: var(--font-size-xs);
-    color: var(--color-midnight-blue);                    
-    background-color: #d3e7f0;   
-    text-decoration: underline;
+
+
+@media (hover: hover) {
+    .blog-category:hover {
+        color: var(--color-midnight-blue);
+        background-color: #d3e7f0;
+    }
 }
-
-
 
 
 /* ============================================================================
