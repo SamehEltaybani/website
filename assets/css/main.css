@@ -2330,6 +2330,22 @@ pre code {
 }
 
 
+/* ============================================================================
+   SEARCH RESULTS CARDS 
+   ============================================================================ */
+
+#search-results-list .publication-item {
+    margin-bottom: 8px;                        /* small gap between cards */
+    border: 1px solid transparent;             /* invisible border – keeps layout stable */
+    border-radius: 8px;                        /* soft corners */
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#search-results-list .publication-item:hover {
+    border-color: var(--color-gold);           /* full gold border on hover */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);   /* subtle shadow on hover */
+}
+
 /* FONT SIZE OF THE TEXT OF SEARCH RESULTS */
 #search-results-list .card-title {
     font-size: 0.9rem;          
