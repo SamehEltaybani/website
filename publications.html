@@ -562,31 +562,32 @@ Background image (immediately before the closing HEAD tag
       function closeFilterDropdown() { filterDropdown.classList.add('hidden'); }
       function closeSortDropdown() { sortDropdown.classList.add('hidden'); }
 
-      filterBtn.addEventListener('click', (e) => {
+filterBtn.addEventListener('click', function(e) {
     e.stopPropagation();
     closeSortDropdown();
     filterDropdown.classList.toggle('hidden');
-    e.target.style.pointerEvents = 'none';
-    setTimeout(() => { e.target.style.pointerEvents = ''; }, 10);
+    const btn = this;
+    setTimeout(() => btn.blur(), 0);
 });
       
-      sortBtn.addEventListener('click', (e) => {
+      sortBtn.addEventListener('click', function(e) {
     e.stopPropagation();
     closeFilterDropdown();
     sortDropdown.classList.toggle('hidden');
-    e.target.style.pointerEvents = 'none';
-    setTimeout(() => { e.target.style.pointerEvents = ''; }, 10);
+    const btn = this;
+    setTimeout(() => btn.blur(), 0);
 });
+      
       
       document.addEventListener('click', (event) => {
           if (!filterDropdown.contains(event.target) && event.target !== filterBtn && !filterBtn.contains(event.target)) closeFilterDropdown();
           if (!sortDropdown.contains(event.target) && event.target !== sortBtn && !sortBtn.contains(event.target)) closeSortDropdown();
       });
 
-      applyFilterBtn.addEventListener('click', function(e) {
+     applyFilterBtn.addEventListener('click', function(e) {
     handleFilterApply();
-    e.target.style.pointerEvents = 'none';
-    setTimeout(() => { e.target.style.pointerEvents = ''; }, 10);
+    const btn = this;
+    setTimeout(() => btn.blur(), 0);
 });
 
       
@@ -698,8 +699,8 @@ Background image (immediately before the closing HEAD tag
       });
             resetBtn.addEventListener('click', function(e) {
     handleReset();
-    e.target.style.pointerEvents = 'none';
-    setTimeout(() => { e.target.style.pointerEvents = ''; }, 10);
+    const btn = this;
+    setTimeout(() => btn.blur(), 0);
 });
 
       // ------------------------------------------------------------------
