@@ -128,7 +128,6 @@ Background image (immediately before the closing HEAD tag
           <div id="sort-dropdown" class="hidden" style="position: absolute; top: 100%; right: 0; left: auto; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 180px;">
             <button class="btn btn-text" data-sort="year-desc" style="display: block; width: 100%; text-align: left;">Newest first</button>
             <button class="btn btn-text" data-sort="year-asc" style="display: block; width: 100%; text-align: left;">Oldest first</button>
-            <button class="btn btn-text" data-sort="authorship" style="display: block; width: 100%; text-align: left;">Authorship (first/corresponding first)</button>
           </div>
         </div>
 
@@ -519,13 +518,12 @@ Background image (immediately before the closing HEAD tag
       }
 
       function handleSortOption(opt) {
-          if (opt === 'year-desc') state.activeSort = { field: 'year', direction: 'desc' };
-          else if (opt === 'year-asc') state.activeSort = { field: 'year', direction: 'asc' };
-          else state.activeSort = { field: 'authorship', direction: 'asc' };
-          updateActiveSortUI();
-          closeSortDropdown();
-          applyAllFilters();
-      }
+    if (opt === 'year-desc') state.activeSort = { field: 'year', direction: 'desc' };
+    else if (opt === 'year-asc') state.activeSort = { field: 'year', direction: 'asc' };
+    updateActiveSortUI();
+    closeSortDropdown();
+    applyAllFilters();
+}
 
       function handleReset() {
           searchInput.value = '';
