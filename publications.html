@@ -588,13 +588,16 @@ filterBtn.addEventListener('click', function(e) {
     handleFilterApply();
     const btn = this;
     setTimeout(() => btn.blur(), 0);
+    setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
 });
-
       
       sortDropdown.addEventListener('click', (e) => {
-          const btn = e.target.closest('button[data-sort]');
-          if (btn) handleSortOption(btn.dataset.sort);
-      });
+    const btn = e.target.closest('button[data-sort]');
+    if (btn) {
+        handleSortOption(btn.dataset.sort);
+        setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
+    }
+});
 
       // ------------------------------------------------------------------
       // RENDER
@@ -635,20 +638,21 @@ filterBtn.addEventListener('click', function(e) {
           });
           publicationsContainer.innerHTML = html;
 
-          // Authorship tag clickability
-          const authorTags = publicationsContainer.querySelectorAll('.publication-authorship');
-          authorTags.forEach(tag => {
-              tag.addEventListener('click', function() {
-                  const authorshipValue = this.textContent.trim();
-                  const authorshipSelect = document.getElementById('filter-authorship');
-                  if (authorshipSelect) {
-                      authorshipSelect.value = authorshipValue;
-                      state.activeFilters.authorship = authorshipValue;
-                      closeFilterDropdown();
-                      applyAllFilters();
-                  }
-              });
-          });
+              // Make authorship tags clickable (filter by authorship)
+    const authorTags = publicationsContainer.querySelectorAll('.publication-authorship');
+    authorTags.forEach(tag => {
+        tag.addEventListener('click', function() {
+            const authorshipValue = this.textContent.trim();
+            const authorshipSelect = document.getElementById('filter-authorship');
+            if (authorshipSelect) {
+                authorshipSelect.value = authorshipValue;
+                state.activeFilters.authorship = authorshipValue;
+                closeFilterDropdown();
+                applyAllFilters();
+                setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
+            }
+        });
+    });
 
           // Result-count bar
           const countBar = document.getElementById('results-count-bar');
@@ -701,6 +705,7 @@ filterBtn.addEventListener('click', function(e) {
     handleReset();
     const btn = this;
     setTimeout(() => btn.blur(), 0);
+    setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
 });
 
       // ------------------------------------------------------------------
