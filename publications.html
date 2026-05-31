@@ -100,24 +100,27 @@ Background image (immediately before the closing HEAD tag
             <span>Filter</span>
           </button>
           <div id="filter-dropdown" class="hidden" style="position: absolute; top: 100%; right: 0; left: auto; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--space-md); box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 250px;">
-            <div class="form-group">
-              <label class="form-label">Year</label>
-              <select id="filter-year" class="form-select"><option value="">All years</option></select>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Authorship</label>
-              <select id="filter-authorship" class="form-select">
-                <option value="">All</option>
-                <option value="First/Corresponding author">First/Corresponding author</option>
-                <option value="Co-author">Co-author</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Journal</label>
-              <select id="filter-journal" class="form-select"><option value="">All journals</option></select>
-            </div>
-            <button id="apply-filters-btn" class="btn btn-primary" style="width: 100%;">Apply Filters</button>
-          </div>
+    <div class="form-group">
+        <label class="form-label">Year</label>
+        <div id="filter-year-options" class="filter-checkbox-list">
+            <!-- filled by JavaScript -->
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="form-label">Authorship</label>
+        <div id="filter-authorship-options" class="filter-checkbox-list">
+            <label class="filter-checkbox-item"><input type="checkbox" value="First/Corresponding author"> First/Corresponding author</label>
+            <label class="filter-checkbox-item"><input type="checkbox" value="Co-author"> Co-author</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="form-label">Journal</label>
+        <div id="filter-journal-options" class="filter-checkbox-list">
+            <!-- filled by JavaScript -->
+        </div>
+    </div>
+    <button id="apply-filters-btn" class="btn btn-primary" style="width: 100%;">Apply Filters</button>
+</div>
         </div>
 
         <!-- SORT (dropdown opens to the left) -->
@@ -181,7 +184,7 @@ Background image (immediately before the closing HEAD tag
         filteredItems: [],
         currentPage: 1,
         itemsPerPage: 10,
-        activeFilters: { year: null, authorship: null, journal: null },
+        activeFilters: { years: [], authorships: [], journals: [] },
         activeSort: { field: 'year', direction: 'desc' },
         activeSearch: ''
       };
@@ -471,9 +474,22 @@ Background image (immediately before the closing HEAD tag
                   });
               });
           }
-          if (state.activeFilters.year) items = items.filter(p => p.year == state.activeFilters.year);
-          if (state.activeFilters.authorship) items = items.filter(p => p.authorship === state.activeFilters.authorship);
-          if (state.activeFilters.journal) items = items.filter(p => p.journal === state.activeFilters.journal);
+            
+        // Filter by selected years (any match)
+                  if (state.activeFilters.years && state.activeFilters.years.length > 0) {
+                      items = items.filter(p => state.activeFilters.years.includes(p.year));
+                  }
+                  
+        // Filter by selected authorship types
+                  if (state.activeFilters.authorships && state.activeFilters.authorships.length > 0) {
+                      items = items.filter(p => state.activeFilters.authorships.includes(p.authorship));
+                  }
+                  
+        // Filter by selected journals
+                  if (state.activeFilters.journals && state.activeFilters.journals.length > 0) {
+                      items = items.filter(p => state.activeFilters.journals.includes(p.journal));
+                  }
+        
           const { field, direction } = state.activeSort;
           if (field === 'year') {
               items.sort((a, b) => ((parseInt(b.year)||0) - (parseInt(a.year)||0)) * (direction === 'desc' ? 1 : -1));
@@ -492,7 +508,7 @@ Background image (immediately before the closing HEAD tag
       }
 
       function updateControlHighlights() {
-          const hasFilters = state.activeFilters.year || state.activeFilters.authorship || state.activeFilters.journal;
+          const hasFilters = state.activeFilters.years.length > 0 || state.activeFilters.authorships.length > 0 || state.activeFilters.journals.length > 0;
           const isDefaultSort = (state.activeSort.field === 'year' && state.activeSort.direction === 'desc');
           const hasChanges = hasFilters || !isDefaultSort || state.activeSearch !== '';
           filterBtn.classList.toggle('active', hasFilters);
@@ -524,12 +540,21 @@ Background image (immediately before the closing HEAD tag
       }
 
       function handleFilterApply() {
-          state.activeFilters.year = document.getElementById('filter-year').value || null;
-          state.activeFilters.authorship = document.getElementById('filter-authorship').value || null;
-          state.activeFilters.journal = document.getElementById('filter-journal').value || null;
-          closeFilterDropdown();
-          applyAllFilters();
-      }
+    // Collect selected years
+    const yearCheckboxes = document.querySelectorAll('#filter-year-options input[type="checkbox"]:checked');
+    state.activeFilters.years = Array.from(yearCheckboxes).map(cb => cb.value);
+
+    // Collect selected authorship types
+    const authorCheckboxes = document.querySelectorAll('#filter-authorship-options input[type="checkbox"]:checked');
+    state.activeFilters.authorships = Array.from(authorCheckboxes).map(cb => cb.value);
+
+    // Collect selected journals
+    const journalCheckboxes = document.querySelectorAll('#filter-journal-options input[type="checkbox"]:checked');
+    state.activeFilters.journals = Array.from(journalCheckboxes).map(cb => cb.value);
+
+    closeFilterDropdown();
+    applyAllFilters();
+}
 
       function handleSortOption(opt) {
     if (opt === 'year-desc') state.activeSort = { field: 'year', direction: 'desc' };
@@ -542,11 +567,16 @@ Background image (immediately before the closing HEAD tag
       function handleReset() {
           searchInput.value = '';
           state.activeSearch = '';
-          state.activeFilters = { year: null, authorship: null, journal: null };
           state.activeSort = { field: 'year', direction: 'desc' };
-          document.getElementById('filter-year').value = '';
-          document.getElementById('filter-authorship').value = '';
-          document.getElementById('filter-journal').value = '';
+          
+          state.activeFilters = { years: [], authorships: [], journals: [] };
+            // Uncheck all year checkboxes
+            document.querySelectorAll('#filter-year-options input[type="checkbox"]').forEach(cb => cb.checked = false);
+            // Uncheck all authorship checkboxes
+            document.querySelectorAll('#filter-authorship-options input[type="checkbox"]').forEach(cb => cb.checked = false);
+            // Uncheck all journal checkboxes
+            document.querySelectorAll('#filter-journal-options input[type="checkbox"]').forEach(cb => cb.checked = false);
+        
           updateActiveSortUI();
           updateSearchHighlight();
           applyAllFilters();
@@ -563,13 +593,27 @@ Background image (immediately before the closing HEAD tag
       // DROPDOWNS
       // ------------------------------------------------------------------
       function populateFilterDropdowns() {
-          const yearSel = document.getElementById('filter-year');
-          const jSel = document.getElementById('filter-journal');
-          yearSel.innerHTML = '<option value="">All years</option>';
-          allYears.forEach(y => yearSel.add(new Option(y, y)));
-          jSel.innerHTML = '<option value="">All journals</option>';
-          allJournals.forEach(j => jSel.add(new Option(j, j)));
-      }
+    const yearContainer = document.getElementById('filter-year-options');
+    const journalContainer = document.getElementById('filter-journal-options');
+
+    // Populate years
+    yearContainer.innerHTML = '';
+    allYears.forEach(y => {
+        const label = document.createElement('label');
+        label.className = 'filter-checkbox-item';
+        label.innerHTML = `<input type="checkbox" value="${y}"> ${y}`;
+        yearContainer.appendChild(label);
+    });
+
+    // Populate journals
+    journalContainer.innerHTML = '';
+    allJournals.forEach(j => {
+        const label = document.createElement('label');
+        label.className = 'filter-checkbox-item';
+        label.innerHTML = `<input type="checkbox" value="${escapeHTML(j)}"> ${escapeHTML(j)}`;
+        journalContainer.appendChild(label);
+    });
+}
 
       function closeFilterDropdown() { filterDropdown.classList.add('hidden'); }
       function closeSortDropdown() { sortDropdown.classList.add('hidden'); }
@@ -729,7 +773,7 @@ filterBtn.addEventListener('click', function(e) {
           const urlParams = new URLSearchParams(window.location.search);
           const searchParam = urlParams.get('search');
           if (searchParam && searchInput) {
-              state.activeFilters = { year: null, authorship: null, journal: null };
+              state.activeFilters = { years: [], authorships: [], journals: [] };
               state.activeSort    = { field: 'year', direction: 'desc' };
               const filterYear = document.getElementById('filter-year');
               const filterAuthor = document.getElementById('filter-authorship');
