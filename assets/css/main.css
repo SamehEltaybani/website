@@ -336,10 +336,12 @@ main {
 
 
 /* ============================================================================
-   SEARCH BADGE (superscript number on search icon)
+   SEARCH, FILTER, and SORT BADGES (superscript number on icons)
    ============================================================================ */
 
-.search-badge {
+.search-badge,
+.filter-badge,
+.sort-badge {
     position: absolute;
     top: -6px;
     right: -6px;
