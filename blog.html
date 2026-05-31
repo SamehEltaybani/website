@@ -290,20 +290,27 @@ function updateBadges() {
         if (sortBadge) sortBadge.style.display = 'none';
     }
 
-    // Filter badge – count only the category group if partial
+
+    // Filter badge – show number of selected categories (ignore "Select all")
+  
     const catCheckboxes = document.querySelectorAll('#filter-category-options input[type="checkbox"]');
     const catChecked = document.querySelectorAll('#filter-category-options input[type="checkbox"]:checked').length;
-    const filterCount = (catChecked > 0 && catChecked < catCheckboxes.length) ? 1 : 0;
+    const isPartial = catChecked > 0 && catChecked < catCheckboxes.length;
 
-    if (filterCount > 0) {
+    if (isPartial) {
         if (filterBadge) {
             filterBadge.style.display = 'flex';
-            filterBadge.textContent = filterCount;
+            filterBadge.textContent = catChecked;      // shows the actual count
         }
-        badgeCount += filterCount;
+        badgeCount++;                                  // ensures the Reset button turns orange
     } else {
         if (filterBadge) filterBadge.style.display = 'none';
     }
+
+
+
+
+  
 
     // Colour the Reset button
     if (resetBtn) {
