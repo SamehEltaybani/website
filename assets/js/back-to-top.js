@@ -46,6 +46,14 @@
         btn.addEventListener('click', goTop);
         btn.addEventListener('pointerdown', goTop);
 
+        // Darker shadow on hover
+        btn.addEventListener('mouseenter', function() {
+            btn.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.3)';
+        });
+        btn.addEventListener('mouseleave', function() {
+            btn.style.boxShadow = '0 4px 14px rgba(0,0,0,0.12)';
+        });
+
         // ----- Show/hide on scroll (throttled) -----
         var ticking = false;
         window.addEventListener('scroll', function() {
