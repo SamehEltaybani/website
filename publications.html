@@ -83,6 +83,8 @@ Background image (immediately before the closing HEAD tag
 
      
     <div class="controls-bar">
+          <!-- Dark overlay for filter dropdown -->
+    <div id="filter-overlay" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1099; display: none;"></div>
       <div class="container" style="display: flex; flex-wrap: nowrap; gap: var(--space-sm); align-items: center; justify-content: space-between;">
 
         <!-- SEARCH -->
@@ -102,12 +104,18 @@ Background image (immediately before the closing HEAD tag
           <div id="filter-dropdown" class="hidden" style="position: absolute; top: 100%; right: 0; left: auto; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--space-md); box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 250px;">
     <div class="form-group">
         <label class="form-label">Year</label>
+       <label class="filter-checkbox-item filter-select-all">
+            <input type="checkbox" data-group="filter-year-options"> Select all
+        </label>
         <div id="filter-year-options" class="filter-checkbox-list">
             <!-- filled by JavaScript -->
         </div>
     </div>
     <div class="form-group">
         <label class="form-label">Authorship</label>
+       <label class="filter-checkbox-item filter-select-all">
+            <input type="checkbox" data-group="filter-authorship-options"> Select all
+        </label>
         <div id="filter-authorship-options" class="filter-checkbox-list">
             <label class="filter-checkbox-item"><input type="checkbox" value="First/Corresponding author"> First/Corresponding author</label>
             <label class="filter-checkbox-item"><input type="checkbox" value="Co-author"> Co-author</label>
@@ -115,11 +123,17 @@ Background image (immediately before the closing HEAD tag
     </div>
     <div class="form-group">
         <label class="form-label">Journal</label>
+       <label class="filter-checkbox-item filter-select-all">
+            <input type="checkbox" data-group="filter-journal-options"> Select all
+        </label>
         <div id="filter-journal-options" class="filter-checkbox-list">
             <!-- filled by JavaScript -->
         </div>
     </div>
-    <button id="apply-filters-btn" class="btn btn-primary" style="width: 100%;">Apply Filters</button>
+    <div style="display: flex; gap: var(--space-sm); margin-top: var(--space-sm);">
+    <button id="clear-filters-btn" class="btn btn-text" style="flex: 1;">Clear all</button>
+    <button id="apply-filters-btn" class="btn btn-primary" style="flex: 1;">Apply</button>
+</div>
 </div>
         </div>
 
@@ -553,6 +567,13 @@ Background image (immediately before the closing HEAD tag
     state.activeFilters.journals = Array.from(journalCheckboxes).map(cb => cb.value);
 
     closeFilterDropdown();
+        
+        const overlay = document.getElementById('filter-overlay');
+    if (overlay) {
+        overlay.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
     applyAllFilters();
 }
 
@@ -613,7 +634,24 @@ Background image (immediately before the closing HEAD tag
         label.innerHTML = `<input type="checkbox" value="${escapeHTML(j)}"> ${escapeHTML(j)}`;
         journalContainer.appendChild(label);
     });
+
+         setupSelectAllToggles();
+
 }
+
+
+    // ---- "Select all" / "Deselect all" for filter sections ----
+function setupSelectAllToggles() {
+    document.querySelectorAll('.filter-select-all input[type="checkbox"]').forEach(allCheckbox => {
+        allCheckbox.addEventListener('change', function() {
+            const groupId = this.getAttribute('data-group');
+            const group = document.getElementById(groupId);
+            if (!group) return;
+            const items = group.querySelectorAll('input[type="checkbox"]');
+            items.forEach(item => item.checked = this.checked);
+        });
+    });
+}  
 
       function closeFilterDropdown() { filterDropdown.classList.add('hidden'); }
       function closeSortDropdown() { sortDropdown.classList.add('hidden'); }
@@ -622,9 +660,25 @@ filterBtn.addEventListener('click', function(e) {
     e.stopPropagation();
     closeSortDropdown();
     filterDropdown.classList.toggle('hidden');
+    const overlay = document.getElementById('filter-overlay');
+    if (overlay) {
+        if (!filterDropdown.classList.contains('hidden')) {
+            overlay.style.display = 'block';
+            document.body.style.overflow = 'hidden';   // prevent page scroll
+        } else {
+            overlay.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    }
     const btn = this;
     setTimeout(() => btn.blur(), 0);
 });
+
+    document.getElementById('filter-overlay').addEventListener('click', function() {
+    filterDropdown.classList.add('hidden');
+    this.style.display = 'none';
+    document.body.style.overflow = '';
+});  
       
       sortBtn.addEventListener('click', function(e) {
     e.stopPropagation();
@@ -645,6 +699,26 @@ filterBtn.addEventListener('click', function(e) {
     const btn = this;
     setTimeout(() => btn.blur(), 0);
     setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
+});
+
+      const clearFiltersBtn = document.getElementById('clear-filters-btn');
+clearFiltersBtn.addEventListener('click', function(e) {
+    // Uncheck all checkboxes in the dropdown
+    document.querySelectorAll('#filter-dropdown input[type="checkbox"]').forEach(cb => cb.checked = false);
+    // Also uncheck the "Select all" checkboxes
+    document.querySelectorAll('.filter-select-all input[type="checkbox"]').forEach(cb => cb.checked = false);
+    // Apply the empty filters immediately
+    state.activeFilters = { years: [], authorships: [], journals: [] };
+    closeFilterDropdown();
+    applyAllFilters();
+    // Hide overlay
+    const overlay = document.getElementById('filter-overlay');
+    if (overlay) {
+        overlay.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+    const btn = this;
+    setTimeout(() => btn.blur(), 0);
 });
       
       sortDropdown.addEventListener('click', (e) => {
@@ -694,13 +768,18 @@ filterBtn.addEventListener('click', function(e) {
           });
           publicationsContainer.innerHTML = html;
 
-                  // Make authorship tags clickable (filter by authorship)
+                     // Make authorship tags clickable (filter by authorship)
     const authorTags = publicationsContainer.querySelectorAll('.publication-authorship');
     authorTags.forEach(tag => {
         tag.addEventListener('click', function() {
             const authorshipValue = this.textContent.trim();
             // Set the filter to only this authorship value
             state.activeFilters.authorships = [authorshipValue];
+
+            // Check the matching checkbox in the filter dropdown
+            const checkbox = document.querySelector('#filter-authorship-options input[value="' + authorshipValue + '"]');
+            if (checkbox) checkbox.checked = true;
+
             closeFilterDropdown();
             applyAllFilters();
             setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
