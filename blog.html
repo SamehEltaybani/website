@@ -78,6 +78,9 @@ Background image (immediately before the closing HEAD tag
   <main>
    
     <!-- CONTROLS BAR (sticky) -->
+        <!-- Dark overlay for filter dropdown -->
+    <div id="filter-overlay" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1099; display: none;"></div>
+    
     <div class="controls-bar">
       <div class="container" style="display: flex; flex-wrap: nowrap; gap: var(--space-sm); align-items: center; justify-content: space-between;">
 
@@ -95,15 +98,23 @@ Background image (immediately before the closing HEAD tag
             <i class="fas fa-filter"></i>
             <span>Filter</span>
           </button>
-          <div id="filter-dropdown" class="hidden" style="position: absolute; top: 100%; right: 0; left: auto; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--space-md); box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 200px;">
-            <div class="form-group">
-              <label class="form-label">Category</label>
-              <select id="filter-category" class="form-select">
-                <option value="">All categories</option>
-              </select>
-            </div>
-            <button id="apply-filter-btn" class="btn btn-primary" style="width: 100%;">Apply Filter</button>
-          </div>
+         <div id="filter-dropdown" class="hidden" style="position: absolute; top: 100%; right: 0; left: auto; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--space-md); box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 220px;">
+    <div class="form-group">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-xs);">
+            <label class="form-label" style="margin-bottom: 0;">Category</label>
+            <label class="filter-checkbox-item filter-select-all" style="margin-bottom: 0; font-weight: 400;">
+                <input type="checkbox" data-group="filter-category-options"> Select all
+            </label>
+        </div>
+        <div id="filter-category-options" class="filter-checkbox-list">
+            <!-- filled by JavaScript -->
+        </div>
+    </div>
+    <div style="display: flex; gap: var(--space-sm); margin-top: var(--space-sm);">
+        <button id="clear-filters-btn" class="btn btn-text" style="flex: 1;">Clear all</button>
+        <button id="apply-filter-btn" class="btn btn-primary" style="flex: 1;">Apply</button>
+    </div>
+</div>
         </div>
 
         <!-- SORT BUTTON + DROPDOWN (aligns left on mobile) -->
@@ -172,7 +183,7 @@ Background image (immediately before the closing HEAD tag
         filteredItems: [],
         currentPage: 1,
         itemsPerPage: 10,
-        activeCategory: null,
+        activeCategories: [],
         activeSort: { field: 'date', direction: 'desc' },
         activeSearch: ''
       };
@@ -234,7 +245,7 @@ Background image (immediately before the closing HEAD tag
       // HIGHLIGHT CONTROLS
       // ------------------------------------------------------------------
       function updateControlHighlights() {
-        const hasFilter = state.activeCategory !== null;
+        const hasFilter = state.activeCategories.length > 0;
         const isDefaultSort = (state.activeSort.field === 'date' && state.activeSort.direction === 'desc');
         const hasChanges = hasFilter || !isDefaultSort || state.activeSearch !== '';
         filterBtn.classList.toggle('active', hasFilter);
@@ -301,13 +312,13 @@ Background image (immediately before the closing HEAD tag
           window.scrollTo({ top: 0, behavior: 'smooth' });
           let items = [...state.allItems];
 
-          if (state.activeCategory) {
-              const catFilter = state.activeCategory.toLowerCase().trim();
-              items = items.filter(post => {
-                  if (!post.categories || !Array.isArray(post.categories)) return false;
-                  return post.categories.some(cat => cat && cat.toLowerCase().trim() === catFilter);
-              });
-          }
+          if (state.activeCategories && state.activeCategories.length > 0) {
+    items = items.filter(post => {
+        if (!post.categories || !Array.isArray(post.categories)) return false;
+        const postCats = post.categories.map(c => c.toLowerCase().trim());
+        return state.activeCategories.some(activeCat => postCats.includes(activeCat.toLowerCase().trim()));
+    });
+}
 
           if (state.activeSearch) {
               const rawQuery = state.activeSearch.toLowerCase().trim();
@@ -363,18 +374,29 @@ Background image (immediately before the closing HEAD tag
           applyAllFilters();
       }
 
-      function handleFilterApply() {
-          state.activeCategory = filterCategorySelect.value || null;
-          closeFilterDropdown();
-          applyAllFilters();
-      }
+     function handleFilterApply() {
+    const checkboxes = document.querySelectorAll('#filter-category-options input[type="checkbox"]:checked');
+    state.activeCategories = Array.from(checkboxes).map(cb => cb.value);
 
-      function quickFilterByCategory(category) {
-          filterCategorySelect.value = category;
-          state.activeCategory = category;
-          closeFilterDropdown();
-          applyAllFilters();
-      }
+    const overlay = document.getElementById('filter-overlay');
+    if (overlay) {
+        overlay.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
+    closeFilterDropdown();
+    applyAllFilters();
+}
+
+function quickFilterByCategory(category) {
+    state.activeCategories = [category];
+    // Check the matching checkbox in the dropdown
+    const checkbox = document.querySelector('#filter-category-options input[value="' + category + '"]');
+    if (checkbox) checkbox.checked = true;
+    closeFilterDropdown();
+    applyAllFilters();
+}
+      
 
       function handleSortOption(opt) {
           if (opt === 'date-desc') state.activeSort = { field: 'date', direction: 'desc' };
@@ -387,8 +409,11 @@ Background image (immediately before the closing HEAD tag
       function handleReset() {
           searchInput.value = '';
           state.activeSearch = '';
-          state.activeCategory = null;
-          filterCategorySelect.value = '';
+          state.activeCategories = [];
+          // Uncheck all category checkboxes
+          document.querySelectorAll('#filter-category-options input[type="checkbox"]').forEach(cb => cb.checked = false);
+          // Also uncheck the "Select all" checkbox
+          document.querySelectorAll('.filter-select-all input[type="checkbox"]').forEach(cb => cb.checked = false);  
           state.activeSort = { field: 'date', direction: 'desc' };
           updateActiveSortUI();
           updateSearchHighlight();
@@ -399,23 +424,62 @@ Background image (immediately before the closing HEAD tag
       // DROPDOWN MANAGEMENT
       // ------------------------------------------------------------------
       function populateFilterDropdown() {
-          filterCategorySelect.innerHTML = '<option value="">All categories</option>';
-          allCategories.forEach(cat => {
-              const opt = new Option(cat, cat);
-              filterCategorySelect.add(opt);
-          });
-      }
+    const categoryContainer = document.getElementById('filter-category-options');
+    if (!categoryContainer) return;
+    categoryContainer.innerHTML = '';
+    allCategories.forEach(cat => {
+        const label = document.createElement('label');
+        label.className = 'filter-checkbox-item';
+        label.innerHTML = `<input type="checkbox" value="${escapeHTML(cat)}"> ${escapeHTML(cat)}`;
+        categoryContainer.appendChild(label);
+    });
+    setupSelectAllToggles();
+}
+
+
+
+      // ---- "Select all" / "Deselect all" for the category section ----
+function setupSelectAllToggles() {
+    document.querySelectorAll('.filter-select-all input[type="checkbox"]').forEach(allCheckbox => {
+        allCheckbox.addEventListener('change', function() {
+            const groupId = this.getAttribute('data-group');
+            const group = document.getElementById(groupId);
+            if (!group) return;
+            const items = group.querySelectorAll('input[type="checkbox"]');
+            items.forEach(item => item.checked = this.checked);
+        });
+    });
+}
+      
 
       function closeFilterDropdown() { filterDropdown.classList.add('hidden'); }
       function closeSortDropdown() { sortDropdown.classList.add('hidden'); }
 
       filterBtn.addEventListener('click', function(e) {
-          e.stopPropagation();
-          closeSortDropdown();
-          filterDropdown.classList.toggle('hidden');
-          const btn = this;
-          setTimeout(() => btn.blur(), 0);
-      });
+    e.stopPropagation();
+    closeSortDropdown();
+    filterDropdown.classList.toggle('hidden');
+    const overlay = document.getElementById('filter-overlay');
+    if (overlay) {
+        if (!filterDropdown.classList.contains('hidden')) {
+            overlay.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        } else {
+            overlay.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    }
+    const btn = this;
+    setTimeout(() => btn.blur(), 0);
+});
+
+document.getElementById('filter-overlay').addEventListener('click', function() {
+    filterDropdown.classList.add('hidden');
+    this.style.display = 'none';
+    document.body.style.overflow = '';
+});
+      
+      
       sortBtn.addEventListener('click', function(e) {
           e.stopPropagation();
           closeFilterDropdown();
@@ -436,6 +500,26 @@ Background image (immediately before the closing HEAD tag
     setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
 });
 
+
+      const clearFiltersBtn = document.getElementById('clear-filters-btn');
+clearFiltersBtn.addEventListener('click', function(e) {
+    // Uncheck all category checkboxes
+    document.querySelectorAll('#filter-category-options input[type="checkbox"]').forEach(cb => cb.checked = false);
+    document.querySelectorAll('.filter-select-all input[type="checkbox"]').forEach(cb => cb.checked = false);
+    // Clear the filter array
+    state.activeCategories = [];
+    closeFilterDropdown();
+    applyAllFilters();
+    // Hide overlay
+    const overlay = document.getElementById('filter-overlay');
+    if (overlay) {
+        overlay.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+    const btn = this;
+    setTimeout(() => btn.blur(), 0);
+});
+      
       
      sortDropdown.addEventListener('click', (e) => {
     const btn = e.target.closest('button[data-sort]');
@@ -750,14 +834,18 @@ Background image (immediately before the closing HEAD tag
           // Auto‑apply category filter from URL (e.g., blog.html?category=AI)
           const urlParams = new URLSearchParams(window.location.search);
           const catParam = urlParams.get('category');
-          if (catParam) {
-              if (filterCategorySelect) {
-                  filterCategorySelect.value = catParam;
-              }
-              state.activeCategory = catParam;
-              applyAllFilters();
-              updateControlHighlights();
-          }
+
+        if (catParam) {
+    state.activeCategories = [catParam];
+    // Check the matching checkbox
+    const checkbox = document.querySelector('#filter-category-options input[value="' + catParam + '"]');
+    if (checkbox) checkbox.checked = true;
+    applyAllFilters();
+    updateControlHighlights();
+}
+
+
+        
       }
 
       if (document.readyState === 'loading') {
