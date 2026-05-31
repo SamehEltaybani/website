@@ -389,10 +389,17 @@ Background image (immediately before the closing HEAD tag
 }
 
 function quickFilterByCategory(category) {
+    // Uncheck all category checkboxes first
+    document.querySelectorAll('#filter-category-options input[type="checkbox"]').forEach(cb => cb.checked = false);
+    document.querySelectorAll('.filter-select-all input[type="checkbox"]').forEach(cb => cb.checked = false);
+
+    // Set the filter to only this category
     state.activeCategories = [category];
-    // Check the matching checkbox in the dropdown
+
+    // Check the matching checkbox
     const checkbox = document.querySelector('#filter-category-options input[value="' + category + '"]');
     if (checkbox) checkbox.checked = true;
+
     closeFilterDropdown();
     applyAllFilters();
 }
