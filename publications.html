@@ -174,7 +174,20 @@ Background image (immediately before the closing HEAD tag
         </button>
       </div>
 
-<div id="results-count-bar" style="flex-basis:100%; display:block; text-align:center; padding:2px 0; font-size:0.75rem; color:var(--color-text-muted);"></div>
+<div style="flex-basis:100%; display:flex; align-items:center; justify-content:center; position:relative;">
+    <div id="results-count-bar" style="padding:2px 0; font-size:0.75rem; color:var(--color-text-muted);"></div>
+    <span id="filter-help-icon" style="display:none; color:#E07B39; font-size:0.9rem; cursor:pointer; margin-left:6px;" title="Why is this list filtered?">?</span>
+
+  <div id="filter-help-tooltip" class="search-tips-tooltip" style="position:absolute; top:100%; left:50%; transform:translateX(-50%); width:280px; display:none; z-index:1101; text-align:left;">
+    <button class="search-modal-close-btn" style="position:absolute; top:8px; right:8px;">&times;</button>
+    <strong>This list is currently filtered</strong><br><br>
+    · Click <i class="fas fa-undo"></i> <strong>Reset</strong> to remove all filters and see the full list.<br>
+    · Use the <strong>central search</strong> <i class="fas fa-search"></i> in the navigation bar for a broader search across the whole site.<br>
+    · Try different keywords or synonyms.<br>
+    · Check the <strong>Filter</strong> <i class="fas fa-filter"></i> and <strong>Sort</strong> <i class="fas fa-sort"></i> options to refine results.
+</div>
+  
+</div>
   
     </div>
 
@@ -614,8 +627,41 @@ function updateBadges() {
             resetBtn.classList.remove('badge-active');
         }
     }
+
+    // Show/hide the "?" help icon when filters are active (excluding sort-only)
+    const helpIcon = document.getElementById('filter-help-icon');
+    if (helpIcon) {
+        const hasActiveFilter = state.activeSearch ||
+            state.activeFilters.years.length > 0 ||
+            state.activeFilters.authorships.length > 0 ||
+            state.activeFilters.journals.length > 0;
+        helpIcon.style.display = hasActiveFilter ? 'inline' : 'none';
+    }
 }
 
+
+      // ---- "?" help icon toggle tooltip ----
+const helpIcon = document.getElementById('filter-help-icon');
+const helpTooltip = document.getElementById('filter-help-tooltip');
+if (helpIcon && helpTooltip) {
+    helpIcon.addEventListener('click', function(e) {
+        e.stopPropagation();
+        helpTooltip.style.display = (helpTooltip.style.display === 'block') ? 'none' : 'block';
+    });
+    helpTooltip.querySelector('.search-modal-close-btn').addEventListener('click', function() {
+        helpTooltip.style.display = 'none';
+    });
+    // Close tooltip when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!helpTooltip.contains(e.target) && e.target !== helpIcon) {
+            helpTooltip.style.display = 'none';
+        }
+    });
+}
+
+
+
+      
       function updateSearchHighlight() {
     const box = document.getElementById('search-container');
     if (box) box.classList.toggle('active', searchInput.value.trim().length > 0);
@@ -896,9 +942,10 @@ clearFiltersBtn.addEventListener('click', function(e) {
               const shownItems = Math.min(state.currentPage * state.itemsPerPage, totalItems);
               const totalPages = Math.max(1, Math.ceil(totalItems / state.itemsPerPage));
               const pageWord = state.currentPage === 1 ? 'page' : 'pages';
-              countBar.innerHTML =
-                  '<span>Showing <span style="color:var(--color-midnight-blue); font-weight:600;">' + shownItems + '</span> of <span style="color:var(--color-midnight-blue); font-weight:600;">' + totalItems + '</span> publications</span>' +
-                  ' <span>( <span style="color:var(--color-midnight-blue); font-weight:600;">' + state.currentPage + '</span> ' + pageWord + ' of <span style="color:var(--color-midnight-blue); font-weight:600;">' + totalPages + '</span> )</span>';
+              const pubWord = totalItems === 1 ? 'publication' : 'publications';
+countBar.innerHTML =
+    '<span>Showing <span style="color:var(--color-midnight-blue); font-weight:600;">' + shownItems + '</span> of <span style="color:var(--color-midnight-blue); font-weight:600;">' + totalItems + '</span> ' + pubWord + '</span>' +
+    ' <span>( <span style="color:var(--color-midnight-blue); font-weight:600;">' + state.currentPage + '</span> ' + pageWord + ' of <span style="color:var(--color-midnight-blue); font-weight:600;">' + totalPages + '</span> )</span>';
           }
 
           if (state.filteredItems.length > end) {
