@@ -397,6 +397,13 @@ main {
 
 }
 
+/* Make the filter dropdown scrollable on small screens */
+@media (max-width: 992px) {
+    #filter-dropdown {
+        max-height: 70vh;          /* never taller than 70% of the screen height */
+        overflow-y: auto;          /* allow scrolling inside the dropdown */
+    }
+}
 
 /* Load More button */
 .btn-load-more {
