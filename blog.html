@@ -94,10 +94,13 @@ Background image (immediately before the closing HEAD tag
 
         <!-- FILTER BUTTON + DROPDOWN (aligns left on mobile) -->
         <div style="position: relative;">
-          <button id="filter-btn" class="btn btn-filter" aria-label="Filter">
-            <i class="fas fa-filter"></i>
-            <span>Filter</span>
-          </button>
+         
+          <button id="filter-btn" class="btn btn-filter" aria-label="Filter" style="position: relative;">
+    <i class="fas fa-filter"></i>
+    <span>Filter</span>
+    <span class="filter-badge" id="filter-badge" style="display: none;"></span>
+</button>
+          
          <div id="filter-dropdown" class="hidden" style="position: absolute; top: 100%; right: 0; left: auto; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--space-md); box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 220px;">
     <div class="form-group">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-xs);">
@@ -119,10 +122,13 @@ Background image (immediately before the closing HEAD tag
 
         <!-- SORT BUTTON + DROPDOWN (aligns left on mobile) -->
         <div style="position: relative;">
-          <button id="sort-btn" class="btn btn-filter" aria-label="Sort">
-            <i class="fas fa-sort"></i>
-            <span>Sort: Newest</span>
-          </button>
+          
+          <button id="sort-btn" class="btn btn-filter" aria-label="Sort" style="position: relative;">
+    <i class="fas fa-sort"></i>
+    <span>Sort: Newest</span>
+    <span class="sort-badge" id="sort-badge" style="display: none;">1</span>
+</button>
+          
           <div id="sort-dropdown" class="hidden" style="position: absolute; top: 100%; right: 0; left: auto; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 180px;">
             <button class="btn btn-text" data-sort="date-desc" style="display: block; width: 100%; text-align: left;">Newest first</button>
             <button class="btn btn-text" data-sort="date-asc" style="display: block; width: 100%; text-align: left;">Oldest first</button>
@@ -194,6 +200,8 @@ Background image (immediately before the closing HEAD tag
       // DOM elements
       const searchInput = document.getElementById('search-input');
       const searchBadge = document.getElementById('search-badge');
+      const filterBadge = document.getElementById('filter-badge');
+      const sortBadge = document.getElementById('sort-badge');
       const filterBtn = document.getElementById('filter-btn');
       const sortBtn = document.getElementById('sort-btn');
       const resetBtn = document.getElementById('reset-btn');
@@ -251,8 +259,62 @@ Background image (immediately before the closing HEAD tag
         filterBtn.classList.toggle('active', hasFilter);
         sortBtn.classList.toggle('active', !isDefaultSort);
         resetBtn.classList.toggle('active', hasChanges);
+        updateBadges(); 
       }
 
+
+// ---- Update superscript badges and reset‑button colour ----
+function updateBadges() {
+    let badgeCount = 0;
+
+    // Search badge
+    if (state.activeSearch) {
+        if (searchBadge) {
+            searchBadge.style.display = 'flex';
+            searchBadge.textContent = '1';
+        }
+        badgeCount++;
+    } else {
+        if (searchBadge) searchBadge.style.display = 'none';
+    }
+
+    // Sort badge (1 if not default)
+    const isDefaultSort = (state.activeSort.field === 'date' && state.activeSort.direction === 'desc');
+    if (!isDefaultSort) {
+        if (sortBadge) {
+            sortBadge.style.display = 'flex';
+            sortBadge.textContent = '1';
+        }
+        badgeCount++;
+    } else {
+        if (sortBadge) sortBadge.style.display = 'none';
+    }
+
+    // Filter badge – count only the category group if partial
+    const catCheckboxes = document.querySelectorAll('#filter-category-options input[type="checkbox"]');
+    const catChecked = document.querySelectorAll('#filter-category-options input[type="checkbox"]:checked').length;
+    const filterCount = (catChecked > 0 && catChecked < catCheckboxes.length) ? 1 : 0;
+
+    if (filterCount > 0) {
+        if (filterBadge) {
+            filterBadge.style.display = 'flex';
+            filterBadge.textContent = filterCount;
+        }
+        badgeCount += filterCount;
+    } else {
+        if (filterBadge) filterBadge.style.display = 'none';
+    }
+
+    // Colour the Reset button
+    if (resetBtn) {
+        if (badgeCount > 0) {
+            resetBtn.classList.add('badge-active');
+        } else {
+            resetBtn.classList.remove('badge-active');
+        }
+    }
+}
+      
       function updateSearchHighlight() {
     const box = document.getElementById('search-container');
     if (box) box.classList.toggle('active', searchInput.value.trim().length > 0);
@@ -386,6 +448,7 @@ Background image (immediately before the closing HEAD tag
 
     closeFilterDropdown();
     applyAllFilters();
+    updateBadges();
 }
 
 function quickFilterByCategory(category) {
@@ -411,6 +474,7 @@ function quickFilterByCategory(category) {
           updateActiveSortUI();
           closeSortDropdown();
           applyAllFilters();
+          updateBadges();
       }
 
       function handleReset() {
@@ -425,6 +489,7 @@ function quickFilterByCategory(category) {
           updateActiveSortUI();
           updateSearchHighlight();
           applyAllFilters();
+          updateBadges();
       }
 
       // ------------------------------------------------------------------
