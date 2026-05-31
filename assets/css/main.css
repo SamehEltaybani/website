@@ -407,6 +407,11 @@ main {
     }
 }
 
+/* Blog filter dropdown – taller category list */
+#filter-category-options.filter-checkbox-list {
+    max-height: 200px;    /* change this value to have shorter or taller dropdown menu (only in the blog page) */
+}
+
 /* Load More button */
 .btn-load-more {
     background-color: transparent;
