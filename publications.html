@@ -694,19 +694,16 @@ filterBtn.addEventListener('click', function(e) {
           });
           publicationsContainer.innerHTML = html;
 
-              // Make authorship tags clickable (filter by authorship)
+                  // Make authorship tags clickable (filter by authorship)
     const authorTags = publicationsContainer.querySelectorAll('.publication-authorship');
     authorTags.forEach(tag => {
         tag.addEventListener('click', function() {
             const authorshipValue = this.textContent.trim();
-            const authorshipSelect = document.getElementById('filter-authorship');
-            if (authorshipSelect) {
-                authorshipSelect.value = authorshipValue;
-                state.activeFilters.authorship = authorshipValue;
-                closeFilterDropdown();
-                applyAllFilters();
-                setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
-            }
+            // Set the filter to only this authorship value
+            state.activeFilters.authorships = [authorshipValue];
+            closeFilterDropdown();
+            applyAllFilters();
+            setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
         });
     });
 
