@@ -710,8 +710,8 @@ clearFiltersBtn.addEventListener('click', function(e) {
               const pageWord = state.currentPage === 1 ? 'page' : 'pages';
               const articleWord = totalItems === 1 ? 'article' : 'articles';
 countBar.innerHTML =
-    '<span>Showing <span style="color:var(--color-midnight-blue); font-weight:600;">' + shownItems + '</span> of <span style="color:var(--color-midnight-blue); font-weight:600;">' + totalItems + '</span> ' + articleWord + '</span>' +
-    ' <span>( <span style="color:var(--color-midnight-blue); font-weight:600;">' + state.currentPage + '</span> ' + pageWord + ' of <span style="color:var(--color-midnight-blue); font-weight:600;">' + totalPages + '</span> )</span>';
+    '<span>Showing <span style="color:var(--color-midnight-blue); font-weight:600;">' + shownItems + '</span> of <span style="color:var(--color-midnight-blue); font-weight:600;">' + totalItems + '</span> ' + pubWord + '</span>' +
+' <span>( <span style="color:var(--color-midnight-blue); font-weight:600;">' + state.currentPage + '</span> ' + pageWord + ' of <span style="color:var(--color-midnight-blue); font-weight:600;">' + totalPages + '</span> )</span>';
           }
 
               // Attach click handlers to category tags
