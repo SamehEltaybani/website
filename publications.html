@@ -97,10 +97,11 @@ Background image (immediately before the closing HEAD tag
 
         <!-- FILTER (dropdown opens to the left) -->
         <div style="position: relative;">
-          <button id="filter-btn" class="btn btn-filter" aria-label="Filter">
-            <i class="fas fa-filter"></i>
-            <span>Filter</span>
-          </button>
+          <button id="filter-btn" class="btn btn-filter" aria-label="Filter" style="position: relative;">
+    <i class="fas fa-filter"></i>
+    <span>Filter</span>
+    <span class="filter-badge" id="filter-badge" style="display: none;"></span>
+</button>
           
           
         <div id="filter-dropdown" class="hidden" style="position: absolute; top: 100%; right: 0; left: auto; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--space-md); box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 250px;">
@@ -155,10 +156,11 @@ Background image (immediately before the closing HEAD tag
 
         <!-- SORT (dropdown opens to the left) -->
         <div style="position: relative;">
-          <button id="sort-btn" class="btn btn-filter" aria-label="Sort">
-            <i class="fas fa-sort"></i>
-            <span>Sort: Newest</span>
-          </button>
+          <button id="sort-btn" class="btn btn-filter" aria-label="Sort" style="position: relative;">
+    <i class="fas fa-sort"></i>
+    <span>Sort: Newest</span>
+    <span class="sort-badge" id="sort-badge" style="display: none;">1</span>
+</button>
           <div id="sort-dropdown" class="hidden" style="position: absolute; top: 100%; right: 0; left: auto; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 180px;">
             <button class="btn btn-text" data-sort="year-desc" style="display: block; width: 100%; text-align: left;">Newest first</button>
             <button class="btn btn-text" data-sort="year-asc" style="display: block; width: 100%; text-align: left;">Oldest first</button>
@@ -225,6 +227,8 @@ Background image (immediately before the closing HEAD tag
 
       const searchInput = document.getElementById('search-input');
       const searchBadge = document.getElementById('search-badge');
+      const filterBadge = document.getElementById('filter-badge');
+      const sortBadge = document.getElementById('sort-badge');
       const autocompleteDropdown = document.getElementById('autocomplete-dropdown');
       let suggestionPool = [];
 
@@ -535,6 +539,7 @@ Background image (immediately before the closing HEAD tag
           hideLoadMoreButton();
           renderCurrentPage();
           updateControlHighlights();
+          updateBadges();
       }
 
       function updateControlHighlights() {
@@ -545,6 +550,71 @@ Background image (immediately before the closing HEAD tag
           sortBtn.classList.toggle('active', !isDefaultSort);
           resetBtn.classList.toggle('active', hasChanges);
       }
+
+      // ---- Update superscript badges and reset‑button colour ----
+function updateBadges() {
+    let badgeCount = 0;
+
+    // Search badge
+    if (state.activeSearch) {
+        if (searchBadge) {
+            searchBadge.style.display = 'flex';
+            searchBadge.textContent = '1';
+        }
+        badgeCount++;
+    } else {
+        if (searchBadge) searchBadge.style.display = 'none';
+    }
+
+    // Sort badge (1 if not default)
+    const isDefaultSort = (state.activeSort.field === 'year' && state.activeSort.direction === 'desc');
+    if (!isDefaultSort) {
+        if (sortBadge) {
+            sortBadge.style.display = 'flex';
+            sortBadge.textContent = '1';
+        }
+        badgeCount++;
+    } else {
+        if (sortBadge) sortBadge.style.display = 'none';
+    }
+
+    // Filter badge – count groups with partial selection
+    let filterCount = 0;
+
+    // Year group
+    const yearCheckboxes = document.querySelectorAll('#filter-year-options input[type="checkbox"]');
+    const yearChecked = document.querySelectorAll('#filter-year-options input[type="checkbox"]:checked').length;
+    if (yearChecked > 0 && yearChecked < yearCheckboxes.length) filterCount++;
+
+    // Authorship group
+    const authorCheckboxes = document.querySelectorAll('#filter-authorship-options input[type="checkbox"]');
+    const authorChecked = document.querySelectorAll('#filter-authorship-options input[type="checkbox"]:checked').length;
+    if (authorChecked > 0 && authorChecked < authorCheckboxes.length) filterCount++;
+
+    // Journal group
+    const journalCheckboxes = document.querySelectorAll('#filter-journal-options input[type="checkbox"]');
+    const journalChecked = document.querySelectorAll('#filter-journal-options input[type="checkbox"]:checked').length;
+    if (journalChecked > 0 && journalChecked < journalCheckboxes.length) filterCount++;
+
+    if (filterCount > 0) {
+        if (filterBadge) {
+            filterBadge.style.display = 'flex';
+            filterBadge.textContent = filterCount;
+        }
+        badgeCount += filterCount;
+    } else {
+        if (filterBadge) filterBadge.style.display = 'none';
+    }
+
+    // Colour the Reset button if any badge is active
+    if (resetBtn) {
+        if (badgeCount > 0) {
+            resetBtn.classList.add('badge-active');
+        } else {
+            resetBtn.classList.remove('badge-active');
+        }
+    }
+}
 
       function updateSearchHighlight() {
     const box = document.getElementById('search-container');
@@ -567,7 +637,7 @@ Background image (immediately before the closing HEAD tag
           state.activeSearch = searchInput.value.trim();
           updateSearchHighlight();
           applyAllFilters();
-      }
+              }
 
       function handleFilterApply() {
     // Collect selected years
@@ -591,6 +661,7 @@ Background image (immediately before the closing HEAD tag
     }
 
     applyAllFilters();
+    updateBadges();
 }
 
       function handleSortOption(opt) {
@@ -599,6 +670,7 @@ Background image (immediately before the closing HEAD tag
     updateActiveSortUI();
     closeSortDropdown();
     applyAllFilters();
+    updateBadges();
 }
 
       function handleReset() {
@@ -617,6 +689,7 @@ Background image (immediately before the closing HEAD tag
           updateActiveSortUI();
           updateSearchHighlight();
           applyAllFilters();
+          updateBadges();
       }
 
       function updateActiveSortUI() {
