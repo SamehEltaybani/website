@@ -380,11 +380,12 @@ main {
 
 .filter-checkbox-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--space-xs);
     padding: 2px 0;
     font-size: var(--font-size-sm);
     cursor: pointer;
+    line-height: 1.4;
 }
 
 .filter-checkbox-item input[type="checkbox"] {
