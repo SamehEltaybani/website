@@ -48,7 +48,7 @@
 
         // Darker shadow on hover
         btn.addEventListener('mouseenter', function() {
-            btn.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.3)';
+            btn.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.5)';
         });
         btn.addEventListener('mouseleave', function() {
             btn.style.boxShadow = '0 4px 14px rgba(0,0,0,0.12)';
