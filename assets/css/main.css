@@ -2408,8 +2408,9 @@ pre code {
 }
 
 
+
 /* ============================================================================
-   SEARCH RESULTS CARDS 
+   SEARCH RESULTS CARDS in search.html
    ============================================================================ */
 
 #search-results-list .publication-item {
@@ -2420,9 +2421,10 @@ pre code {
 }
 
 #search-results-list .publication-item:hover {
-    border-color: var(--color-gold);           /* full gold border on hover */
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);   /* subtle shadow on hover */
+    border-color: transparent;           
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);   
 }
+
 
 /* FONT SIZE OF THE TEXT OF SEARCH RESULTS */
 #search-results-list .card-title {
@@ -2431,7 +2433,6 @@ pre code {
 #search-results-list .paragraph {
     font-size: 0.6rem;
 }
-
 
 
 
