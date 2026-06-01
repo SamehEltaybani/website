@@ -412,6 +412,57 @@ main {
     max-height: 200px;    /* change this value to have shorter or taller dropdown menu (only in the blog page) */
 }
 
+
+
+
+/* ============================================================================
+   SORT DROPDOWN – circular radio‑style options
+   ============================================================================ */
+.sort-radio-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-xs) var(--space-sm);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.sort-radio-item:hover {
+    background-color: var(--color-bg-alt);
+}
+
+.sort-radio-circle {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.sort-radio-item.active .sort-radio-circle {
+    border-color: var(--color-gold);
+    background-color: var(--color-gold);
+}
+
+.sort-radio-item.active .sort-radio-circle::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-white);
+}
+
+
+
+
+
+
 /* Load More button */
 .btn-load-more {
     background-color: transparent;
