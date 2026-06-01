@@ -579,6 +579,8 @@ const hasFilters = yearPartial || authorPartial || journalPartial;
       }
 
       // ---- Update superscript badges and reset‑button colour ----
+
+
 function updateBadges() {
     let badgeCount = 0;
 
@@ -593,24 +595,26 @@ function updateBadges() {
         if (searchBadge) searchBadge.style.display = 'none';
     }
 
- 
     // Filter badge – count groups with partial selection
     let filterCount = 0;
 
     // Year group
     const yearCheckboxes = document.querySelectorAll('#filter-year-options input[type="checkbox"]');
     const yearChecked = document.querySelectorAll('#filter-year-options input[type="checkbox"]:checked').length;
-    if (yearChecked > 0 && yearChecked < yearCheckboxes.length) filterCount++;
+    const yearPartial = (yearChecked > 0 && yearChecked < yearCheckboxes.length);
+    if (yearPartial) filterCount++;
 
     // Authorship group
     const authorCheckboxes = document.querySelectorAll('#filter-authorship-options input[type="checkbox"]');
     const authorChecked = document.querySelectorAll('#filter-authorship-options input[type="checkbox"]:checked').length;
-    if (authorChecked > 0 && authorChecked < authorCheckboxes.length) filterCount++;
+    const authorPartial = (authorChecked > 0 && authorChecked < authorCheckboxes.length);
+    if (authorPartial) filterCount++;
 
     // Journal group
     const journalCheckboxes = document.querySelectorAll('#filter-journal-options input[type="checkbox"]');
     const journalChecked = document.querySelectorAll('#filter-journal-options input[type="checkbox"]:checked').length;
-    if (journalChecked > 0 && journalChecked < journalCheckboxes.length) filterCount++;
+    const journalPartial = (journalChecked > 0 && journalChecked < journalCheckboxes.length);
+    if (journalPartial) filterCount++;
 
     if (filterCount > 0) {
         if (filterBadge) {
@@ -631,14 +635,15 @@ function updateBadges() {
         }
     }
 
-    // Show/hide the "?" help icon when filters are active (excluding sort-only)
+    // Show/hide the "?" help icon when filters are active (excluding sort‑only)
     const helpIcon = document.getElementById('filter-help-icon');
     if (helpIcon) {
         const hasActiveFilter = state.activeSearch || yearPartial || authorPartial || journalPartial;
-      
-                helpIcon.style.display = hasActiveFilter ? 'flex' : 'none';
+        helpIcon.style.display = hasActiveFilter ? 'flex' : 'none';
     }
 }
+      
+      
 
 
       // ---- "?" help icon toggle tooltip ----
