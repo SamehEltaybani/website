@@ -129,10 +129,21 @@ Background image (immediately before the closing HEAD tag
     <span class="sort-badge" id="sort-badge" style="display: none;">1</span>
 </button>
           
-          <div id="sort-dropdown" class="hidden" style="position: absolute; top: 100%; right: 0; left: auto; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 180px;">
-            <button class="btn btn-text" data-sort="date-desc" style="display: block; width: 100%; text-align: left;">Newest first</button>
-            <button class="btn btn-text" data-sort="date-asc" style="display: block; width: 100%; text-align: left;">Oldest first</button>
-          </div>
+
+<div id="sort-dropdown" class="hidden" style="position: absolute; top: 100%; right: 0; left: auto; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 180px; padding: var(--space-sm);">
+    <label class="sort-radio-item" data-sort="date-desc">
+        <span class="sort-radio-circle"></span>
+        Newest first
+    </label>
+    <label class="sort-radio-item" data-sort="date-asc">
+        <span class="sort-radio-circle"></span>
+        Oldest first
+    </label>
+</div>
+
+
+          
+          
         </div>
 
         <!-- RESET -->
@@ -268,7 +279,9 @@ Background image (immediately before the closing HEAD tag
       // HIGHLIGHT CONTROLS
       // ------------------------------------------------------------------
       function updateControlHighlights() {
-        const hasFilter = state.activeCategories.length > 0;
+        const catCheckboxesAll = document.querySelectorAll('#filter-category-options input[type="checkbox"]');
+const catCheckedAll = document.querySelectorAll('#filter-category-options input[type="checkbox"]:checked').length;
+const hasFilter = (catCheckedAll > 0 && catCheckedAll < catCheckboxesAll.length);
         const isDefaultSort = (state.activeSort.field === 'date' && state.activeSort.direction === 'desc');
         const hasChanges = hasFilter || !isDefaultSort || state.activeSearch !== '';
         filterBtn.classList.toggle('active', hasFilter);
@@ -293,31 +306,19 @@ function updateBadges() {
         if (searchBadge) searchBadge.style.display = 'none';
     }
 
-    // Sort badge (1 if not default)
-    const isDefaultSort = (state.activeSort.field === 'date' && state.activeSort.direction === 'desc');
-    if (!isDefaultSort) {
-        if (sortBadge) {
-            sortBadge.style.display = 'flex';
-            sortBadge.textContent = '1';
-        }
-        badgeCount++;
-    } else {
-        if (sortBadge) sortBadge.style.display = 'none';
-    }
-
-
-    // Filter badge – show number of selected categories (ignore "Select all")
   
+
+       // Filter badge – show number of selected categories (ignore "Select all")
     const catCheckboxes = document.querySelectorAll('#filter-category-options input[type="checkbox"]');
     const catChecked = document.querySelectorAll('#filter-category-options input[type="checkbox"]:checked').length;
-    const isPartial = catChecked > 0 && catChecked < catCheckboxes.length;
+    const catPartial = catChecked > 0 && catChecked < catCheckboxes.length;
 
-    if (isPartial) {
+    if (catPartial) {
         if (filterBadge) {
             filterBadge.style.display = 'flex';
-            filterBadge.textContent = catChecked;      // shows the actual count
+            filterBadge.textContent = catChecked;
         }
-        badgeCount++;                                  // ensures the Reset button turns orange
+        badgeCount++;
     } else {
         if (filterBadge) filterBadge.style.display = 'none';
     }
@@ -336,13 +337,12 @@ function updateBadges() {
         }
     }
 
-    // Show/hide the "?" help icon when filters are active (excluding sort-only)
+        // Show/hide the "?" help icon when filters are active (excluding sort-only)
     const helpIcon = document.getElementById('filter-help-icon');
     if (helpIcon) {
-        const hasActiveFilter = state.activeSearch || state.activeCategories.length > 0;
-          helpIcon.style.display = hasActiveFilter ? 'flex' : 'none';
+        const hasActiveFilter = state.activeSearch || catPartial;
+        helpIcon.style.display = hasActiveFilter ? 'flex' : 'none';
     }
-  }
 
 
 
@@ -478,11 +478,19 @@ if (helpIcon && helpTooltip) {
           updateControlHighlights();
       }
 
-      function updateActiveSortUI() {
-          const span = sortBtn.querySelector('span');
-          if (!span) return;
-          span.textContent = state.activeSort.direction === 'desc' ? 'Sort: Newest' : 'Sort: Oldest';
-      }
+     function updateActiveSortUI() {
+    const span = sortBtn.querySelector('span');
+    if (!span) return;
+
+    // Update the button text
+    span.textContent = state.activeSort.direction === 'desc' ? 'Sort: Newest' : 'Sort: Oldest';
+
+    // Highlight the active sort option in the dropdown
+    const currentValue = state.activeSort.field + '-' + state.activeSort.direction;
+    document.querySelectorAll('.sort-radio-item').forEach(item => {
+        item.classList.toggle('active', item.getAttribute('data-sort') === currentValue);
+    });
+}
 
       function handleSearchInput() {
           state.activeSearch = searchInput.value.trim();
@@ -647,11 +655,11 @@ clearFiltersBtn.addEventListener('click', function(e) {
 });
       
       
-     sortDropdown.addEventListener('click', (e) => {
-    const btn = e.target.closest('button[data-sort]');
-    if (btn) {
-        handleSortOption(btn.dataset.sort);
-        setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
+   sortDropdown.addEventListener('click', (e) => {
+    const radioItem = e.target.closest('.sort-radio-item');
+    if (radioItem) {
+        const sortValue = radioItem.getAttribute('data-sort');
+        if (sortValue) handleSortOption(sortValue);
     }
 });
       
