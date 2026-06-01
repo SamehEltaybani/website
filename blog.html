@@ -306,9 +306,7 @@ function updateBadges() {
         if (searchBadge) searchBadge.style.display = 'none';
     }
 
-  
-
-       // Filter badge – show number of selected categories (ignore "Select all")
+    // Filter badge – show number of selected categories (ignore "Select all")
     const catCheckboxes = document.querySelectorAll('#filter-category-options input[type="checkbox"]');
     const catChecked = document.querySelectorAll('#filter-category-options input[type="checkbox"]:checked').length;
     const catPartial = catChecked > 0 && catChecked < catCheckboxes.length;
@@ -323,11 +321,6 @@ function updateBadges() {
         if (filterBadge) filterBadge.style.display = 'none';
     }
 
-
-
-
-  
-
     // Colour the Reset button
     if (resetBtn) {
         if (badgeCount > 0) {
@@ -337,16 +330,15 @@ function updateBadges() {
         }
     }
 
-        // Show/hide the "?" help icon when filters are active (excluding sort-only)
+    // Show/hide the "?" help icon when filters are active (excluding sort-only)
     const helpIcon = document.getElementById('filter-help-icon');
     if (helpIcon) {
         const hasActiveFilter = state.activeSearch || catPartial;
         helpIcon.style.display = hasActiveFilter ? 'flex' : 'none';
     }
+}
 
-
-
-      // ---- "?" help icon toggle tooltip ----
+// ---- "?" help icon toggle tooltip ----
 const helpIcon = document.getElementById('filter-help-icon');
 const helpTooltip = document.getElementById('filter-help-tooltip');
 if (helpIcon && helpTooltip) {
