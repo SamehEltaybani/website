@@ -161,10 +161,16 @@ Background image (immediately before the closing HEAD tag
     <span>Sort: Newest</span>
     <span class="sort-badge" id="sort-badge" style="display: none;">1</span>
 </button>
-          <div id="sort-dropdown" class="hidden" style="position: absolute; top: 100%; right: 0; left: auto; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 180px;">
-            <button class="btn btn-text" data-sort="year-desc" style="display: block; width: 100%; text-align: left;">Newest first</button>
-            <button class="btn btn-text" data-sort="year-asc" style="display: block; width: 100%; text-align: left;">Oldest first</button>
-          </div>
+          <div id="sort-dropdown" class="hidden" style="position: absolute; top: 100%; right: 0; left: auto; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1100; min-width: 180px; padding: var(--space-sm);">
+    <label class="sort-radio-item" data-sort="year-desc">
+        <span class="sort-radio-circle"></span>
+        Newest first
+    </label>
+    <label class="sort-radio-item" data-sort="year-asc">
+        <span class="sort-radio-circle"></span>
+        Oldest first
+    </label>
+</div>
         </div>
 
         <!-- RESET -->
@@ -579,18 +585,7 @@ function updateBadges() {
         if (searchBadge) searchBadge.style.display = 'none';
     }
 
-    // Sort badge (1 if not default)
-    const isDefaultSort = (state.activeSort.field === 'year' && state.activeSort.direction === 'desc');
-    if (!isDefaultSort) {
-        if (sortBadge) {
-            sortBadge.style.display = 'flex';
-            sortBadge.textContent = '1';
-        }
-        badgeCount++;
-    } else {
-        if (sortBadge) sortBadge.style.display = 'none';
-    }
-
+ 
     // Filter badge – count groups with partial selection
     let filterCount = 0;
 
@@ -739,11 +734,22 @@ if (helpIcon && helpTooltip) {
       }
 
       function updateActiveSortUI() {
-          const span = sortBtn.querySelector('span');
-          if (!span) return;
-          if (state.activeSort.field === 'year') span.textContent = state.activeSort.direction === 'desc' ? 'Sort: Newest' : 'Sort: Oldest';
-          else span.textContent = 'Sort: Authorship';
-      }
+    const span = sortBtn.querySelector('span');
+    if (!span) return;
+
+    // Set the button text
+    if (state.activeSort.field === 'year') {
+        span.textContent = state.activeSort.direction === 'desc' ? 'Sort: Newest' : 'Sort: Oldest';
+    } else {
+        span.textContent = 'Sort: Authorship';
+    }
+
+    // Highlight the active sort option in the dropdown
+    const currentValue = state.activeSort.field + '-' + state.activeSort.direction;
+    document.querySelectorAll('.sort-radio-item').forEach(item => {
+        item.classList.toggle('active', item.getAttribute('data-sort') === currentValue);
+    });
+}
 
       // ------------------------------------------------------------------
       // DROPDOWNS
@@ -870,11 +876,11 @@ clearFiltersBtn.addEventListener('click', function(e) {
     setTimeout(() => btn.blur(), 0);
 });
       
-      sortDropdown.addEventListener('click', (e) => {
-    const btn = e.target.closest('button[data-sort]');
-    if (btn) {
-        handleSortOption(btn.dataset.sort);
-        setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
+     sortDropdown.addEventListener('click', (e) => {
+    const radioItem = e.target.closest('.sort-radio-item');
+    if (radioItem) {
+        const sortValue = radioItem.getAttribute('data-sort');
+        if (sortValue) handleSortOption(sortValue);
     }
 });
 
