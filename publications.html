@@ -562,7 +562,15 @@ Background image (immediately before the closing HEAD tag
       }
 
       function updateControlHighlights() {
-          const hasFilters = state.activeFilters.years.length > 0 || state.activeFilters.authorships.length > 0 || state.activeFilters.journals.length > 0;
+          const yearCheckboxesAll = document.querySelectorAll('#filter-year-options input[type="checkbox"]');
+const authorCheckboxesAll = document.querySelectorAll('#filter-authorship-options input[type="checkbox"]');
+const journalCheckboxesAll = document.querySelectorAll('#filter-journal-options input[type="checkbox"]');
+
+const yearPartial = state.activeFilters.years.length > 0 && state.activeFilters.years.length < yearCheckboxesAll.length;
+const authorPartial = state.activeFilters.authorships.length > 0 && state.activeFilters.authorships.length < authorCheckboxesAll.length;
+const journalPartial = state.activeFilters.journals.length > 0 && state.activeFilters.journals.length < journalCheckboxesAll.length;
+
+const hasFilters = yearPartial || authorPartial || journalPartial;
           const isDefaultSort = (state.activeSort.field === 'year' && state.activeSort.direction === 'desc');
           const hasChanges = hasFilters || !isDefaultSort || state.activeSearch !== '';
           filterBtn.classList.toggle('active', hasFilters);
@@ -626,10 +634,8 @@ function updateBadges() {
     // Show/hide the "?" help icon when filters are active (excluding sort-only)
     const helpIcon = document.getElementById('filter-help-icon');
     if (helpIcon) {
-        const hasActiveFilter = state.activeSearch ||
-            state.activeFilters.years.length > 0 ||
-            state.activeFilters.authorships.length > 0 ||
-            state.activeFilters.journals.length > 0;
+        const hasActiveFilter = state.activeSearch || yearPartial || authorPartial || journalPartial;
+      
                 helpIcon.style.display = hasActiveFilter ? 'flex' : 'none';
     }
 }
