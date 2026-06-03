@@ -1423,36 +1423,34 @@ footer .footer-copyright {
 }
 
 
-@media (hover: hover) {
-    .publication-authorship:hover {
-        opacity: 0.85;
-      font-size: 1.0rem;
-    }
-}
-
 .authorship-first {
     background-color: #F0F5F1;
-    color: var(--color-midnight-blue);
+    color: #000000;
     border: 0.5px solid #e4ede6;
 }
 
+
+@media (hover: hover) {
 .authorship-first:hover {
     background-color: #cdddd0;
     color: #000000;
     border: 0.5px solid #e4ede6;
 }
+ }
 
 .authorship-coauthor {
     background-color: #F6F4FA;
-    color: var(--color-midnight-blue);
+    color: #000000;
     border: 0.5px solid #ebe7f4;
 }
 
+@media (hover: hover) {
 .authorship-coauthor:hover {
     background-color: #d5cce8;
     color: #000000;
     border: 0.5px solid #ebe7f4;
 }
+ }
 
 .publication-buttons {
     display: flex;
