@@ -28,8 +28,8 @@
             '<span style="font-size:1.8rem; color:#D4AF37; line-height:1;">' +
               '<i class="fas fa-angle-up"></i>' +
             '</span>' +
-            '<span style="font-size:0.65rem; font-weight:600; color:#1A2530; line-height:1; margin-top:0px;">' +
-              'To Top' +
+            '<span style="font-size:0.7rem; font-weight:700; color:#1A2530; line-height:1; margin-top:0px;">' +
+              'Top' +
             '</span>';
 
         document.body.appendChild(btn);
