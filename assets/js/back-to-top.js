@@ -25,10 +25,10 @@
             'touch-action:manipulation;';
 
         btn.innerHTML =
-            '<span style="font-size:1.3rem; color:#D4AF37; line-height:1;">' +
-              '<i class="fas fa-circle-up"></i>' +
+            '<span style="font-size:1.5rem; color:#D4AF37; line-height:1;">' +
+              '<i class="fas fa-chevron-up"></i>' +
             '</span>' +
-            '<span style="font-size:0.5rem; font-weight:700; color:#1A2530; line-height:1; margin-top:1px;">' +
+            '<span style="font-size:0.75rem; font-weight:700; color:#1A2530; line-height:1; margin-top:1px;">' +
               'To Top' +
             '</span>';
 
@@ -46,7 +46,7 @@
         btn.addEventListener('click', goTop);
         btn.addEventListener('pointerdown', goTop);
 
-        // Darker shadow on hover
+        // Shadow on hover
         btn.addEventListener('mouseenter', function() {
             btn.style.boxShadow = '0px 0px 14px rgba(224, 123, 57, 0.9)';
         });
