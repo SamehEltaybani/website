@@ -29,7 +29,7 @@
               '<i class="fas fa-chevron-up"></i>' +
             '</span>' +
             '<span style="font-size:0.75rem; font-weight:700; color:#1A2530; line-height:1; margin-top:1px;">' +
-              'To Top' +
+              'Top' +
             '</span>';
 
         document.body.appendChild(btn);
