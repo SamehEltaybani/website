@@ -25,10 +25,10 @@
             'touch-action:manipulation;';
 
         btn.innerHTML =
-            '<span style="font-size:1.5rem; color:#D4AF37; line-height:1;">' +
-              '<i class="fas fa-chevron-up"></i>' +
+            '<span style="font-size:1.8rem; color:#D4AF37; line-height:1;">' +
+              '<i class="fas fa-angle-up"></i>' +
             '</span>' +
-            '<span style="font-size:0.75rem; font-weight:700; color:#1A2530; line-height:1; margin-top:1px;">' +
+            '<span style="font-size:0.70rem; font-weight:600; color:#1A2530; line-height:1; margin-top:1px;">' +
               'Top' +
             '</span>';
 
