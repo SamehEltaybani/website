@@ -118,9 +118,8 @@ Differences from Research page:
 </section>
 
 
-    
-    <div id="insights-grid">
-      </div>
+  
+  
   </div>
 </section>
 
@@ -220,47 +219,7 @@ Differences from Research page:
     (function() {
       'use strict';
 
-      // ------------------------------------------------------------------
-      // A. INSIGHTS GRID (teaching themed)
-      // ------------------------------------------------------------------
-      const insightsList = [
-        'Student‑Centred Learning Approaches',
-        'Clinical Skills Development',
-        'Evidence‑Based Practice Training',
-        'Curriculum Design & Evaluation',
-        'Mentorship & Supervision',
-        'Assessment & Feedback Strategies'
-      ];
-
-
-function renderInsightsGrid() {
-    const container = document.getElementById('insights-grid');
-    if (!container) return;
-    container.innerHTML = '';
-
-    insightsList.forEach(text => {
-        const item = document.createElement('div');
-        item.className = 'insight-pill';                         // class used for the top line
-        item.style.padding = '12px 15px';
-        item.style.borderRadius = '50px';
-        item.style.border = '1px solid rgba(224, 224, 224, 0.3)';
-        item.style.backgroundColor = 'rgba(252, 252, 252, 0.5)';
-        item.style.boxShadow = '0 2px 4px rgba(0,0,0,0.03)';
-        item.style.display = 'flex';
-        item.style.alignItems = 'center';
-        item.style.justifyContent = 'center';
-        item.style.textAlign = 'center';
-        item.style.fontWeight = '500';
-        item.style.color = 'var(--color-midnight-blue)';
-        item.style.position = 'relative';    // required for the ::before line
-        item.textContent = text;
-        container.appendChild(item);
-    });
-}
-
-
-
-
+     
       
 
       // ------------------------------------------------------------------
