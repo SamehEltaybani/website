@@ -123,11 +123,6 @@ I translate complex clinical data into clear, actionable insights that improve p
 
 
     
-
-
-
-  <div id="insights-grid">
-      </div>
   </div>
 </section>
 
@@ -229,45 +224,7 @@ I translate complex clinical data into clear, actionable insights that improve p
     (function() {
       'use strict';
 
-      // ------------------------------------------------------------------
-      // A. INSIGHTS GRID (editable list of short sentences)
-      // ------------------------------------------------------------------
-      const insightsList = [
-        'Actionable Clinical Insights',
-        'Evidence‑Based Practice Indicators',
-        'Mortality & Morbidity Trends',
-        'Patient‑Reported Outcome Measures',
-        'Cost‑Effectiveness Analyses',
-        'Predictive Analytics for Readmission'
-      ];
-
-     function renderInsightsGrid() {
-    const container = document.getElementById('insights-grid');
-    if (!container) return;
-    container.innerHTML = '';
-
-    insightsList.forEach(text => {
-        const item = document.createElement('div');
-        item.className = 'insight-pill';                         // class used for the top line
-        item.style.padding = '12px 15px';
-        item.style.borderRadius = '50px';
-        item.style.border = '1px solid rgba(224, 224, 224, 0.3)';
-        item.style.backgroundColor = 'rgba(252, 252, 252, 0.5)';
-        item.style.boxShadow = '0 2px 4px rgba(0,0,0,0.03)';
-        item.style.display = 'flex';
-        item.style.alignItems = 'center';
-        item.style.justifyContent = 'center';
-        item.style.textAlign = 'center';
-        item.style.fontWeight = '500';
-        item.style.color = 'var(--color-midnight-blue)';
-        item.style.position = 'relative';    // required for the ::after line
-        item.textContent = text;
-        container.appendChild(item);
-    });
-}
-
-
-
+      
       // ------------------------------------------------------------------
       // B. FEATURE BUTTONS
       // ------------------------------------------------------------------
@@ -404,7 +361,6 @@ I translate complex clinical data into clear, actionable insights that improve p
       // D. INITIALISATION
       // ------------------------------------------------------------------
       function initPageSpecific() {
-        renderInsightsGrid();
         renderFeatureButtons();
         renderAnalysisCards();
       }
