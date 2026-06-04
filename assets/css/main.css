@@ -1348,7 +1348,23 @@ footer .footer-copyright {
     gap: var(--space-lg);
 }
 
+/* Data Analysis page grid (modifiable column count via custom property) */
+.grid-data-analysis {
+    display: grid;
+    grid-template-columns: repeat(var(--da-grid-columns, 3), 1fr);
+    gap: var(--space-md);
+}
 
+@media (max-width: 992px) {
+    .grid-2, .grid-3, .grid-4 {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+    }
+    
+    .grid-data-analysis {
+        grid-template-columns: 1fr;
+    }
+}
 
 /* ============================================================================
    PUBLICATION LIST (Specific styles)
@@ -1598,6 +1614,40 @@ footer .footer-copyright {
     width: var(--space-md);
 }
 
+
+/* ============================================================================
+   INSIGHT PILLS GRID (in the top part of Teaching / Data Analysis pages)
+   ============================================================================ */
+
+/* Single gold bottom bar on insight pills (70% wide, fades at edges) */
+.insight-pill::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 15%;
+    width: 70%;
+    height: 0.8px;
+    background: linear-gradient(to right, transparent 0%, var(--color-gold) 25%, var(--color-gold) 75%, transparent 100%);
+    border-radius: 1px;
+}
+
+
+#insights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);   /* 3 equal columns on desktop */
+    gap: 12px;                                /* spacing between pills */
+    width: 100%;
+    max-width: 1200px;                        /* doesn't stretch too wide */
+    margin: 0 auto;                           /* centered */
+}
+
+/* Mobile: stack pills in one column, limit width to 700px */
+@media (max-width: 992px) {
+    #insights-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+    }
+}
 
 
 /* ============================================================================
