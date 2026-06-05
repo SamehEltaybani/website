@@ -896,7 +896,7 @@ clearFiltersBtn.addEventListener('click', function(e) {
               const rowClass = globalIndex % 2 === 0 ? 'row-even' : 'row-odd';
               html += `
                   <div class="publication-item ${rowClass}">
-                      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px;">
+                      <div style="display: flex; justify-content: space-between; align-items: baseline;">
                           ${authorTag}
                           <span class="publication-year">${escapeHTML(pub.year)}</span>
                       </div>
