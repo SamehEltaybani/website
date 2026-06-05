@@ -103,10 +103,18 @@ Page‑specific content:
     <div style="display: flex; flex-wrap: wrap; gap: var(--space-lg); justify-content: center;">
 
       <!-- Card 1 -->
-      <div style="text-align: center; padding: var(--space-lg); flex: 1 1 250px;">
-        <i class="fas fa-lightbulb" style="font-size: 2.8rem; color: var(--color-gold); margin-bottom: var(--space-sm);"></i>
-        <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--color-midnight-blue); margin: 0 0 var(--space-sm) 0;">What I Do</h3>
-        <p style="font-size: 0.9rem; color: var(--color-text-main); margin: 0; line-height: 1.6;">A concise, single‑sentence description of the research activities, outputs, and focus areas that define my work.</p>
+      <div style="flex: 1 1 250px; display: flex; justify-content: center;">
+        <div style="width: 280px; max-width: 100%; aspect-ratio: 1 / 1;
+                    border-radius: 50%;
+                    border: 1px solid var(--color-gold);
+                    display: flex; flex-direction: column; align-items: center; justify-content: center;
+                    text-align: center; padding: var(--space-xs); box-sizing: border-box;">
+          <i class="fas fa-cog" style="font-size: 2.5rem; color: var(--color-gold); margin-bottom: var(--space-xs);"></i>
+          <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--color-midnight-blue); margin: 0 0 var(--space-xs) 0;">How I Work</h3>
+          <p style="font-size: 0.9rem; color: var(--color-text-main); margin: 0; line-height: 1.6; max-width: 250px;">
+            A short description of the methods, approach, or unique way in which the work is carried out.
+          </p>
+        </div>
       </div>
 
       <!-- Card 2 -->
