@@ -182,7 +182,7 @@ main {
   border-radius: 0 0 8px 8px;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1100px) {
   .section-alt-tight {
     padding-top: 0 !important;
     margin-top: 0 !important;
@@ -257,7 +257,7 @@ main {
 }
 
 /* Remove white-space for mobile */
-@media (max-width: 992px) {
+@media (max-width: 1100px) {
     .btn {
         white-space: normal;
         padding: var(--space-sm) var(--space-md);
@@ -400,7 +400,7 @@ main {
 }
 
 /* Make the filter dropdown scrollable on small screens */
-@media (max-width: 992px) {
+@media (max-width: 1100px) {
     #filter-dropdown {
         max-height: 70vh;          /* never taller than 70% of the screen height */
         overflow-y: auto;          /* allow scrolling inside the dropdown */
@@ -860,7 +860,7 @@ main ol {
    RESPONSIVE NAVIGATION (Mobile)
    ============================================================================ */
 
-@media (max-width: 992px) {
+@media (max-width: 1100px) {
     .navbar-right {
         display: none;
     }
@@ -903,7 +903,7 @@ main ol {
     padding: var(--space-sm) 0;      /* vertical padding only */
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1100px) {
     .breadcrumb-bar {
         top: calc(var(--nav-height-mobile) + 0px);
         padding: 0;
@@ -961,7 +961,7 @@ main ol {
 }
 
 /* Mobile breadcrumb - single line with back arrow */
-@media (max-width: 992px) {
+@media (max-width: 1100px) {
     .breadcrumb-list {
         flex-wrap: nowrap;
         overflow-x: auto;
@@ -1169,7 +1169,7 @@ footer .footer-copyright {
     justify-content: space-between;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1100px) {
     .controls-bar {
         top: calc(var(--nav-height-mobile) + var(--breadcrumb-height));
     }
@@ -1354,7 +1354,7 @@ footer .footer-copyright {
     gap: var(--space-lg);
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1100px) {
     .grid-2, .grid-3, .grid-4 {
         grid-template-columns: 1fr;
         gap: var(--space-md);
@@ -1638,7 +1638,7 @@ footer .footer-copyright {
     color: var(--color-text-muted);
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1100px) {
     .three-buttons-block {
         grid-template-columns: 1fr;
         gap: var(--space-md);
@@ -1662,7 +1662,7 @@ footer .footer-copyright {
 }
 
 /* On phones and tablets, stack the buttons in a single column */
-@media (max-width: 992px) {
+@media (max-width: 1100px) {
     #external-buttons-container {
         grid-template-columns: repeat(2, 1fr);          
         max-width: 400px;                     /* a comfortable width on small screens */
@@ -1747,7 +1747,7 @@ footer .footer-copyright {
     color: var(--color-gold);
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1100px) {
     .portfolio-photo,
     .portfolio-bio {
         flex: 1 1 100%;
@@ -1827,7 +1827,7 @@ pre code {
    RESPONSIVE UTILITIES
    ============================================================================ */
 
-@media (max-width: 992px) {
+@media (max-width: 1100px) {
     .hide-mobile {
         display: none;
     }
@@ -1839,7 +1839,7 @@ pre code {
     }
 }
 
-@media (min-width: 993px) {
+@media (min-width: 1101px) {
     .hide-desktop {
         display: none;
     }
@@ -2023,7 +2023,7 @@ pre code {
 
 
 /* Prevent iOS / Android zoom on search / filter inputs */
-@media (max-width: 992px) {
+@media (max-width: 1100px) {
     .search-box input,
     .controls-bar input,
     .controls-bar select,
@@ -2076,7 +2076,7 @@ pre code {
 }
 
 /* On mobile: show search icon and hamburger, hide desktop links */
-@media (max-width: 992px) {
+@media (max-width: 1100px) {
     .navbar-right {
         display: none;          /* hide desktop nav links */
     }
@@ -2385,7 +2385,7 @@ pre code {
 
 /* Mobile – make modal taller */
 /* Mobile – make the overlay scrollable so nothing is clipped */
-@media (max-width: 992px) {
+@media (max-width: 1100px) {
     .search-modal-overlay {
         align-items: flex-start;        /* pin the white box to the top */
         padding-top: 10vh;              /* leave room from the very top */
