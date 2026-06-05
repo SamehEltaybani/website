@@ -1709,6 +1709,20 @@ footer .footer-copyright {
 }
 
 
+
+/* ============================================================================
+   SINGLE VALUES‑TO‑ACTION CIRCLE (below values in teh research, teaching and data analysis pages)– hover only on mouse devices
+   ============================================================================ */
+@media (hover: hover) {
+    .values-action-circle {
+        transition: background-color 0.3s, box-shadow 0.3s;
+    }
+    a:hover .values-action-circle {
+        background-color: rgba(212,175,55,0.08);
+        box-shadow: 0 0 30px rgba(0,0,0,0.18);
+    }
+}
+
 /* ============================================================================
    PORTFOLIO PAGE (Individual - 25% / 75% split)
    ============================================================================ */
