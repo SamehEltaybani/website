@@ -284,7 +284,7 @@ function renderMobileMenu(navItems) {
      * Sets up responsive behavior (matchMedia)
      */
     function setupResponsiveBehavior() {
-        const mediaQuery = window.matchMedia('(min-width: 993px)');
+        const mediaQuery = window.matchMedia('(min-width: 1101px)');
         
         function handleScreenChange(e) {
             if (e.matches) {
