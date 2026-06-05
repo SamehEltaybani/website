@@ -25,7 +25,7 @@
             'touch-action:manipulation;';
 
         btn.innerHTML =
-            '<span style="font-size:1.8rem; color:#D4AF37; line-height:1;">' +
+            '<span style="font-size:2.2rem; color:#D4AF37; line-height:1;">' +
               '<i class="fas fa-angle-up"></i>' +
             '</span>' +
             '<span style="font-size:0.7rem; font-weight:700; color:#1A2530; line-height:1; margin-top:0px;">' +
