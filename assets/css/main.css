@@ -685,6 +685,9 @@ main ol {
 
 .navbar {
     position: sticky;
+   -webkit-position: sticky;
+    transform: translateZ(0);
+    will-change: transform;
     top: 0;
     z-index: 1000;
     background: var(--color-midnight-blue);                
@@ -890,6 +893,9 @@ main ol {
 
 .breadcrumb-bar {
     position: sticky;
+    -webkit-position: sticky;
+    transform: translateZ(0);
+    will-change: transform;
     top: calc(var(--nav-height-desktop) + 0px);
     z-index: 999;
     background-color: #F0EDE6;
@@ -1364,7 +1370,7 @@ footer .footer-copyright {
     border-bottom: none;
     margin-bottom: 10px;            /* Space between cards */
     transition: var(--transition-fast);
-    box-shadow: -6px -6px 8px rgba(0,0,0,0.04), 0 0 0 transparent;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
 }
 
 
@@ -1381,8 +1387,10 @@ footer .footer-copyright {
     font-weight: 600;
     font-size: var(--font-size-lg);
     letter-spacing: 0.3px;
-    color: var(--color-midnight-blue);
+    color: #000000;
     flex: 1;
+    margin-top: 6px;
+    margin-bottom: 4px;
 }
 
 .publication-year {
@@ -1449,6 +1457,9 @@ footer .footer-copyright {
     justify-content: flex-end;       /* pushes buttons to the right */
 }
 
+.publication-header {
+    margin-bottom: 8px;
+}
 
 /* Page separator for load more */
 
@@ -1479,33 +1490,7 @@ footer .footer-copyright {
 }
 
 
-/* Fading top and left gold borders on publication and blog cards */
-.blog-card,
-.publication-item {
-    position: relative;
-}
 
-.blog-card::before,
-.publication-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(to right, var(--color-gold) 0%, transparent 70%);
-}
-
-.blog-card::after,
-.publication-item::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 1px;
-    height: 100%;
-    background: linear-gradient(to bottom, var(--color-gold) 0%, transparent 70%);
-}
 
 /* Alternating row backgrounds for Publication cards and Blog cards */
 
@@ -1527,15 +1512,15 @@ footer .footer-copyright {
     padding: var(--space-md);
     border-bottom: none;
     margin-bottom: 10px;          /* Space between cards */
-    box-shadow: -6px -6px 8px rgba(0,0,0,0.04), 0 0 0 transparent;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
 }
 
 .blog-title {
     font-size: var(--font-size-lg);
     font-weight: 600;
     letter-spacing: 0.3px;
-    margin-bottom: 2px;
-    color: var(--color-midnight-blue);
+    margin-bottom: 8px;
+    color: #000000;
 }
 
 .blog-categories {
@@ -1565,6 +1550,11 @@ footer .footer-copyright {
         background-color: #d3e7f0;
     }
 }
+
+.blog-date {
+    margin-bottom: 6px;
+}
+
 
 
 /* ============================================================================
