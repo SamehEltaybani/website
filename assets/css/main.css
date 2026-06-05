@@ -1370,7 +1370,7 @@ footer .footer-copyright {
     border-bottom: none;
     margin-bottom: 10px;            /* Space between cards */
     transition: var(--transition-fast);
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
 }
 
 
@@ -1390,7 +1390,8 @@ footer .footer-copyright {
     color: #000000;
     flex: 1;
     margin-top: 6px;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
+    line-height: 1.25;      /* tighter between wrapped lines */
 }
 
 .publication-year {
@@ -1457,6 +1458,16 @@ footer .footer-copyright {
     justify-content: flex-end;       /* pushes buttons to the right */
 }
 
+/* Publication card action buttons – smaller, muted */
+.publication-buttons .btn-text {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+.publication-buttons .btn-text:hover {
+    color: var(--color-gold);
+}
+
 .publication-header {
     margin-bottom: 8px;
 }
@@ -1495,7 +1506,7 @@ footer .footer-copyright {
 /* Alternating row backgrounds for Publication cards and Blog cards */
 
 .row-even {
-    background-color: rgba(255, 255, 255, 0.5);            
+    background-color: #FFFFFF;            
 }
 .row-odd {
     background-color: #FFFFFF;       
@@ -1508,11 +1519,14 @@ footer .footer-copyright {
    BLOG LIST (Specific styles)
    ============================================================================ */
 
+
+/* Blog card text */
+
 .blog-card {
     padding: var(--space-md);
     border-bottom: none;
-    margin-bottom: 10px;          /* Space between cards */
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    margin-bottom: 14px;          /* Space between cards */
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
 }
 
 .blog-title {
@@ -1521,6 +1535,7 @@ footer .footer-copyright {
     letter-spacing: 0.3px;
     margin-bottom: 8px;
     color: #000000;
+    line-height: 1.25;
 }
 
 .blog-categories {
@@ -1532,9 +1547,9 @@ footer .footer-copyright {
 }
 
 .blog-category {
-    font-size: var(--font-size-xs);
+    font-size: 0.7rem;
     background-color: #F0F7FA;
-    padding: 2px var(--space-sm);
+    padding: 2px 8px;
     border-radius: 20px;
     color: var(--color-midnight-blue);          
     text-decoration: underline;         
@@ -1551,10 +1566,12 @@ footer .footer-copyright {
     }
 }
 
-.blog-date {
-    margin-bottom: 6px;
-}
 
+.blog-card .btn-text {
+    font-size: 0.75rem;
+    display: block;
+    text-align: right;
+}
 
 
 /* ============================================================================
@@ -2442,25 +2459,6 @@ pre code {
 }
 #search-results-list .paragraph {
     font-size: 0.6rem;
-}
-
-
-
-/* Blog card text */
-.blog-title {
-    font-size: var(--font-size-lg);      
-    margin-bottom: 2px;
-}
-.blog-category {
-    font-size: 0.7rem;                  
-    padding: 2px 8px;
-}
-
-
-.blog-card .btn-text {
-    font-size: 0.85rem;
-    display: block;
-    text-align: right;
 }
 
 
