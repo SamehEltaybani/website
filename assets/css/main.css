@@ -1533,7 +1533,7 @@ footer .footer-copyright {
     font-size: var(--font-size-lg);
     font-weight: 600;
     letter-spacing: 0.3px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     color: #000000;
     line-height: 1.25;
 }
@@ -1571,10 +1571,14 @@ footer .footer-copyright {
     font-size: 0.75rem;
     display: block;
     text-align: right;
+    margin-top: var(--space-sm);
 }
 
 
 .blog-date {
+    text-align: right;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
     margin-bottom: 8px;
 }
 
