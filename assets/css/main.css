@@ -1543,14 +1543,19 @@ footer .footer-copyright {
     color: #ffffff;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: flex-end;
+    justify-content: flex-start;     /* items sit at the top */
+    align-items: center;             /* centered horizontally */
     padding: var(--space-md);
-    gap: 2px;
+    gap: 6px;                        /* small, fixed gap between items */
     min-width: 130px;
     flex-shrink: 0;
     font-size: 0.8rem;
-    text-align: right;
+    text-align: center;
+}
+
+.blog-info-sep-dot,
+[data-page="blog.html"] .blog-info-sep-bar {
+    display: none;
 }
 
 .blog-info-item {
@@ -1558,18 +1563,6 @@ footer .footer-copyright {
     white-space: nowrap;
 }
 
-.blog-info-sep {
-    display: none;            /* hidden by default; shown by media queries */
-    color: #ffffff;
-}
-
-.blog-info-sep-dot {
-    display: inline;
-}
-
-.blog-info-sep-bar {
-    display: none;
-}
 
 .blog-date {
     color: #d0d0d0;                /* soft grey instead of white */
@@ -1637,34 +1630,41 @@ footer .footer-copyright {
 
 
 /* ---- Mobile layout (max 1100px) ---- */
+
 @media (max-width: 1100px) {
-    .blog-card-inner {
+    [data-page="blog.html"] .blog-card-inner {
         flex-direction: column;
     }
-/* Info column becomes a horizontal bar at the top */
-    .blog-info-col {
+
+    [data-page="blog.html"] .blog-info-col {
         flex-direction: row;
-        justify-content: flex-start;
+        justify-content: space-between;
         align-items: center;
-        gap: 6px;
+        gap: 0;
         padding: var(--space-sm) var(--space-md);
         min-width: 0;
         font-size: 0.75rem;
-        text-align: left;
+        text-align: center;
         white-space: nowrap;
         overflow-x: auto;
     }
 
-    /* Hide dot separator, show bar separator */
-    .blog-info-sep-dot {
-        display: none;
+    /* Show bar separators, hide dots */
+    [data-page="blog.html"] .blog-info-sep-dot {
+        display: none !important;
     }
-    .blog-info-sep-bar {
-        display: inline;
+    [data-page="blog.html"] .blog-info-sep-bar {
+        display: inline !important;
+        color: #ffffff;
+        margin: 0 4px;
     }
 
-    /* Content column below */
-    .blog-content-col {
+    [data-page="blog.html"] .blog-info-item {
+        flex: 1;
+        text-align: center;
+    }
+
+    [data-page="blog.html"] .blog-content-col {
         padding: var(--space-md);
     }
 }
