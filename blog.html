@@ -677,8 +677,7 @@ clearFiltersBtn.addEventListener('click', function(e) {
               infoColumnHtml += '<span class="blog-info-item blog-date">' + escapeHTML(dateFormatted) + '</span>';
 
                            if (readTime) {
-                  infoColumnHtml += '<span class="blog-info-sep blog-info-sep-dot">·</span>';
-                  infoColumnHtml += '<span class="blog-info-sep blog-info-sep-bar">|</span>';
+                  infoColumnHtml += '<span class="blog-info-sep blog-info-sep-bar blog-info-sep-read">|</span>';
                   infoColumnHtml += '<span class="blog-info-item blog-read-time">' + escapeHTML(readTime) + ' <i class="fas fa-circle-info blog-reading-info-icon"></i></span>';
               }
 
