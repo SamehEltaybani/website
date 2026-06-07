@@ -1516,18 +1516,86 @@ footer .footer-copyright {
 
 
 /* ============================================================================
-   BLOG LIST (Specific styles)
+   BLOG CARDS – two‑column layout (desktop) / top bar (mobile)
    ============================================================================ */
 
 
 /* Blog card text */
 
 .blog-card {
-    padding: var(--space-md);
+    padding: 0;
     border-bottom: none;
     margin-bottom: 14px;          /* Space between cards */
+    background-color: #ffffff;
     box-shadow: 0 2px 12px rgba(0,0,0,0.1);
 }
+
+.blog-card-inner {
+    display: flex;
+    flex-direction: row;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+
+.blog-info-col {
+    background-color: var(--color-midnight-blue);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    padding: var(--space-md);
+    gap: 2px;
+    min-width: 130px;
+    flex-shrink: 0;
+    font-size: 0.8rem;
+    text-align: right;
+}
+
+.blog-info-item {
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+.blog-info-sep {
+    display: none;            /* hidden by default; shown by media queries */
+    color: #ffffff;
+}
+
+.blog-info-sep-dot {
+    display: inline;
+}
+
+.blog-info-sep-bar {
+    display: none;
+}
+
+.blog-date {
+    text-align: right;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin-bottom: 8px;
+}
+
+.blog-read-link {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.blog-read-link:hover {
+    color: var(--color-gold);
+}
+
+
+ .blog-content-col {
+    flex: 1;
+    padding: var(--space-md);
+    background-color: #ffffff;
+}
+
 
 .blog-title {
     font-size: var(--font-size-lg);
@@ -1567,20 +1635,40 @@ footer .footer-copyright {
 }
 
 
-.blog-card .btn-text {
-    font-size: 0.75rem;
-    display: block;
-    text-align: right;
-    margin-top: var(--space-sm);
+
+/* ---- Mobile layout (max 1100px) ---- */
+@media (max-width: 1100px) {
+    .blog-card-inner {
+        flex-direction: column;
+    }
+/* Info column becomes a horizontal bar at the top */
+    .blog-info-col {
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 6px;
+        padding: var(--space-sm) var(--space-md);
+        min-width: 0;
+        font-size: 0.75rem;
+        text-align: left;
+        white-space: nowrap;
+        overflow-x: auto;
+    }
+
+    /* Hide dot separator, show bar separator */
+    .blog-info-sep-dot {
+        display: none;
+    }
+    .blog-info-sep-bar {
+        display: inline;
+    }
+
+    /* Content column below */
+    .blog-content-col {
+        padding: var(--space-md);
+    }
 }
 
-
-.blog-date {
-    text-align: right;
-    font-size: var(--font-size-sm);
-    color: var(--color-text-muted);
-    margin-bottom: 8px;
-}
 
 /* ============================================================================
    FEATURED CARDS (Home page)
