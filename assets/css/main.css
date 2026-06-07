@@ -1576,6 +1576,7 @@ footer .footer-copyright {
 }
 
 .blog-read-link {
+    align-self: flex-end;
     text-decoration: none;
     color: #ffffff;
     font-weight: 500;
@@ -1667,6 +1668,11 @@ footer .footer-copyright {
     /* “Read article” follows right after reading time */
     .blog-read-link {
         margin-left: 0;
+    }
+
+     /* Push Read article to the right when there is no reading time */
+    .blog-read-link-alone {
+        margin-left: auto !important;
     }
 
     /* Only show the separator that has the special class */
