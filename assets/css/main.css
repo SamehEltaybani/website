@@ -1586,6 +1586,10 @@ footer .footer-copyright {
     color: var(--color-gold);
 }
 
+    
+    .blog-read-link-alone {    /* Push Read article to the right when there is no reading time */
+        margin-left: auto;
+    }
 
  .blog-content-col {
     flex: 1;
