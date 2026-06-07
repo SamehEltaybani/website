@@ -5,6 +5,7 @@
     "date": "2026-11-15",
     "categories": ["AI", "Clinical Practice", "Nursing"],
     "blogfile": "blog/blog-199.html",
+    "readingTime": "10 min.",
     "summary": "This is a summary used only for search. Example words for testing are deviation and exaggeration."
   },
   {
@@ -12,6 +13,7 @@
     "shortTitle": "Qualitative meta-synthesis",
     "date": "2026-10-02",
     "categories": ["Research Methods", "Evidence-Based Practice"],
+    "readingTime": "7 min.",
     "blogfile": "blog/blog-198.html"
   },
   {
@@ -19,6 +21,7 @@
     "shortTitle": "ML for sepsis",
     "date": "2026-09-20",
     "categories": ["AI", "Critical Care", "Data Science"],
+    "readingTime": "15 min.",
     "blogfile": "blog/blog-197.html"
   },
   {
@@ -47,6 +50,7 @@
     "shortTitle": "Telemedicine and satisfaction",
     "date": "2026-05-18",
     "categories": ["Telehealth", "Patient Care", "Innovation"],
+    "readingTime": "10 min.",
     "blogfile": "blog/blog-193.html"
   },
   {
