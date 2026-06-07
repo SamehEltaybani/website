@@ -935,8 +935,7 @@ clearFiltersBtn.addEventListener('click', function(e) {
                   // Build the pop‑up
                   const popup = document.createElement('div');
                   popup.className = 'pub-action-popup';
-                  popup.style.cssText = 'position:absolute; background:#fff; border:1px solid var(--color-border); border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,0.15); padding:var(--space-md); z-index:1200; min-width:160px; max-width:90vw; right:0;';
-
+                  popup.style.cssText = 'position:absolute; background:#fff; border:1px solid var(--color-border); border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,0.15); padding:var(--space-md); z-index:1200; width:max-content; min-width:180px; max-width:280px;';
                   // Close button (X)
                   const closeBtn = document.createElement('button');
                   closeBtn.innerHTML = '&times;';
@@ -987,8 +986,18 @@ clearFiltersBtn.addEventListener('click', function(e) {
 
                   // Position the pop‑up near the link
                   const rect = link.getBoundingClientRect();
-                  popup.style.top = (rect.bottom + window.scrollY + 4) + 'px';
-                  popup.style.left = (rect.left + window.scrollX) + 'px';
+                    let top = rect.bottom + window.scrollY + 4;
+                    let left = rect.left + window.scrollX;
+                    
+                    // Keep pop‑up inside the right edge of the screen
+                    if (left + 290 > window.innerWidth) {
+                        left = window.innerWidth - 300;
+                    }
+                    if (left < 10) left = 10;
+                    
+                    popup.style.top = top + 'px';
+                    popup.style.left = left + 'px';
+                
                     // Prevent overflow on the right edge
                     if (rect.right > window.innerWidth - 200) {
                         popup.style.left = 'auto';
