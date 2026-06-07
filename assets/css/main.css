@@ -1641,7 +1641,7 @@ footer .footer-copyright {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        gap: 8px;          /* adjustable spacing between reading time and "Read article" */
+        gap: 2px;          /* adjustable spacing between reading time and "Read article" */
         padding: var(--space-sm) var(--space-md);
         min-width: 0;
         font-size: 0.75rem;
