@@ -1422,7 +1422,7 @@ footer .footer-copyright {
 
 /* Action link */
 .pub-action-link {
-    color: #ffffff;
+    color: var(--color-gold);
     cursor: pointer;
     font-size: 0.8rem;
     font-weight: 500;
@@ -1432,6 +1432,7 @@ footer .footer-copyright {
 }
 .pub-action-link:hover {
     color: var(--color-gold);
+    text-decoration: underline;
 }
 
 /* ---- Content column (right side on desktop) ---- */
@@ -1646,13 +1647,14 @@ footer .footer-copyright {
 .blog-read-link {
     align-self: center;          
     text-decoration: none;
-    color: #ffffff;
+    color: var(--color-gold);
     font-weight: 500;
     transition: color 0.2s;
 }
 
 .blog-read-link:hover {
     color: var(--color-gold);
+    text-decoration: underline;
 }
 
     
