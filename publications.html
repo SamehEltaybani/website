@@ -935,7 +935,7 @@ clearFiltersBtn.addEventListener('click', function(e) {
                   // Build the pop‑up
                   const popup = document.createElement('div');
                   popup.className = 'pub-action-popup';
-                  popup.style.cssText = 'position:absolute; background:#fff; border:1px solid var(--color-border); border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,0.15); padding:var(--space-md); z-index:1200; min-width:160px;';
+                  popup.style.cssText = 'position:absolute; background:#fff; border:1px solid var(--color-border); border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,0.15); padding:var(--space-md); z-index:1200; min-width:160px; max-width:90vw; right:0;';
 
                   // Close button (X)
                   const closeBtn = document.createElement('button');
@@ -949,7 +949,7 @@ clearFiltersBtn.addEventListener('click', function(e) {
 
                   // Button container
                   const btnContainer = document.createElement('div');
-                  btnContainer.style.cssText = 'display:flex; flex-direction:column; gap:var(--space-sm); margin-top:var(--space-sm);';
+                  btnContainer.style.cssText = 'display:flex; flex-direction:column; align-items:flex-start; gap:var(--space-sm); margin-top:var(--space-sm);';
 
                   // PubMed button
                   if (pub.pubmedLink) {
@@ -989,6 +989,11 @@ clearFiltersBtn.addEventListener('click', function(e) {
                   const rect = link.getBoundingClientRect();
                   popup.style.top = (rect.bottom + window.scrollY + 4) + 'px';
                   popup.style.left = (rect.left + window.scrollX) + 'px';
+                    // Prevent overflow on the right edge
+                    if (rect.right > window.innerWidth - 200) {
+                        popup.style.left = 'auto';
+                        popup.style.right = '8px';
+                    }
 
                   // Close pop‑up when clicking outside
                   function outsideClickHandler(ev) {
