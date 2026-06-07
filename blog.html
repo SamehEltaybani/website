@@ -676,11 +676,10 @@ clearFiltersBtn.addEventListener('click', function(e) {
               let infoColumnHtml = '<div class="blog-info-col">';
               infoColumnHtml += '<span class="blog-info-item blog-date">' + escapeHTML(dateFormatted) + '</span>';
 
-              if (readTime) {
-                  // Dot separator (desktop) and bar separator (mobile) between date and reading time
+                           if (readTime) {
                   infoColumnHtml += '<span class="blog-info-sep blog-info-sep-dot">·</span>';
                   infoColumnHtml += '<span class="blog-info-sep blog-info-sep-bar">|</span>';
-                  infoColumnHtml += '<span class="blog-info-item blog-read-time">' + escapeHTML(readTime) + '</span>';
+                  infoColumnHtml += '<span class="blog-info-item blog-read-time">' + escapeHTML(readTime) + ' <i class="fas fa-circle-info blog-reading-info-icon"></i></span>';
               }
 
               // Separator before the read link (always present)
@@ -736,6 +735,44 @@ countBar.innerHTML =
             }
         });
     });
+
+                  // Reading‑time info tooltips
+          const infoIcons = blogListContainer.querySelectorAll('.blog-reading-info-icon');
+          infoIcons.forEach(icon => {
+              icon.addEventListener('click', function(e) {
+                  e.stopPropagation();
+                  // Remove any existing tooltip
+                  const oldTip = document.querySelector('.blog-reading-tooltip');
+                  if (oldTip) oldTip.remove();
+
+                  const tooltip = document.createElement('div');
+                  tooltip.className = 'blog-reading-tooltip';
+                  tooltip.innerHTML = '<button class="blog-reading-tooltip-close">&times;</button> Approximate reading time of this article.';
+                  tooltip.querySelector('.blog-reading-tooltip-close').addEventListener('click', function() {
+                      tooltip.remove();
+                  });
+
+                  // Position the tooltip below the icon
+                  const rect = icon.getBoundingClientRect();
+                  tooltip.style.top = (rect.bottom + 4) + 'px';
+                  tooltip.style.left = rect.left + 'px';
+
+                  document.body.appendChild(tooltip);
+              });
+          });
+
+          // Close tooltip when clicking anywhere else or scrolling
+          document.addEventListener('click', function(e) {
+              if (!e.target.closest('.blog-reading-info-icon') && !e.target.closest('.blog-reading-tooltip')) {
+                  const tip = document.querySelector('.blog-reading-tooltip');
+                  if (tip) tip.remove();
+              }
+          });
+          window.addEventListener('scroll', function() {
+              const tip = document.querySelector('.blog-reading-tooltip');
+              if (tip) tip.remove();
+          }, { passive: true });
+        
 
           if (state.filteredItems.length > end) {
               loadMoreBtn.classList.remove('hidden');
