@@ -110,7 +110,7 @@ Fixed issues (central + page‑specific):
             </label>
         </div>
         <div id="filter-authorship-options" class="filter-checkbox-list">
-            <label class="filter-checkbox-item"><input type="checkbox" value="First/Corresponding author"> First/Corresponding author</label>
+            <label class="filter-checkbox-item"><input type="checkbox" value="First/Corresponding author"> First author</label>
             <label class="filter-checkbox-item"><input type="checkbox" value="Co-author"> Co-author</label>
         </div>
     </div>
@@ -887,24 +887,27 @@ clearFiltersBtn.addEventListener('click', function(e) {
           let html = '';
           itemsToShow.forEach((pub, i) => {
               const authorClass = pub.authorship === 'First/Corresponding author' ? 'authorship-first' : 'authorship-coauthor';
-              const authorTag = pub.authorship ? `<div class="publication-authorship ${authorClass}" style="margin-bottom: 0;">${escapeHTML(pub.authorship)}</div>` : '';
+              const displayAuthorship = pub.authorship === 'First/Corresponding author' ? 'First author' : (pub.authorship || '');
+              const authorTag = pub.authorship ? `<div class="publication-authorship ${authorClass}">${escapeHTML(displayAuthorship)}</div>` : '';
               let btns = '';
               if (pub.pubmedLink) btns += `<a href="${escapeHTML(pub.pubmedLink)}" class="btn btn-text" target="_blank" rel="noopener" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-external-link-alt mr-xs"></i>PubMed </a>`;
               if (pub.journalLink) btns += `<a href="${escapeHTML(pub.journalLink)}" class="btn btn-text" target="_blank" rel="noopener" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-external-link-alt mr-xs"></i>Journal </a>`;
               if (pub.blogLink) btns += `<a href="${escapeHTML(pub.blogLink)}" class="btn btn-text" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-lightbulb mr-xs"></i>My insights ❯</a>`;
-              const globalIndex = (state.currentPage - 1) * state.itemsPerPage + i;
-              const rowClass = globalIndex % 2 === 0 ? 'row-even' : 'row-odd';
-              html += `
-                  <div class="publication-item ${rowClass}">
-                      <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                          ${authorTag}
-                          <span class="publication-year">${escapeHTML(pub.year)}</span>
-                      </div>
-                      <div class="publication-title">${escapeHTML(pub.title)}</div>
-                      <div class="publication-journal">${escapeHTML(pub.journal || '')}</div>
-                      ${btns ? `<div class="publication-buttons">${btns}</div>` : ''}
-                  </div>
-              `;
+              
+             
+            html += `
+    <div class="publication-item">
+        <div class="publication-header-row">
+            ${authorTag}
+            <span class="publication-year">${escapeHTML(pub.year)}</span>
+        </div>
+        <div class="publication-title">${escapeHTML(pub.title)}</div>
+        <div class="publication-journal">${escapeHTML(pub.journal || '')}</div>
+        ${btns ? `<div class="publication-buttons">${btns}</div>` : ''}
+    </div>
+`;
+
+            
               if ((i + 1) % state.itemsPerPage === 0 && (i + 1) < itemsToShow.length) {
                   const pageNumber = Math.ceil((i + 1) / state.itemsPerPage);
                   html += `<div class="page-separator">
@@ -916,12 +919,16 @@ clearFiltersBtn.addEventListener('click', function(e) {
           });
           publicationsContainer.innerHTML = html;
 
-                     // Make authorship tags clickable (filter by authorship)
+                    
+        
+                           // Make authorship tags clickable (filter by authorship)
     const authorTags = publicationsContainer.querySelectorAll('.publication-authorship');
     authorTags.forEach(tag => {
         tag.addEventListener('click', function() {
-            const authorshipValue = this.textContent.trim();
-            // Set the filter to only this authorship value
+            const displayedText = this.textContent.trim();
+            // Map back to the original JSON value
+            const authorshipValue = displayedText === 'First author' ? 'First/Corresponding author' : displayedText;
+
             state.activeFilters.authorships = [authorshipValue];
 
             // Check the matching checkbox in the filter dropdown
@@ -933,6 +940,7 @@ clearFiltersBtn.addEventListener('click', function(e) {
             setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
         });
     });
+        
 
           // Result-count bar
           const countBar = document.getElementById('results-count-bar');
