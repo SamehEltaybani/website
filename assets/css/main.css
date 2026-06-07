@@ -1559,6 +1559,9 @@ footer .footer-copyright {
     white-space: nowrap;
 }
 
+.blog-info-sep {
+    display: none !important;
+}
 
 .blog-date {
     color: #d0d0d0;                /* soft grey instead of white */
@@ -1637,29 +1640,43 @@ footer .footer-copyright {
         flex-direction: column;
     }
 
+
     .blog-info-col {
         flex-direction: row;
-        justify-content: space-between;
         align-items: center;
-        gap: 2px;          /* adjustable spacing between reading time and "Read article" */
+        justify-content: flex-start;      /* start from left */
         padding: var(--space-sm) var(--space-md);
         min-width: 0;
         font-size: 0.75rem;
-        text-align: center;
         white-space: nowrap;
         overflow-x: auto;
+        gap: 0;                           /* no automatic gap */
     }
 
-   
-   .blog-info-item {
-        text-align: left;            /* date and reading time left‑aligned */
+    /* Date stays left – no extra style needed */
+
+    /* Push the reading time (if present) to the right */
+    .blog-read-time {
+        margin-left: auto;
     }
+
+    /* “Read article” follows right after reading time */
     .blog-read-link {
-        margin-left: auto;           /* push to the right */
-        text-align: right;
+        margin-left: 0;
     }
 
-    .blog-content-col {
+    /* Only show the separator that has the special class */
+    .blog-info-sep {
+        display: none !important;          /* hide all separators by default */
+    }
+   .blog-info-sep-read {
+        display: inline !important;        /* show the “|” before Read article */
+        color: #ffffff;
+        margin: 0 6px;                    /* space around the bar */
+    }
+
+
+     .blog-content-col {
         padding: var(--space-md);
     }
 }
