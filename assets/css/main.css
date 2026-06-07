@@ -1588,8 +1588,8 @@ footer .footer-copyright {
 }
 
     
-    .blog-read-link-alone {    /* Push Read article to the right when there is no reading time */
-        margin-left: auto;
+    .blog-read-link-alone {    
+        margin-left: 0 !important;
     }
 
  .blog-content-col {
