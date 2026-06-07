@@ -669,13 +669,35 @@ clearFiltersBtn.addEventListener('click', function(e) {
                   categoriesHtml += '</div>';
               }
 
-              const globalIndex = (state.currentPage - 1) * state.itemsPerPage + index;
-                            html += `
-                  <div class="blog-card ${globalIndex % 2 === 0 ? 'row-even' : 'row-odd'}">
-                      <div class="blog-date" style="text-align: right; font-size: 0.5 rem; color: var(--color-text-muted);">${escapeHTML(dateFormatted)}</div>
-                      <div class="blog-title">${escapeHTML(post.title)}</div>
-                      ${categoriesHtml}
-                      <a href="${escapeHTML(post.blogfile)}" class="btn btn-text" style="margin-top: var(--space-sm);"><i class="fas fa-newspaper mr-xs"></i> Read article ❯</a>
+                           // Reading time from JSON (optional)
+              const readTime = post.readingTime || '';
+
+              // Build the info column content (date, optional reading time, read link)
+              let infoColumnHtml = '<div class="blog-info-col">';
+              infoColumnHtml += '<span class="blog-info-item blog-date">' + escapeHTML(dateFormatted) + '</span>';
+
+              if (readTime) {
+                  // Dot separator (desktop) and bar separator (mobile) between date and reading time
+                  infoColumnHtml += '<span class="blog-info-sep blog-info-sep-dot">·</span>';
+                  infoColumnHtml += '<span class="blog-info-sep blog-info-sep-bar">|</span>';
+                  infoColumnHtml += '<span class="blog-info-item blog-read-time">' + escapeHTML(readTime) + '</span>';
+              }
+
+              // Separator before the read link (always present)
+              infoColumnHtml += '<span class="blog-info-sep blog-info-sep-dot">·</span>';
+              infoColumnHtml += '<span class="blog-info-sep blog-info-sep-bar">|</span>';
+              infoColumnHtml += '<a href="' + escapeHTML(post.blogfile) + '" class="blog-info-item blog-read-link">Read article <i class="fas fa-angle-right"></i></a>';
+              infoColumnHtml += '</div>';
+
+              html += `
+                  <div class="blog-card">
+                      <div class="blog-card-inner">
+                          ${infoColumnHtml}
+                          <div class="blog-content-col">
+                              <div class="blog-title">${escapeHTML(post.title)}</div>
+                              ${categoriesHtml}
+                          </div>
+                      </div>
                   </div>
               `;
 
