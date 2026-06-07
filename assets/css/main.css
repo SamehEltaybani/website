@@ -1572,10 +1572,10 @@ footer .footer-copyright {
 }
 
 .blog-date {
-    text-align: right;
-    font-size: var(--font-size-sm);
-    color: var(--color-text-muted);
-    margin-bottom: 8px;
+    color: #d0d0d0;                /* soft grey instead of white */
+    font-size: inherit;            /* match the info‑column font size */
+    font-weight: 400;
+    line-height: 1.4;
 }
 
 .blog-read-link {
@@ -1669,6 +1669,32 @@ footer .footer-copyright {
     }
 }
 
+
+/* Reading‑time info tooltip */
+
+.blog-reading-tooltip {
+    position: fixed;
+    background-color: var(--color-midnight-blue);
+    color: #ffffff;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    z-index: 2000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    max-width: 250px;
+}
+.blog-reading-tooltip-close {
+    background: none;
+    border: none;
+    color: var(--color-gold);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
 
 /* ============================================================================
    FEATURED CARDS (Home page)
