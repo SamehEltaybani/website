@@ -889,21 +889,22 @@ clearFiltersBtn.addEventListener('click', function(e) {
               const authorClass = pub.authorship === 'First/Corresponding author' ? 'authorship-first' : 'authorship-coauthor';
               const displayAuthorship = pub.authorship === 'First/Corresponding author' ? 'First author' : (pub.authorship || '');
               const authorTag = pub.authorship ? `<div class="publication-authorship ${authorClass}">${escapeHTML(displayAuthorship)}</div>` : '';
-              let btns = '';
-              if (pub.pubmedLink) btns += `<a href="${escapeHTML(pub.pubmedLink)}" class="btn btn-text" target="_blank" rel="noopener" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-external-link-alt mr-xs"></i>PubMed </a>`;
-              if (pub.journalLink) btns += `<a href="${escapeHTML(pub.journalLink)}" class="btn btn-text" target="_blank" rel="noopener" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-external-link-alt mr-xs"></i>Journal </a>`;
-              if (pub.blogLink) btns += `<a href="${escapeHTML(pub.blogLink)}" class="btn btn-text" style="white-space: nowrap; padding: var(--space-xs) var(--space-sm); font-size: var(--font-size-sm);"><i class="fas fa-lightbulb mr-xs"></i>My insights ❯</a>`;
+             
               
              
-            html += `
+           html += `
     <div class="publication-item">
-        <div class="publication-header-row">
-            ${authorTag}
-            <span class="publication-year">${escapeHTML(pub.year)}</span>
+        <div class="pub-card-inner">
+            <div class="pub-info-col">
+                <span class="pub-info-item pub-authorship-item">${authorTag}</span>
+                <span class="pub-info-item pub-year-item">${escapeHTML(pub.year)}</span>
+                <a class="pub-action-link">Action link <i class="fas fa-angle-right"></i></a>
+            </div>
+            <div class="pub-content-col">
+                <div class="publication-title">${escapeHTML(pub.title)}</div>
+                <div class="publication-journal">${escapeHTML(pub.journal || '')}</div>
+            </div>
         </div>
-        <div class="publication-title">${escapeHTML(pub.title)}</div>
-        <div class="publication-journal">${escapeHTML(pub.journal || '')}</div>
-        ${btns ? `<div class="publication-buttons">${btns}</div>` : ''}
     </div>
 `;
 
@@ -918,6 +919,96 @@ clearFiltersBtn.addEventListener('click', function(e) {
               }
           });
           publicationsContainer.innerHTML = html;
+
+
+                  // ---- Action link pop‑up ----
+          const actionLinks = publicationsContainer.querySelectorAll('.pub-action-link');
+          actionLinks.forEach((link, idx) => {
+              link.addEventListener('click', function(e) {
+                  e.stopPropagation();
+                  // Remove any existing pop‑up
+                  const oldPopup = document.querySelector('.pub-action-popup');
+                  if (oldPopup) oldPopup.remove();
+
+                  const pub = itemsToShow[idx];   // the publication data for this card
+
+                  // Build the pop‑up
+                  const popup = document.createElement('div');
+                  popup.className = 'pub-action-popup';
+                  popup.style.cssText = 'position:absolute; background:#fff; border:1px solid var(--color-border); border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,0.15); padding:var(--space-md); z-index:1200; min-width:160px;';
+
+                  // Close button (X)
+                  const closeBtn = document.createElement('button');
+                  closeBtn.innerHTML = '&times;';
+                  closeBtn.className = 'search-modal-close-btn';
+                  closeBtn.style.cssText = 'position:absolute; top:4px; right:4px;';
+                  closeBtn.addEventListener('click', function() {
+                      popup.remove();
+                  });
+                  popup.appendChild(closeBtn);
+
+                  // Button container
+                  const btnContainer = document.createElement('div');
+                  btnContainer.style.cssText = 'display:flex; flex-direction:column; gap:var(--space-sm); margin-top:var(--space-sm);';
+
+                  // PubMed button
+                  if (pub.pubmedLink) {
+                      const pubmedBtn = document.createElement('a');
+                      pubmedBtn.href = pub.pubmedLink;
+                      pubmedBtn.target = '_blank';
+                      pubmedBtn.rel = 'noopener noreferrer';
+                      pubmedBtn.className = 'btn btn-text';
+                      pubmedBtn.innerHTML = '<i class="fas fa-external-link-alt mr-xs"></i> PubMed';
+                      btnContainer.appendChild(pubmedBtn);
+                  }
+
+                  // Journal button
+                  if (pub.journalLink) {
+                      const journalBtn = document.createElement('a');
+                      journalBtn.href = pub.journalLink;
+                      journalBtn.target = '_blank';
+                      journalBtn.rel = 'noopener noreferrer';
+                      journalBtn.className = 'btn btn-text';
+                      journalBtn.innerHTML = '<i class="fas fa-book-open mr-xs"></i> Journal';
+                      btnContainer.appendChild(journalBtn);
+                  }
+
+                  // My insights button
+                  if (pub.blogLink) {
+                      const insightsBtn = document.createElement('a');
+                      insightsBtn.href = pub.blogLink;
+                      insightsBtn.className = 'btn btn-text';
+                      insightsBtn.innerHTML = '<i class="fas fa-lightbulb mr-xs"></i> My insights';
+                      btnContainer.appendChild(insightsBtn);
+                  }
+
+                  popup.appendChild(btnContainer);
+                  document.body.appendChild(popup);
+
+                  // Position the pop‑up near the link
+                  const rect = link.getBoundingClientRect();
+                  popup.style.top = (rect.bottom + window.scrollY + 4) + 'px';
+                  popup.style.left = (rect.left + window.scrollX) + 'px';
+
+                  // Close pop‑up when clicking outside
+                  function outsideClickHandler(ev) {
+                      if (!popup.contains(ev.target) && ev.target !== link) {
+                          popup.remove();
+                          document.removeEventListener('click', outsideClickHandler);
+                          window.removeEventListener('scroll', scrollHandler);
+                      }
+                  }
+                  function scrollHandler() {
+                      popup.remove();
+                      document.removeEventListener('click', outsideClickHandler);
+                      window.removeEventListener('scroll', scrollHandler);
+                  }
+                  setTimeout(() => {
+                      document.addEventListener('click', outsideClickHandler);
+                      window.addEventListener('scroll', scrollHandler, { passive: true });
+                  }, 0);
+              });
+          });
 
                     
         
