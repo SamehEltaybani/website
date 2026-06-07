@@ -1511,7 +1511,7 @@ footer .footer-copyright {
 .publication-authorship {
     display: inline-block;
     font-size: 0.75rem;
-    padding: 2px var(--space-xs);
+    padding: 4px var(--space-sm);
     border-radius: 10px;
     margin-bottom: var(--space-xs);
     font-weight: 400;
