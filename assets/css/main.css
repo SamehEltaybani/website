@@ -1576,6 +1576,7 @@ footer .footer-copyright {
 }
 
 .blog-read-link {
+    align-self: center;          
     text-decoration: none;
     color: #ffffff;
     font-weight: 500;
