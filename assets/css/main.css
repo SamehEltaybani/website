@@ -2653,10 +2653,14 @@ pre code {
    ============================================================================ */
 
 #search-results-list .publication-item {
-    margin-bottom: 8px;                        /* small gap between cards */
-    border: 1px solid transparent;             /* invisible border – keeps layout stable */
-    border-radius: 8px;                        /* soft corners */
-    transition: border-color 0.2s, box-shadow 0.2s;
+    padding: var(--space-md);
+    background-color: #ffffff;
+    margin-bottom: 8px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    box-shadow: none;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    overflow: visible;      
 }
 
 #search-results-list .publication-item:hover {
@@ -2664,8 +2668,20 @@ pre code {
     box-shadow: 0 8px 24px rgba(0,0,0,0.3);   
 }
 
+#search-results-list .pub-card-inner {
+    display: block;               
+}
+
+#search-results-list .pub-info-col {
+    display: none;
+}
+
+#search-results-list .pub-content-col {
+    padding: 0;
+}
 
 /* FONT SIZE OF THE TEXT OF SEARCH RESULTS */
+
 #search-results-list .card-title {
     font-size: 0.9rem;          
 }
