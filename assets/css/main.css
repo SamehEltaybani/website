@@ -1886,8 +1886,8 @@ footer .footer-copyright {
 #external-buttons-container {
     display: grid !important;                 
     grid-template-columns: repeat(4, 1fr);    /* 4 equal columns on desktop */
-    row-gap: 12px;                      /* vertical space */
-    column-gap: var(--space-md);        /* horizontal space */
+    row-gap: 16px;                      /* vertical space */
+    column-gap: 16px;        /* horizontal space */
     max-width: 800px;                         /* prevents the grid from stretching too wide */
     margin: 0 auto;                           /* centers the whole grid */
 }
@@ -1904,7 +1904,7 @@ footer .footer-copyright {
 
 /* Give the buttons inside this container a little extra breathing room */
 #external-buttons-container .btn {
-    padding: 15px 15px;
+    padding: 16px 20px;
     justify-content: flex-start;
     min-height: 40px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
