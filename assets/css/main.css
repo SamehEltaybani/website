@@ -68,7 +68,7 @@ main {
     --color-white: #FFFFFF;
     
     /* ===== COLORS - Roles ===== */
-    --color-bg-main: var(--color-white);       /* The background space outside the container area [any space beyond the navigation bar, readcrumb, footer, etc.] */
+    --color-bg-main: #f9f9f7;       /* The background space outside the container area [any space beyond the navigation bar, readcrumb, footer] */
     --color-bg-alt: #F8F9FA;
     --color-hover-bg: #E9ECEF;
     --color-bg-breadcrumb: #E9ECEF;
