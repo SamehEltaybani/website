@@ -39,18 +39,7 @@ All blocks are clearly labelled with start and end comments.
 
 
 
-    <!--
-Background image (immediately before the closing HEAD tag
--->
-
-<style>
-  body {
-    background: linear-gradient(rgba(255,255,255,0.92), rgba(255,255,255,0.92)), url('assets/img/david-edelstein-N4DbvTUDikw-unsplash.jpg') fixed;
-    background-size: cover;
-    background-position: center;
-  }
-</style>
-  
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
 
 
 </head>
@@ -1022,6 +1011,16 @@ Background image (immediately before the closing HEAD tag
 
  <!-- // ================================================================-->
 
+  <script>
+  (function() {
+    if (typeof GLightbox !== 'undefined') {
+      const images = document.querySelectorAll('main img');
+      if (images.length > 0) {
+        GLightbox({ selector: 'main img' });
+      }
+    }
+  })();
+</script>
 
 
 
@@ -1035,5 +1034,8 @@ Background image (immediately before the closing HEAD tag
   <script src="assets/js/back-to-top.js"></script>
   <script src="assets/js/search.js"></script>
 
+
+  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+  
 </body>
 </html>
