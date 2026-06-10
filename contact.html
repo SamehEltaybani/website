@@ -74,10 +74,11 @@ All standard components (nav, breadcrumb, footer) are present.
           <i class="fas fa-envelope mr-sm"></i> Send me an email
         </a>
 
-        <!-- Contact form (Formspree) -->
+        <!-- Contact form (web3forms.com) -->
 <div style="max-width: 500px; margin: var(--space-xl) auto 0 auto; text-align: left;">
   <form action="https://api.web3forms.com/submit" method="POST">
     <input type="hidden" name="access_key" value="a650cbf7-f244-4d06-9099-b2069b49770f">
+    <input type="hidden" name="redirect" value="contact.html?success=1">
 
     <!-- Name -->
     <div class="form-group">
@@ -140,7 +141,35 @@ All standard components (nav, breadcrumb, footer) are present.
       if (emailBtn) {
         emailBtn.href = 'mailto:' + fullEmail;
       }
+
+
+
+
+     
     })();
   </script>
+
+
+ // ------------------------------------------------------------------
+ // Thank you message after the form is submitted successfull.
+ // ------------------------------------------------------------------
+  
+  <script>
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('success') === '1') {
+      // Remove the success parameter from the URL without reloading
+      window.history.replaceState({}, document.title, window.location.pathname);
+
+      // Show a friendly message
+      const msg = document.createElement('div');
+      msg.style.cssText = 'max-width:500px; margin: var(--space-md) auto 0; padding: var(--space-sm) var(--space-md); background-color: var(--color-gold-light); color: var(--color-midnight-blue); border-radius: 8px; text-align: center; font-weight: 600;';
+      msg.textContent = 'Thank you! Your message has been sent successfully.';
+      const form = document.querySelector('form');
+      if (form) form.parentNode.insertBefore(msg, form);
+    }
+  })();
+</script>
+  
 </body>
 </html>
