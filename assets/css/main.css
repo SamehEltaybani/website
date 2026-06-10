@@ -1788,6 +1788,45 @@ footer .footer-copyright {
     line-height: 1;
 }
 
+
+
+
+
+/* ============================================================================
+   PROGRESS BAR (For blog articles)
+   ============================================================================ */
+.progress-container {
+    position: sticky;
+    top: calc(var(--nav-height-desktop) + var(--breadcrumb-height));
+    z-index: 998;
+    width: 100%;
+    height: 3px;
+    background-color: rgba(212, 175, 55, 0.2);   /* faint gold track */
+    border-radius: 8px 8px 0 0;
+}
+
+@media (max-width: 1100px) {
+    .progress-container {
+        top: calc(var(--nav-height-mobile) + var(--breadcrumb-height));
+    }
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: var(--color-gold);
+    transition: width 0.25s ease-out;
+}
+
+
+
+/* Hover effect for the single "Action link" trigger */
+.share-trigger:hover {
+    color: var(--color-gold);
+}
+
+
+
 /* ============================================================================
    FEATURED CARDS (Home page)
    ============================================================================ */
