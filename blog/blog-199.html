@@ -222,7 +222,7 @@ Before using:
 
 
 
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
 
 
  
@@ -914,6 +914,13 @@ Before using:
       } else {
         initArticle();
       }
+
+  // Activate lightbox on all images inside the article content
+  const articleImages = document.querySelectorAll('#article-content img');
+  if (articleImages.length > 0) {
+    const lightbox = GLightbox({ selector: '#article-content img' });
+  }
+     
     })();
 </script>
   
@@ -935,4 +942,6 @@ Before using:
  
  
 </body>
+<script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+ 
 </html>
