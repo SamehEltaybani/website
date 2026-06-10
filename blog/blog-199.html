@@ -1,12 +1,28 @@
 <!--
 ============================================================================
-BLOG/BLOG-TEMPLATE.HTML - INDIVIDUAL ARTICLE TEMPLATE (FIXED)
+BLOG/BLOG-TEMPLATE.HTML – INDIVIDUAL ARTICLE TEMPLATE (REVISED)
 ============================================================================
 Copy this file to create a new article (e.g., blog-1.html).
+
 Before using:
- - Change the <title> and meta description in the <head>.
- - Edit the content inside <div id="article-content">.
- - Add an entry in /json/blog-list.json
+ - Change the <title>, meta description, og:title, og:description,
+   og:image, and og:url in the <head>.
+ - Edit the article content inside <div id="article-content">.
+ - Add an entry in /json/blog-list.json:
+     "blogfile": "blog/your-file.html",
+     "shortTitle": "...",
+     "categories": ["...", "..."],
+     "date": "YYYY-MM-DD",
+     "readingTime": "X min."   (optional)
+
+The page automatically:
+ - Highlights the Blog navigation item.
+ - Shows the shortTitle in the breadcrumb (Home > Blog > shortTitle).
+ - Calculates reading time from the article content.
+ - Displays a scroll progress bar.
+ - Loads "Recommended for You" articles.
+ - Provides a single "Action link" trigger for sharing tools.
+ - Activates a lightbox on all images inside the article.
 ============================================================================
 -->
 <!DOCTYPE html>
@@ -19,324 +35,242 @@ Before using:
   <base href="/website/">
   <meta name="site-base-path" content="/website/">
 
-  <!-- PAGE-SPECIFIC (edit for each article) -->
+  <!-- PAGE‑SPECIFIC (edit for each article) -->
   <title>Dr. Sameh Eltaybani - Article Title</title>
-  <meta name="description" content="An article discussing the importance of research integrity in healthcare.">
-  <meta property="og:title" content="Why Research Integrity Matters">
-  <meta property="og:description" content="An article discussing the importance of research integrity in healthcare.">
+  <meta name="description" content="A blog article by Dr. Sameh Eltaybani covering insights on healthcare, research, or data analysis.">
+  <meta property="og:title" content="Dr. Sameh Eltaybani - Article Title">
+  <meta property="og:description" content="A blog article by Dr. Sameh Eltaybani covering insights on healthcare, research, or data analysis.">
   <meta property="og:type" content="article">
   <meta property="og:image" content="https://sameheltaybani.github.io/website/assets/img/temp-1.webp">
   <meta property="og:url" content="https://sameheltaybani.github.io/website/blog/blog-1.html">
 
   <!-- FAVICON -->
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+
   <!-- FONT AWESOME -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
   <!-- MAIN CSS -->
   <link rel="stylesheet" href="assets/css/main.css">
 
+  <!-- LIGHTBOX CSS (image overlay) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
 
- 
-
- <style media="print">
- 
-  /* ----- HIDE the background image ----- */
+  <!-- ==================================================================
+       PRINT STYLES
+       ================================================================== -->
+  <style media="print">
+    /* Hide the page background image when printing */
     body { background: none !important; }
-  
-  /* ----- HIDE unwanted elements ----- */
-  nav, .breadcrumb-bar, footer:not(.print-footer), .progress-container,
-  #recommended-section, #share-btn-top, #share-btn-bottom,
-  .share-dropdown, .qr-overlay, .search-icon-btn,
-  #theme-toggle-desktop, #theme-toggle-mobile,
-  #search-toggle, .hamburger, .mobile-menu, .mobile-menu-overlay {
-    display: none !important;
-  }
 
-.no-print { display: none !important; }
-  
-  /* ----- Smaller fonts for print ----- */
-    body {
-    font-size: 11pt;
-    color: #000;
-  }
-  #article-content,
-  #article-content p,
-  #article-content li {
-    font-size: 11pt;
-  }
-  .heading-large { font-size: 15pt; }
-  .heading-medium { font-size: 13pt; }
-  .heading-small { font-size: 11pt; }
+    /* Hide navigation, breadcrumbs, footer, progress bar, etc. */
+    nav, .breadcrumb-bar, footer:not(.print-footer), .progress-container,
+    #recommended-section, #share-btn-top, #share-btn-bottom,
+    .share-dropdown, .qr-overlay, .search-icon-btn,
+    #theme-toggle-desktop, #theme-toggle-mobile,
+    #search-toggle, .hamburger, .mobile-menu, .mobile-menu-overlay {
+      display: none !important;
+    }
 
-  /* ----- Keep images and callouts together ----- */
-  figure, img, .callout {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-    max-width: 100% !important;
-    height: auto !important;
-  }
-  h2, h3, h4 {
-    break-after: avoid !important;
-    page-break-after: avoid !important;
-  }
+    .no-print { display: none !important; }
 
+    /* Smaller fonts */
+    body { font-size: 11pt; color: #000; }
+    #article-content, #article-content p, #article-content li { font-size: 11pt; }
+    .heading-large { font-size: 15pt; }
+    .heading-medium { font-size: 13pt; }
+    .heading-small { font-size: 11pt; }
 
-  /* ----- Page margins (leave room for fixed header and footer) ----- */
+    /* Keep images and callouts together */
+    figure, img, .callout {
+      break-inside: avoid !important;
+      page-break-inside: avoid !important;
+      max-width: 100% !important;
+      height: auto !important;
+    }
+    h2, h3, h4 { break-after: avoid !important; page-break-after: avoid !important; }
+
+    /* Page margins and page numbers */
     @page {
-    margin-top: 45pt;
-    margin-bottom: 45pt;     /* extra space for the page number */
-    margin-left: 30pt;
-    margin-right: 30pt;
+      margin-top: 45pt;
+      margin-bottom: 45pt;
+      margin-left: 30pt;
+      margin-right: 30pt;
+      @bottom-center {
+        content: "Page " counter(page) " of " counter(pages);
+        font-size: 8pt;
+        color: #555;
+        font-family: inherit;
+      }
+    }
 
-    @bottom-center {
-      content: "Page " counter(page) " of " counter(pages);
+    /* ---- PRINT HEADER: Title, metadata, QR code ---- */
+    .print-article-header {
+      display: flex !important;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16pt;
+      margin-bottom: 20pt;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 12pt;
+    }
+    .print-header-left {
+      flex: 1;
+    }
+    .print-header-right {
+      flex-shrink: 0;
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    .print-header-right .qr-caption {
+      font-size: 7pt;
+      color: #555;
+      text-align: center;
+      margin: 0 0 4pt 0;
+      width: 80pt;
+      line-height: 1.2;
+    }
+    .print-header-right img {
+      width: 80pt;
+      height: auto;
+    }
+
+    /* ---- PRINT NOTES (full width below header) ---- */
+    .print-info-block {
+      display: block !important;
+      margin-top: 20pt;
+      border-top: 1px solid #ccc;
+      padding-top: 12pt;
+    }
+    .print-info-container {
+      display: block;
+    }
+    .print-info-left {
+      display: none;               /* no profile photo needed */
+    }
+    .print-callout {
+      background-color: #f8f9fa;
+      border-left: 2pt solid #D4AF37;
+      padding: 6pt;
+      border-radius: 4pt;
+    }
+    .print-callout-text {
+      font-size: 9pt;
+      line-height: 1.3;
+      color: #333;
+    }
+    .print-callout-text p { margin: 0 0 4pt 0; }
+    .print-callout-text a { color: #1A2530; font-weight: 600; }
+    .link-icon { font-size: 1em; }
+    .print-settings-note { font-style: italic; color: #555; margin-top: 6pt; }
+
+    /* Links icon */
+    a::after, .btn::after, .btn-text::after, .callout a::after,
+    .callout .btn::after, .callout .btn-text::after {
+      content: " 🔗" !important;
+      font-size: 0.8em;
+      display: inline;
+    }
+    a[href^="#"]::after { content: none !important; }
+
+    /* Links note at the end */
+    .print-links-note {
+      display: block !important;
       font-size: 8pt;
       color: #555;
-      font-family: inherit;
+      margin-top: 12pt;
+      border-top: 1px solid #ccc;
+      padding-top: 6pt;
     }
-  }
 
-  /* ----- QR code (right‑aligned) ----- */
-    .print-qr {
-    display: block !important;
-    margin-left: auto;
-    width: auto !important;
-    text-align: right !important;
-    margin-top: 12pt;
-    margin-bottom: 4pt;
-  }
-  .print-qr img {
-    width: 80pt;
-    height: auto;
-  }
-
-  /* ----- Hide the QR overlay (only the static one remains) ----- */
-  .qr-overlay { display: none !important; }
-
-  /* ----- Link icon after every hyperlink ----- */
-    a::after,
-  .btn::after,
-  .btn-text::after,
-  .callout a::after,
-  .callout .btn::after,
-  .callout .btn-text::after {
-    content: " 🔗" !important;
-    font-size: 0.8em;
-    display: inline;
-  }
-  
-  a[href^="#"]::after { content: none !important; }
-
-  /* ----- Links note at the end ----- */
-  .print-links-note {
-    display: block !important;
-    font-size: 8pt;
-    color: #555;
-    margin-top: 12pt;
-    border-top: 1px solid #ccc;
-    padding-top: 6pt;
-  }
-
-  /* ----- Ensure article title is visible ----- */
+    /* Ensure article title visible */
     #article-title { display: block !important; font-size: 15pt; font-weight: 700; color: #1A2530; margin-bottom: 8pt; }
 
-   /* ===== PRINT‑ONLY INFORMATION BLOCK ===== */
-  .print-info-block {
-    display: block !important;
-    margin-bottom: 20pt;
-  }
-
-  /* ===== NEW LEFT COLUMN (QR + photo) ===== */
-  .print-info-left {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6pt;
-    flex-shrink: 0;
-  }
-
-  .print-qr-img {
-    width: 80pt;                /* adjust as you like */
-    height: auto;
-  }
-
-  .print-profile-pic {
-    width: 36pt;
-    height: 36pt;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 1pt solid #D4AF37;
-  }
-
-  /* ===== RIGHT CALLOUT (text only) ===== */
-  .print-callout {
-    background-color: #f8f9fa;
-    border-left: 2pt solid #D4AF37;
-    padding: 6pt;
-    border-radius: 4pt;
-    flex: 1;
-  }
-
-  .print-callout-text {
-    font-size: 9pt;
-    line-height: 1.3;
-    color: #333;
-  }
-
-  .print-callout-text p {
-    margin: 0 0 4pt 0;
-  }
-
-  .print-callout-text a {
-    color: #1A2530;
-    font-weight: 600;
-  }
-
-  .link-icon {
-    font-size: 1em;
-  }
-
-  .print-settings-note {
-    font-style: italic;
-    color: #555;
-    margin-top: 6pt;
-  }
-
-  /* Keep the main container as flex row */
-  .print-info-container {
-    display: flex;
-    align-items: flex-start;
-    gap: 6pt;   /* control spacing between left and right side */
-  }
-
-  /* Hide the old QR rule if present */
-  .print-qr { display: none !important; }
-  
-
- 
- 
- 
- 
- </style>
-
-
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
-
-
- 
-
-
+    /* Hide the separate QR overlay and profile pic */
+    .qr-overlay { display: none !important; }
+    .print-profile-pic { display: none !important; }
+    .print-qr { display: none !important; }
+  </style>
 </head>
 
- 
- <body data-page="blog.html">
-
-
-
-
+<body data-page="blog.html">
 
   <!-- ========== NAVIGATION BAR ========== -->
   <nav data-component="navigation" class="navbar">
     <div class="navbar-container">
-        <div class="navbar-left"></div>
-        <div class="navbar-right"></div>
-        <!-- Search icon (always visible, never cleared by navigation.js) -->
-        <button id="search-toggle" class="search-icon-btn" aria-label="Search">
-            <i class="fas fa-search"></i>
-        </button>
-        <button class="hamburger" aria-label="Menu">
-            <i class="fas fa-bars"></i>
-        </button>
+      <div class="navbar-left"></div>
+      <div class="navbar-right"></div>
+      <button id="search-toggle" class="search-icon-btn" aria-label="Search">
+        <i class="fas fa-search"></i>
+      </button>
+      <button class="hamburger" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
-</nav>
+  </nav>
 
-  <!-- ========== BREADCRUMB BAR (exact height) ========== -->
+  <!-- ========== BREADCRUMB BAR ========== -->
   <div data-component="breadcrumb" class="breadcrumb-bar"
        style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
 
   <!-- ========== SCROLL PROGRESS BAR ========== -->
-  
- <div class="progress-container" style="width: 100%; border-radius: 8px 8px 0 0;">
-  <div class="progress-bar" id="progress-bar"></div>
-</div>
+  <!-- Wrapped in a container to match the article width -->
+  <div style="max-width: var(--container-max-width); margin: 0 auto; width: 100%; border-radius: 8px 8px 0 0;">
+    <div class="progress-container" style="border-radius: 8px 8px 0 0;">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+  </div>
 
   <!-- ========== MAIN CONTENT ========== -->
-  <main>
+  <main style="background-color: #ffffff;">
     <article class="section" style="padding-top: 0; padding-bottom: 0;">
-<div class="container" style="max-width: 800px; margin: 0 auto; background-color: #ffffff; padding-top: var(--space-xl); padding-bottom: var(--space-xl);">
- 
- 
-        <!-- TITLE METADATA BLOCK (populated by JS) -->
-            
-       <header id="article-header">
+      <div class="container" style="max-width: 800px; margin: 0 auto; background-color: #ffffff; padding-top: var(--space-xl); padding-bottom: var(--space-xl);">
+
+        <!-- ==================================================================
+             TITLE METADATA BLOCK (populated by JavaScript)
+             ================================================================== -->
+        <header id="article-header">
           <h1 id="article-title" class="heading-large">Article Title</h1>
           <div id="article-categories" class="blog-categories" style="margin-bottom: var(--space-sm);"></div>
           <div id="article-meta" class="text-muted" style="margin-bottom: var(--space-md);">
             <span id="article-date">Month Day, Year</span> &bull; <span id="article-read-time">X min. read</span>
           </div>
-         
         </header>
 
-       
-       <!-- Permanent QR code (visible on screen and in print) -->
-<div class="print-qr" style="display:none; text-align:right; margin-bottom:4px;">
-  <img id="static-qr-image" src="" alt="QR Code" style="display:none; width:100px; height:auto;">
-</div>
-       
-       <div id="share-btn-top" class="share-btn-wrapper"></div>
-       
-       <hr style="border: none; border-top: 2px solid var(--color-border); margin: 4px 0 var(--space-lg) 0;">
+        <!-- ==================================================================
+             PRINT HEADER (visible only when printing)
+             This block puts the title/metadata on the left and the QR code on the right.
+             ================================================================== -->
+        <div class="print-article-header" style="display:none;">
+          <div class="print-header-left">
+            <!-- The JavaScript will copy the real title, categories, date, and reading time here
+                 by using the elements from the article-header above; the browser duplicates them automatically. -->
+          </div>
+          <div class="print-header-right">
+            <p class="qr-caption">Scan for the online version of this article.</p>
+            <img id="print-qr-image" src="" alt="QR Code">
+          </div>
+        </div>
 
+        <!-- ==================================================================
+             SHARE TRIGGER (top) – single "Action link" button
+             ================================================================== -->
+        <div id="share-btn-top" class="share-btn-wrapper"></div>
 
+        <hr style="border: none; border-top: 2px solid var(--color-border); margin: 4px 0 var(--space-lg) 0;">
 
-       
-      <!-- Print‑only information block (hidden on screen) -->
-       
-<div class="print-info-block" style="display:none;">
-  <div class="print-info-container">
-    <!-- Left column: QR code + profile photo -->
-    <div class="print-info-left">
-          <p class="qr-caption" style="width: 80pt; font-size:7pt; color:#555; text-align:center; margin:0pt 0pt 0pt 0pt; line-height: 1;">Scan for the online version of this article.</p>
-          <img id="print-qr-image" src="" alt="QR Code" class="print-qr-img">
-          <img src="assets/img/profile.webp" alt="Dr. Sameh Eltaybani" class="print-profile-pic">
-    </div>
-    <!-- Right column: text callout -->
-    <div class="print-callout">
-      <div class="print-callout-text">
-        <p><strong>Printed from:</strong> <span id="print-url-span"></span></p>
-        <p><strong>Printed on:</strong> <span id="print-date-span"></span></p>
-        <p>This article contains hyperlinks (<span class="link-icon">🔗</span>). Visit the online version to access all linked resources</p>
-        <p>Content is updated regularly. For the latest version, visit the article online.</p>
-        <p>This work is licensed under <a href="legal.html">CC BY‑NC‑ND 4.0</a>. Refer to the <a href="legal.html">Legal page</a> for details.</p>
-        <p class="print-settings-note"><i class="fas fa-lightbulb" style="margin-right: 2pt;"></i>This article was designed for web viewing. This is an optimized printable version, but your browser may override some settings. For best results, scroll down through the article at least once before printing and use the following print setting: Layout: Portrait; Margins: Default; Paper size: A4; Show background graphics, and disable browser headers/footers.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-       
-
-       
-       
-       <!-- === ARTICLE CONTENT (edit freely) === -->
+        <!-- ==================================================================
+             ARTICLE CONTENT (edit freely)
+             ================================================================== -->
         <div id="article-content">
 
-       
-         
-<!--
- ============================================================
-          REPLICABLE CONTENT BLOCKS
-          Copy, delete, or reorder any block below as needed.
-          All blocks are optional – unused ones leave no gap.
- ============================================================
-          -->
+          <!-- ===== REPLICABLE CONTENT BLOCKS ===== -->
+          <!-- You can copy, delete, or reorder any of the following blocks.
+               Unused blocks leave no gap. -->
 
-          
-         <!-- Large heading -->
+          <!-- Large heading -->
           <h2 class="heading-large">Section Title (Large Heading)</h2>
 
           <!-- Medium heading -->
@@ -345,191 +279,142 @@ Before using:
           <!-- Small heading -->
           <h4 class="heading-small">Detail (Small Heading)</h4>
 
-          <!-- Paragraph block -->
+          <!-- Paragraph -->
           <p class="paragraph">
-            This is a regular paragraph. Write your text here. It will
-            wrap naturally and respect the container width.
+            This is a regular paragraph. Write your text here. It will wrap
+            naturally and respect the container width.
           </p>
 
-          <!-- Bullet list block -->
+          <!-- Bullet list -->
           <ul class="paragraph">
             <li>Bullet point one</li>
             <li>Bullet point two</li>
             <li>Bullet point three</li>
           </ul>
 
-          <!-- Numbered list block -->
+          <!-- Numbered list -->
           <ol class="paragraph">
             <li>First item</li>
             <li>Second item</li>
             <li>Third item</li>
           </ol>
 
-          <!-- Image block (single image) -->
+          <!-- Single image -->
           <figure style="margin: var(--space-md) 0;">
             <img src="assets/img/temp-1.webp" alt="Description" style="width:100%; border-radius:8px;" loading="lazy">
             <figcaption class="text-muted" style="text-align:center;">Optional caption</figcaption>
           </figure>
 
-          
-       
-         
-         <!-- ============================================================
-     CONTENT BLOCK WITH LEFT VERTICAL LINE
-     - To change LINE COLOR: edit the hex value in "border-left-color"
-     - To change LINE THICKNESS: edit the number in "border-left-width"
-     - To remove the line: delete the three "border-left-*" lines
-     - The background is white by default; you can change it via
-       "background-color" if desired.
-     ============================================================ -->
-<div style="
-    border-left: 4px solid var(--color-gold);   /* ← thickness and colour */
-    padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg);
-    background-color: #ffffff;
-    border-radius: 0 8px 8px 0;               /* soft right corners */
-    margin-bottom: var(--space-lg);
-    box-shadow: 0 1px 4px rgba(0,0,0,0.04);  /* optional subtle shadow */
-">
+          <!-- Left‑border content block -->
+          <div style="border-left: 4px solid var(--color-gold); padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg); background-color: #ffffff; border-radius: 0 8px 8px 0; margin-bottom: var(--space-lg); box-shadow: 0 1px 4px rgba(0,0,0,0.04);">
+            <h2 class="heading-large">Section Title</h2>
+            <p class="paragraph">Your paragraph text goes here.</p>
+            <ul class="paragraph">
+              <li>List item one</li>
+              <li>List item two</li>
+            </ul>
+            <img src="assets/img/temp-1.webp" alt="Description" style="width:100%; border-radius:8px; margin-top: var(--space-md);" loading="lazy">
+          </div>
 
-    <!-- Inside this div you can place any element: -->
-    <h2 class="heading-large">Section Title</h2>
-    <p class="paragraph">Your paragraph text goes here.</p>
-
-    <!-- Bullet list example -->
-    <ul class="paragraph">
-        <li>List item one</li>
-        <li>List item two</li>
-    </ul>
-
-    <!-- Image example -->
-    <img src="assets/img/temp-1.webp" alt="Description" style="width:100%; border-radius:8px; margin-top: var(--space-md);" loading="lazy">
-
-    <!-- You can also include callouts, buttons, etc. -->
-</div>
-<!-- ============================================================ -->
-         
-
-
-<div class="callout callout-tip-btn">
-    <div style="display: flex; align-items: flex-start; gap: var(--space-md);">
-        <div style="font-size: 2rem; color: var(--color-gold); flex-shrink: 0;">
-            <i class="fas fa-lightbulb"></i>
-        </div>
-        <div style="flex: 1;">
-            <p>Helpful advice or practical suggestion. Replace this text with your own tip.</p>
-            <!-- Optional button – right‑aligned -->
-            <div style="text-align: right;">
-                <a href="#" class="btn btn-text">Learn more</a>
+          <!-- Tip callout (icon + text + optional button) -->
+          <div class="callout callout-tip-btn">
+            <div style="display: flex; align-items: flex-start; gap: var(--space-md);">
+              <div style="font-size: 2rem; color: var(--color-gold); flex-shrink: 0;"><i class="fas fa-lightbulb"></i></div>
+              <div style="flex: 1;">
+                <p>Helpful advice or practical suggestion.</p>
+                <div style="text-align: right;"><a href="#" class="btn btn-text">Learn more</a></div>
+              </div>
             </div>
-        </div>
-    </div>
-</div>
+          </div>
 
-
-         
-    <div class="callout callout-warning-btn">
-    <div style="display: flex; align-items: flex-start; gap: var(--space-md);">
-        <div style="font-size: 2rem; color: #dc3545; flex-shrink: 0;">
-            <i class="fas fa-exclamation-triangle"></i>
-        </div>
-        <div style="flex: 1;">
-            <p>Be cautious about this point. It may be misinterpreted.</p>
-            <div style="text-align: right;">
-                <a href="#" class="btn btn-text">Read more</a>
+          <!-- Warning callout -->
+          <div class="callout callout-warning-btn">
+            <div style="display: flex; align-items: flex-start; gap: var(--space-md);">
+              <div style="font-size: 2rem; color: #dc3545; flex-shrink: 0;"><i class="fas fa-exclamation-triangle"></i></div>
+              <div style="flex: 1;">
+                <p>Be cautious about this point. It may be misinterpreted.</p>
+                <div style="text-align: right;"><a href="#" class="btn btn-text">Read more</a></div>
+              </div>
             </div>
-        </div>
-    </div>
-</div>     
+          </div>
 
-       
-
-<div class="callout callout-note-btn">
-    <div style="display: flex; align-items: flex-start; gap: var(--space-md);">
-        <div style="font-size: 2rem; color: var(--color-midnight-light); flex-shrink: 0;">
-            <i class="fas fa-info-circle"></i>
-        </div>
-        <div style="flex: 1;">
-            <p>Supplementary information or an important remark.</p>
-            <div style="text-align: right;">
-                <a href="#" class="btn btn-text">Reference</a>
+          <!-- Note callout -->
+          <div class="callout callout-note-btn">
+            <div style="display: flex; align-items: flex-start; gap: var(--space-md);">
+              <div style="font-size: 2rem; color: var(--color-midnight-light); flex-shrink: 0;"><i class="fas fa-info-circle"></i></div>
+              <div style="flex: 1;">
+                <p>Supplementary information or an important remark.</p>
+                <div style="text-align: right;"><a href="#" class="btn btn-text">Reference</a></div>
+              </div>
             </div>
-        </div>
-    </div>
-</div>
+          </div>
 
-
-
-        
-         
-         
-          
-         
-             
-         
-         <!-- Callout 8: Quotation -->
+          <!-- Quotation callout -->
           <div class="callout callout-quote">
-            <p>“This is a block quote with large ornamental quotation marks.
-            Use it for important excerpts or testimonials.”</p>
+            <p>“This is a block quote with large ornamental quotation marks.”</p>
             <a href="#" class="btn btn-text">Optional button</a>
           </div>
 
-          
-         
-         <!-- Extra image placeholder -->
+          <!-- Extra image placeholder -->
           <img src="assets/img/temp-3.webp" alt="Extra illustration" style="width:100%; margin: var(--space-md) 0; border-radius:8px;" loading="lazy">
 
-          
-         
-       
-         
-         <!-- ===== END OF REPLICABLE CONTENT BLOCKS ===== -->
-        
+        </div>
+        <!-- ===== END OF ARTICLE CONTENT ===== -->
+
+        <!-- ==================================================================
+             PRINT INFO BLOCK (visible only when printing)
+             Contains the legal notes, licence, print settings, etc.
+             ================================================================== -->
+        <div class="print-info-block" style="display:none;">
+          <div class="print-info-container">
+            <div class="print-callout">
+              <div class="print-callout-text">
+                <p><strong>Printed from:</strong> <span id="print-url-span"></span></p>
+                <p><strong>Printed on:</strong> <span id="print-date-span"></span></p>
+                <p>This article contains hyperlinks (<span class="link-icon">🔗</span>). Visit the online version to access all linked resources.</p>
+                <p>Content is updated regularly. For the latest version, visit the article online.</p>
+                <p>This work is licensed under <a href="legal.html">CC BY‑NC‑ND 4.0</a>. Refer to the <a href="legal.html">Legal page</a> for details.</p>
+                <p class="print-settings-note"><i class="fas fa-lightbulb" style="margin-right: 2pt;"></i>This article was designed for web viewing. This is an optimized printable version, but your browser may override some settings. For best results, scroll through the article at least once before printing and use: Layout: Portrait; Margins: Default; Paper size: A4; Show background graphics; and disable browser headers/footers.</p>
+              </div>
+            </div>
+          </div>
         </div>
 
+        <!-- ==================================================================
+             SHARE TRIGGER (bottom)
+             ================================================================== -->
+        <div id="share-btn-bottom" class="share-btn-wrapper"></div>
 
-
-
-
-
-       
-
-        <!-- POST-CONTENT LEGAL LINE AND SHARING BUTTON-->
-        
-       
-       <div id="share-btn-bottom" class="share-btn-wrapper"></div>
-       
-       <div class="footer-legal" style="margin-top: var(--space-sm); padding-top: var(--space-md); border-top: 1px solid var(--color-border);">
-          <p>© Dr. Sameh Eltaybani. Content is for informational purposes only and represents personal views. <a href="legal.html">Read more &gt;&gt;</a></p>
+        <!-- ==================================================================
+             POST‑CONTENT LEGAL LINE
+             ================================================================== -->
+        <div class="footer-legal" style="margin-top: var(--space-sm); padding-top: var(--space-md); border-top: 1px solid var(--color-border);">
+          <p>&copy; Dr. Sameh Eltaybani. Content is for informational purposes only and represents personal views. <a href="legal.html">Read more &gt;&gt;</a></p>
         </div>
 
-
-
-       
-
-        <!-- "READ MORE INSIGHTS" BUTTON -->
+        <!-- ==================================================================
+             "READ MORE INSIGHTS" BUTTON
+             ================================================================== -->
         <div style="text-align: right; margin: var(--space-lg) 0;">
           <a href="blog.html" class="btn btn-primary no-print">Read More Insights</a>
         </div>
 
-        <!-- RECOMMENDED FOR YOU -->
+        <!-- ==================================================================
+             RECOMMENDED FOR YOU
+             ================================================================== -->
         <section id="recommended-section" class="section-alt" style="padding: var(--space-lg); border-radius: 12px;">
           <h2 class="heading-medium" style="margin-bottom: var(--space-lg);">Recommended for You</h2>
-          <div id="recommended-container" class="grid-2" style="gap: var(--space-md);">
-            <!-- dynamically filled by JS -->
-          </div>
+          <div id="recommended-container" class="grid-2" style="gap: var(--space-md);"></div>
         </section>
 
       </div>
     </article>
-
-
-   
   </main>
 
   <!-- ========== FOOTER ========== -->
   <footer data-component="footer"></footer>
 
-  <!-- ========== SCRIPTS (exact order) ========== -->
+  <!-- ========== SCRIPTS ========== -->
   <script src="assets/js/utils.js"></script>
   <script src="assets/js/navigation.js"></script>
   <script src="assets/js/breadcrumbs.js"></script>
@@ -537,10 +422,12 @@ Before using:
   <script src="assets/js/back-to-top.js"></script>
   <script src="assets/js/search.js"></script>
 
-  <!-- PAGE-SPECIFIC SCRIPTS -->
-  
+  <!-- LIGHTBOX LIBRARY (loaded before the page‑specific script) -->
+  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
 
-
+  <!-- ==================================================================
+       PAGE‑SPECIFIC SCRIPTS
+       ================================================================== -->
   <script>
     (function() {
       'use strict';
@@ -601,8 +488,7 @@ Before using:
           // Categories
           const catContainer = document.getElementById('article-categories');
           catContainer.innerHTML = '';
-             if (entry.categories && Array.isArray(entry.categories)) {
-            // Remove duplicate categories
+          if (entry.categories && Array.isArray(entry.categories)) {
             const uniqueCategories = [...new Set(entry.categories)];
             uniqueCategories.forEach(cat => {
               const a = document.createElement('a');
@@ -613,7 +499,7 @@ Before using:
             });
           }
 
-          // Date formatting
+          // Date
           const dateObj = new Date(entry.date);
           const dateFormatted = isNaN(dateObj.getTime()) ? entry.date : dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).replace(/(\w+)\s/, '$1. ');
           document.getElementById('article-date').textContent = dateFormatted;
@@ -622,7 +508,7 @@ Before using:
           const readTime = calculateReadingTime();
           document.getElementById('article-read-time').textContent = (readTime || 1) + ' min. read';
 
-          // Create share buttons (now that the real title is loaded)
+          // Create share triggers (now that the real title is loaded)
           createShareButton(document.getElementById('share-btn-top'));
           createShareButton(document.getElementById('share-btn-bottom'));
         } catch (e) {
@@ -693,7 +579,7 @@ Before using:
       }
 
       // ------------------------------------------------------------------
-      // H. SOCIAL SHARING BUTTON
+      // H. SOCIAL SHARING BUTTON (single "Action link" trigger)
       // ------------------------------------------------------------------
       function createShareButton(container) {
         if (!container) return;
@@ -704,26 +590,12 @@ Before using:
         wrapper.style.position = 'relative';
         wrapper.style.display = 'inline-block';
 
-        // Icon group trigger (share, print, pdf, qr, copy, copyright)
-        const iconGroup = document.createElement('div');
-        iconGroup.className = 'share-icons-group';
-        iconGroup.setAttribute('aria-label', 'Share and article tools');
-
-        const iconList = [
-          { icon: 'fas fa-share-alt', title: 'Share' },
-          { icon: 'fas fa-print', title: 'Print' },
-          { icon: 'fas fa-qrcode', title: 'QR Code' },
-          { icon: 'fas fa-copy', title: 'Copy link' },
-          { icon: 'fas fa-copyright', title: 'Copyright' }
-        ];
-
-        iconList.forEach(function(item) {
-          const btn = document.createElement('span');
-          btn.className = 'share-icon-item';
-          btn.innerHTML = '<i class="' + item.icon + '"></i>';
-          btn.setAttribute('title', item.title);
-          iconGroup.appendChild(btn);
-        });
+        // ---- New single trigger (share icon + text + ellipsis + angle‑down) ----
+        const trigger = document.createElement('span');
+        trigger.className = 'share-trigger';                          // uses the existing hover style
+        trigger.style.cssText = 'cursor:pointer; display:inline-flex; align-items:center; gap:6px; font-size:0.9rem; color:var(--color-midnight-blue);';
+        trigger.innerHTML = '<i class="fas fa-share-alt"></i> Action link <i class="fas fa-ellipsis-vertical"></i><i class="fas fa-angle-down"></i>';
+        // -----------------------------------------------------------------
 
         // Dropdown
         const dropdown = document.createElement('div');
@@ -775,7 +647,7 @@ Before using:
         divider.className = 'share-divider';
         dropdown.appendChild(divider);
 
-        // Action items (Copy, Print, QR, Copyright)
+        // Action items
         function addActionItem(label, iconClass, onClick) {
           const btn = document.createElement('button');
           btn.className = 'share-action-item';
@@ -785,11 +657,7 @@ Before using:
         }
 
         addActionItem('Copy link', 'fas fa-copy', function() {
-          navigator.clipboard.writeText(articleUrl).then(() => {
-            alert('Link copied to clipboard!');
-          }).catch(() => {
-            prompt('Copy this link:', articleUrl);
-          });
+          navigator.clipboard.writeText(articleUrl).then(() => alert('Link copied to clipboard!')).catch(() => prompt('Copy this link:', articleUrl));
         });
 
         addActionItem('Print / PDF', 'fas fa-print', function() {
@@ -804,8 +672,8 @@ Before using:
           window.location.href = 'legal.html';
         });
 
-        // Toggle dropdown via icon group click
-        iconGroup.addEventListener('click', function(e) {
+        // Toggle dropdown on trigger click
+        trigger.addEventListener('click', function(e) {
           e.stopPropagation();
           dropdown.classList.toggle('open');
         });
@@ -817,13 +685,13 @@ Before using:
           }
         });
 
-        wrapper.appendChild(iconGroup);
+        wrapper.appendChild(trigger);
         wrapper.appendChild(dropdown);
         container.appendChild(wrapper);
       }
 
       // ------------------------------------------------------------------
-      // I. QR CODE OVERLAY
+      // I. QR CODE OVERLAY (for the dropdown action)
       // ------------------------------------------------------------------
       function showQRCode(url) {
         const overlay = document.getElementById('qr-overlay');
@@ -877,36 +745,40 @@ Before using:
 
         await displayMetadata();
 
-        // Fill static QR code for print
+        // ---- Fill print QR code ----
         const qrApiUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(window.location.href);
         const printQrImg = document.getElementById('print-qr-image');
         if (printQrImg) {
           printQrImg.src = qrApiUrl;
         }
 
-        // Fill print URL
+        // ---- Fill print URL ----
         const printUrlSpan = document.getElementById('print-url-span');
         if (printUrlSpan) {
           printUrlSpan.textContent = window.location.href;
         }
 
-        // Fill print date
+        // ---- Fill print date ----
         const printDateSpan = document.getElementById('print-date-span');
         if (printDateSpan) {
           const now = new Date();
           printDateSpan.textContent = now.toLocaleString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
+            year: 'numeric', month: 'long', day: 'numeric',
+            hour: '2-digit', minute: '2-digit', second: '2-digit',
             timeZoneName: 'short'
           });
         }
 
         highlightBlogNav();
         await renderRecommended();
+
+        // ---- Activate lightbox on all article images ----
+        if (typeof GLightbox !== 'undefined') {
+          const articleImages = document.querySelectorAll('#article-content img');
+          if (articleImages.length > 0) {
+            GLightbox({ selector: '#article-content img' });
+          }
+        }
       }
 
       if (document.readyState === 'loading') {
@@ -914,34 +786,19 @@ Before using:
       } else {
         initArticle();
       }
-
-  // Activate lightbox on all images inside the article content
-  const articleImages = document.querySelectorAll('#article-content img');
-  if (articleImages.length > 0) {
-    const lightbox = GLightbox({ selector: '#article-content img' });
-  }
-     
     })();
-</script>
-  
+  </script>
 
-
-
-
- 
-
-
-<div id="qr-overlay" class="qr-overlay">
-  <div class="qr-overlay-box">
-    <button class="search-modal-close-btn qr-overlay-close">&times;</button>
-    <p id="qr-message" style="font-size: var(--font-size-sm);"></p>
-    <img id="qr-image" src="" alt="QR Code" style="display:none;">
+  <!-- ==================================================================
+       QR CODE OVERLAY (for the pop‑up QR code)
+       ================================================================== -->
+  <div id="qr-overlay" class="qr-overlay">
+    <div class="qr-overlay-box">
+      <button class="search-modal-close-btn qr-overlay-close">&times;</button>
+      <p id="qr-message" style="font-size: var(--font-size-sm);"></p>
+      <img id="qr-image" src="" alt="QR Code" style="display:none;">
+    </div>
   </div>
-</div>
-
- 
- <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
 
 </body>
- 
 </html>
