@@ -65,16 +65,11 @@ All standard components (nav, breadcrumb, footer) are present.
         <h1 class="heading-large">Contact</h1>
         <p class="paragraph">
           I am always happy to communicate about research collaborations, teaching opportunities,
-          data analysis projects, or any other academic inquiry. You can email me directly, or
-          use the form below — both will reach me promptly.
+          data analysis projects, or any other academic inquiry. You can use the form below or email me directly; both will reach me promptly.
         </p>
 
-        <!-- The button's href will be set by JavaScript to protect the email address -->
-        <a id="contact-email-btn" class="btn btn-primary" style="font-size: var(--font-size-lg); padding: var(--space-md) var(--space-xl);">
-          <i class="fas fa-envelope mr-sm"></i> Send me an email
-        </a>
 
-        <!-- Contact form (web3forms.com) -->
+          <!-- Contact form (web3forms.com) -->
 <div style="max-width: 500px; margin: var(--space-xl) auto 0 auto; text-align: left;">
   <form action="https://api.web3forms.com/submit" method="POST">
     <input type="hidden" name="access_key" value="a650cbf7-f244-4d06-9099-b2069b49770f">
@@ -99,10 +94,23 @@ All standard components (nav, breadcrumb, footer) are present.
     </div>
 
     <!-- Submit button -->
-    <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+    <button type="submit" class="btn btn-primary" style="font-size: var(--font-size-lg); padding: var(--space-md) var(--space-xl); width: auto; display: inline-flex; align-items: center; gap: var(--space-xs);">
+  <i class="fas fa-paper-plane"></i> Send Message
+</button>
   </form>
 </div>
 
+
+
+<p style="text-align: center; margin: var(--space-lg) 0 var(--space-sm) 0; color: var(--color-text-muted);">Or you can send me an email directly.</p>
+
+        
+        <!-- The button's href will be set by JavaScript to protect the email address -->
+        <a id="contact-email-btn" class="btn btn-primary" style="font-size: var(--font-size-lg); padding: var(--space-md) var(--space-xl);">
+          <i class="fas fa-envelope mr-sm"></i> Send me an email
+        </a>
+
+      
 
 
         
