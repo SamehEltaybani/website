@@ -73,8 +73,8 @@ All standard components (nav, breadcrumb, footer) are present.
 <div style="max-width: 500px; margin: var(--space-xl) auto 0 auto; text-align: left;">
   <form action="https://api.web3forms.com/submit" method="POST">
     <input type="hidden" name="access_key" value="a650cbf7-f244-4d06-9099-b2069b49770f">
-    <input type="hidden" name="redirect" value="contact.html?success=1">
-
+    <input type="hidden" name="redirect" id="redirect-url" value="">
+    
     <!-- Name -->
     <div class="form-group">
       <label class="form-label" for="contact-name">Your Name</label>
@@ -153,7 +153,9 @@ All standard components (nav, breadcrumb, footer) are present.
       }
 
 
-
+      // Set the form's redirect URL to the current contact page with a success flag
+      const redirectInput = document.getElementById('redirect-url');
+      if (redirectInput) redirectInput.value = window.location.origin + window.location.pathname + '?success=1';
 
      
     })();
