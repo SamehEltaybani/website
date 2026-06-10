@@ -1820,11 +1820,6 @@ footer .footer-copyright {
 
 
 
-/* Hover effect for the single "Action link" trigger */
-.share-trigger:hover {
-    color: var(--color-gold);
-}
-
 
 
 /* ============================================================================
@@ -2817,38 +2812,10 @@ pre code {
     transition: color 0.2s;
 }
 
+
 .share-trigger:hover {
-    color: var(--color-gold);
-}
-
-
-
-/* Share icon group */
-.share-icons-group {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.share-icon-item {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: transparent;
-    color: var(--color-midnight-blue);
-    font-size: 1rem;
-    transition: all 0.2s;
-}
-
-.share-icon-item:hover {
-    color: var(--color-midnight-blue);
-    background-color: var(--color-gold-light);
-    transform: scale(1.1);
+    color: var(--color-gold) !important;
+    text-decoration: underline;
 }
 
 
@@ -2896,7 +2863,7 @@ pre code {
 }
 
 .share-social-icons a:hover {
-    background-color: var(--color-gold);
+    background-color: var(--color-hover-bg);
     color: var(--color-midnight-blue);
 }
 
