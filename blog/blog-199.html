@@ -48,7 +48,7 @@ The page automatically:
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
 
   <!-- FONT AWESOME -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
 
   <!-- MAIN CSS -->
   <link rel="stylesheet" href="assets/css/main.css">
@@ -68,7 +68,8 @@ The page automatically:
     #recommended-section, #share-btn-top, #share-btn-bottom,
     .share-dropdown, .qr-overlay, .search-icon-btn,
     #theme-toggle-desktop, #theme-toggle-mobile,
-    #search-toggle, .hamburger, .mobile-menu, .mobile-menu-overlay {
+    #search-toggle, .hamburger, .mobile-menu, .mobile-menu-overlay,
+    .back-to-top {
       display: none !important;
     }
 
@@ -111,7 +112,7 @@ The page automatically:
       align-items: flex-start;
       gap: 16pt;
       margin-bottom: 20pt;
-      border-bottom: 1px solid #ccc;
+      border-bottom: none;
       padding-bottom: 12pt;
     }
     .print-header-left {
@@ -217,14 +218,12 @@ The page automatically:
 
   <!-- ========== SCROLL PROGRESS BAR ========== -->
   <!-- Wrapped in a container to match the article width -->
-  <div style="max-width: var(--container-max-width); margin: 0 auto; width: 100%; border-radius: 8px 8px 0 0;">
-    <div class="progress-container" style="border-radius: 8px 8px 0 0;">
-      <div class="progress-bar" id="progress-bar"></div>
-    </div>
+  <div class="progress-container" style="border-radius: 8px 8px 0 0;">
+  <div class="progress-bar" id="progress-bar"></div>
   </div>
 
   <!-- ========== MAIN CONTENT ========== -->
-  <main style="background-color: #ffffff;">
+  <main>
     <article class="section" style="padding-top: 0; padding-bottom: 0;">
       <div class="container" style="max-width: 800px; margin: 0 auto; background-color: #ffffff; padding-top: var(--space-xl); padding-bottom: var(--space-xl);">
 
@@ -261,6 +260,27 @@ The page automatically:
 
         <hr style="border: none; border-top: 2px solid var(--color-border); margin: 4px 0 var(--space-lg) 0;">
 
+
+        <!-- ==================================================================
+                    PRINT INFO BLOCK (visible only when printing)
+                    Contains the legal notes, licence, print settings, etc.
+                    ================================================================== -->
+               <div class="print-info-block" style="display:none;">
+                 <div class="print-info-container">
+                   <div class="print-callout">
+                     <div class="print-callout-text">
+                       <p><strong>Printed from:</strong> <span id="print-url-span"></span></p>
+                       <p><strong>Printed on:</strong> <span id="print-date-span"></span></p>
+                       <p>This article contains hyperlinks (<span class="link-icon">🔗</span>). Visit the online version to access all linked resources.</p>
+                       <p>Content is updated regularly. For the latest version, visit the article online.</p>
+                       <p>This work is licensed under <a href="legal.html">CC BY‑NC‑ND 4.0</a>. Refer to the <a href="legal.html">Legal page</a> for details.</p>
+                       <p class="print-settings-note"><i class="fas fa-lightbulb" style="margin-right: 2pt;"></i>This article was designed for web viewing. This is an optimized printable version, but your browser may override some settings. For best results, scroll through the article at least once before printing and use: Layout: Portrait; Margins: Default; Paper size: A4; Show background graphics; and disable browser headers/footers.</p>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+
+       
         <!-- ==================================================================
              ARTICLE CONTENT (edit freely)
              ================================================================== -->
@@ -361,25 +381,7 @@ The page automatically:
         </div>
         <!-- ===== END OF ARTICLE CONTENT ===== -->
 
-        <!-- ==================================================================
-             PRINT INFO BLOCK (visible only when printing)
-             Contains the legal notes, licence, print settings, etc.
-             ================================================================== -->
-        <div class="print-info-block" style="display:none;">
-          <div class="print-info-container">
-            <div class="print-callout">
-              <div class="print-callout-text">
-                <p><strong>Printed from:</strong> <span id="print-url-span"></span></p>
-                <p><strong>Printed on:</strong> <span id="print-date-span"></span></p>
-                <p>This article contains hyperlinks (<span class="link-icon">🔗</span>). Visit the online version to access all linked resources.</p>
-                <p>Content is updated regularly. For the latest version, visit the article online.</p>
-                <p>This work is licensed under <a href="legal.html">CC BY‑NC‑ND 4.0</a>. Refer to the <a href="legal.html">Legal page</a> for details.</p>
-                <p class="print-settings-note"><i class="fas fa-lightbulb" style="margin-right: 2pt;"></i>This article was designed for web viewing. This is an optimized printable version, but your browser may override some settings. For best results, scroll through the article at least once before printing and use: Layout: Portrait; Margins: Default; Paper size: A4; Show background graphics; and disable browser headers/footers.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
+       
         <!-- ==================================================================
              SHARE TRIGGER (bottom)
              ================================================================== -->
@@ -594,7 +596,7 @@ The page automatically:
         const trigger = document.createElement('span');
         trigger.className = 'share-trigger';                          // uses the existing hover style
         trigger.style.cssText = 'cursor:pointer; display:inline-flex; align-items:center; gap:6px; font-size:0.9rem; color:var(--color-midnight-blue);';
-        trigger.innerHTML = '<i class="fas fa-share-alt"></i> Action link <i class="fas fa-ellipsis-vertical"></i><i class="fas fa-angle-down"></i>';
+        trigger.innerHTML = '<i class="fas fa-share-alt"></i> Action link <i class="fas fa-angle-down"></i>';
         // -----------------------------------------------------------------
 
         // Dropdown
