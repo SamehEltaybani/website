@@ -2940,6 +2940,17 @@ pre code {
 
 
 
+/* ============================================================================
+   CONTACT FORM from "formpree" (in CONTACT page)
+   ============================================================================ */
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+    outline: none;
+    border-color: var(--color-gold);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+}
+
 
 
 /* ============================================================================
