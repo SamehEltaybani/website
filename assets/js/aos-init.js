@@ -21,7 +21,7 @@
  *                  Leave empty to animate on all devices.
  */
 AOS.init({
-    duration: 800,       // animation speed (800 ms = 0.8 seconds)
+    duration: 600,       // animation speed (800 ms = 0.8 seconds)
     once: false,         // false = animate both directions (scroll down & up)
     easing: 'ease-in-out',
     offset: 150,
