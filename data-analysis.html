@@ -28,6 +28,7 @@ Differences from Research page:
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 
 
 
@@ -65,13 +66,20 @@ Differences from Research page:
     <section class="section" style="padding-top: var(--space-lg); padding-bottom: var(--space-lg);">
   <div class="container" style="margin: 0 auto; padding: 0 20px;">
     
-    <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-top: 20px; margin-bottom: 30px;">
-      <h1 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; margin: 0; color: #000000;">Data Analysis</h1>
-      <div style="width: 2px; height: 80px; background-color: var(--color-gold);"></div>
-      <div style="text-align: left; font-weight: 700; color: var(--color-gold); line-height: 1.4; font-size: 1.2rem;">
-        Reliable<br>Accurate<br>Actionable
-      </div>
+   <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-top: 20px; margin-bottom: 30px;">
+    
+    <h1 data-aos="fade-right" data-aos-duration="600" style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; margin: 0; color: #000000;">
+        Data Analysis
+    </h1>
+    
+    <div data-aos="fade-down" data-aos-duration="600" data-aos-delay="500" style="width: 2px; height: 80px; background-color: var(--color-gold);"></div>
+    
+    <div style="text-align: left; font-weight: 700; color: var(--color-gold); line-height: 1.4; font-size: 1.2rem;">
+        <div data-aos="fade-left" data-aos-duration="600" data-aos-delay="500">Reliable</div>
+        <div data-aos="fade-left" data-aos-duration="600" data-aos-delay="800">Accurate</div>
+        <div data-aos="fade-left" data-aos-duration="600" data-aos-delay="1000">Actionable</div>
     </div>
+</div>
 
     <p class="paragraph" style="text-align: center; margin: 0 auto 50px auto; max-width: 700px; padding: 0 10px;">
 I translate complex clinical data into clear, actionable insights that improve patient outcomes and inform healthcare decisions. My approach combines rigorous statistical methods with a deep understanding of the clinical context.
@@ -276,6 +284,8 @@ I translate complex clinical data into clear, actionable insights that improve p
   <script src="assets/js/footer.js"></script>
   <script src="assets/js/back-to-top.js"></script>
   <script src="assets/js/search.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="assets/js/aos-init.js"></script>
 
   <script>
     (function() {
