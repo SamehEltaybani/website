@@ -2959,6 +2959,17 @@ pre code {
 
 
 
+/* ============================================================================
+   Animating three circles 9what i do, why, how) in Research, teaching, and data analysis pages 
+  (Ensure mobile animations are snappy)
+   ============================================================================ */
+
+@media screen and (max-width: 1100px) {
+  [data-aos-delay] {
+    transition-delay: 0 !important;
+  }
+}
+
 
 /* ============================================================================
    END OF THE main.css FILE
