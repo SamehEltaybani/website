@@ -29,12 +29,12 @@ Page‑specific content:
   <meta property="og:type" content="website">
   <meta property="og:url" content="research.html">
 
-  <!-- FAVICON -->
+
+  
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-  <!-- FONT AWESOME -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <!-- MAIN CSS -->
   <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 
 
   
@@ -99,7 +99,7 @@ Page‑specific content:
     <div style="display: flex; flex-wrap: wrap; gap: var(--space-lg); justify-content: center;">
 
       <!-- What I Do -->
-      <div style="flex: 1 1 250px; display: flex; justify-content: center;">
+      <div data-aos="fade-right" style="flex: 1 1 250px; display: flex; justify-content: center;">
         <div style="width: 280px; max-width: 100%; aspect-ratio: 1 / 1;
                     border-radius: 50%;
                     border: 1px solid var(--color-gold);
@@ -115,7 +115,7 @@ Page‑specific content:
       </div>
 
       <!-- Why I Do It -->
-      <div style="flex: 1 1 250px; display: flex; justify-content: center;">
+      <div data-aos="fade-up" style="flex: 1 1 250px; display: flex; justify-content: center;">
         <div style="width: 280px; max-width: 100%; aspect-ratio: 1 / 1;
                     border-radius: 50%;
                     border: 1px solid var(--color-gold);
@@ -131,7 +131,7 @@ Page‑specific content:
       </div>
 
       <!-- How I Work -->
-      <div style="flex: 1 1 250px; display: flex; justify-content: center;">
+      <div data-aos="fade-left" style="flex: 1 1 250px; display: flex; justify-content: center;">
         <div style="width: 280px; max-width: 100%; aspect-ratio: 1 / 1;
                     border-radius: 50%;
                     border: 1px solid var(--color-gold);
@@ -285,6 +285,8 @@ Page‑specific content:
   <script src="assets/js/footer.js"></script>
   <script src="assets/js/back-to-top.js"></script>
   <script src="assets/js/search.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="assets/js/aos-init.js"></script>
 
  
   <!-- ========== PAGE-SPECIFIC SCRIPTS ========== -->
