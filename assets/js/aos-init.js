@@ -25,6 +25,6 @@ AOS.init({
     once: false,         // false = animate both directions (scroll down & up)
     easing: 'ease-in-out',
     offset: 120,
-    delay: 300,            // default delay – you can override per element
+    delay: 0,            // default delay – you can override per element
     disable: false       // false = animations on ALL devices (desktop, tablet, phone)
 });
