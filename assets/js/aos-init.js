@@ -21,10 +21,10 @@
  *                  Leave empty to animate on all devices.
  */
 AOS.init({
-    duration: 800,       // animation speed (800 ms = 0.8 seconds)
+    duration: 1000,       // animation speed (800 ms = 0.8 seconds)
     once: false,         // false = animate both directions (scroll down & up)
     easing: 'ease-in-out',
     offset: 120,
-    delay: 0,            // default delay – you can override per element
+    delay: 300,            // default delay – you can override per element
     disable: false       // false = animations on ALL devices (desktop, tablet, phone)
 });
