@@ -33,6 +33,7 @@ body {
 }
 
 /* Main content wrapper to push footer down */
+
 main {
     flex: 1 0 auto;
 }
@@ -42,7 +43,9 @@ main {
    ============================================================================ */
 
 :root {
-    /* ===== COLORS - Brand ===== */
+    
+ /* ===== COLORS - Brand ===== */
+ 
     --color-midnight-blue: #1A2530;
     --color-midnight-light: #2C3E50;
     --color-gold: #D4AF37;
@@ -50,6 +53,7 @@ main {
     --color-white: #FFFFFF;
     
     /* ===== COLORS - Roles ===== */
+ 
     --color-bg-main: #f9f9f7;       /* The background space outside the container area [any space beyond the navigation bar, readcrumb, footer] */
     --color-bg-alt: #F8F9FA;
     --color-hover-bg: #E9ECEF;
@@ -60,6 +64,7 @@ main {
     --color-border: #DEE2E6;
     
     /* ===== SPACING SCALE ===== */
+ 
     --space-xs: 0.25rem;   /* 4px */
     --space-sm: 0.5rem;    /* 8px */
     --space-md: 1rem;      /* 16px */
@@ -67,6 +72,7 @@ main {
     --space-xl: 4rem;      /* 64px */
     
     /* ===== TYPOGRAPHY SCALE ===== */
+ 
     --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --font-size-sm: 0.875rem;    /* 14px */
     --font-size-base: 1rem;       /* 16px */
@@ -77,10 +83,12 @@ main {
     --line-height-heading: 1.2;
     
     /* ===== TRANSITIONS ===== */
+ 
     --transition-fast: 0.2s ease-in-out;
     --transition-base: 0.3s ease-in-out;
     
     /* ===== LAYOUT CONSTANTS ===== */
+ 
     --nav-height-desktop: 70px;
     --nav-height-mobile: 60px;
     --breadcrumb-height: 45px;
@@ -1963,9 +1971,14 @@ footer .footer-copyright {
     color: var(--color-midnight-blue);
 }
 
+/* Make the arrow white on the gold button */
+
+#external-buttons-container .btn-secondary::after {
+    color: #ffffff;
+}
 
 /* ============================================================================
-   SINGLE VALUES‑TO‑ACTION CIRCLE (below values in teh research, teaching and data analysis pages)– hover only on mouse devices
+   SINGLE VALUES‑TO‑ACTION CIRCLE (below values in the research, teaching and data analysis pages)– hover only on mouse devices
    ============================================================================ */
 
 
