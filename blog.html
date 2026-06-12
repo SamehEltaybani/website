@@ -31,12 +31,10 @@ All data comes from /json/blog-list.json.
   <meta property="og:type" content="website">
   <meta property="og:url" content="blog.html">
 
-  <!-- FAVICON -->
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-  <!-- FONT AWESOME -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <!-- MAIN CSS -->
   <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 
 
   
@@ -59,14 +57,19 @@ All data comes from /json/blog-list.json.
     </div>
 </nav>
 
+  
   <!-- ========== BREADCRUMB BAR (exact height) ========== -->
+  
   <div data-component="breadcrumb" class="breadcrumb-bar"
        style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
 
+  
   <!-- ========== MAIN CONTENT ========== -->
+  
   <main>
    
     <!-- CONTROLS BAR (sticky) -->
+    
         <!-- Dark overlay for filter dropdown -->
     <div id="filter-overlay" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 996; display: none;"></div>
     
@@ -110,6 +113,7 @@ All data comes from /json/blog-list.json.
         </div>
 
         <!-- SORT BUTTON + DROPDOWN (aligns left on mobile) -->
+        
         <div style="position: relative;">
           
           <button id="sort-btn" class="btn btn-filter" aria-label="Sort" style="position: relative;">
@@ -136,6 +140,7 @@ All data comes from /json/blog-list.json.
         </div>
 
         <!-- RESET -->
+        
         <button id="reset-btn" class="btn btn-filter" aria-label="Reset">
           <i class="fas fa-undo"></i>
           <span>Reset</span>
@@ -156,23 +161,26 @@ All data comes from /json/blog-list.json.
   
 </div>
 
-      
-     </div>   
+         </div>   
 
 
 
     
     <!-- BLOG LIST CONTAINER -->
+    
     <section class="section">
       <div class="container">
          <h1 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; line-height: 1.2; margin-bottom: var(--space-xl); color: #000000; letter-spacing: -0.5px; text-align: left;">Blog Articles & Insights</h1>
         <div id="blog-list" data-component="blog-list">
           <!-- Rendered by JavaScript -->
         </div>
+        
         <!-- Load More button -->
+        
         <div id="load-more-container" class="text-center mt-md">
           <button id="load-more-btn" class="btn btn-load-more hidden">Load More</button>
         </div>
+        
       </div>
     </section>
   </main>
@@ -187,6 +195,8 @@ All data comes from /json/blog-list.json.
   <script src="assets/js/footer.js"></script>
   <script src="assets/js/back-to-top.js"></script>
   <script src="assets/js/search.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="assets/js/aos-init.js"></script>
 
   <!-- PAGE-SPECIFIC SCRIPTS -->
  
@@ -538,6 +548,7 @@ function quickFilterByCategory(category) {
       // ------------------------------------------------------------------
       // DROPDOWN MANAGEMENT
       // ------------------------------------------------------------------
+      
       function populateFilterDropdown() {
     const categoryContainer = document.getElementById('filter-category-options');
     if (!categoryContainer) return;
@@ -648,6 +659,7 @@ clearFiltersBtn.addEventListener('click', function(e) {
       // ------------------------------------------------------------------
       // RENDER BLOG LIST
       // ------------------------------------------------------------------
+      
       function renderCurrentPage() {
           if (!blogListContainer) return;
           const end = state.currentPage * state.itemsPerPage;
@@ -669,10 +681,10 @@ clearFiltersBtn.addEventListener('click', function(e) {
                   categoriesHtml += '</div>';
               }
 
-                           // Reading time from JSON (optional)
+             // Reading time from JSON (optional)
               const readTime = post.readingTime || '';
 
-              // Build the info column content (date, optional reading time, read link)
+             // Build the info column content (date, optional reading time, read link)
               let infoColumnHtml = '<div class="blog-info-col">';
               infoColumnHtml += '<span class="blog-info-item blog-date">' + escapeHTML(dateFormatted) + '</span>';
 
@@ -688,7 +700,7 @@ clearFiltersBtn.addEventListener('click', function(e) {
               infoColumnHtml += '</div>';
 
               html += `
-                  <div class="blog-card">
+                  <div class="blog-card" data-aos="fade-up">
                       <div class="blog-card-inner">
                           ${infoColumnHtml}
                           <div class="blog-content-col">
@@ -735,7 +747,7 @@ countBar.innerHTML =
         });
     });
 
-                  // Reading‑time info tooltips
+         // Reading‑time info tooltips
           const infoIcons = blogListContainer.querySelectorAll('.blog-reading-info-icon');
           infoIcons.forEach(icon => {
               icon.addEventListener('click', function(e) {
@@ -803,6 +815,7 @@ countBar.innerHTML =
       // ------------------------------------------------------------------
       // EVENT LISTENERS
       // ------------------------------------------------------------------
+      
       const debouncedSearch = (typeof SiteUtils !== 'undefined' && SiteUtils.debounce) ? SiteUtils.debounce(handleSearchInput, 300) : handleSearchInput;
       searchInput.addEventListener('input', function(e) {
           debouncedSearch();
@@ -816,9 +829,10 @@ countBar.innerHTML =
     setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
 });
 
-      // ------------------------------------------------------------------
+      // -------------------------------------------------------
       // AUTOCOMPLETE FOR SEARCH
-      // ------------------------------------------------------------------
+      // -------------------------------------------------------
+      
       function buildSuggestionPool() {
           if (suggestionPool.length > 0) return;
           const freqMap = new Map();
@@ -998,6 +1012,7 @@ countBar.innerHTML =
       // ------------------------------------------------------------------
       // INITIALISATION
       // ------------------------------------------------------------------
+      
       async function initBlog() {
           if (typeof SiteUtils !== 'undefined' && SiteUtils.waitForDOM) await SiteUtils.waitForDOM();
           await loadBlogData();
@@ -1011,7 +1026,9 @@ countBar.innerHTML =
 
         if (catParam) {
     state.activeCategories = [catParam];
+          
     // Check the matching checkbox
+          
     const checkbox = document.querySelector('#filter-category-options input[value="' + catParam + '"]');
     if (checkbox) checkbox.checked = true;
     applyAllFilters();
@@ -1028,9 +1045,8 @@ countBar.innerHTML =
           initBlog();
       }
     })();
+  
 </script>
 
-
-  
 </body>
 </html>
