@@ -1930,9 +1930,7 @@ footer .footer-copyright {
 #external-buttons-container .btn {
     padding: 14px 14px;              /* inside each button, top & bottom space (1st number) left & right space (2nd umbr)*/ 
     justify-content: flex-start;
-    min-height: 30px;
-    height: 100%; 
-    white-space: nowrap; 
+    min-height: 45px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
     background-color: transparent;
     border: 1px solid var(--color-border);
