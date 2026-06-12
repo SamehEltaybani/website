@@ -1918,19 +1918,16 @@ footer .footer-copyright {
     margin: 0 auto;                           /* centers the whole grid */
 }
 
-/* On phones and tablets, stack the buttons in two column */
-
 @media (max-width: 1100px) {
     #external-buttons-container {
-        grid-template-columns: repeat(2, 1fr);
-        max-width: 450px;            /* Maximum width on small screens */
-        width: calc(100% - 28px);    /* leaves 14px on each side (i.e., nothng touches screen edge) */
-        margin: 0 auto;              /* prevents stretching beyond max-width */
+        grid-template-columns: repeat(2, 1fr);       /* 2 equal columns on phone */
+        max-width: 450px;
+        width: 100%;
+        padding: 0 16px;          /* space inside the container on left and right */
+        margin: 0 auto;
+        box-sizing: border-box;
     }
 }
-
-
-/* Give the buttons inside this container a little extra breathing room */
 
 #external-buttons-container .btn {
     padding: 14px 14px;              /* inside each button, top & bottom space (1st number) left & right space (2nd umbr)*/ 
@@ -1945,14 +1942,10 @@ footer .footer-copyright {
     transition: var(--transition-base);
 }
 
-/* Hover effect – subtle gold background, matching feature buttons */
-
 #external-buttons-container .btn:hover {
     background-color: rgba(212, 175, 55, 0.12);
     border-color: var(--color-gold);
 }
-
-/* Right‑aligned arrow (added automatically) */
 
 #external-buttons-container .btn::after {
     content: '❯';
@@ -1962,15 +1955,13 @@ footer .footer-copyright {
     font-size: 1.2rem;
 }
 
-/* Publication List button (in the Research page) – special gold style */
+/* "Publication List" button (in the Research page) – special gold style */
 
 #external-buttons-container .btn-secondary {
     background-color: var(--color-gold);
     color: var(--color-midnight-blue);
     border-color: var(--color-gold);
 }
-
-/* Make the arrow white on the gold button */
 
 #external-buttons-container .btn-secondary::after {
     color: #ffffff;
