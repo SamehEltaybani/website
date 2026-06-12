@@ -2,13 +2,8 @@
 ==========================================================================
 RESEARCH.HTML - DR. SAMEH ELTAYBANI - RESEARCH PAGE
 ===========================================================================
-Page‑specific content:
-  1. Title, paragraph, and external resource buttons (array‑driven)
-  2. Three prominent buttons block (equal height, side‑by‑side on all screens)
-  3. Featured cards group (10 cards, array‑driven)
-  4. Repeated three prominent buttons block (second instance)
-============================================================================
 -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,8 +12,7 @@ Page‑specific content:
 
   <!-- ===== BASE PATH (for GitHub Pages project site) ===== -->
   <base href="/website/">
-  <!-- ===== SITE BASE PATH (used by utils.js to resolve absolute URLs) ===== -->
-  <meta name="site-base-path" content="/website/">
+    <meta name="site-base-path" content="/website/">
 
   <!-- PAGE-SPECIFIC -->
   
@@ -29,17 +23,15 @@ Page‑specific content:
   <meta property="og:description" content="Explore Dr. Sameh Eltaybani's research interests, key projects, and external resources. Discover evidence‑based healthcare research.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="research.html">
-
-
   
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 
-
   
 </head>
+  
 <body data-page="research.html">
  
   <!-- ========== NAVIGATION BAR ========== -->
@@ -60,10 +52,12 @@ Page‑specific content:
   
 
   <!-- ========== BREADCRUMB BAR ========== -->
+  
   <div data-component="breadcrumb" class="breadcrumb-bar"
      style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
 
   <!-- ========== MAIN CONTENT ========== -->
+  
   <main>
     
    
@@ -283,12 +277,12 @@ Page‑specific content:
     <div id="feature-buttons-container" class="feature-buttons-container">
       <!-- Rendered by JavaScript -->
     </div>
-  
-  </div>
+    </div>
 </section>
  
 
     <!-- FEATURED CARDS GROUP (10 CARDS) -->
+    
     <section class="section">
       <div class="container">
         <div id="research-cards-container" class="grid-2" style="gap: var(--space-lg);">
@@ -297,7 +291,6 @@ Page‑specific content:
       </div>
     </section>
 
-     
   </main>
 
   <!-- ========== FOOTER ========== -->
@@ -321,9 +314,9 @@ Page‑specific content:
       'use strict';
 
       
-      // ------------------------------------------------------------------
-      // A. EXTERNAL RESOURCE BUTTONS
-      // ------------------------------------------------------------------
+      // -----------------------------------------------
+      // EXTERNAL RESOURCE BUTTONS
+      // ------------------------------------------------
 
 
  // ICON REPLACEMENT NOTE:
@@ -436,9 +429,9 @@ Page‑specific content:
       }
 
       
-        // ------------------------------------------------------------------
-        // B. FEATURE BUTTONS (simplified)
-        // ------------------------------------------------------------------
+        // ------------------------------------------------
+        // FEATURE BUTTONS (simplified)
+        // ------------------------------------------------
       
               const featureButtonsData = [
                 {
@@ -470,10 +463,12 @@ Page‑specific content:
                   const a = document.createElement('a');
                   a.href = btn.link;
                   a.className = 'btn-feature';
+                  a.setAttribute('data-aos', 'fade-up');
                   a.style.padding = 'var(--space-sm) var(--space-md)';
                   
               
                   // Icon
+                  
                   const icon = document.createElement('i');
                   icon.className = btn.icon + ' btn-feature-icon';
                   icon.style.width = '40px';
@@ -482,6 +477,7 @@ Page‑specific content:
                   a.appendChild(icon);
               
                   // Text block
+                  
                   const textDiv = document.createElement('div');
                   textDiv.className = 'btn-feature-text';
 
@@ -500,6 +496,7 @@ Page‑specific content:
                   
               
                   // Arrow
+                  
                   const arrow = document.createElement('span');
                   arrow.className = 'btn-feature-arrow';
                   arrow.innerHTML = '&#x203A;';   // single right‑pointing angle quote
@@ -514,9 +511,10 @@ Page‑specific content:
 
       
 
-      // ------------------------------------------------------------------
-      // C. FEATURED RESEARCH CARDS
-      // ------------------------------------------------------------------
+      // -------------------------------------------------
+      // FEATURED RESEARCH CARDS
+      // --------------------------------------------------
+      
       const researchCards = [
         { title: 'Care Quality in Nursing Homes', img: 'assets/img/research-card-1.webp', desc: 'Investigating staff‑to‑resident ratios and quality outcomes.', blog: 'blog/blog-21.html' },
         { title: 'Geriatric Syndromes', img: 'assets/img/research-card-2.webp', desc: 'Understanding frailty and falls prevention in acute care.', blog: 'blog/blog-22.html' },
@@ -537,15 +535,19 @@ Page‑specific content:
     container.innerHTML = '';
 
     researchCards.forEach(card => {
-        // Create a clickable link that wraps the entire card
+        
+      // Create a clickable link that wraps the entire card
+      
         const cardLink = document.createElement('a');
         cardLink.href = card.blog;
         cardLink.className = 'card card-lift';
+        cardLink.setAttribute('data-aos', 'zoom-in-up');
         cardLink.style.textDecoration = 'none';
         cardLink.style.color = 'inherit';
         cardLink.style.display = 'block';
 
         // Image
+      
         const img = document.createElement('img');
         img.src = card.img;
         img.alt = card.title;
@@ -560,6 +562,7 @@ Page‑specific content:
         cardLink.appendChild(img);
 
         // Content
+      
         const content = document.createElement('div');
         content.className = 'card-content';
 
@@ -574,6 +577,7 @@ Page‑specific content:
         content.appendChild(descEl);
 
         // Visual "button" (no link, just text)
+      
         const btnText = document.createElement('span');
         btnText.className = 'btn btn-text';
         btnText.innerHTML = '<i class="fas fa-newspaper mr-xs"></i> Read more ❯';
@@ -585,9 +589,10 @@ Page‑specific content:
 }
             
 
-      // ------------------------------------------------------------------
-      // D. INITIALISATION
-      // ------------------------------------------------------------------
+      // -------------------------------------------
+      // INITIALISATION
+      // --------------------------------------------
+      
       function initPageSpecific() {
         renderExternalButtons();
         renderFeatureButtons();
@@ -600,6 +605,7 @@ Page‑specific content:
         initPageSpecific();
       }
     })();
+    
   </script>
   
 </body>
