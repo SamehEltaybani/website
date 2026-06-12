@@ -349,8 +349,7 @@ function renderMobileMenu(navItems) {
         // Create profile name
         const profileName = document.createElement('span');
         profileName.className = 'profile-name';
-        // profileName.textContent = 'Dr. Sameh Eltaybani';
-        profileName.innerHTML = 'Dr. Sameh <span style="background-color: #D4AF37; padding: 1 6px; border-radius: 2px; font-weight: 700;">Eltaybani</span>';
+        profileName.textContent = 'Sameh Eltaybani';
         
         // Add truncation for mobile (handled by CSS)
         
