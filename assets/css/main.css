@@ -1912,9 +1912,9 @@ footer .footer-copyright {
 #external-buttons-container {
     display: grid !important;                 
     grid-template-columns: repeat(4, 1fr);    /* 4 equal columns on desktop */
-    row-gap: 30px;                            /* vertical space */
-    column-gap: 30px;                         /* horizontal space */
-    max-width: 800px;                         /* prevents the grid from stretching too wide */
+    row-gap: 14px;                            /* vertical space */
+    column-gap: 14px;                         /* horizontal space */
+    max-width: 900px;                         /* prevents the grid from stretching too wide */
     margin: 0 auto;                           /* centers the whole grid */
 }
 
