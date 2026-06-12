@@ -6,7 +6,9 @@ TEACHING.HTML - DR. SAMEH ELTAYBANI - TEACHING PAGE
 
 <!DOCTYPE html>
 <html lang="en">
+  
 <head>
+  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -25,14 +27,11 @@ TEACHING.HTML - DR. SAMEH ELTAYBANI - TEACHING PAGE
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 
-  
-
-
 </head>
+  
 <body data-page="teaching.html">
 
-  
- <nav data-component="navigation" class="navbar">
+  <nav data-component="navigation" class="navbar">
     <div class="navbar-container">
         <div class="navbar-left"></div>
         <div class="navbar-right"></div>
@@ -52,9 +51,8 @@ TEACHING.HTML - DR. SAMEH ELTAYBANI - TEACHING PAGE
 
   <main>
    
-   
-    
-    <!-- TITLE, PARAGRAPH, INSIGHTS GRID -->
+       
+<!-- TITLE, PARAGRAPH, INSIGHTS GRID -->
 
 <section class="section" style="padding-top: var(--space-lg); padding-bottom: var(--space-lg);">
   <div class="container" style="margin: 0 auto; padding: 0 20px;">
@@ -84,6 +82,7 @@ TEACHING.HTML - DR. SAMEH ELTAYBANI - TEACHING PAGE
 <!-- ============================================
      WHAT I DO / WHY / HOW – TEACHING
      ============================================ -->
+    
 <section style="padding: var(--space-lg) 0; background: transparent;">
   <div class="container" style="max-width: 1200px; margin: 0 auto;">
 
@@ -142,19 +141,14 @@ TEACHING.HTML - DR. SAMEH ELTAYBANI - TEACHING PAGE
 
     </div>
   </div>
-</section>
-
-
-  
+</section> 
   
   </div>
 </section>
 
+ 
 
-
-    
-
-  <!-- ========== VALUE‑BASED TEACHING SECTION (centred layout) ========== -->
+<!-- ========== VALUE‑BASED TEACHING SECTION (centred layout) ========== -->
     
 <section class="section" style="padding-top: var(--space-lg); padding-bottom: var(--space-lg); background-color: transparent;">
   <div class="container" style="max-width: 900px; margin: 0 auto; text-align: center;">
@@ -297,7 +291,6 @@ TEACHING.HTML - DR. SAMEH ELTAYBANI - TEACHING PAGE
     (function() {
       'use strict';
 
-     
       
 
       // ------------------------------------------------------
@@ -334,6 +327,7 @@ TEACHING.HTML - DR. SAMEH ELTAYBANI - TEACHING PAGE
           const a = document.createElement('a');
           a.href = btn.link;
           a.className = 'btn-feature';
+          a.setAttribute('data-aos', 'fade-up');
           a.style.padding = 'var(--space-sm) var(--space-md)';
 
           const icon = document.createElement('i');
@@ -368,9 +362,9 @@ TEACHING.HTML - DR. SAMEH ELTAYBANI - TEACHING PAGE
         });
       }
 
-      // ------------------------------------------------------
-      // FEATURED CARDS (teaching themed)
-      // -------------------------------------------------------
+ // ------------------------------------------------------
+ // FEATURED CARDS (teaching themed)
+ // -------------------------------------------------------
       
       const analysisCards = [
         { title: 'Clinical Teaching Techniques', img: 'assets/img/teaching-card-1.webp', desc: 'Best practices for bedside clinical instruction.', blog: 'blog/blog-21.html' },
@@ -394,6 +388,7 @@ TEACHING.HTML - DR. SAMEH ELTAYBANI - TEACHING PAGE
           const cardLink = document.createElement('a');
           cardLink.href = card.blog;
           cardLink.className = 'card card-lift';
+          cardLink.setAttribute('data-aos', 'zoom-in-up');
           cardLink.style.textDecoration = 'none';
           cardLink.style.color = 'inherit';
           cardLink.style.display = 'block';
@@ -434,9 +429,9 @@ TEACHING.HTML - DR. SAMEH ELTAYBANI - TEACHING PAGE
         });
       }
 
-      // --------------------------------------------------
-      // INITIALISATION
-      // ---------------------------------------------------
+// --------------------------------------------------
+// INITIALISATION
+// ---------------------------------------------------
       
       function initPageSpecific() {
         renderFeatureButtons();
@@ -451,5 +446,6 @@ TEACHING.HTML - DR. SAMEH ELTAYBANI - TEACHING PAGE
     })();
     
   </script>
+  
 </body>
 </html>
