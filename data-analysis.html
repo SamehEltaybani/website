@@ -2,16 +2,13 @@
 ============================================================================
 DATA-ANALYSIS.HTML - DR. SAMEH ELTAYBANI - DATA ANALYSIS PAGE
 ============================================================================
-Differences from Research page:
-  - Top section: grid of short sentences (insights) instead of external buttons
-  - Feature button 2 links to data-analysis-portfolio.html
-  - Featured cards use analysisCards array and container id="analysis-cards-container"
-  - Page metadata updated
-========================================================================
 -->
+
 <!DOCTYPE html>
 <html lang="en">
+  
 <head>
+  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -30,13 +27,9 @@ Differences from Research page:
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 
-
-
- 
-
 </head>
+  
 <body data-page="data-analysis.html">
-
   
   <nav data-component="navigation" class="navbar">
     <div class="navbar-container">
@@ -58,10 +51,8 @@ Differences from Research page:
 
   <main>
    
-    
-    
-    
-    <!-- PART 1: TITLE, PARAGRAPH, INSIGHTS GRID -->
+        
+    <!-- TITLE, PARAGRAPH, INSIGHTS GRID -->
     
     <section class="section" style="padding-top: var(--space-lg); padding-bottom: var(--space-lg);">
   <div class="container" style="margin: 0 auto; padding: 0 20px;">
@@ -160,10 +151,12 @@ I translate complex clinical data into clear, actionable insights that improve p
 
 
 <!-- ========== VALUE‑BASED DATA ANALYSIS SECTION (centred layout) ========== -->
+    
 <section class="section" style="padding-top: var(--space-lg); padding-bottom: var(--space-lg); background-color: transparent;">
   <div class="container" style="max-width: 900px; margin: 0 auto; text-align: center;">
 
     <!-- Title -->
+    
     <div style="margin-bottom: 40px;">
       <div style="width: 60px; height: 60px; border-radius: 50%; background-color: transparent; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto;">
         <i class="fas fa-caret-down" style="font-size: 2.5rem; color: var(--color-gold);"></i>
@@ -175,6 +168,7 @@ I translate complex clinical data into clear, actionable insights that improve p
     </div>
 
     <!-- Value 1 -->
+    
     <div style="margin-bottom: var(--space-xl); text-align: center;">
       <span style="font-size: 2.5rem; font-weight: 700; color: var(--color-gold); line-height: 1;">1</span>
       <p style="font-size: var(--font-size-xl); font-weight: 700; color: var(--color-midnight-blue); margin: 0 0 4px 0;">Accuracy</p>
@@ -183,6 +177,7 @@ I translate complex clinical data into clear, actionable insights that improve p
     </div>
 
     <!-- Value 2 -->
+    
     <div style="margin-bottom: var(--space-xl); text-align: center;">
       <span style="font-size: 2.5rem; font-weight: 700; color: var(--color-gold); line-height: 1;">2</span>
       <p style="font-size: var(--font-size-xl); font-weight: 700; color: var(--color-midnight-blue); margin: 0 0 4px 0;">Transparency</p>
@@ -303,9 +298,10 @@ I translate complex clinical data into clear, actionable insights that improve p
       'use strict';
 
       
-      // ------------------------------------------------------------------
-      // B. FEATURE BUTTONS
-      // ------------------------------------------------------------------
+// ------------------------------------------
+// FEATURE BUTTONS
+// -------------------------------------------
+      
       const featureButtonsData = [
         {
           icon: 'fas fa-newspaper',
@@ -336,6 +332,7 @@ I translate complex clinical data into clear, actionable insights that improve p
           const a = document.createElement('a');
           a.href = btn.link;
           a.className = 'btn-feature';
+          a.setAttribute('data-aos', 'fade-up');
           a.style.padding = 'var(--space-sm) var(--space-md)';
 
           const icon = document.createElement('i');
@@ -370,9 +367,10 @@ I translate complex clinical data into clear, actionable insights that improve p
         });
       }
 
-      // ------------------------------------------------------------------
-      // C. FEATURED CARDS (data analysis themed)
-      // ------------------------------------------------------------------
+// ------------------------------------------------------------
+// FEATURED CARDS (data analysis themed)
+// ------------------------------------------------------------
+      
       const analysisCards = [
         { title: 'Clinical Decision Support', img: 'assets/img/data-card-1.webp', desc: 'Building dashboards that guide bedside decisions.', blog: 'blog/blog-21.html' },
         { title: 'Outcomes Prediction', img: 'assets/img/data-card-2.webp', desc: 'Machine learning models for readmission risk.', blog: 'blog/blog-22.html' },
@@ -395,6 +393,7 @@ I translate complex clinical data into clear, actionable insights that improve p
           const cardLink = document.createElement('a');
           cardLink.href = card.blog;
           cardLink.className = 'card card-lift';
+          cardLink.setAttribute('data-aos', 'zoom-in-up');
           cardLink.style.textDecoration = 'none';
           cardLink.style.color = 'inherit';
           cardLink.style.display = 'block';
@@ -435,9 +434,10 @@ I translate complex clinical data into clear, actionable insights that improve p
         });
       }
 
-      // ------------------------------------------------------------------
-      // D. INITIALISATION
-      // ------------------------------------------------------------------
+// --------------------------------------------
+// INITIALISATION
+// --------------------------------------------
+      
       function initPageSpecific() {
         renderFeatureButtons();
         renderAnalysisCards();
@@ -449,6 +449,9 @@ I translate complex clinical data into clear, actionable insights that improve p
         initPageSpecific();
       }
     })();
+    
   </script>
+  
 </body>
+  
 </html>
