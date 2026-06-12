@@ -18,14 +18,15 @@
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
  
 
-
-
   </head>
+  
 <body data-page="index.html">
 
   <!-- ========== NAVIGATION BAR ========== -->
+  
   <nav data-component="navigation" class="navbar">
     <div class="navbar-container">
         <div class="navbar-left"></div>
@@ -42,10 +43,12 @@
   
 
   <!-- ========== BREADCRUMB BAR (exact height) ========== -->
+  
   <div data-component="breadcrumb" class="breadcrumb-bar"
        style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
 
   <!-- ========== MAIN CONTENT ========== -->
+  
   <main>
     
 
@@ -70,11 +73,8 @@
   
 
 
-    
-  
-
-
     <!-- ========== 5 CORE VALUES SECTION ========== -->
+    
 <section class="section-alt" style="padding-top: 0; padding-bottom: var(--space-md); background-color: transparent;">
   <div class="container" style="max-width: 900px; margin: 0 auto;">
 
@@ -95,6 +95,7 @@
     
 
     <!-- Box 1 -->
+    
     <div style="display: flex; gap: var(--space-md); padding: var(--space-md); background: var(--color-white); border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.2); margin-bottom: var(--space-md);">
       <div style="flex-shrink: 0; width: 50px; text-align: center; font-size: 2.5rem; font-weight: 700; color: var(--color-midnight-blue); line-height: 1;">1</div>
       <div style="flex: 1; min-width: 0;">
@@ -110,6 +111,7 @@
     </div>
 
     <!-- Box 2 -->
+    
     <div style="display: flex; gap: var(--space-md); padding: var(--space-md); background: var(--color-white); border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.2); margin-bottom: var(--space-md);">
       <div style="flex-shrink: 0; width: 50px; text-align: center; font-size: 2.5rem; font-weight: 700; color: var(--color-midnight-blue); line-height: 1;">2</div>
       <div style="flex: 1; min-width: 0;">
@@ -125,6 +127,7 @@
     </div>
 
     <!-- Box 3 -->
+    
     <div style="display: flex; gap: var(--space-md); padding: var(--space-md); background: var(--color-white); border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.2); margin-bottom: var(--space-md);">
       <div style="flex-shrink: 0; width: 50px; text-align: center; font-size: 2.5rem; font-weight: 700; color: var(--color-midnight-blue); line-height: 1;">3</div>
       <div style="flex: 1; min-width: 0;">
@@ -140,6 +143,7 @@
     </div>
 
     <!-- Box 4 -->
+    
     <div style="display: flex; gap: var(--space-md); padding: var(--space-md); background: var(--color-white); border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.2); margin-bottom: var(--space-md);">
       <div style="flex-shrink: 0; width: 50px; text-align: center; font-size: 2.5rem; font-weight: 700; color: var(--color-midnight-blue); line-height: 1;">4</div>
       <div style="flex: 1; min-width: 0;">
@@ -155,6 +159,7 @@
     </div>
 
     <!-- Box 5 -->
+    
     <div style="display: flex; gap: var(--space-md); padding: var(--space-md); background: var(--color-white); border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.2); margin-bottom: var(--space-md);">
       <div style="flex-shrink: 0; width: 50px; text-align: center; font-size: 2.5rem; font-weight: 700; color: var(--color-midnight-blue); line-height: 1;">5</div>
       <div style="flex: 1; min-width: 0;">
@@ -174,12 +179,10 @@
 
 
 
-
-
-
    
 
     <!-- FEATURED NAVIGATION CARDS -->
+    
     <section class="section" style="padding-top: var(--space-lg);">
       <div class="container">
           
@@ -193,6 +196,7 @@
   </main>
 
   <!-- ========== FOOTER ========== -->
+  
   <footer data-component="footer"></footer>
 
   <!-- ========== SCRIPTS (EXACT ORDER) ========== -->
@@ -202,8 +206,11 @@
   <script src="assets/js/footer.js"></script>
   <script src="assets/js/back-to-top.js"></script>
   <script src="assets/js/search.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="assets/js/aos-init.js"></script>
 
   <!-- PAGE-SPECIFIC SCRIPTS -->
+  
   <script>
     (function() {
       'use strict';
@@ -282,11 +289,14 @@
     cardLink.style.textDecoration = 'none';
     cardLink.style.color = 'inherit';
     cardLink.style.display = 'block';
+    cardLink.setAttribute('data-aos', 'zoom-in');
+    
 
     const content = document.createElement('div');
     content.className = 'card-content';
 
     // ---- Title with optional icon ----
+      
     const titleEl = document.createElement('h3');
     titleEl.className = 'card-title';
 
