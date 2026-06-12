@@ -1414,7 +1414,7 @@ footer .footer-copyright {
 .pub-action-link {
     color: var(--color-gold);
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-weight: 500;
     transition: color 0.2s;
     text-decoration: none;
@@ -1638,9 +1638,10 @@ footer .footer-copyright {
     align-self: center;          
     text-decoration: none;
     color: var(--color-gold);
+    font-size: 0.9rem;
     font-weight: 500;
     transition: color 0.2s;
-}
+    }
 
 .blog-read-link:hover {
     color: var(--color-gold);
@@ -1718,33 +1719,35 @@ footer .footer-copyright {
         gap: 0;                           /* no automatic gap */
     }
 
-    /* Date stays left – no extra style needed */
-
     /* Push the reading time (if present) to the right */
+ 
     .blog-read-time {
         margin-left: auto;
     }
 
     /* “Read article” follows right after reading time */
+ 
     .blog-read-link {
         margin-left: 0;
     }
 
      /* Push Read article to the right when there is no reading time */
+ 
     .blog-read-link-alone {
         margin-left: auto !important;
     }
 
     /* Only show the separator that has the special class */
+ 
     .blog-info-sep {
         display: none !important;          /* hide all separators by default */
     }
-   .blog-info-sep-read {
-        display: inline !important;        /* show the “|” before Read article */
-        color: #ffffff;
-        margin: 0 6px;                    /* space around the bar */
-    }
 
+    /* Add space between reading time and Read article (replaces the removed | separator) */
+ 
+    .blog-read-link:not(.blog-read-link-alone) {
+        margin-left: 14px;
+    }
 
      .blog-content-col {
         padding: var(--space-md);
@@ -1768,6 +1771,7 @@ footer .footer-copyright {
     gap: var(--space-sm);
     max-width: 250px;
 }
+
 .blog-reading-tooltip-close {
     background: none;
     border: none;
@@ -1777,8 +1781,6 @@ footer .footer-copyright {
     padding: 0;
     line-height: 1;
 }
-
-
 
 
 
