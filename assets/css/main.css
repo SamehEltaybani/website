@@ -1920,9 +1920,8 @@ footer .footer-copyright {
 
 @media (max-width: 1100px) {
     #external-buttons-container {
-        grid-template-columns: repeat(2, 1fr);       /* 2 equal columns on phone */
-        width: 100%;
-        padding: 0 16px;          /* space inside the container on left and right */
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 100%;
         margin: 0 auto;
         box-sizing: border-box;
     }
