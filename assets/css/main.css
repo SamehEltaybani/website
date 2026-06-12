@@ -1923,11 +1923,23 @@ footer .footer-copyright {
 @media (max-width: 1100px) {
     #external-buttons-container {
         grid-template-columns: repeat(2, 1fr);          
-        max-width: 450px;                     /* Maximum width on small screens */
+        max-width: 450px;                    
         width: auto;                          /* prevents stretching beyond max-width */
         margin: 0 auto;
     }
 }
+
+
+
+@media (max-width: 1100px) {
+    #external-buttons-container {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 450px;            /* Maximum width on small screens */
+        width: calc(100% - 28px);   /* leaves 14px on each side (i.e., nothng touches screen edge) */
+        margin: 0 auto;
+    }
+}
+
 
 /* Give the buttons inside this container a little extra breathing room */
 
