@@ -1912,18 +1912,18 @@ footer .footer-copyright {
 #external-buttons-container {
     display: grid !important;                 
     grid-template-columns: repeat(4, 1fr);    /* 4 equal columns on desktop */
-    row-gap: 24px;                            /* vertical space */
-    column-gap: 24px;                         /* horizontal space */
-    max-width: 9000px;                         /* prevents the grid from stretching too wide */
+    row-gap: 30px;                            /* vertical space */
+    column-gap: 30px;                         /* horizontal space */
+    max-width: 700px;                         /* prevents the grid from stretching too wide */
     margin: 0 auto;                           /* centers the whole grid */
 }
 
-/* On phones and tablets, stack the buttons in a single column */
+/* On phones and tablets, stack the buttons in two column */
 
 @media (max-width: 1100px) {
     #external-buttons-container {
         grid-template-columns: repeat(2, 1fr);          
-        max-width: 500px;                     /* a comfortable width on small screens */
+        max-width: 400px;                     /* a comfortable width on small screens */
         width: auto;                          /* prevents stretching beyond max-width */
         margin: 0 auto;
     }
@@ -1959,12 +1959,18 @@ footer .footer-copyright {
     font-size: 1.2rem;
 }
 
-/* Publication List button – special gold style */
+/* Publication List button (in the Research page) – special gold style */
 
 #external-buttons-container .btn-secondary {
     background-color: var(--color-gold);
     color: var(--color-midnight-blue);
     border-color: var(--color-gold);
+}
+
+/* Make the arrow white on the gold button */
+
+#external-buttons-container .btn-secondary::after {
+    color: #ffffff;
 }
 
 #external-buttons-container .btn-secondary:hover {
@@ -1973,11 +1979,6 @@ footer .footer-copyright {
     color: var(--color-midnight-blue);
 }
 
-/* Make the arrow white on the gold button */
-
-#external-buttons-container .btn-secondary::after {
-    color: #ffffff;
-}
 
 /* ============================================================================
    SINGLE VALUES‑TO‑ACTION CIRCLE (below values in the research, teaching and data analysis pages)– hover only on mouse devices
