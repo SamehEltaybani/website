@@ -2,27 +2,9 @@
  * ============================================================================
  * MAIN.CSS - MASTER STYLESHEET
  * ============================================================================
-  * This file contains ALL styles for the entire website.
- * No page should have inline styles or its own <style> block.
- * ============================================================================
- * HOW TO MODIFY THIS FILE:
- * ============================================================================
-  * 1. To change a color globally: Edit the :root variables at the top
- * 2. To change button styles: Find the /* BUTTONS * / section
- * 3. To add a new variant (e.g., a new button color):
- *    - Copy an existing button block
- *    - Rename the class (e.g., .btn-newcolor)
- *    - Change the background-color variable
- * 4. All class names are prefixed with context (btn-, card-, icon-, etc.)
- * 5. Never change values in two places. Use variables.
- * ============================================================================
- */
+  */
 
-/* ===========================================================================
-   IMPORTS & FONT FACES
-   ============================================================================ */
 
-/* No external fonts - using system fonts for speed and professional look */
 
 /* ============================================================================
    CSS RESET & BASE STYLES
@@ -1920,13 +1902,14 @@ footer .footer-copyright {
 #external-buttons-container {
     display: grid !important;                 
     grid-template-columns: repeat(4, 1fr);    /* 4 equal columns on desktop */
-    row-gap: 16px;                      /* vertical space */
-    column-gap: 16px;        /* horizontal space */
+    row-gap: 20px;                            /* vertical space */
+    column-gap: 20px;                         /* horizontal space */
     max-width: 800px;                         /* prevents the grid from stretching too wide */
     margin: 0 auto;                           /* centers the whole grid */
 }
 
 /* On phones and tablets, stack the buttons in a single column */
+
 @media (max-width: 1100px) {
     #external-buttons-container {
         grid-template-columns: repeat(2, 1fr);          
@@ -1937,8 +1920,9 @@ footer .footer-copyright {
 }
 
 /* Give the buttons inside this container a little extra breathing room */
+
 #external-buttons-container .btn {
-    padding: 16px 20px;
+    padding: 20px 20px;
     justify-content: flex-start;
     min-height: 40px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
@@ -1949,12 +1933,14 @@ footer .footer-copyright {
 }
 
 /* Hover effect – subtle gold background, matching feature buttons */
+
 #external-buttons-container .btn:hover {
     background-color: rgba(212, 175, 55, 0.12);
     border-color: var(--color-gold);
 }
 
 /* Right‑aligned arrow (added automatically) */
+
 #external-buttons-container .btn::after {
     content: '❯';
     margin-left: auto;
@@ -1963,11 +1949,26 @@ footer .footer-copyright {
     font-size: 1.2rem;
 }
 
+/* Publication List button – special gold style */
+
+#external-buttons-container .btn-secondary {
+    background-color: var(--color-gold);
+    color: var(--color-midnight-blue);
+    border-color: var(--color-gold);
+}
+
+#external-buttons-container .btn-secondary:hover {
+    background-color: var(--color-gold-light);
+    border-color: var(--color-gold);
+    color: var(--color-midnight-blue);
+}
 
 
 /* ============================================================================
    SINGLE VALUES‑TO‑ACTION CIRCLE (below values in teh research, teaching and data analysis pages)– hover only on mouse devices
    ============================================================================ */
+
+
 @media (hover: hover) {
     .values-action-circle {
         transition: background-color 0.3s, box-shadow 0.3s;
@@ -1977,6 +1978,7 @@ footer .footer-copyright {
         box-shadow: 0 0 30px rgba(0,0,0,0.18);
     }
 }
+
 
 /* ============================================================================
    PORTFOLIO PAGE (Individual - 25% / 75% split)
@@ -2020,6 +2022,7 @@ footer .footer-copyright {
 }
 
 /* Content playground blocks */
+
 .content-block-white {
     background-color: var(--color-white);
     padding: var(--space-lg);
@@ -2072,6 +2075,7 @@ pre code {
     padding: 0;
 }
 
+
 /* ============================================================================
    UTILITY CLASSES
    ============================================================================ */
@@ -2088,9 +2092,11 @@ pre code {
 .text-right { text-align: right; }
 .text-center { text-align: center; }
 
+
 /* ============================================================================
    RESPONSIVE UTILITIES
    ============================================================================ */
+
 
 @media (max-width: 1100px) {
     .hide-mobile {
@@ -2111,11 +2117,13 @@ pre code {
 }
 
 /* Active state for search box (Publications & Blog) */
+
 .search-box.active input {
     border-color: var(--color-gold);
 }
 
 /* Article content lists – slightly indented */
+
 #article-content ul,
 #article-content ol {
   padding-left: 1.5rem;
@@ -2123,12 +2131,11 @@ pre code {
 
 
 /* Gold left border on featured cards (Research, Teaching, Data Analysis) */
+
 #research-cards-container .card,
 #analysis-cards-container .card {
     border-left: 4px solid var(--color-gold);
 }
-
-
 
 
 /* ============================================================================
@@ -2210,6 +2217,7 @@ pre code {
 
 
 /* Reusable left vertical line with top & bottom gaps */
+
 .left-line {
     position: relative;
     padding-left: var(--space-xl);          /* make room for the line */
@@ -2233,6 +2241,7 @@ pre code {
 /* ============================================================================
    MEDIA OBJECT (icon left, title & text right)
    ============================================================================ */
+
 .media-object {
     display: flex;
     align-items: flex-start;
@@ -2288,6 +2297,7 @@ pre code {
 
 
 /* Prevent iOS / Android zoom on search / filter inputs */
+
 @media (max-width: 1100px) {
     .search-box input,
     .controls-bar input,
@@ -2296,7 +2306,6 @@ pre code {
         font-size: 16px;      /* minimum size that stops auto‑zoom */
     }
 }
-
 
 
 /* ============================================================================
@@ -2317,6 +2326,7 @@ pre code {
 }
 
 /* Search icon button (circle) */
+
 .search-icon-btn {
     width: var(--search-icon-size);
     height: var(--search-icon-size);
@@ -2341,6 +2351,7 @@ pre code {
 }
 
 /* On mobile: show search icon and hamburger, hide desktop links */
+
 @media (max-width: 1100px) {
     .navbar-right {
         display: none;          /* hide desktop nav links */
@@ -2357,9 +2368,11 @@ pre code {
     }
 }
 
+
 /* ============================================================================
    SEARCH MODAL (pop‑up overlay)
    ============================================================================ */
+
 .search-modal-overlay {
     position: fixed;
     top: 0;
@@ -2410,8 +2423,6 @@ pre code {
 }
 
 
-
-
 /* Submit icon + text (right side of input) */
 
 .search-modal-submit-area {
@@ -2454,12 +2465,8 @@ pre code {
 }
 
 
-
-
-
-
-
 /* "Search tips" trigger above the input */
+
 .search-tips-trigger {
     display: inline-flex;
     align-items: center;
@@ -2476,6 +2483,7 @@ pre code {
 }
 
 /* Tips overlay (second modal on top of search) */
+
 .search-tips-overlay {
     position: fixed;
     top: 0;
@@ -2516,8 +2524,6 @@ pre code {
 }
 
 
-
-
 .search-modal-close-btn {
     /* 1. Layout: Push to the right, don't stretch */
     align-self: flex-end;
@@ -2550,9 +2556,12 @@ pre code {
     color: var(--color-white);
 }
 
+
 /* ============================================================================
    RESULT TYPE LABELS (used on search.html)
    ============================================================================ */
+
+
 .result-type {
     display: inline-block;
     padding: 2px 10px;
@@ -2569,19 +2578,19 @@ pre code {
 .result-type-page   { background-color: #F5E6CC; color: #7B5E3B; }    /* soft tan */
 
 
-
-
-
 /* ============================================================================
    SEARCH MODAL ENHANCEMENTS (autocomplete, tips, tooltip, mobile)
    ============================================================================ */
 
+
 /* Ensure the modal input has position relative for dropdown */
+
 .search-modal-input-wrapper {
     position: relative;
 }
 
 /* Autocomplete dropdown inside the modal */
+
 .search-modal-autocomplete {
     position: absolute;
     top: 100%;
@@ -2616,6 +2625,7 @@ pre code {
 }
 
 /* Tips tooltip */
+
 .search-tips-tooltip {
     position: absolute;
     top: 100%;
@@ -2649,7 +2659,9 @@ pre code {
 }
 
 /* Mobile – make modal taller */
+
 /* Mobile – make the overlay scrollable so nothing is clipped */
+
 @media (max-width: 1100px) {
     .search-modal-overlay {
         align-items: flex-start;        /* pin the white box to the top */
@@ -2666,6 +2678,7 @@ pre code {
 }
 
 /* "Did not find" banner on results page */
+
 .not-found-banner {
     background-color: var(--color-bg-alt);
     border-left: 4px solid var(--color-gold);
@@ -2738,6 +2751,7 @@ pre code {
 
 
 /* Dark overlay behind the hamburger menu */
+
 .mobile-menu-overlay {
     position: fixed;
     top: 0;
@@ -2775,18 +2789,17 @@ pre code {
 
 
 /* Fast tap response without breaking scroll */
+
 .search-modal-autocomplete-item,
 .blog-category {
     touch-action: manipulation;
 }
 
 
-
-
-
 /* ============================================================================
    SOCIAL SHARING BUTTONS (blog articles)
    ============================================================================ */
+
 .share-btn-wrapper {
     text-align: right;
     margin-top: 4px;          /* very small gap from the element above */
@@ -2903,8 +2916,8 @@ pre code {
 }
 
 
-
 /* QR Code overlay */
+
 .qr-overlay {
     position: fixed;
     top: 0;
@@ -2949,6 +2962,8 @@ pre code {
 /* ============================================================================
    CONTACT FORM (in CONTACT page)
    ============================================================================ */
+
+
 .form-input:focus,
 .form-textarea:focus,
 .form-select:focus {
