@@ -8,9 +8,9 @@ Page‑specific content:
   - Cards link to the respective individual portfolio pages
   - Breadcrumb: Home > Portfolios
   - Navigation highlights "Portfolios"
-All amendments integrated (base path, breadcrumb height, left‑aligned, etc.)
 ============================================================================
 -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,28 +38,6 @@ All amendments integrated (base path, breadcrumb height, left‑aligned, etc.)
 
 
 
-
-    <!--
-Background image (immediately before the closing HEAD tag
--->
-
-<style>
-  body {
-    background: linear-gradient(rgba(255,255,255,0.92), rgba(255,255,255,0.92)), url('assets/img/david-edelstein-N4DbvTUDikw-unsplash.jpg') fixed;
-    background-size: cover;
-    background-position: center;
-  }
-</style>
-
-
-
-
-
-
-
-
-
-
 </head>
 <body data-page="portfolios.html">
 
@@ -79,11 +57,14 @@ Background image (immediately before the closing HEAD tag
 </nav>
 
   <!-- ========== BREADCRUMB BAR (exact height) ========== -->
+  
   <div data-component="breadcrumb" class="breadcrumb-bar"
        style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
 
   <!-- ========== MAIN CONTENT ========== -->
+  
   <main>
+    
     <section class="section">
       <div class="container">
         <h1 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; line-height: 1.2; margin-bottom: 55px; color: #000000; letter-spacing: -0.5px; text-align: left">Portfolios</h1>
@@ -114,9 +95,10 @@ Background image (immediately before the closing HEAD tag
     (function() {
       'use strict';
 
-      // ------------------------------------------------------------------
-      // A. HELPERS
-      // ------------------------------------------------------------------
+// -------------------------------------------
+// HELPERS
+// --------------------------------------------
+      
       function escapeHTML(text) {
         if (typeof SiteUtils !== 'undefined' && SiteUtils.escapeHTML) {
           return SiteUtils.escapeHTML(text);
@@ -130,15 +112,16 @@ Background image (immediately before the closing HEAD tag
       // B. PORTFOLIO DATA MAPPING
       // ------------------------------------------------------------------
       // Maps portfolio names from JSON to their respective page URLs
+      
       const portfolioPageMap = {
         'Research Portfolio': 'research-portfolio.html',
         'Teaching Portfolio': 'teaching-portfolio.html',
         'Data Analysis Portfolio': 'data-analysis-portfolio.html'
       };
 
-      // ------------------------------------------------------------------
-      // C. LOAD & RENDER PORTFOLIO CARDS
-      // ------------------------------------------------------------------
+ // ------------------------------------------------------------------
+ // LOAD & RENDER PORTFOLIO CARDS
+ // ------------------------------------------------------------------
 
       
 async function renderPortfolioCards() {
@@ -146,6 +129,7 @@ async function renderPortfolioCards() {
     if (!container) return;
 
     // Icon assignments based on portfolio name
+  
     const iconMap = {
         'Research Portfolio': 'fas fa-brain',
         'Teaching Portfolio': 'fas fa-chalkboard-teacher',
@@ -225,11 +209,10 @@ async function renderPortfolioCards() {
 }
 
 
+// ------------------------------------------------------------------
+// INITIALISATION
+// ------------------------------------------------------------------
       
-
-      // ------------------------------------------------------------------
-      // D. INITIALISATION
-      // ------------------------------------------------------------------
       async function initPortfolios() {
         if (typeof SiteUtils !== 'undefined' && SiteUtils.waitForDOM) {
           await SiteUtils.waitForDOM();
@@ -243,6 +226,9 @@ async function renderPortfolioCards() {
         initPortfolios();
       }
     })();
+    
   </script>
+  
 </body>
+  
 </html>
