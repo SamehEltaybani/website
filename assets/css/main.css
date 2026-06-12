@@ -1914,7 +1914,7 @@ footer .footer-copyright {
     grid-template-columns: repeat(4, 1fr);    /* 4 equal columns on desktop */
     row-gap: 30px;                            /* vertical space */
     column-gap: 30px;                         /* horizontal space */
-    max-width: 700px;                         /* prevents the grid from stretching too wide */
+    max-width: 800px;                         /* prevents the grid from stretching too wide */
     margin: 0 auto;                           /* centers the whole grid */
 }
 
