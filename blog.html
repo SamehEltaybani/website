@@ -2,14 +2,6 @@
 ===========================================================================
 BLOG.HTML - DR. SAMEH ELTAYBANI - BLOG PAGE
 ===========================================================================
-Page‑specific content:
-  - Search by title (debounced)
-  - Filter by category (dropdown + clickable inline tags)
-  - Sort by date (newest ↔ oldest)
-  - Reset button
-  - Dynamic blog article list with Load More and batch separators
-All data comes from /json/blog-list.json.
-============================================================================
 -->
 
 
@@ -34,7 +26,6 @@ All data comes from /json/blog-list.json.
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 
 
   
@@ -133,9 +124,7 @@ All data comes from /json/blog-list.json.
         Oldest first
     </label>
 </div>
-
-
-          
+   
           
         </div>
 
@@ -195,11 +184,8 @@ All data comes from /json/blog-list.json.
   <script src="assets/js/footer.js"></script>
   <script src="assets/js/back-to-top.js"></script>
   <script src="assets/js/search.js"></script>
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script src="assets/js/aos-init.js"></script>
 
   <!-- PAGE-SPECIFIC SCRIPTS -->
- 
   
 
 <script>
@@ -209,6 +195,7 @@ All data comes from /json/blog-list.json.
       // ------------------------------------------------------------------
       // GLOBALS & STATE (Blog)
       // ------------------------------------------------------------------
+      
       const state = {
         allItems: [],
         filteredItems: [],
@@ -277,6 +264,7 @@ All data comes from /json/blog-list.json.
       // ------------------------------------------------------------------
       // HIGHLIGHT CONTROLS
       // ------------------------------------------------------------------
+      
       function updateControlHighlights() {
         const catCheckboxesAll = document.querySelectorAll('#filter-category-options input[type="checkbox"]');
 const catCheckedAll = document.querySelectorAll('#filter-category-options input[type="checkbox"]:checked').length;
@@ -291,6 +279,7 @@ const hasFilter = (catCheckedAll > 0 && catCheckedAll < catCheckboxesAll.length)
 
 
 // ---- Update superscript badges and reset‑button colour ----
+      
 function updateBadges() {
     let badgeCount = 0;
 
@@ -321,6 +310,7 @@ function updateBadges() {
     }
 
     // Colour the Reset button
+  
     if (resetBtn) {
         if (badgeCount > 0) {
             resetBtn.classList.add('badge-active');
@@ -338,6 +328,7 @@ function updateBadges() {
 }
 
 // ---- "?" help icon toggle tooltip ----
+      
 const helpIcon = document.getElementById('filter-help-icon');
 const helpTooltip = document.getElementById('filter-help-tooltip');
 if (helpIcon && helpTooltip) {
@@ -377,9 +368,10 @@ if (helpIcon && helpTooltip) {
     }
 }
 
-      // ------------------------------------------------------------------
+      // --------------------------------------------------
       // LOAD DATA FROM blog-list.json
-      // ------------------------------------------------------------------
+      // ---------------------------------------------------
+      
       async function loadBlogData() {
         try {
           if (typeof SiteUtils === 'undefined') throw new Error('utils.js not loaded');
@@ -415,6 +407,7 @@ if (helpIcon && helpTooltip) {
       // ------------------------------------------------------------------
       // FILTER / SORT / SEARCH LOGIC
       // ------------------------------------------------------------------
+      
       function applyAllFilters() {
           window.scrollTo({ top: 0, behavior: 'smooth' });
           let items = [...state.allItems];
@@ -474,9 +467,11 @@ if (helpIcon && helpTooltip) {
     if (!span) return;
 
     // Update the button text
+       
     span.textContent = state.activeSort.direction === 'desc' ? 'Sort: Newest' : 'Sort: Oldest';
 
     // Highlight the active sort option in the dropdown
+       
     const currentValue = state.activeSort.field + '-' + state.activeSort.direction;
     document.querySelectorAll('.sort-radio-item').forEach(item => {
         item.classList.toggle('active', item.getAttribute('data-sort') === currentValue);
@@ -565,6 +560,7 @@ function quickFilterByCategory(category) {
 
 
       // ---- "Select all" / "Deselect all" for the category section ----
+      
 function setupSelectAllToggles() {
     document.querySelectorAll('.filter-select-all input[type="checkbox"]').forEach(allCheckbox => {
         allCheckbox.addEventListener('change', function() {
@@ -682,9 +678,11 @@ clearFiltersBtn.addEventListener('click', function(e) {
               }
 
              // Reading time from JSON (optional)
+            
               const readTime = post.readingTime || '';
 
              // Build the info column content (date, optional reading time, read link)
+            
               let infoColumnHtml = '<div class="blog-info-col">';
               infoColumnHtml += '<span class="blog-info-item blog-date">' + escapeHTML(dateFormatted) + '</span>';
 
@@ -695,12 +693,13 @@ clearFiltersBtn.addEventListener('click', function(e) {
               }
 
               // Read article link (always present)
+            
               infoColumnHtml += '<a href="' + escapeHTML(post.blogfile) + '" class="blog-info-item blog-read-link' + (readTime ? '' : ' blog-read-link-alone') + '">Read article <i class="fas fa-angle-right"></i></a>';  
                       
               infoColumnHtml += '</div>';
 
               html += `
-                  <div class="blog-card" data-aos="fade-up">
+                  <div class="blog-card">
                       <div class="blog-card-inner">
                           ${infoColumnHtml}
                           <div class="blog-content-col">
@@ -723,6 +722,7 @@ clearFiltersBtn.addEventListener('click', function(e) {
           blogListContainer.innerHTML = html;
 
           // Result-count bar
+        
           const countBar = document.getElementById('results-count-bar');
           if (countBar) {
               const totalItems = state.filteredItems.length;
@@ -736,6 +736,7 @@ countBar.innerHTML =
           }
 
               // Attach click handlers to category tags
+        
     const categoryTags = blogListContainer.querySelectorAll('.blog-category');
     categoryTags.forEach(tag => {
         tag.addEventListener('click', function() {
@@ -748,6 +749,7 @@ countBar.innerHTML =
     });
 
          // Reading‑time info tooltips
+        
           const infoIcons = blogListContainer.querySelectorAll('.blog-reading-info-icon');
           infoIcons.forEach(icon => {
               icon.addEventListener('click', function(e) {
@@ -773,6 +775,7 @@ countBar.innerHTML =
           });
 
           // Close tooltip when clicking anywhere else or scrolling
+        
           document.addEventListener('click', function(e) {
               if (!e.target.closest('.blog-reading-info-icon') && !e.target.closest('.blog-reading-tooltip')) {
                   const tip = document.querySelector('.blog-reading-tooltip');
@@ -812,9 +815,9 @@ countBar.innerHTML =
           renderCurrentPage();
       });
 
-      // ------------------------------------------------------------------
+      // ------------------------------------------------------
       // EVENT LISTENERS
-      // ------------------------------------------------------------------
+      // -------------------------------------------------------
       
       const debouncedSearch = (typeof SiteUtils !== 'undefined' && SiteUtils.debounce) ? SiteUtils.debounce(handleSearchInput, 300) : handleSearchInput;
       searchInput.addEventListener('input', function(e) {
@@ -829,9 +832,9 @@ countBar.innerHTML =
     setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
 });
 
-      // -------------------------------------------------------
+      // ----------------------------------------------
       // AUTOCOMPLETE FOR SEARCH
-      // -------------------------------------------------------
+      // ------------------------------------------------
       
       function buildSuggestionPool() {
           if (suggestionPool.length > 0) return;
@@ -1009,9 +1012,9 @@ countBar.innerHTML =
           }
       }
 
-      // ------------------------------------------------------------------
+      // --------------------------------------------
       // INITIALISATION
-      // ------------------------------------------------------------------
+      // ---------------------------------------------
       
       async function initBlog() {
           if (typeof SiteUtils !== 'undefined' && SiteUtils.waitForDOM) await SiteUtils.waitForDOM();
