@@ -1832,24 +1832,30 @@ footer .footer-copyright {
     align-items: stretch;         /* makes the line full height */
     justify-content: center;
     gap: 0;
-    max-width: 1200px;            /* your chosen max width */
+    max-width: 1000px;            /* your chosen max width */
 }
 
-/* ---- Left column (40%) ---- */
+/* ---- Left column (50%) ---- */
+
 .home-split-left {
-    flex: 0 0 40%;
+    flex: 0 0 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-end;        /* words align to the right, close to the line */
+    align-items: center;           /* centered horizontally */
     padding-right: var(--space-lg);
-    text-align: right;
+    text-align: center;            /* centered text */
 }
 
 .home-split-word {
     display: block;
     font-family: inherit;
     line-height: 1.1;
+    margin-bottom: var(--space-xs); 
+}
+
+.home-split-word:last-child {
+    margin-bottom: 0;
 }
 
 .home-split-word-large {
@@ -1865,6 +1871,7 @@ footer .footer-copyright {
 }
 
 /* ---- Vertical gold line ---- */
+
 .home-split-line {
     width: 2px;
     background-color: var(--color-gold);
@@ -1872,8 +1879,9 @@ footer .footer-copyright {
 }
 
 /* ---- Right column (60%) ---- */
+
 .home-split-right {
-    flex: 1;
+    flex: 0 0 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1889,7 +1897,7 @@ footer .footer-copyright {
 
 /* ---- Mobile: stack, no line, center everything ---- */
 
-@media (max-width: 1100px) {
+@media (max-width: 768px) {
     .home-split-title-container {
         flex-direction: column;
         align-items: center;
@@ -1924,14 +1932,17 @@ footer .footer-copyright {
 
 .home-glance-container {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;             /* never wrap on desktop */
     gap: var(--space-xl);
     max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;               /* centered */
 }
 
-/* ---- Photo column (40%) ---- */
+/* ---- Photo column (50%) ---- */
+
 .home-glance-photo {
-    flex: 0 0 40%;
+    flex: 0 0 50%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1947,12 +1958,14 @@ footer .footer-copyright {
     box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
-/* ---- Content column (60%) ---- */
+/* ---- Content column (50%) ---- */
+
 .home-glance-content {
-    flex: 1 1 60%;
+    flex: 0 0 50%;
 }
 
 /* Title pill + line row */
+
 .home-glance-title-row {
     display: flex;
     align-items: center;
@@ -1962,13 +1975,14 @@ footer .footer-copyright {
 
 .home-glance-title-pill {
     display: inline-block;
-    background-color: var(--color-gold-light);
+    background-color: #ffffff;
     color: var(--color-midnight-blue);
     padding: var(--space-xs) var(--space-md);
     border-radius: 50px;
     font-weight: 700;
     font-size: 0.9rem;
     white-space: nowrap;
+    border: 1px solid var(--color-gold);
 }
 
 .home-glance-title-line {
@@ -1979,6 +1993,7 @@ footer .footer-copyright {
 }
 
 /* ---- Icon list ---- */
+
 .home-glance-icons {
     display: flex;
     flex-direction: column;
@@ -1995,7 +2010,8 @@ footer .footer-copyright {
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background-color: var(--color-gold-light);
+    background-color: #ffffff;
+    border: 1px solid var(--color-gold);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2030,6 +2046,7 @@ footer .footer-copyright {
 }
 
 /* ---- Mobile: photo first, then content, everything centered ---- */
+
 @media (max-width: 1100px) {
     .home-glance-container {
         flex-direction: column;
