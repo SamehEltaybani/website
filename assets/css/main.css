@@ -1819,6 +1819,232 @@ footer .footer-copyright {
 }
 
 
+/* ============================================================================
+   HOME PAGE – SPLIT TITLE
+   ============================================================================ */
+.home-split-title {
+    padding: var(--space-xl) 0;
+    background-color: transparent;
+}
+
+.home-split-title-container {
+    display: flex;
+    align-items: stretch;         /* makes the line full height */
+    justify-content: center;
+    gap: 0;
+    max-width: 1200px;            /* your chosen max width */
+}
+
+/* ---- Left column (40%) ---- */
+.home-split-left {
+    flex: 0 0 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;        /* words align to the right, close to the line */
+    padding-right: var(--space-lg);
+    text-align: right;
+}
+
+.home-split-word {
+    display: block;
+    font-family: inherit;
+    line-height: 1.1;
+}
+
+.home-split-word-large {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--color-midnight-blue);
+}
+
+.home-split-word-small {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--color-midnight-blue);
+}
+
+/* ---- Vertical gold line ---- */
+.home-split-line {
+    width: 2px;
+    background-color: var(--color-gold);
+    flex-shrink: 0;
+}
+
+/* ---- Right column (60%) ---- */
+.home-split-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: var(--space-lg);
+}
+
+.home-split-pillar {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    line-height: 1.6;
+}
+
+/* ---- Mobile: stack, no line, center everything ---- */
+
+@media (max-width: 1100px) {
+    .home-split-title-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .home-split-left {
+        flex: auto;
+        align-items: center;
+        padding-right: 0;
+        text-align: center;
+        margin-bottom: var(--space-md);
+    }
+    .home-split-line {
+        display: none;            /* gold line disappears on mobile */
+    }
+    .home-split-right {
+        flex: auto;
+        align-items: center;
+        padding-left: 0;
+        text-align: center;
+    }
+}
+
+
+/* ============================================================================
+   HOME PAGE – AT A GLANCE
+   ============================================================================ */
+.home-glance {
+    padding: var(--space-xl) 0;
+    background-color: transparent;
+}
+
+.home-glance-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xl);
+    max-width: 1200px;
+}
+
+/* ---- Photo column (40%) ---- */
+.home-glance-photo {
+    flex: 0 0 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-glance-img {
+    width: 100%;
+    max-width: 280px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--color-gold);
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+/* ---- Content column (60%) ---- */
+.home-glance-content {
+    flex: 1 1 60%;
+}
+
+/* Title pill + line row */
+.home-glance-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: var(--space-lg);
+}
+
+.home-glance-title-pill {
+    display: inline-block;
+    background-color: var(--color-gold-light);
+    color: var(--color-midnight-blue);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.home-glance-title-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--color-gold) 0%, transparent 100%);
+    margin-left: var(--space-sm);
+}
+
+/* ---- Icon list ---- */
+.home-glance-icons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.home-glance-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+}
+
+.home-glance-icon-circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: var(--color-gold-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--color-midnight-blue);
+    font-size: 1.5rem;
+}
+
+.home-glance-item-text {
+    flex: 1;
+}
+
+.home-glance-item-text p {
+    margin: 0 0 var(--space-xs) 0;
+    color: var(--color-text-main);
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+}
+
+.home-glance-readmore {
+    display: block;
+    text-align: right;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-midnight-blue);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.home-glance-readmore:hover {
+    color: var(--color-gold);
+}
+
+/* ---- Mobile: photo first, then content, everything centered ---- */
+@media (max-width: 1100px) {
+    .home-glance-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: left;
+    }
+    .home-glance-photo {
+        flex: auto;
+        margin-bottom: var(--space-lg);
+    }
+    .home-glance-content {
+        flex: auto;
+        width: 100%;
+    }
+}
 
 
 
