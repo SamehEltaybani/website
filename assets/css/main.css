@@ -1842,9 +1842,9 @@ footer .footer-copyright {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-end;           
+    align-items: center;           /* centered horizontally */
     padding-right: var(--space-lg);
-    text-align: right;           
+    text-align: center;            /* centered text */
 }
 
 .home-split-word {
@@ -1932,11 +1932,11 @@ footer .footer-copyright {
 
 .home-glance-container {
     display: flex;
-    flex-wrap: nowrap;
-    gap: 0;                        /* removed gap – we'll use padding instead */
+    flex-wrap: nowrap;             /* never wrap on desktop */
+    gap: var(--space-xl);
     max-width: 1200px;
     width: 100%;
-    margin: 0 auto;
+    margin: 0 auto;               /* centered */
 }
 
 /* ---- Photo column (50%) ---- */
@@ -1944,9 +1944,8 @@ footer .footer-copyright {
 .home-glance-photo {
     flex: 0 0 50%;
     display: flex;
-    justify-content: flex-end;      /* right‑aligned on desktop */
+    justify-content: center;
     align-items: center;
-    padding-right: var(--space-lg); /* equal to the split title’s inner padding */
 }
 
 .home-glance-img {
@@ -1963,7 +1962,6 @@ footer .footer-copyright {
 
 .home-glance-content {
     flex: 0 0 50%;
-    padding-left: var(--space-lg); /* equal padding on the other side of the midline */
 }
 
 /* Title pill + line row */
@@ -2055,17 +2053,13 @@ footer .footer-copyright {
         align-items: center;
         text-align: left;
     }
-    
     .home-glance-photo {
         flex: auto;
-        justify-content: center;   /* back to centered on mobile */
-        padding-right: 0;
         margin-bottom: var(--space-lg);
-     
+    }
     .home-glance-content {
         flex: auto;
         width: 100%;
-        padding-left: 0;
     }
 }
 
