@@ -2076,6 +2076,31 @@ footer .footer-copyright {
 }
 
 
+/* ============================================================================
+   AT A GLANCE – align icon & pill centres with the title’s gold line
+   ============================================================================ */
+
+/* Nudge the icon list 28 px to the left so the circles’ centres sit on the midline.
+   (28 px = half of the 56 px icon‑circle width) */
+.home-glance-icons {
+    margin-left: -28px;
+}
+
+/* Nudge the title pill row 50 px to the left.
+   (50 px = half of the estimated pill width – adjust if you change the text) */
+.home-glance-title-row {
+    margin-left: -50px;
+}
+
+/* Mobile: remove the nudges so everything stacks cleanly */
+@media (max-width: 1100px) {
+    .home-glance-icons {
+        margin-left: 0;
+    }
+    .home-glance-title-row {
+        margin-left: 0;
+    }
+}
 
 /* ============================================================================
    FEATURED CARDS (Home page)
