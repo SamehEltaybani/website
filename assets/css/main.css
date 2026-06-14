@@ -2051,6 +2051,30 @@ footer .footer-copyright {
     color: var(--color-gold);
 }
 
+
+/* The pill box that holds the icon and the sentence */
+
+.home-glance-item-pill {
+    display: flex;
+    align-items: center;            /* vertically center icon and text */
+    gap: var(--space-md);
+    background-color: #ffffff;
+    border: 1px solid var(--color-gold);
+    border-radius: 50px;            /* pill shape */
+    padding: var(--space-sm) var(--space-md);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Make the paragraph sit nicely inside the pill */
+
+.home-glance-item-pill .home-glance-item-text p {
+    margin: 0;
+    line-height: 1.4;
+}
+
+
 /* ---- Mobile: photo first, then content, everything centered ---- */
 
 @media (max-width: 1100px) {
