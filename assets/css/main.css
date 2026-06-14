@@ -2061,7 +2061,7 @@ footer .footer-copyright {
     background-color: #ffffff;
     border: 1px solid var(--color-gold);
     border-radius: 50px;            /* pill shape */
-    padding: var(--space-sm) var(--space-sm) var(--space-sm) var(--space-xs);
+    padding: var(--space-sm) var(--space-sm) var(--space-sm) var(--space-sm);
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     width: 100%;
     box-sizing: border-box;
