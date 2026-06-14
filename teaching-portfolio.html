@@ -46,24 +46,22 @@
   <!-- ========== MAIN CONTENT ========== -->
   <main>
 
-    <!-- ===== INTRODUCTION BLOCK (photo + bio, same as Research Portfolio) ===== -->
     
-    <section style="padding-top: 0; padding-bottom: 0;">
-      <div class="container">
-        <div style="display: flex; flex-wrap: nowrap; gap: 0; align-items: stretch;">
+       <!-- ===== INTRODUCTION BLOCK (photo circle + bio, transparent) ===== -->
+    <section style="padding-top: var(--space-xl); padding-bottom: var(--space-xl);">
+      <div class="container" style="max-width: 1200px; margin: 0 auto;">
+        <div style="display: flex; flex-wrap: wrap; gap: var(--space-lg); align-items: center;">
 
-          <!-- LEFT: Photo (rounded left edges only) -->
-          <div style="flex: 0 0 22%; min-width: 100px; border-radius: 12px 0 0 12px; overflow: hidden;">
+          <!-- LEFT: Circular photo -->
+          <div style="flex: 0 0 250px; text-align: center; margin: 0 auto;">
             <img src="assets/img/profile.webp" alt="Dr. Sameh Eltaybani"
-                 style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                 style="width: 220px; height: 220px; border-radius: 50%; object-fit: cover; border: 2px solid var(--color-gold); box-shadow: 0 0 20px rgba(0,0,0,0.1);">
           </div>
 
-          <!-- RIGHT: Dark panel with intro text -->
-          <div style="flex: 1 1 78%; background-color: var(--color-midnight-blue); color: var(--color-text-inverted);
-                      padding: var(--space-lg); border-radius: 0 12px 12px 0;
-                      display: flex; flex-direction: column; justify-content: center;">
-            <h2 style="color: var(--color-gold); margin-bottom: var(--space-sm);">Teaching Portfolio</h2>
-            <p style="line-height: 1.6; opacity: 0.9;">
+          <!-- RIGHT: Intro text (no dark background) -->
+          <div style="flex: 1; min-width: 280px;">
+            <h2 style="color: var(--color-midnight-blue); margin-bottom: var(--space-sm);">Teaching Portfolio</h2>
+            <p style="line-height: 1.6; color: var(--color-text-main);">
               With a PhD in Health Science and Nursing, I bring over a decade of experience in teaching,
               mentoring, and curriculum design. My approach is resource‑oriented, student‑centred, and
               grounded in evidence‑based practice – shaped by years of work in Egypt and Japan with
@@ -182,6 +180,7 @@
       </div>
     </section>
 
+    
     <!-- ===== FOUR THEME ROWS ===== -->
 
     <!-- Theme 1: Resource‑Oriented & Adaptive -->
@@ -193,10 +192,13 @@
           <div style="flex: 0 0 120px; text-align: center;">
             <div style="width: 100px; height: 100px; border-radius: 50%; background-color: var(--color-midnight-blue); color: var(--color-gold); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 700; margin: 0 auto;">R</div>
           </div>
-          <div style="flex: 1; min-width: 200px;">
-            <h3 style="color: var(--color-midnight-blue);">Resource‑Oriented &amp; Adaptive</h3>
-            <p style="color: var(--color-text-main);">I design teaching that achieves the best possible outcomes given the available resources, adapting quickly to the learner’s environment and needs.</p>
-          </div>
+         <div style="flex: 1; min-width: 200px; display: flex; flex-direction: column; justify-content: space-between;">
+  <div>
+    <h3 style="color: var(--color-midnight-blue);">Resource‑Oriented &amp; Adaptive</h3>
+    <p style="color: var(--color-text-main); margin-bottom: var(--space-sm);">I design teaching that achieves the best possible outcomes given the available resources, adapting quickly to the learner’s environment and needs.</p>
+  </div>
+  <a href="blog/blog-999.html" class="btn btn-text" style="align-self: flex-end;">Read more &rsaquo;</a>
+</div>
           <div style="flex: 0 0 250px; background-color: var(--color-bg-alt); padding: var(--space-md); border-radius: 12px; font-style: italic; color: var(--color-text-muted);">
             “Dr. Eltaybani’s ability to tailor complex material to our limited simulation lab was remarkable.”<br>— Clinical Supervisor
           </div>
@@ -214,10 +216,13 @@
           <div style="flex: 0 0 120px; text-align: center;">
             <div style="width: 100px; height: 100px; border-radius: 50%; background-color: var(--color-midnight-blue); color: var(--color-gold); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 700; margin: 0 auto;">G</div>
           </div>
-          <div style="flex: 1; min-width: 200px;">
-            <h3 style="color: var(--color-midnight-blue);">Global &amp; Multicultural Perspective</h3>
-            <p style="color: var(--color-text-main);">Having studied and worked in Egypt and Japan, I bring a deep appreciation for cultural diversity to the classroom.</p>
-          </div>
+         <div style="flex: 1; min-width: 200px; display: flex; flex-direction: column; justify-content: space-between;">
+  <div>
+    <h3 style="color: var(--color-midnight-blue);">Resource‑Oriented &amp; Adaptive</h3>
+    <p style="color: var(--color-text-main); margin-bottom: var(--space-sm);">I design teaching that achieves the best possible outcomes given the available resources, adapting quickly to the learner’s environment and needs.</p>
+  </div>
+  <a href="blog/blog-999.html" class="btn btn-text" style="align-self: flex-end;">Read more &rsaquo;</a>
+</div>
           <div style="flex: 0 0 250px; background-color: var(--color-white); padding: var(--space-md); border-radius: 12px; font-style: italic; color: var(--color-text-muted);">
             “He made every international student feel seen and included.”<br>— Programme Coordinator
           </div>
@@ -235,10 +240,13 @@
           <div style="flex: 0 0 120px; text-align: center;">
             <div style="width: 100px; height: 100px; border-radius: 50%; background-color: var(--color-midnight-blue); color: var(--color-gold); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 700; margin: 0 auto;">E</div>
           </div>
-          <div style="flex: 1; min-width: 200px;">
-            <h3 style="color: var(--color-midnight-blue);">Evidence‑Based &amp; Clinically Grounded</h3>
-            <p style="color: var(--color-text-main);">Every lesson is rooted in current research and my own clinical experience, keeping the focus on practical patient‑centred outcomes.</p>
-          </div>
+         <div style="flex: 1; min-width: 200px; display: flex; flex-direction: column; justify-content: space-between;">
+  <div>
+    <h3 style="color: var(--color-midnight-blue);">Resource‑Oriented &amp; Adaptive</h3>
+    <p style="color: var(--color-text-main); margin-bottom: var(--space-sm);">I design teaching that achieves the best possible outcomes given the available resources, adapting quickly to the learner’s environment and needs.</p>
+  </div>
+  <a href="blog/blog-999.html" class="btn btn-text" style="align-self: flex-end;">Read more &rsaquo;</a>
+</div>
           <div style="flex: 0 0 250px; background-color: var(--color-bg-alt); padding: var(--space-md); border-radius: 12px; font-style: italic; color: var(--color-text-muted);">
             “The way he links research to bedside practice is exceptional.”<br>— Final‑Year Student
           </div>
@@ -256,10 +264,13 @@
           <div style="flex: 0 0 120px; text-align: center;">
             <div style="width: 100px; height: 100px; border-radius: 50%; background-color: var(--color-midnight-blue); color: var(--color-gold); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 700; margin: 0 auto;">C</div>
           </div>
-          <div style="flex: 1; min-width: 200px;">
-            <h3 style="color: var(--color-midnight-blue);">Clear Communication &amp; Knowledge Translation</h3>
-            <p style="color: var(--color-text-main);">I simplify complex information so it can be understood by anyone, regardless of their native language or prior knowledge.</p>
-          </div>
+         <div style="flex: 1; min-width: 200px; display: flex; flex-direction: column; justify-content: space-between;">
+  <div>
+    <h3 style="color: var(--color-midnight-blue);">Resource‑Oriented &amp; Adaptive</h3>
+    <p style="color: var(--color-text-main); margin-bottom: var(--space-sm);">I design teaching that achieves the best possible outcomes given the available resources, adapting quickly to the learner’s environment and needs.</p>
+  </div>
+  <a href="blog/blog-999.html" class="btn btn-text" style="align-self: flex-end;">Read more &rsaquo;</a>
+</div>
           <div style="flex: 0 0 250px; background-color: var(--color-white); padding: var(--space-md); border-radius: 12px; font-style: italic; color: var(--color-text-muted);">
             “Even the hardest topics became crystal clear.”<br>— International Student
           </div>
