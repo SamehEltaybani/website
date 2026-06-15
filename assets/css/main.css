@@ -1946,7 +1946,7 @@ footer .footer-copyright {
 /* ---- Photo column (50%) ---- */
 
 .home-glance-photo {
-    flex: 0 0 50%;
+    flex: 0 0 25%;
     display: flex;
     justify-content: flex-end;      
     align-items: center;
@@ -1966,7 +1966,7 @@ footer .footer-copyright {
 /* ---- Content column (50%) ---- */
 
 .home-glance-content {
-    flex: 0 0 50%;
+    flex: 0 0 75%;
     padding-left: var(--space-lg);
 }
 
