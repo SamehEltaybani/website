@@ -1,1 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- ===== BASE PATH ===== -->
+  <base href="/website/">
+  <meta name="site-base-path" content="/website/">
+
+  <!-- DATA ANALYSIS PORTFOLIO -->
+  <title>Dr. Sameh Eltaybani - Data Analysis Portfolio</title>
+  <meta name="description" content="A detailed look at Dr. Sameh Eltaybani's data analysis expertise, tools, and insights that translate complex data into actionable healthcare solutions.">
+  <meta property="og:title" content="Dr. Sameh Eltaybani - Data Analysis Portfolio">
+  <meta property="og:description" content="A detailed look at Dr. Sameh Eltaybani's data analysis expertise, tools, and insights.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="data-analysis-portfolio.html">
+
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+
+  <style>
+    /* Ensure the dark section content is visible */
+    .text-light { color: var(--color-text-inverted); }
+    /* Soft teal accent for this page */
+    .accent-teal { color: #2A9D8F; }
+    .accent-teal-border { border-color: #2A9D8F !important; }
+    .accent-teal-bg { background-color: #2A9D8F; }
+    /* Stats & grid cards adapt to full width */
+    .full-width-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-md);
+    }
+    .full-width-cards > * {
+      flex: 0 1 150px;
+      min-width: 120px;
+    }
+    /* Themed row: left‑aligned icon, middle text, right quote */
+    .theme-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;   /* keep left/right at top */
+      gap: var(--space-lg);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .theme-left {
+      flex: 0 0 80px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .theme-left-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 2px solid #2A9D8F;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: #2A9D8F;
+    }
+    .theme-middle {
+      flex: 1 1 300px;
+      min-width: 200px;
+    }
+    .theme-middle img {
+      max-width: 80%;
+      max-height: 250px;
+      object-fit: cover;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      display: block;
+      margin: var(--space-sm) auto;
+    }
+    .theme-btn {
+      display: inline-block;
+      background: var(--color-white);
+      border: 1px solid #2A9D8F;
+      color: #2A9D8F;
+      padding: 4px 16px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      margin-top: var(--space-sm);
+    }
+    .theme-btn:hover {
+      background: #2A9D8F;
+      color: #fff;
+    }
+    .theme-right {
+      flex: 0 0 220px;
+      background: transparent;
+      padding: var(--space-md);
+      font-style: italic;
+      color: var(--color-text-muted);
+      position: relative;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .theme-right::before {
+      content: "\201C";
+      font-size: 4rem;
+      color: var(--color-gold);
+      position: absolute;
+      top: -10px;
+      left: 0;
+      opacity: 0.4;
+      font-family: serif;
+    }
+    .theme-right::after {
+      content: "\201D";
+      font-size: 4rem;
+      color: var(--color-gold);
+      position: absolute;
+      bottom: -30px;
+      right: 0;
+      opacity: 0.4;
+      font-family: serif;
+    }
+    @media (max-width: 1100px) {
+      .theme-row {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .theme-left {
+        flex: auto;
+      }
+      .theme-right {
+        flex: auto;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body data-page="data-analysis-portfolio.html">
+
+  <!-- ========== NAVIGATION BAR ========== -->
+  <nav data-component="navigation" class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-left"></div>
+        <div class="navbar-right"></div>
+        <button id="search-toggle" class="search-icon-btn" aria-label="Search">
+            <i class="fas fa-search"></i>
+        </button>
+        <button class="hamburger" aria-label="Menu">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+  </nav>
+
+  <!-- ========== BREADCRUMB BAR (exact height) ========== -->
+  <div data-component="breadcrumb" class="breadcrumb-bar"
+       style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main>
+
+    <!-- ===== INTRODUCTION BLOCK (photo circle + bio, transparent) ===== -->
+    <section style="padding-top: var(--space-xl); padding-bottom: var(--space-xl);">
+      <div class="container" style="max-width: 1200px; margin: 0 auto;">
+        <div style="display: flex; flex-wrap: wrap; gap: var(--space-lg); align-items: center;">
+
+          <div style="flex: 0 0 250px; text-align: center; margin: 0 auto;">
+            <img src="assets/img/profile.webp" alt="Dr. Sameh Eltaybani"
+                 style="width: 220px; height: 220px; border-radius: 50%; object-fit: cover; border: 2px solid var(--color-gold); box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+          </div>
+
+          <div style="flex: 1; min-width: 280px;">
+            <h2 style="color: var(--color-midnight-blue); margin-bottom: var(--space-sm);">Data Analysis Portfolio</h2>
+            <p style="line-height: 1.6; color: var(--color-text-main);">
+              I don’t let the tools drive the analysis. I start from the clinical question, choose the right method,
+              and let the data speak clearly — so that the moment you see my output, you already have the answer.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== STATS COUNTER (full width) ===== -->
+    <section style="padding: var(--space-xl) 0; background-color: var(--color-bg-alt);">
+      <div class="full-width-cards" style="text-align: center;">
+
+        <div>
+          <div style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #2A9D8F; background: transparent; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-sm) auto; color: #2A9D8F; font-size: 2rem; font-weight: 700;">15+</div>
+          <p style="color: var(--color-text-main); font-weight: 600;">Years of Experience</p>
+        </div>
+
+        <div>
+          <div style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #2A9D8F; background: transparent; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-sm) auto; color: #2A9D8F; font-size: 2rem; font-weight: 700;">100+</div>
+          <p style="color: var(--color-text-main); font-weight: 600;">Different Datasets</p>
+        </div>
+
+        <div>
+          <div style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #2A9D8F; background: transparent; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-sm) auto; color: #2A9D8F; font-size: 2rem; font-weight: 700;">8</div>
+          <p style="color: var(--color-text-main); font-weight: 600;">Analytical Tools</p>
+        </div>
+
+        <div>
+          <div style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #2A9D8F; background: transparent; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-sm) auto; color: #2A9D8F; font-size: 2rem; font-weight: 700;">5</div>
+          <p style="color: var(--color-text-main); font-weight: 600;">Certifications</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== MY APPROACH (dark full‑width) ===== -->
+    <section style="padding: var(--space-xl) 0; background-color: var(--color-midnight-blue);">
+      <div class="container" style="max-width: 800px; margin: 0 auto; text-align: center; color: var(--color-text-inverted);">
+        <h2 style="color: var(--color-gold); margin-bottom: var(--space-md);">My Approach</h2>
+        <p style="font-size: 1.1rem; line-height: 1.7; max-width: 700px; margin: 0 auto;">
+          “I don’t let the tools drive the analysis. I start from the clinical question, choose the right method,
+          and let the data speak clearly — so that the moment you see my output, you already have the answer.”
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== QUICK‑SCAN GRID (10 cards, full width) ===== -->
+    <section style="padding: var(--space-xl) 0; background-color: transparent;">
+      <div class="full-width-cards" style="max-width: 1400px; margin: 0 auto;">
+
+        <!-- Card 1 -->
+        <div style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--space-md); text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+          <i class="fas fa-chart-line" style="font-size: 2rem; color: #2A9D8F;"></i>
+          <h3 style="font-size: 1rem; margin: var(--space-sm) 0;">Statistical Rigour</h3>
+          <p style="font-size: 0.85rem; color: var(--color-text-muted);">Choosing the right test for meaningful insights.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--space-md); text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+          <i class="fas fa-stethoscope" style="font-size: 2rem; color: #2A9D8F;"></i>
+          <h3 style="font-size: 1rem; margin: var(--space-sm) 0;">Healthcare Context</h3>
+          <p style="font-size: 0.85rem; color: var(--color-text-muted);">Deep understanding of clinical reality.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--space-md); text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+          <i class="fas fa-comments" style="font-size: 2rem; color: #2A9D8F;"></i>
+          <h3 style="font-size: 1rem; margin: var(--space-sm) 0;">Qualitative Depth</h3>
+          <p style="font-size: 0.85rem; color: var(--color-text-muted);">Beyond numbers — working with the largest share of healthcare data.</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--space-md); text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+          <i class="fas fa-users" style="font-size: 2rem; color: #2A9D8F;"></i>
+          <h3 style="font-size: 1rem; margin: var(--space-sm) 0;">Stakeholder Synergy</h3>
+          <p style="font-size: 0.85rem; color: var(--color-text-muted);">Insights that unite, not divide.</p>
+        </div>
+
+        <!-- Card 5 -->
+        <div style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--space-md); text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+          <i class="fas fa-sync-alt" style="font-size: 2rem; color: #2A9D8F;"></i>
+          <h3 style="font-size: 1rem; margin: var(--space-sm) 0;">Continuous Learning</h3>
+          <p style="font-size: 0.85rem; color: var(--color-text-muted);">Staying ahead with the best techniques.</p>
+        </div>
+
+        <!-- Card 6 -->
+        <div style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--space-md); text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+          <i class="fas fa-book-open" style="font-size: 2rem; color: #2A9D8F;"></i>
+          <h3 style="font-size: 1rem; margin: var(--space-sm) 0;">Data Storytelling</h3>
+          <p style="font-size: 0.85rem; color: var(--color-text-muted);">Visuals that speak for themselves.</p>
+        </div>
+
+        <!-- Card 7 -->
+        <div style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--space-md); text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+          <i class="fas fa-tools" style="font-size: 2rem; color: #2A9D8F;"></i>
+          <h3 style="font-size: 1rem; margin: var(--space-sm) 0;">Tool Flexibility</h3>
+          <p style="font-size: 0.85rem; color: var(--color-text-muted);">Outcome‑oriented, not tool‑constrained.</p>
+        </div>
+
+        <!-- Card 8 -->
+        <div style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--space-md); text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+          <i class="fas fa-shield-alt" style="font-size: 2rem; color: #2A9D8F;"></i>
+          <h3 style="font-size: 1rem; margin: var(--space-sm) 0;">Data Ethics</h3>
+          <p style="font-size: 0.85rem; color: var(--color-text-muted);">Governance you can trust.</p>
+        </div>
+
+        <!-- Card 9 -->
+        <div style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--space-md); text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+          <i class="fas fa-certificate" style="font-size: 2rem; color: #2A9D8F;"></i>
+          <h3 style="font-size: 1rem; margin: var(--space-sm) 0;">Certified Expertise</h3>
+          <p style="font-size: 0.85rem; color: var(--color-text-muted);">Recognised standards and quality.</p>
+        </div>
+
+        <!-- Card 10 -->
+        <div style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--space-md); text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+          <i class="fas fa-briefcase" style="font-size: 2rem; color: #2A9D8F;"></i>
+          <h3 style="font-size: 1rem; margin: var(--space-sm) 0;">Proven Portfolio</h3>
+          <p style="font-size: 0.85rem; color: var(--color-text-muted);">What I do, why, and how.</p>
+        </div>
+
+      </div>
+    </section>
+
+    
+    <!-- ===== 10 THEMED ROWS ===== -->
+
+    <!-- Row 1: Statistical Rigour -->
+    <section style="padding: var(--space-lg) 0; background-color: transparent;">
+      <div class="theme-row">
+        <div class="theme-left">
+          <div class="theme-left-icon"><i class="fas fa-chart-line"></i></div>
+        </div>
+        <div class="theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">1. Strong Foundations in Statistics</h3>
+          <p style="color: var(--color-text-main);">Every dataset deserves the right statistical treatment. I go beyond default tests to ensure the conclusions are valid, robust, and clinically meaningful.</p>
+          <img src="assets/img/data-card-1.webp" alt="Statistical output example">
+          <a href="blog/blog-999.html" class="theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="theme-right">
+          “The statistical rigour in his work gave us confidence to change our practice guidelines.”<br>— Clinical Director
+        </div>
+      </div>
+    </section>
+
+    <!-- Row 2: Healthcare Context -->
+    <section style="padding: var(--space-lg) 0; background-color: #f0f5f2;">
+      <div class="theme-row">
+        <div class="theme-left">
+          <div class="theme-left-icon"><i class="fas fa-stethoscope"></i></div>
+        </div>
+        <div class="theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">2. Deep Understanding of Healthcare Context</h3>
+          <p style="color: var(--color-text-main);">My background in nursing and health sciences means the numbers are always interpreted in the real‑world clinical environment they come from.</p>
+          <img src="assets/img/data-card-2.webp" alt="Healthcare context image">
+          <a href="blog/blog-999.html" class="theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="theme-right">
+          “He doesn’t just analyse data — he understands where it came from.”<br>— Senior Nurse Manager
+        </div>
+      </div>
+    </section>
+
+    <!-- Row 3: Qualitative Depth -->
+    <section style="padding: var(--space-lg) 0; background-color: transparent;">
+      <div class="theme-row">
+        <div class="theme-left">
+          <div class="theme-left-icon"><i class="fas fa-comments"></i></div>
+        </div>
+        <div class="theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">3. Ability to Work with Qualitative Data</h3>
+          <p style="color: var(--color-text-main);">Healthcare data is not just numbers. I am equally skilled in analysing qualitative data — interviews, focus groups, and open‑ended surveys — to uncover the full picture.</p>
+          <img src="assets/img/data-card-3.webp" alt="Qualitative data analysis">
+          <a href="blog/blog-999.html" class="theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="theme-right">
+          “His qualitative insights gave voice to patients in a way quantitative data never could.”<br>— Research Fellow
+        </div>
+      </div>
+    </section>
+
+    <!-- Row 4: Stakeholder Synergy -->
+    <section style="padding: var(--space-lg) 0; background-color: #f0f5f2;">
+      <div class="theme-row">
+        <div class="theme-left">
+          <div class="theme-left-icon"><i class="fas fa-users"></i></div>
+        </div>
+        <div class="theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">4. Experience with Diverse Stakeholders</h3>
+          <p style="color: var(--color-text-main);">From clinicians to policymakers, I know what each group needs from the data and how to deliver insights that bring them together, not push them apart.</p>
+          <img src="assets/img/data-card-4.webp" alt="Stakeholder meeting">
+          <a href="blog/blog-999.html" class="theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="theme-right">
+          “He translated complex statistics into language everyone around the table could grasp.”<br>— Hospital CEO
+        </div>
+      </div>
+    </section>
+
+    <!-- Row 5: Continuous Learning -->
+    <section style="padding: var(--space-lg) 0; background-color: transparent;">
+      <div class="theme-row">
+        <div class="theme-left">
+          <div class="theme-left-icon"><i class="fas fa-sync-alt"></i></div>
+        </div>
+        <div class="theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">5. Adaptability and Continuous Learning</h3>
+          <p style="color: var(--color-text-main);">In a rapidly evolving field, I stay current with the latest techniques — from machine learning to advanced visualisation — and apply only what is most appropriate for the problem.</p>
+          <img src="assets/img/data-card-5.webp" alt="Learning new tools">
+          <a href="blog/blog-999.html" class="theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="theme-right">
+          “He brought a technique we’d never seen before — and trained our team to use it independently.”<br>— Data Unit Lead
+        </div>
+      </div>
+    </section>
+
+    <!-- Row 6: Data Storytelling -->
+    <section style="padding: var(--space-lg) 0; background-color: #f0f5f2;">
+      <div class="theme-row">
+        <div class="theme-left">
+          <div class="theme-left-icon"><i class="fas fa-book-open"></i></div>
+        </div>
+        <div class="theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">6. Excellence in Data Storytelling</h3>
+          <p style="color: var(--color-text-main);">My figures, tables, and dashboards are designed so that you don’t need to ask questions — the answer is already in front of you, clearly and comprehensively.</p>
+          <img src="assets/img/data-card-6.webp" alt="Dashboard example">
+          <a href="blog/blog-999.html" class="theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="theme-right">
+          “I presented his dashboard at a board meeting — no one asked a single follow‑up. It was all there.”<br>— Quality Improvement Officer
+        </div>
+      </div>
+    </section>
+
+    <!-- Row 7: Tool Flexibility -->
+    <section style="padding: var(--space-lg) 0; background-color: transparent;">
+      <div class="theme-row">
+        <div class="theme-left">
+          <div class="theme-left-icon"><i class="fas fa-tools"></i></div>
+        </div>
+        <div class="theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">7. Flexibility with Analytical Tools</h3>
+          <p style="color: var(--color-text-main);">I am experienced with multiple platforms — R, Python, SPSS, Stata, Tableau, Power BI — and I choose the best tool for each task, integrating them when needed for maximum efficiency.</p>
+          <img src="assets/img/data-card-7.webp" alt="Multiple tools">
+          <a href="blog/blog-999.html" class="theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="theme-right">
+          “He moved seamlessly between tools, always picking the one that got the job done fastest.”<br>— IT Project Manager
+        </div>
+      </div>
+    </section>
+
+    <!-- Row 8: Data Ethics -->
+    <section style="padding: var(--space-lg) 0; background-color: #f0f5f2;">
+      <div class="theme-row">
+        <div class="theme-left">
+          <div class="theme-left-icon"><i class="fas fa-shield-alt"></i></div>
+        </div>
+        <div class="theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">8. Commitment to Data Governance and Ethics</h3>
+          <p style="color: var(--color-text-main);">Working with sensitive, confidential data across top‑tier organisations, I adhere to the highest ethical standards to protect every individual and institution involved.</p>
+          <img src="assets/img/data-card-8.webp" alt="Ethics and governance">
+          <a href="blog/blog-999.html" class="theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="theme-right">
+          “His handling of sensitive patient data was impeccable — we never had a single concern.”<br>— Ethics Committee Chair
+        </div>
+      </div>
+    </section>
+
+    <!-- Row 9: Certified Expertise -->
+    <section style="padding: var(--space-lg) 0; background-color: transparent;">
+      <div class="theme-row">
+        <div class="theme-left">
+          <div class="theme-left-icon"><i class="fas fa-certificate"></i></div>
+        </div>
+        <div class="theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">9. Certification and Professional Accreditation</h3>
+          <p style="color: var(--color-text-main);">While certification alone doesn’t guarantee quality, it signals that I have learned from high‑quality resources and I am committed to recognised professional standards.</p>
+          <img src="assets/img/data-card-9.webp" alt="Certificates">
+          <a href="blog/blog-999.html" class="theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="theme-right">
+          “Knowing he held respected certifications gave our board the confidence to approve the project.”<br>— Executive Sponsor
+        </div>
+      </div>
+    </section>
+
+    <!-- Row 10: Proven Portfolio -->
+    <section style="padding: var(--space-lg) 0; background-color: #f0f5f2;">
+      <div class="theme-row">
+        <div class="theme-left">
+          <div class="theme-left-icon"><i class="fas fa-briefcase"></i></div>
+        </div>
+        <div class="theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">10. A Strong Professional Portfolio</h3>
+          <p style="color: var(--color-text-main);">This page itself is evidence of my work — a transparent, detailed showcase of what I do, why I do it, and how I deliver results.</p>
+          <img src="assets/img/data-card-10.webp" alt="Portfolio page">
+          <a href="blog/blog-999.html" class="theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="theme-right">
+          “I’ve rarely seen such a clear, evidence‑based portfolio from a data analyst.”<br>— Academic Collaborator
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer data-component="footer"></footer>
+
+  <!-- ========== SCRIPTS (EXACT ORDER) ========== -->
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/navigation.js"></script>
+  <script src="assets/js/breadcrumbs.js"></script>
+  <script src="assets/js/footer.js"></script>
+  <script src="assets/js/back-to-top.js"></script>
+  <script src="assets/js/search.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="assets/js/aos-init.js"></script>
+
+</body>
+</html>
