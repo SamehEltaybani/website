@@ -4,11 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- ===== BASE PATH ===== -->
   <base href="/website/">
   <meta name="site-base-path" content="/website/">
 
-  <!-- TEACHING PORTFOLIO -->
   <title>Dr. Sameh Eltaybani - Teaching Portfolio</title>
   <meta name="description" content="A detailed look at Dr. Sameh Eltaybani's teaching philosophy, experience, and contributions to health science education.">
   <meta property="og:title" content="Dr. Sameh Eltaybani - Teaching Portfolio">
@@ -20,46 +18,31 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-
 </head>
 <body data-page="teaching-portfolio.html">
 
-  <!-- ========== NAVIGATION BAR ========== -->
   <nav data-component="navigation" class="navbar">
     <div class="navbar-container">
         <div class="navbar-left"></div>
         <div class="navbar-right"></div>
-        <button id="search-toggle" class="search-icon-btn" aria-label="Search">
-            <i class="fas fa-search"></i>
-        </button>
-        <button class="hamburger" aria-label="Menu">
-            <i class="fas fa-bars"></i>
-        </button>
+        <button id="search-toggle" class="search-icon-btn" aria-label="Search"><i class="fas fa-search"></i></button>
+        <button class="hamburger" aria-label="Menu"><i class="fas fa-bars"></i></button>
     </div>
   </nav>
 
-  <!-- ========== BREADCRUMB BAR (exact height) ========== -->
-  
   <div data-component="breadcrumb" class="breadcrumb-bar"
        style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
 
-  <!-- ========== MAIN CONTENT ========== -->
   <main>
 
-    
-       <!-- ===== INTRODUCTION BLOCK (photo circle + bio, transparent) ===== -->
-    
+    <!-- ===== INTRODUCTION (photo circle + bio, transparent) ===== -->
     <section style="padding-top: var(--space-xl); padding-bottom: var(--space-xl);">
       <div class="container" style="max-width: 1200px; margin: 0 auto;">
         <div style="display: flex; flex-wrap: wrap; gap: var(--space-lg); align-items: center;">
-
-          <!-- LEFT: Circular photo -->
           <div style="flex: 0 0 250px; text-align: center; margin: 0 auto;">
             <img src="assets/img/profile.webp" alt="Dr. Sameh Eltaybani"
                  style="width: 220px; height: 220px; border-radius: 50%; object-fit: cover; border: 2px solid var(--color-gold); box-shadow: 0 0 20px rgba(0,0,0,0.1);">
           </div>
-
-          <!-- RIGHT: Intro text -->
           <div style="flex: 1; min-width: 280px;">
             <h2 style="color: var(--color-midnight-blue); margin-bottom: var(--space-sm);">Teaching Portfolio</h2>
             <p style="line-height: 1.6; color: var(--color-text-main);">
@@ -69,31 +52,34 @@
               more than 1,000 students from diverse cultural and educational backgrounds.
             </p>
           </div>
-
         </div>
       </div>
     </section>
 
-    
-    <!-- ===== STATS COUNTER ROW ===== -->
-    
-    <section style="padding: var(--space-xl) 0; background-color: var(--color-midnight-blue);">
-      <div class="container" style="max-width: 1200px; margin: 0 auto;">
-        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-xl); text-align: center;">
-
-          <div><div style="width: 80px; height: 80px; border-radius: 50%; background-color: var(--color-gold-light); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-sm) auto; color: var(--color-midnight-blue); font-size: 2rem; font-weight: 700;">1K+</div><p style="color: #ffffff; font-weight: 600;">Students Taught</p></div>
-          <div><div style="width: 80px; height: 80px; border-radius: 50%; background-color: var(--color-gold-light); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-sm) auto; color: var(--color-midnight-blue); font-size: 2rem; font-weight: 700;">10+</div><p style="color: #ffffff; font-weight: 600;">Years Teaching</p></div>
-          <div><div style="width: 80px; height: 80px; border-radius: 50%; background-color: var(--color-gold-light); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-sm) auto; color: var(--color-midnight-blue); font-size: 2rem; font-weight: 700;">5</div><p style="color: #ffffff; font-weight: 600;">Core Courses</p></div>
-          <div><div style="width: 80px; height: 80px; border-radius: 50%; background-color: var(--color-gold-light); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-sm) auto; color: var(--color-midnight-blue); font-size: 2rem; font-weight: 700;">3+</div><p style="color: #ffffff; font-weight: 600;">Institutions</p></div>
-
+    <!-- ===== STATS COUNTER (plum accent on light grey) ===== -->
+    <section style="padding: var(--space-xl) 0; background-color: var(--color-bg-alt);">
+      <div class="tp-stats-row">
+        <div>
+          <div class="tp-stat-circle">1K+</div>
+          <p class="tp-stat-label">Students Taught</p>
+        </div>
+        <div>
+          <div class="tp-stat-circle">10+</div>
+          <p class="tp-stat-label">Years Teaching</p>
+        </div>
+        <div>
+          <div class="tp-stat-circle">5</div>
+          <p class="tp-stat-label">Core Courses</p>
+        </div>
+        <div>
+          <div class="tp-stat-circle">3+</div>
+          <p class="tp-stat-label">Institutions</p>
         </div>
       </div>
     </section>
-  
 
-     <!-- ===== TEACHING PHILOSOPHY (dark full‑width) ===== -->
-
-     <section style="padding: var(--space-xl) 0; background-color: #f0f5f2;">
+    <!-- ===== TEACHING PHILOSOPHY (warm ivory background) ===== -->
+    <section style="padding: var(--space-xl) 0; background-color: #FDF7F0;">
       <div class="container" style="max-width: 800px; margin: 0 auto; text-align: center;">
         <h2 style="color: var(--color-midnight-blue); margin-bottom: var(--space-sm);">Teaching Philosophy</h2>
         <p style="font-size: 1.05rem; line-height: 1.7; color: var(--color-text-main);">
@@ -105,9 +91,7 @@
       </div>
     </section>
 
-  
-    <!-- ===== MISSION (transparent, centred) ===== -->
-    
+    <!-- ===== MISSION (transparent) ===== -->
     <section style="padding: var(--space-xl) 0; background-color: transparent;">
       <div class="container" style="max-width: 800px; margin: 0 auto; text-align: center;">
         <h2 style="color: var(--color-midnight-blue); margin-bottom: var(--space-sm);">Mission</h2>
@@ -119,9 +103,8 @@
       </div>
     </section>
 
-    <!-- ===== STRATEGY (light grey background) ===== -->
-    
-    <section style="padding: var(--space-xl) 0; background-color: #f0f5f2;">
+    <!-- ===== STRATEGY (warm ivory background) ===== -->
+    <section style="padding: var(--space-xl) 0; background-color: #FDF7F0;">
       <div class="container" style="max-width: 800px; margin: 0 auto; text-align: center;">
         <h2 style="color: var(--color-midnight-blue); margin-bottom: var(--space-sm);">Strategy</h2>
         <p style="font-size: 1.05rem; line-height: 1.7; color: var(--color-text-main);">
@@ -133,46 +116,29 @@
       </div>
     </section>
 
-
-
-
-
-    
-    <!-- ===== CORE VALUES (white background, 4 value blocks) ===== -->
-    
+    <!-- ===== CORE VALUES (white background) ===== -->
     <section style="padding: var(--space-xl) 0; background-color: var(--color-white);">
       <div class="container" style="max-width: 1000px; margin: 0 auto;">
         <h2 style="text-align: center; color: var(--color-midnight-blue); margin-bottom: var(--space-xl);">Core Values in Teaching</h2>
         <div style="display: flex; flex-wrap: wrap; gap: var(--space-lg); justify-content: center;">
 
-          <!-- Value 1 -->
-          
           <div style="flex: 1 1 200px; text-align: center; background-color: var(--color-bg-alt); padding: var(--space-md); border-radius: 12px;">
-            <i class="fas fa-star" style="font-size: 2rem; color: var(--color-gold); margin-bottom: var(--space-sm);"></i>
+            <i class="fas fa-star" style="font-size: 2rem; color: #6B3A5B; margin-bottom: var(--space-sm);"></i>
             <h3 style="color: var(--color-midnight-blue); margin-bottom: var(--space-xs);">Respect</h3>
             <p style="font-size: 0.9rem; color: var(--color-text-muted);">Every student’s background and pace are honoured.</p>
           </div>
-
-          <!-- Value 2 -->
-          
           <div style="flex: 1 1 200px; text-align: center; background-color: var(--color-bg-alt); padding: var(--space-md); border-radius: 12px;">
-            <i class="fas fa-balance-scale" style="font-size: 2rem; color: var(--color-gold); margin-bottom: var(--space-sm);"></i>
+            <i class="fas fa-balance-scale" style="font-size: 2rem; color: #6B3A5B; margin-bottom: var(--space-sm);"></i>
             <h3 style="color: var(--color-midnight-blue); margin-bottom: var(--space-xs);">Equity</h3>
             <p style="font-size: 0.9rem; color: var(--color-text-muted);">Accessible education for all, regardless of starting point.</p>
           </div>
-
-          <!-- Value 3 -->
-          
           <div style="flex: 1 1 200px; text-align: center; background-color: var(--color-bg-alt); padding: var(--space-md); border-radius: 12px;">
-            <i class="fas fa-lightbulb" style="font-size: 2rem; color: var(--color-gold); margin-bottom: var(--space-sm);"></i>
+            <i class="fas fa-lightbulb" style="font-size: 2rem; color: #6B3A5B; margin-bottom: var(--space-sm);"></i>
             <h3 style="color: var(--color-midnight-blue); margin-bottom: var(--space-xs);">Innovation</h3>
             <p style="font-size: 0.9rem; color: var(--color-text-muted);">Continuously evolving methods for modern healthcare education.</p>
           </div>
-
-          <!-- Value 4 -->
-          
           <div style="flex: 1 1 200px; text-align: center; background-color: var(--color-bg-alt); padding: var(--space-md); border-radius: 12px;">
-            <i class="fas fa-heart" style="font-size: 2rem; color: var(--color-gold); margin-bottom: var(--space-sm);"></i>
+            <i class="fas fa-heart" style="font-size: 2rem; color: #6B3A5B; margin-bottom: var(--space-sm);"></i>
             <h3 style="color: var(--color-midnight-blue); margin-bottom: var(--space-xs);">Compassion</h3>
             <p style="font-size: 0.9rem; color: var(--color-text-muted);">Teaching that cares for the learner and the patients they serve.</p>
           </div>
@@ -181,108 +147,246 @@
       </div>
     </section>
 
-    
-    <!-- ===== FOUR THEME ROWS ===== -->
-
-    <!-- Theme 1: Resource‑Oriented & Adaptive -->
-    
+    <!-- ===== WHAT I DO / WHAT I AVOID (plum circles) ===== -->
     <section style="padding: var(--space-xl) 0; background-color: transparent;">
-      <div class="container" style="max-width: 1200px; margin: 0 auto;">
-        <div style="display: flex; flex-wrap: wrap; gap: var(--space-lg); align-items: center;">
+      <div class="tp-do-avoid-container">
 
-          <div style="flex: 0 0 120px; text-align: center;">
-            <div style="width: 100px; height: 100px; border-radius: 50%; background-color: var(--color-midnight-blue); color: var(--color-gold); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 700; margin: 0 auto;">R</div>
-          </div>
-         <div style="flex: 1; min-width: 200px; display: flex; flex-direction: column; justify-content: space-between;">
-  <div>
-    <h3 style="color: var(--color-midnight-blue);">Resource‑Oriented &amp; Adaptive</h3>
-    <p style="color: var(--color-text-main); margin-bottom: var(--space-sm);">I design teaching that achieves the best possible outcomes given the available resources, adapting quickly to the learner’s environment and needs.</p>
-  </div>
-  <a href="blog/blog-999.html" class="btn btn-text" style="align-self: flex-end;">Read more &rsaquo;</a>
-</div>
-          <div style="flex: 0 0 250px; background-color: var(--color-bg-alt); padding: var(--space-md); border-radius: 12px; font-style: italic; color: var(--color-text-muted);">
-            “Dr. Eltaybani’s ability to tailor complex material to our limited simulation lab was remarkable.”<br>— Clinical Supervisor
-          </div>
-
+        <div class="tp-do-avoid-col">
+          <div class="tp-do-avoid-circle">What I Do</div>
+          <ul class="tp-do-avoid-list">
+            <li><i class="fas fa-thumbs-up"></i> Create dynamic, evidence‑based learning experiences.</li>
+            <li><i class="fas fa-thumbs-up"></i> Respect diverse backgrounds and learning styles.</li>
+            <li><i class="fas fa-thumbs-up"></i> Bridge theory with real‑world clinical practice.</li>
+            <li><i class="fas fa-thumbs-up"></i> Adapt teaching to the learner’s level and needs.</li>
+            <li><i class="fas fa-thumbs-up"></i> Use interactive, case‑based and simulation methods.</li>
+            <li><i class="fas fa-thumbs-up"></i> Provide structured mentorship and continuous feedback.</li>
+            <li><i class="fas fa-thumbs-up"></i> Integrate the latest research into every session.</li>
+            <li><i class="fas fa-thumbs-up"></i> Communicate clearly, even across language barriers.</li>
+            <li><i class="fas fa-thumbs-up"></i> Support struggling learners with patience and empathy.</li>
+            <li><i class="fas fa-thumbs-up"></i> Achieve the best outcomes with available resources.</li>
+          </ul>
         </div>
+
+        <div class="tp-do-avoid-col">
+          <div class="tp-do-avoid-circle">What I Avoid</div>
+          <ul class="tp-do-avoid-list">
+            <li><i class="fas fa-thumbs-down"></i> Monologue lectures that leave no room for questions.</li>
+            <li><i class="fas fa-thumbs-down"></i> Ignoring the unique cultural context of each learner.</li>
+            <li><i class="fas fa-thumbs-down"></i> Teaching theory without clinical application.</li>
+            <li><i class="fas fa-thumbs-down"></i> Assuming all students learn at the same pace.</li>
+            <li><i class="fas fa-thumbs-down"></i> Relying on outdated materials and methods.</li>
+            <li><i class="fas fa-thumbs-down"></i> Withholding constructive, growth‑focused feedback.</li>
+            <li><i class="fas fa-thumbs-down"></i> Presenting opinions as facts without evidence.</li>
+            <li><i class="fas fa-thumbs-down"></i> Using jargon that confuses rather than clarifies.</li>
+            <li><i class="fas fa-thumbs-down"></i> Giving up on learners who struggle.</li>
+            <li><i class="fas fa-thumbs-down"></i> Blaming limited resources for poor outcomes.</li>
+          </ul>
+        </div>
+
       </div>
     </section>
 
-    <!-- Theme 2: Global & Multicultural -->
-    
-    <section style="padding: var(--space-xl) 0; background-color: #f0f5f2;">
-      <div class="container" style="max-width: 1200px; margin: 0 auto;">
-        <div style="display: flex; flex-wrap: wrap; gap: var(--space-lg); align-items: center;">
+    <!-- ===== QUICK‑SCAN GRID (10 clickable cards) ===== -->
+    <section style="padding: var(--space-xl) 0; background-color: #FDF7F0;">
+      <div class="tp-quickgrid-container">
 
-          <div style="flex: 0 0 120px; text-align: center;">
-            <div style="width: 100px; height: 100px; border-radius: 50%; background-color: var(--color-midnight-blue); color: var(--color-gold); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 700; margin: 0 auto;">G</div>
-          </div>
-         <div style="flex: 1; min-width: 200px; display: flex; flex-direction: column; justify-content: space-between;">
-  <div>
-    <h3 style="color: var(--color-midnight-blue);">Resource‑Oriented &amp; Adaptive</h3>
-    <p style="color: var(--color-text-main); margin-bottom: var(--space-sm);">I design teaching that achieves the best possible outcomes given the available resources, adapting quickly to the learner’s environment and needs.</p>
-  </div>
-  <a href="blog/blog-999.html" class="btn btn-text" style="align-self: flex-end;">Read more &rsaquo;</a>
-</div>
-          <div style="flex: 0 0 250px; background-color: var(--color-white); padding: var(--space-md); border-radius: 12px; font-style: italic; color: var(--color-text-muted);">
-            “He made every international student feel seen and included.”<br>— Programme Coordinator
-          </div>
+        <a href="blog/blog-999.html" class="tp-quickgrid-card">
+          <i class="fas fa-globe-africa"></i>
+          <h3>Global &amp; Multicultural</h3>
+          <p>Perspective shaped by Egypt and Japan.</p>
+        </a>
+        <a href="blog/blog-999.html" class="tp-quickgrid-card">
+          <i class="fas fa-stethoscope"></i>
+          <h3>Holistic Understanding</h3>
+          <p>Education, practice, management, research, policy.</p>
+        </a>
+        <a href="blog/blog-999.html" class="tp-quickgrid-card">
+          <i class="fas fa-layer-group"></i>
+          <h3>Teaching All Levels</h3>
+          <p>Undergraduate, postgraduate, fellows, lay people.</p>
+        </a>
+        <a href="blog/blog-999.html" class="tp-quickgrid-card">
+          <i class="fas fa-puzzle-piece"></i>
+          <h3>Interdisciplinary</h3>
+          <p>Working with all healthcare stakeholders.</p>
+        </a>
+        <a href="blog/blog-999.html" class="tp-quickgrid-card">
+          <i class="fas fa-user-md"></i>
+          <h3>Clinically Grounded</h3>
+          <p>Teaching rooted in real patient care.</p>
+        </a>
+        <a href="blog/blog-999.html" class="tp-quickgrid-card">
+          <i class="fas fa-flask"></i>
+          <h3>Research‑Driven</h3>
+          <p>Evidence‑based methods in every session.</p>
+        </a>
+        <a href="blog/blog-999.html" class="tp-quickgrid-card">
+          <i class="fas fa-user-check"></i>
+          <h3>Student‑Centred</h3>
+          <p>Adaptive approach for every learner.</p>
+        </a>
+        <a href="blog/blog-999.html" class="tp-quickgrid-card">
+          <i class="fas fa-comments"></i>
+          <h3>Clear Communication</h3>
+          <p>Simplifying complexity for all audiences.</p>
+        </a>
+        <a href="blog/blog-999.html" class="tp-quickgrid-card">
+          <i class="fas fa-hands-helping"></i>
+          <h3>Supporting Difficult Learners</h3>
+          <p>Patience and empathy in every interaction.</p>
+        </a>
+        <a href="blog/blog-999.html" class="tp-quickgrid-card">
+          <i class="fas fa-tools"></i>
+          <h3>Resource‑Oriented</h3>
+          <p>Best outcomes with available resources.</p>
+        </a>
 
-        </div>
       </div>
     </section>
 
-    <!-- Theme 3: Evidence‑Based & Clinically Grounded -->
-    
-    <section style="padding: var(--space-xl) 0; background-color: transparent;">
-      <div class="container" style="max-width: 1200px; margin: 0 auto;">
-        <div style="display: flex; flex-wrap: wrap; gap: var(--space-lg); align-items: center;">
+    <!-- ===== 10 THEMED ROWS ===== -->
 
-          <div style="flex: 0 0 120px; text-align: center;">
-            <div style="width: 100px; height: 100px; border-radius: 50%; background-color: var(--color-midnight-blue); color: var(--color-gold); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 700; margin: 0 auto;">E</div>
-          </div>
-         <div style="flex: 1; min-width: 200px; display: flex; flex-direction: column; justify-content: space-between;">
-  <div>
-    <h3 style="color: var(--color-midnight-blue);">Resource‑Oriented &amp; Adaptive</h3>
-    <p style="color: var(--color-text-main); margin-bottom: var(--space-sm);">I design teaching that achieves the best possible outcomes given the available resources, adapting quickly to the learner’s environment and needs.</p>
-  </div>
-  <a href="blog/blog-999.html" class="btn btn-text" style="align-self: flex-end;">Read more &rsaquo;</a>
-</div>
-          <div style="flex: 0 0 250px; background-color: var(--color-bg-alt); padding: var(--space-md); border-radius: 12px; font-style: italic; color: var(--color-text-muted);">
-            “The way he links research to bedside practice is exceptional.”<br>— Final‑Year Student
-          </div>
-
+    <!-- Row 1: Global & Multicultural -->
+    <section style="background-color: transparent;">
+      <div class="tp-theme-row">
+        <div class="tp-theme-left"><div class="tp-theme-icon-circle"><i class="fas fa-globe-africa"></i></div></div>
+        <div class="tp-theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">1. A Global and Multicultural Perspective</h3>
+          <p style="color: var(--color-text-main);">Having studied and worked in Egypt and Japan, I bring a deep appreciation for cultural diversity to the classroom.</p>
+          <img src="assets/img/temp-1.webp" alt="Global teaching">
+          <a href="blog/blog-999.html" class="tp-theme-btn" style="float: right;">Read more &rsaquo;</a>
         </div>
+        <div class="tp-theme-right">“He made every international student feel seen and included.”<br>— Programme Coordinator</div>
       </div>
     </section>
 
-    <!-- Theme 4: Clear Communication -->
-    
-    <section style="padding: var(--space-xl) 0; background-color: #f0f5f2;">
-      <div class="container" style="max-width: 1200px; margin: 0 auto;">
-        <div style="display: flex; flex-wrap: wrap; gap: var(--space-lg); align-items: center;">
-
-          <div style="flex: 0 0 120px; text-align: center;">
-            <div style="width: 100px; height: 100px; border-radius: 50%; background-color: var(--color-midnight-blue); color: var(--color-gold); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 700; margin: 0 auto;">C</div>
-          </div>
-         <div style="flex: 1; min-width: 200px; display: flex; flex-direction: column; justify-content: space-between;">
-  <div>
-    <h3 style="color: var(--color-midnight-blue);">Resource‑Oriented &amp; Adaptive</h3>
-    <p style="color: var(--color-text-main); margin-bottom: var(--space-sm);">I design teaching that achieves the best possible outcomes given the available resources, adapting quickly to the learner’s environment and needs.</p>
-  </div>
-  <a href="blog/blog-999.html" class="btn btn-text" style="align-self: flex-end;">Read more &rsaquo;</a>
-</div>
-          <div style="flex: 0 0 250px; background-color: var(--color-white); padding: var(--space-md); border-radius: 12px; font-style: italic; color: var(--color-text-muted);">
-            “Even the hardest topics became crystal clear.”<br>— International Student
-          </div>
-
+    <!-- Row 2: Holistic Understanding -->
+    <section style="background-color: #FDF7F0;">
+      <div class="tp-theme-row">
+        <div class="tp-theme-left"><div class="tp-theme-icon-circle"><i class="fas fa-stethoscope"></i></div></div>
+        <div class="tp-theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">2. A Holistic Understanding of Healthcare</h3>
+          <p style="color: var(--color-text-main);">I draw on experience across education, practice, management, research, and policy to give learners the full picture.</p>
+          <img src="assets/img/temp-1.webp" alt="Holistic healthcare">
+          <a href="blog/blog-999.html" class="tp-theme-btn" style="float: right;">Read more &rsaquo;</a>
         </div>
+        <div class="tp-theme-right">“He connected dots I didn’t even know existed.”<br>— Postgraduate Student</div>
       </div>
     </section>
 
-    
+    <!-- Row 3: Teaching All Levels -->
+    <section style="background-color: transparent;">
+      <div class="tp-theme-row">
+        <div class="tp-theme-left"><div class="tp-theme-icon-circle"><i class="fas fa-layer-group"></i></div></div>
+        <div class="tp-theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">3. The Ability to Teach Across All Levels</h3>
+          <p style="color: var(--color-text-main);">From undergraduate students to postdoctoral fellows and lay audiences, I adjust my methods to suit every level.</p>
+          <img src="assets/img/temp-1.webp" alt="All levels">
+          <a href="blog/blog-999.html" class="tp-theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="tp-theme-right">“He was equally brilliant with first‑years and PhD candidates.”<br>— Dean of Faculty</div>
+      </div>
+    </section>
+
+    <!-- Row 4: Interdisciplinary -->
+    <section style="background-color: #FDF7F0;">
+      <div class="tp-theme-row">
+        <div class="tp-theme-left"><div class="tp-theme-icon-circle"><i class="fas fa-puzzle-piece"></i></div></div>
+        <div class="tp-theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">4. Interdisciplinary and Cross‑Domain Expertise</h3>
+          <p style="color: var(--color-text-main);">I work with clinicians, managers, educators, and policymakers to create learning that bridges disciplines.</p>
+          <img src="assets/img/temp-1.webp" alt="Interdisciplinary">
+          <a href="blog/blog-999.html" class="tp-theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="tp-theme-right">“He brought nursing, medicine, and management together in one classroom.”<br>— Hospital Director</div>
+      </div>
+    </section>
+
+    <!-- Row 5: Clinically Grounded -->
+    <section style="background-color: transparent;">
+      <div class="tp-theme-row">
+        <div class="tp-theme-left"><div class="tp-theme-icon-circle"><i class="fas fa-user-md"></i></div></div>
+        <div class="tp-theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">5. Practice‑Oriented and Clinically Grounded Teaching</h3>
+          <p style="color: var(--color-text-main);">My teaching reflects real clinical experience, keeping the focus on patients and families — not just theory.</p>
+          <img src="assets/img/temp-1.webp" alt="Clinical teaching">
+          <a href="blog/blog-999.html" class="tp-theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="tp-theme-right">“Finally, a lecturer who has actually worked at the bedside.”<br>— Nursing Student</div>
+      </div>
+    </section>
+
+    <!-- Row 6: Research‑Driven -->
+    <section style="background-color: #FDF7F0;">
+      <div class="tp-theme-row">
+        <div class="tp-theme-left"><div class="tp-theme-icon-circle"><i class="fas fa-flask"></i></div></div>
+        <div class="tp-theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">6. Research‑Driven and Evidence‑Based Education</h3>
+          <p style="color: var(--color-text-main);">As an active researcher, I ground every lesson in the latest evidence — and I teach students how to find and evaluate it themselves.</p>
+          <img src="assets/img/temp-1.webp" alt="Research teaching">
+          <a href="blog/blog-999.html" class="tp-theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="tp-theme-right">“He taught us to question everything — and gave us the tools to find the answers.”<br>— Graduate Researcher</div>
+      </div>
+    </section>
+
+    <!-- Row 7: Student‑Centred -->
+    <section style="background-color: transparent;">
+      <div class="tp-theme-row">
+        <div class="tp-theme-left"><div class="tp-theme-icon-circle"><i class="fas fa-user-check"></i></div></div>
+        <div class="tp-theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">7. A Student‑Centred and Adaptive Approach</h3>
+          <p style="color: var(--color-text-main);">I recognise the uniqueness of each learner and adapt my style, pace, and materials to help everyone succeed.</p>
+          <img src="assets/img/temp-1.webp" alt="Student-centred">
+          <a href="blog/blog-999.html" class="tp-theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="tp-theme-right">“He noticed when I was struggling and quietly adapted the whole session for me.”<br>— Undergraduate Student</div>
+      </div>
+    </section>
+
+    <!-- Row 8: Clear Communication -->
+    <section style="background-color: #FDF7F0;">
+      <div class="tp-theme-row">
+        <div class="tp-theme-left"><div class="tp-theme-icon-circle"><i class="fas fa-comments"></i></div></div>
+        <div class="tp-theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">8. Clear Communication and Meaningful Knowledge Translation</h3>
+          <p style="color: var(--color-text-main);">Even when we don’t share the same first language, I simplify complex information so it can be understood by anyone.</p>
+          <img src="assets/img/temp-1.webp" alt="Clear communication">
+          <a href="blog/blog-999.html" class="tp-theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="tp-theme-right">“Even the hardest topics became crystal clear.”<br>— International Student</div>
+      </div>
+    </section>
+
+    <!-- Row 9: Supporting Difficult Learners -->
+    <section style="background-color: transparent;">
+      <div class="tp-theme-row">
+        <div class="tp-theme-left"><div class="tp-theme-icon-circle"><i class="fas fa-hands-helping"></i></div></div>
+        <div class="tp-theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">9. Supporting Difficult Learners</h3>
+          <p style="color: var(--color-text-main);">I have extensive experience supporting learners who struggle — with patience, empathy, and tailored strategies that build confidence and competence.</p>
+          <img src="assets/img/temp-1.webp" alt="Supporting learners">
+          <a href="blog/blog-999.html" class="tp-theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="tp-theme-right">“He never gave up on me, even when I wanted to give up on myself.”<br>— Former Student</div>
+      </div>
+    </section>
+
+    <!-- Row 10: Resource‑Oriented -->
+    <section style="background-color: #FDF7F0;">
+      <div class="tp-theme-row">
+        <div class="tp-theme-left"><div class="tp-theme-icon-circle"><i class="fas fa-tools"></i></div></div>
+        <div class="tp-theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">10. Resource‑Oriented Teaching</h3>
+          <p style="color: var(--color-text-main);">I design teaching that achieves the best possible outcomes given the available resources — turning constraints into creative opportunities.</p>
+          <img src="assets/img/temp-1.webp" alt="Resource teaching">
+          <a href="blog/blog-999.html" class="tp-theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="tp-theme-right">“He did more with a whiteboard than others do with a simulation lab.”<br>— Clinical Supervisor</div>
+      </div>
+    </section>
+
     <!-- ===== TIMELINE ROW ===== -->
-    
     <section style="padding: var(--space-xl) 0; background-color: var(--color-white);">
       <div class="container" style="max-width: 900px; margin: 0 auto;">
         <h2 style="text-align: center; color: var(--color-midnight-blue); margin-bottom: var(--space-xl);">Teaching Milestones</h2>
@@ -317,8 +421,7 @@
       </div>
     </section>
 
-    <!-- ===== BUTTONS ROW ===== -->
-    
+    <!-- ===== ACTION BUTTONS ROW ===== -->
     <section style="padding: var(--space-xl) 0; background-color: transparent;">
       <div class="container" style="max-width: 700px; margin: 0 auto; text-align: center;">
         <div style="display: flex; flex-wrap: wrap; gap: var(--space-md); justify-content: center;">
@@ -332,10 +435,8 @@
 
   </main>
 
-  <!-- ========== FOOTER ========== -->
   <footer data-component="footer"></footer>
 
-  <!-- ========== SCRIPTS (EXACT ORDER) ========== -->
   <script src="assets/js/utils.js"></script>
   <script src="assets/js/navigation.js"></script>
   <script src="assets/js/breadcrumbs.js"></script>
