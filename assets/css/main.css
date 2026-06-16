@@ -2226,7 +2226,7 @@ footer .footer-copyright {
     grid-template-columns: repeat(4, 1fr);    /* 4 equal columns on desktop */
     row-gap: 16px;                            /* vertical space */
     column-gap: 16px;                         /* horizontal space */
-    max-width: 1200px;                         /* prevents the grid from stretching too wide */
+    max-width: 1100px;                         /* prevents the grid from stretching too wide */
     margin: 0 auto;                           /* centers the whole grid */
 }
 
@@ -2259,6 +2259,7 @@ footer .footer-copyright {
     border: 1px solid var(--color-border);
     color: var(--color-midnight-blue);
     transition: var(--transition-base);
+    border-radius: 30px;
 }
 
 #external-buttons-container .btn:hover {
