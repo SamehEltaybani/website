@@ -2259,7 +2259,7 @@ footer .footer-copyright {
     border: 1px solid var(--color-border);
     color: var(--color-midnight-blue);
     transition: var(--transition-base);
-    border-radius: 30px;
+    border-radius: 50px;
 }
 
 #external-buttons-container .btn:hover {
