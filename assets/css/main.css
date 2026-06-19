@@ -2458,6 +2458,9 @@ pre code {
 /* Right content */
 .fc-card-content {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;   /* pushes title/text up, button down */
 }
 
 .fc-card-title {
@@ -2467,12 +2470,15 @@ pre code {
     font-size: 1.05rem;
 }
 
-.fc-card-text {
-    font-size: 0.9rem;
+/* Bullet list inside featured cards */
+.fc-card-list {
+    margin: 0 0 var(--space-sm) 0;
+    padding-left: 1.2rem;
+    font-size: 0.85rem;
     color: var(--color-text-muted);
-    margin-bottom: var(--space-sm);
     line-height: 1.5;
 }
+
 
 /* Read more (looks like a button, but the whole card is clickable) */
 .fc-card-btn {
@@ -2485,6 +2491,11 @@ pre code {
     font-weight: 600;
     font-size: 0.85rem;
     transition: all 0.2s;
+}
+
+.fc-card-btn {
+    align-self: flex-end;              /* right‑aligned inside the flex column */
+    margin-top: var(--space-sm);
 }
 
 .fc-card:hover .fc-card-btn {
