@@ -2164,59 +2164,6 @@ footer .footer-copyright {
 
 
 
-
-
-/* ============================================================================
-   THREE BUTTONS BLOCK (Research, Data Analysis, Teaching pages)
-   ============================================================================ */
-
-.three-buttons-block {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: var(--space-lg);
-    margin: var(--space-lg) 0;
-    align-items: stretch;
-}
-
-.three-buttons-left {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-}
-
-.three-buttons-left .btn {
-    width: 100%;
-    justify-content: flex-start;
-}
-
-.three-buttons-right {
-    position: relative;
-}
-
-.three-buttons-right img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    object-fit: cover;
-}
-
-.three-buttons-right .image-caption {
-    text-align: center;
-    margin-top: var(--space-xs);
-    font-size: var(--font-size-sm);
-    color: var(--color-text-muted);
-}
-
-@media (max-width: 1100px) {
-    .three-buttons-block {
-        grid-template-columns: 1fr;
-        gap: var(--space-md);
-    }
-}
-
-
-
-
 /* ============================================================================
    RESEARCH EXTERNAL BUTTONS – 2x4 grid (desktop) / stacked (mobile)
    ============================================================================ */
@@ -2490,7 +2437,7 @@ pre code {
     text-decoration: none;
     color: inherit;
     border: 1px solid var(--color-border);
-    border-radius: 50%;
+    border-radius: 50px;
     background: rgba(255,255,255,0.85);
     transition: var(--transition-base);
     box-shadow: 0 4px 10px rgba(0,0,0,0.10);  
