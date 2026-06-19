@@ -5,7 +5,6 @@
   */
 
 
-
 /* ============================================================================
    CSS RESET & BASE STYLES
    ============================================================================ */
@@ -2407,11 +2406,90 @@ pre code {
 }
 
 
-/* Gold left border on featured cards (Research, Teaching, Data Analysis) */
 
-#research-cards-container .card,
-#analysis-cards-container .card {
-    border-left: 4px solid var(--color-gold);
+/* ============================================================================
+   FEATURED CARD GRID (Research, Teaching, Data Analysis main pages)
+   ============================================================================ */
+
+/* Grid container – 2 columns desktop, 1 column mobile */
+.card-grid-2col {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+}
+
+@media (max-width: 1100px) {
+    .card-grid-2col {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Individual card – clickable, hover effect */
+.fc-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: var(--color-white);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border: 1px solid var(--color-border);
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.fc-card:hover {
+    border-color: var(--color-gold);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+/* Left icon */
+.fc-card-icon {
+    flex-shrink: 0;
+    font-size: 2rem;
+    color: var(--color-gold);
+    margin-top: 2px;
+}
+
+/* Right content */
+.fc-card-content {
+    flex: 1;
+}
+
+.fc-card-title {
+    font-weight: 700;
+    color: var(--color-midnight-blue);
+    margin-bottom: 4px;
+    font-size: 1.05rem;
+}
+
+.fc-card-text {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-sm);
+    line-height: 1.5;
+}
+
+/* Read more (looks like a button, but the whole card is clickable) */
+.fc-card-btn {
+    display: inline-block;
+    background: var(--color-white);
+    border: 1px solid var(--color-gold);
+    color: var(--color-midnight-blue);
+    padding: 4px 16px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+
+.fc-card:hover .fc-card-btn {
+    background: var(--color-gold);
+    color: #fff;
 }
 
 
