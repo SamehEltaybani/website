@@ -3882,6 +3882,301 @@ pre code {
 
 
 
+
+/* ============================================================================
+   RESEARCH PORTFOLIO – violet accent (#581596) / soft lavender (#f3e9fc)
+   ============================================================================ */
+
+/* ---- Stats Counter ---- */
+.rp-stats-row {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-xl);
+    text-align: center;
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+}
+
+.rp-stat-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #581596;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--space-sm) auto;
+    color: #581596;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.rp-stat-label {
+    color: var(--color-text-main);
+    font-weight: 600;
+    max-width: 120px;
+    margin: 0 auto;
+}
+
+/* ---- My Approach (dark full‑width) ---- */
+.rp-approach {
+    padding: var(--space-xl) 0;
+    background-color: var(--color-midnight-blue);
+}
+.rp-approach-text {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    color: var(--color-text-inverted);
+}
+
+/* ---- What I Do / What I Avoid ---- */
+.rp-do-avoid-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xl);
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+}
+
+.rp-do-avoid-col {
+    flex: 1 1 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rp-do-avoid-circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background-color: #581596;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: var(--space-md);
+    text-align: center;
+    line-height: 1.3;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.rp-do-avoid-list {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    max-width: 450px;
+}
+
+.rp-do-avoid-list li {
+    padding: var(--space-xs) 0;
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+    font-size: 0.95rem;
+    color: var(--color-text-main);
+    line-height: 1.5;
+}
+
+.rp-do-avoid-list li i {
+    color: #581596;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+/* ---- Quick‑scan Grid (5 columns desktop, 2 on mobile) ---- */
+.rp-quickgrid-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--space-md);
+}
+
+@media (max-width: 1100px) {
+    .rp-quickgrid-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.rp-quickgrid-card {
+    display: block;
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: var(--space-md);
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.rp-quickgrid-card:hover {
+    border-color: var(--color-gold);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+.rp-quickgrid-card i {
+    font-size: 2.2rem;
+    color: #581596;
+    margin-bottom: var(--space-sm);
+}
+
+.rp-quickgrid-card h3 {
+    font-size: 1.05rem;
+    margin: var(--space-sm) 0 var(--space-xs);
+    color: var(--color-midnight-blue);
+}
+
+.rp-quickgrid-card p {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin: 0;
+}
+
+/* ---- 10 Themed Rows ---- */
+.rp-theme-row {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--space-lg);
+    padding: var(--space-lg) 0;
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+}
+
+.rp-theme-left {
+    flex: 0 0 80px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.rp-theme-icon-circle {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 2px solid #581596;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #581596;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.rp-theme-middle {
+    flex: 1 1 300px;
+    min-width: 200px;
+}
+
+.rp-theme-middle img {
+    max-width: 80%;
+    max-height: 250px;
+    object-fit: cover;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    display: block;
+    margin: var(--space-sm) auto;
+}
+
+.rp-theme-btn {
+    display: inline-block;
+    background: var(--color-white);
+    border: 1px solid #581596;
+    color: #581596;
+    padding: 6px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin-top: var(--space-sm);
+}
+
+.rp-theme-btn:hover {
+    background: #581596;
+    color: #fff;
+}
+
+.rp-theme-right {
+    flex: 0 0 240px;
+    background: transparent;
+    padding: var(--space-md);
+    font-style: italic;
+    color: var(--color-text-muted);
+    position: relative;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.rp-theme-right::before {
+    content: "\201C";
+    font-size: 3.5rem;
+    color: var(--color-gold);
+    position: absolute;
+    top: -14px;
+    left: 0;
+    opacity: 0.35;
+    font-family: serif;
+}
+
+.rp-theme-right::after {
+    content: "\201D";
+    font-size: 3.5rem;
+    color: var(--color-gold);
+    position: absolute;
+    bottom: -28px;
+    right: 0;
+    opacity: 0.35;
+    font-family: serif;
+}
+
+/* Mobile – prevent quotation overlap */
+@media (max-width: 1100px) {
+    .rp-theme-row {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .rp-theme-left {
+        flex: auto;
+    }
+    .rp-theme-right {
+        flex: auto;
+        max-width: 100%;
+        padding-top: var(--space-md);
+        margin-top: var(--space-sm);
+    }
+    .rp-theme-right::before,
+    .rp-theme-right::after {
+        font-size: 2.5rem;
+    }
+    .rp-theme-right::before { top: -6px; }
+    .rp-theme-right::after { bottom: -20px; }
+    .rp-theme-middle img {
+        max-width: 100%;
+    }
+}
+
+
+
 /* ============================================================================
    END OF THE main.css FILE
    ============================================================================ */
