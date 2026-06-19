@@ -1,20 +1,12 @@
-<!--
-============================================================================
-RESEARCH-PORTFOLIO.HTML - DR. SAMEH ELTAYBANI - RESEARCH PORTFOLIO
-============================================================================
--->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- ===== BASE PATH ===== -->
   <base href="/website/">
   <meta name="site-base-path" content="/website/">
 
-  <!-- EDIT-FOR-OTHER-PORTFOLIOS: Change the 6 lines below -->
   <title>Dr. Sameh Eltaybani - Research Portfolio</title>
   <meta name="description" content="A detailed look at Dr. Sameh Eltaybani's research achievements, projects, and contributions to gerontological nursing.">
   <meta property="og:title" content="Dr. Sameh Eltaybani - Research Portfolio">
@@ -26,983 +18,686 @@ RESEARCH-PORTFOLIO.HTML - DR. SAMEH ELTAYBANI - RESEARCH PORTFOLIO
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-
-
-
 </head>
-<!-- EDIT-FOR-OTHER-PORTFOLIOS: change the data-page value -->
 <body data-page="research-portfolio.html">
 
-  <!-- ========== NAVIGATION BAR ========== -->
   <nav data-component="navigation" class="navbar">
     <div class="navbar-container">
         <div class="navbar-left"></div>
         <div class="navbar-right"></div>
-        <!-- Search icon (always visible, never cleared by navigation.js) -->
-        <button id="search-toggle" class="search-icon-btn" aria-label="Search">
-            <i class="fas fa-search"></i>
-        </button>
-        <button class="hamburger" aria-label="Menu">
-            <i class="fas fa-bars"></i>
-        </button>
+        <button id="search-toggle" class="search-icon-btn" aria-label="Search"><i class="fas fa-search"></i></button>
+        <button class="hamburger" aria-label="Menu"><i class="fas fa-bars"></i></button>
     </div>
-</nav>
+  </nav>
 
-  <!-- ========= BREADCRUMB BAR (exact height) ========== -->
-  
   <div data-component="breadcrumb" class="breadcrumb-bar"
        style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
 
-  <!-- ========== MAIN CONTENT ========== -->
-  
   <main>
 
-    
-    
-    <!-- BLOCK START: Introduction (photo + dark panel, no gap between them) -->
-    
-    <section style="padding-top: var(--space-lg); padding-bottom: 0;">
-      <div class="container">
-        <div style="display: flex; flex-wrap: nowrap; gap: 0; align-items: stretch;">
-
-          <!-- LEFT: Photo (rounded left edges only) -->
-          <div style="flex: 0 0 22%; min-width: 100px; border-radius: 12px 0 0 12px; overflow: hidden;">
+    <!-- ===== INTRODUCTION (photo circle + bio, transparent) ===== -->
+    <section style="padding-top: var(--space-xl); padding-bottom: var(--space-xl);">
+      <div class="container" style="max-width: 1200px; margin: 0 auto;">
+        <div style="display: flex; flex-wrap: wrap; gap: var(--space-lg); align-items: center;">
+          <div style="flex: 0 0 250px; text-align: center; margin: 0 auto;">
             <img src="assets/img/profile.webp" alt="Dr. Sameh Eltaybani"
-                 style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                 style="width: 220px; height: 220px; border-radius: 50%; object-fit: cover; border: 2px solid var(--color-gold); box-shadow: 0 0 20px rgba(0,0,0,0.1);">
           </div>
-
-          <!-- RIGHT: Dark panel with text (rounded right edges only).
-               To vertically center the text: keep justify-content: center.
-               To make text start at the top: change to justify-content: flex-start. -->
-          <div style="flex: 1 1 78%; background-color: var(--color-midnight-blue); color: var(--color-text-inverted);
-                      padding: var(--space-lg); border-radius: 0 12px 12px 0;
-                      display: flex; flex-direction: column; justify-content: center;">
-            <!-- EDIT-FOR-OTHER-PORTFOLIOS: change the heading and paragraph -->
-            <h2 style="color: var(--color-gold); margin-bottom: var(--space-sm);">Research Portfolio</h2>
-            <p style="line-height: 1.6; opacity: 0.9;">
+          <div style="flex: 1; min-width: 280px;">
+            <h2 style="color: var(--color-midnight-blue); margin-bottom: var(--space-sm);">Research Portfolio</h2>
+            <p style="line-height: 1.6; color: var(--color-text-main);">
               This portfolio showcases my research career, major projects, and the impact
               of my work on gerontological nursing and evidence‑based practice.
             </p>
           </div>
-
         </div>
       </div>
     </section>
-    
-    <!-- BLOCK END: Introduction -->
 
+    <!-- ===== STATS COUNTER (violet accent on light grey) ===== -->
+    <section style="padding: var(--space-xl) 0; background-color: var(--color-bg-alt);">
+      <div class="rp-stats-row">
+        <div>
+          <div class="rp-stat-circle">50+</div>
+          <p class="rp-stat-label">Publications</p>
+        </div>
+        <div>
+          <div class="rp-stat-circle">15+</div>
+          <p class="rp-stat-label">Grants</p>
+        </div>
+        <div>
+          <div class="rp-stat-circle">8</div>
+          <p class="rp-stat-label">Projects</p>
+        </div>
+        <div>
+          <div class="rp-stat-circle">5</div>
+          <p class="rp-stat-label">Awards</p>
+        </div>
+      </div>
+    </section>
 
-  
-    
+    <!-- ===== MY APPROACH (dark full‑width) ===== -->
+    <section class="rp-approach">
+      <div class="rp-approach-text">
+        <h2 style="color: var(--color-gold); margin-bottom: var(--space-md);">My Approach</h2>
+        <p style="font-size: 1.1rem; line-height: 1.7; max-width: 700px; margin: 0 auto;">
+          “Rigorous methods, meaningful questions, and a commitment to integrity — from the first hypothesis to the final publication.”
+        </p>
+      </div>
+    </section>
 
-        <!-- ===== CONTENT PLAYGROUND (all blocks inside container for width control) ===== -->
-    <div class="container">
+    <!-- ===== WHAT I DO / WHAT I AVOID (violet circles) ===== -->
+    <section style="padding: var(--space-xl) 0; background-color: transparent;">
+      <div class="rp-do-avoid-container">
 
+        <div class="rp-do-avoid-col">
+          <div class="rp-do-avoid-circle">What I Do</div>
+          <ul class="rp-do-avoid-list">
+            <li><i class="fas fa-thumbs-up"></i> Master every stage of the research lifecycle.</li>
+            <li><i class="fas fa-thumbs-up"></i> Uphold integrity in design, data, and reporting.</li>
+            <li><i class="fas fa-thumbs-up"></i> Choose the right methodology for each question.</li>
+            <li><i class="fas fa-thumbs-up"></i> Ground research in real clinical and stakeholder needs.</li>
+            <li><i class="fas fa-thumbs-up"></i> Lead international, multidisciplinary collaborations.</li>
+            <li><i class="fas fa-thumbs-up"></i> Apply advanced biostatistics and data‑driven inquiry.</li>
+            <li><i class="fas fa-thumbs-up"></i> Adapt creatively to resource constraints.</li>
+            <li><i class="fas fa-thumbs-up"></i> Communicate findings with clarity and precision.</li>
+            <li><i class="fas fa-thumbs-up"></i> Build a sustained record of high‑impact scholarship.</li>
+            <li><i class="fas fa-thumbs-up"></i> Serve as a peer reviewer and editorial steward.</li>
+          </ul>
+        </div>
 
+        <div class="rp-do-avoid-col">
+          <div class="rp-do-avoid-circle">What I Avoid</div>
+          <ul class="rp-do-avoid-list">
+            <li><i class="fas fa-thumbs-down"></i> Skipping steps in the research process.</li>
+            <li><i class="fas fa-thumbs-down"></i> Compromising ethics for convenience.</li>
+            <li><i class="fas fa-thumbs-down"></i> Using the same method for every question.</li>
+            <li><i class="fas fa-thumbs-down"></i> Ignoring the voices of patients and clinicians.</li>
+            <li><i class="fas fa-thumbs-down"></i> Working in silos without collaboration.</li>
+            <li><i class="fas fa-thumbs-down"></i> Applying statistics without understanding.</li>
+            <li><i class="fas fa-thumbs-down"></i> Abandoning rigour when resources are tight.</li>
+            <li><i class="fas fa-thumbs-down"></i> Overcomplicating or obscuring results.</li>
+            <li><i class="fas fa-thumbs-down"></i> Publishing for volume instead of value.</li>
+            <li><i class="fas fa-thumbs-down"></i> Avoiding responsibility in the scientific community.</li>
+          </ul>
+        </div>
 
+      </div>
+    </section>
 
-      <!-- BLOCK START: White block with headings, paragraph, lists, and buttons -->
+    <!-- ===== QUICK‑SCAN GRID (10 clickable cards) ===== -->
+    <section style="padding: var(--space-xl) 0; background-color: #f3e9fc;">
+      <div class="rp-quickgrid-container">
+
+        <a href="blog/blog-999.html" class="rp-quickgrid-card">
+          <i class="fas fa-sync-alt"></i>
+          <h3>Full Research Lifecycle</h3>
+          <p>From idea to publication and beyond.</p>
+        </a>
+        <a href="blog/blog-999.html" class="rp-quickgrid-card">
+          <i class="fas fa-balance-scale"></i>
+          <h3>Research Integrity</h3>
+          <p>Ethics and transparency at every step.</p>
+        </a>
+        <a href="blog/blog-999.html" class="rp-quickgrid-card">
+          <i class="fas fa-project-diagram"></i>
+          <h3>Methodological Breadth</h3>
+          <p>Strategic design for complex questions.</p>
+        </a>
+        <a href="blog/blog-999.html" class="rp-quickgrid-card">
+          <i class="fas fa-hand-holding-heart"></i>
+          <h3>Stakeholder‑Centred</h3>
+          <p>Research grounded in real‑world needs.</p>
+        </a>
+        <a href="blog/blog-999.html" class="rp-quickgrid-card">
+          <i class="fas fa-globe-americas"></i>
+          <h3>Global Collaboration</h3>
+          <p>Multidisciplinary teams across borders.</p>
+        </a>
+        <a href="blog/blog-999.html" class="rp-quickgrid-card">
+          <i class="fas fa-chart-bar"></i>
+          <h3>Biostatistics &amp; Data</h3>
+          <p>Advanced competence in data‑driven inquiry.</p>
+        </a>
+        <a href="blog/blog-999.html" class="rp-quickgrid-card">
+          <i class="fas fa-tools"></i>
+          <h3>Resource‑Conscious</h3>
+          <p>Adaptive implementation in any setting.</p>
+        </a>
+        <a href="blog/blog-999.html" class="rp-quickgrid-card">
+          <i class="fas fa-pen-fancy"></i>
+          <h3>Scientific Writing</h3>
+          <p>Excellence in professional communication.</p>
+        </a>
+        <a href="blog/blog-999.html" class="rp-quickgrid-card">
+          <i class="fas fa-trophy"></i>
+          <h3>High‑Impact Scholarship</h3>
+          <p>Sustained record of influential contributions.</p>
+        </a>
+        <a href="blog/blog-999.html" class="rp-quickgrid-card">
+          <i class="fas fa-user-edit"></i>
+          <h3>Peer Review &amp; Editorial</h3>
+          <p>Active engagement in scientific stewardship.</p>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ===== 10 THEMED ROWS ===== -->
+
+    <!-- Row 1 -->
+    <section style="background-color: transparent;">
+      <div class="rp-theme-row">
+        <div class="rp-theme-left"><div class="rp-theme-icon-circle"><i class="fas fa-sync-alt"></i></div></div>
+        <div class="rp-theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">1. Comprehensive Mastery of the Full Research Lifecycle</h3>
+          <p style="color: var(--color-text-main);">From idea generation and protocol design to data collection, analysis, and dissemination — I bring experience to every phase of the research process.</p>
+          <img src="assets/img/temp-1.webp" alt="Research lifecycle">
+          <a href="blog/blog-999.html" class="rp-theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="rp-theme-right">“He understands the entire journey of a study, not just a single step.”<br>— Senior Research Fellow</div>
+      </div>
+    </section>
+
+    <!-- Row 2 -->
+    <section style="background-color: #f3e9fc;">
+      <div class="rp-theme-row">
+        <div class="rp-theme-left"><div class="rp-theme-icon-circle"><i class="fas fa-balance-scale"></i></div></div>
+        <div class="rp-theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">2. Holistic Commitment to Research Integrity Across the Scientific Ecosystem</h3>
+          <p style="color: var(--color-text-main);">I uphold ethical standards from study inception through peer review, ensuring transparency, reproducibility, and trust.</p>
+          <img src="assets/img/temp-1.webp" alt="Research integrity">
+          <a href="blog/blog-999.html" class="rp-theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="rp-theme-right">“His commitment to ethics gave our team complete confidence.”<br>— Ethics Committee Chair</div>
+      </div>
+    </section>
+
+    <!-- Row 3 -->
+    <section style="background-color: transparent;">
+      <div class="rp-theme-row">
+        <div class="rp-theme-left"><div class="rp-theme-icon-circle"><i class="fas fa-project-diagram"></i></div></div>
+        <div class="rp-theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">3. Methodological Breadth and Strategic Research Design Expertise</h3>
+          <p style="color: var(--color-text-main);">Quantitative, qualitative, mixed methods — I select and tailor the design to fit the question, not the other way around.</p>
+          <img src="assets/img/temp-1.webp" alt="Research design">
+          <a href="blog/blog-999.html" class="rp-theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="rp-theme-right">“He picks the right method for the problem — always.”<br>— Collaborating Statistician</div>
+      </div>
+    </section>
+
+    <!-- Row 4 -->
+    <section style="background-color: #f3e9fc;">
+      <div class="rp-theme-row">
+        <div class="rp-theme-left"><div class="rp-theme-icon-circle"><i class="fas fa-hand-holding-heart"></i></div></div>
+        <div class="rp-theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">4. Practice‑Grounded and Stakeholder‑Centred Research Orientation</h3>
+          <p style="color: var(--color-text-main);">Every study I design starts with the people it affects — patients, families, and clinicians — ensuring relevance and impact.</p>
+          <img src="assets/img/temp-1.webp" alt="Stakeholder research">
+          <a href="blog/blog-999.html" class="rp-theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="rp-theme-right">“Our patients’ voices were truly heard.”<br>— Patient Advocacy Lead</div>
+      </div>
+    </section>
+
+    <!-- Row 5 -->
+    <section style="background-color: transparent;">
+      <div class="rp-theme-row">
+        <div class="rp-theme-left"><div class="rp-theme-icon-circle"><i class="fas fa-globe-americas"></i></div></div>
+        <div class="rp-theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">5. Global and Multidisciplinary Collaborative Leadership</h3>
+          <p style="color: var(--color-text-main);">I lead and participate in international, cross‑disciplinary teams that bridge nursing, medicine, public health, and data science.</p>
+          <img src="assets/img/temp-1.webp" alt="Global collaboration">
+          <a href="blog/blog-999.html" class="rp-theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="rp-theme-right">“He brought together experts from three continents seamlessly.”<br>— International Project Manager</div>
+      </div>
+    </section>
+
+    <!-- Row 6 -->
+    <section style="background-color: #f3e9fc;">
+      <div class="rp-theme-row">
+        <div class="rp-theme-left"><div class="rp-theme-icon-circle"><i class="fas fa-chart-bar"></i></div></div>
+        <div class="rp-theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">6. Advanced Competence in Biostatistics and Data‑Driven Inquiry</h3>
+          <p style="color: var(--color-text-main);">I apply sophisticated statistical techniques to uncover patterns, test hypotheses, and guide evidence‑based decisions.</p>
+          <img src="assets/img/temp-1.webp" alt="Biostatistics">
+          <a href="blog/blog-999.html" class="rp-theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="rp-theme-right">“His statistical rigour raised the bar for our entire department.”<br>— Head of Research</div>
+      </div>
+    </section>
+
+    <!-- Row 7 -->
+    <section style="background-color: transparent;">
+      <div class="rp-theme-row">
+        <div class="rp-theme-left"><div class="rp-theme-icon-circle"><i class="fas fa-tools"></i></div></div>
+        <div class="rp-theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">7. Adaptive and Resource‑Conscious Research Implementation</h3>
+          <p style="color: var(--color-text-main);">I deliver high‑quality research even in resource‑limited settings, adapting protocols without compromising rigour.</p>
+          <img src="assets/img/temp-1.webp" alt="Adaptive research">
+          <a href="blog/blog-999.html" class="rp-theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="rp-theme-right">“He achieved more with limited resources than others with full funding.”<br>— Grant Reviewer</div>
+      </div>
+    </section>
+
+    <!-- Row 8 -->
+    <section style="background-color: #f3e9fc;">
+      <div class="rp-theme-row">
+        <div class="rp-theme-left"><div class="rp-theme-icon-circle"><i class="fas fa-pen-fancy"></i></div></div>
+        <div class="rp-theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">8. Excellence in Scientific Writing and Professional Communication</h3>
+          <p style="color: var(--color-text-main);">My manuscripts are clear, structured, and impactful — whether for high‑impact journals, grant applications, or policy briefs.</p>
+          <img src="assets/img/temp-1.webp" alt="Scientific writing">
+          <a href="blog/blog-999.html" class="rp-theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="rp-theme-right">“His writing is a model for junior researchers.”<br>— Journal Editor</div>
+      </div>
+    </section>
+
+    <!-- Row 9 -->
+    <section style="background-color: transparent;">
+      <div class="rp-theme-row">
+        <div class="rp-theme-left"><div class="rp-theme-icon-circle"><i class="fas fa-trophy"></i></div></div>
+        <div class="rp-theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">9. Sustained Record of High‑Impact and Diverse Scholarly Contributions</h3>
+          <p style="color: var(--color-text-main);">My publication record spans original research, reviews, guidelines, and commentaries — consistently cited and used in practice.</p>
+          <img src="assets/img/temp-1.webp" alt="High impact">
+          <a href="blog/blog-999.html" class="rp-theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="rp-theme-right">“His work has been directly cited in national guidelines.”<br>— Policy Advisor</div>
+      </div>
+    </section>
+
+    <!-- Row 10 -->
+    <section style="background-color: #f3e9fc;">
+      <div class="rp-theme-row">
+        <div class="rp-theme-left"><div class="rp-theme-icon-circle"><i class="fas fa-user-edit"></i></div></div>
+        <div class="rp-theme-middle">
+          <h3 style="color: var(--color-midnight-blue);">10. Active Engagement in Peer Review and Editorial Stewardship</h3>
+          <p style="color: var(--color-text-main);">I regularly review for leading journals and contribute to editorial boards, helping maintain the quality and integrity of scientific publishing.</p>
+          <img src="assets/img/temp-1.webp" alt="Peer review">
+          <a href="blog/blog-999.html" class="rp-theme-btn" style="float: right;">Read more &rsaquo;</a>
+        </div>
+        <div class="rp-theme-right">“His reviews are thorough, constructive, and always on time.”<br>— Associate Editor</div>
+      </div>
+    </section>
+
+    <!-- ===== LEGACY CONTENT BLOCKS (each wrapped individually) ===== -->
+
+    <!-- LEGACY BLOCK: About My Research (White) -->
+    <div style="max-width: 1200px; margin: var(--space-xl) auto; padding: 0 var(--container-padding);">
       <div class="content-block-white">
         <h2 class="heading-large">About My Research</h2>
         <p class="paragraph">
           This is a White block with headings, paragraph, lists, and buttons.
         </p>
-
-        
-        <!-- Numbered list -->
-        
         <ol class="paragraph">
           <li>First research priority or milestone</li>
           <li>Second important point</li>
           <li>Third achievement</li>
         </ol>
-
-        
-        <!-- Bullet list -->
-        
         <ul class="paragraph">
           <li>Supporting detail A</li>
           <li>Supporting detail B</li>
         </ul>
-
-        
-        <!-- Button alignment control:
-             Change justify-content to: flex-start (left), center (center), flex-end (right) -->
-        
         <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap; justify-content: flex-start; margin-top: var(--space-md);">
           <a href="#" class="btn btn-primary">Primary Action</a>
           <a href="#" class="btn btn-secondary">Secondary Link</a>
           <a href="#" class="btn btn-text">Text‑Only Button</a>
         </div>
-
-        
       </div>
-      
-      <!-- BLOCK END: White block -->
+    </div>
 
-
-     
-      
-       <!-- Empty vertical space helper (change height as needed) -->
-      <div style="height: var(--space-lg);"></div>
-
-
-           
-      
-      <!-- BLOCK START: Grey block with image and note callout -->
-      
+    <!-- LEGACY BLOCK: Grey Block -->
+    <div style="max-width: 1200px; margin: var(--space-xl) auto; padding: 0 var(--container-padding);">
       <div class="content-block-grey">
-        
         <h3 class="heading-medium">Key Projects or Any Other Title</h3>
-        
         <p class="paragraph">
           Use this grey block to highlight specific projects. You can include bullet lists,
           images, or any other elements.
         </p>
-
-        
-        <!-- Single image placeholder -->
-        
         <figure style="margin: var(--space-md) 0;">
           <img src="assets/img/temp-1.webp" alt="Project image" style="width:100%; border-radius:8px;" loading="lazy">
           <figcaption class="text-muted" style="text-align:center;">Optional caption for the image</figcaption>
         </figure>
-
-        
-        <!-- Note callout (with button). To remove the button, delete the <a> line. -->
-        
         <div class="callout callout-note-btn">
           <div class="callout-title"><i class="fas fa-info-circle"></i> Note</div>
           <p>Supplementary information or important remark goes here.</p>
           <a href="#" class="btn btn-text">Reference</a>
         </div>
-      
       </div>
-      
-      <!-- BLOCK END: Grey block -->
-
-
-
-          <!-- ============================================================
-         CONTENT BLOCK WITH LEFT VERTICAL LINE
-         - To change LINE COLOR: edit the hex value in "border-left-color"
-         - To change LINE THICKNESS: edit the number in "border-left-width"
-         - To remove the line: delete the three "border-left-*" lines
-         - The background is white by default; you can change it via
-           "background-color" if desired.
-         ============================================================ -->
-      
-              <div style="
-                  border-left: 4px solid var(--color-gold);   /* ← thickness and colour */
-                  padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg);
-                  background-color: #ffffff;
-                  border-radius: 0 8px 8px 0;               /* soft right corners */
-                  margin-bottom: var(--space-lg);
-                  box-shadow: 0 1px 4px rgba(0,0,0,0.04);  /* optional subtle shadow */
-              ">
-              
-                  <!-- Inside this div you can place any element: -->
-                  <h2 class="heading-large">Section Title</h2>
-                  <p class="paragraph">Your paragraph text goes here.</p>
-              
-                  <!-- Bullet list example -->
-                  <ul class="paragraph">
-                      <li>List item one</li>
-                      <li>List item two</li>
-                  </ul>
-              
-                  <!-- Image example -->
-                  <img src="assets/img/temp-1.webp" alt="Description" style="width:100%; border-radius:8px; margin-top: var(--space-md);" loading="lazy">
-              
-                  <!-- You can also include callouts, buttons, etc. -->
-              
-              </div>
-      
-        <!-- =======  Block ended  ===================================================== -->
-
-
-
-
-      
-
-       <!-- Empty vertical space helper (change height as needed) -->
-      <div style="height: var(--space-lg);"></div>
-
-
-
-      
-
-
-<!-- =================================================================
-     MEDIA OBJECT EXAMPLES
-     =================================================================
-     · icon / number / image → always on the left
-     · title → on the right, at the top
-     · description text → below the title, indented so that the area
-       under the icon stays empty
-     · every part is optional – remove what you don't need
-     ================================================================= -->
-
-<!-- EXAMPLE 1: Icon only + Title + Text -->
-      
-<div class="media-object">
-    <!-- Left: icon inside a circle -->
-    <div class="media-icon">
-        <i class="fas fa-flask"></i>
     </div>
-    <!-- Right: title and text -->
-    <div class="media-body">
-        <h3 class="media-title">Research Excellence</h3>
-        <p class="media-text">
-            My research focuses on gerontological nursing, long‑term care quality,
-            and evidence‑based practice. I collaborate with international teams to
-            improve outcomes for older adults and their caregivers.
-        </p>
-    </div>
-</div>
 
-<!-- EXAMPLE 2: Number only + Title + Text -->
-      
-<div class="media-object">
-    <!-- Left: number inside the circle -->
-    <div class="media-icon">
-        <span class="media-number">45</span>
+    <!-- LEGACY BLOCK: Left Vertical Line -->
+    <div style="max-width: 1200px; margin: var(--space-xl) auto; padding: 0 var(--container-padding);">
+      <div style="border-left: 4px solid var(--color-gold); padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg); background-color: #ffffff; border-radius: 0 8px 8px 0; margin-bottom: var(--space-lg); box-shadow: 0 1px 4px rgba(0,0,0,0.04);">
+        <h2 class="heading-large">Section Title</h2>
+        <p class="paragraph">Your paragraph text goes here.</p>
+        <ul class="paragraph">
+          <li>List item one</li>
+          <li>List item two</li>
+        </ul>
+        <img src="assets/img/temp-1.webp" alt="Description" style="width:100%; border-radius:8px; margin-top: var(--space-md);" loading="lazy">
+      </div>
     </div>
-    <div class="media-body">
-        <h3 class="media-title">Publications</h3>
-        <p class="media-text">
-            Peer‑reviewed articles in high‑impact journals, covering topics from
-            dementia care to nursing workforce.
-        </p>
-    </div>
-</div>
 
-<!-- EXAMPLE 3: Image only (circular) + Title + Text -->
-      
-<div class="media-object">
-    <!-- Left: circular image from assets/img -->
-    <div class="media-icon">
-        <img src="assets/img/temp-1.webp" alt="Project image">
-    </div>
-    <div class="media-body">
-        <h3 class="media-title">Grant‑Funded Study</h3>
-        <p class="media-text">
-            A multi‑site project investigating staff‑to‑resident ratios and their
-            impact on care quality in nursing homes.
-        </p>
-    </div>
-</div>
-
-<!-- EXAMPLE 4: Circle with icon + number (matching the Stats Counter style) + Title + Text -->
-      
-<div class="media-object">
-    <!-- Left column: circle + number stacked vertically -->
-    <div style="display: flex; flex-direction: column; align-items: center; gap: var(--space-xs);">
-        <!-- Gold circle (same size and colour as the stats counter) -->
-        <div style="width: 70px; height: 70px; border-radius: 50%; background-color: var(--color-gold-light);
-                    display: flex; align-items: center; justify-content: center;">
-            <i class="fas fa-chalkboard-teacher" style="font-size: 2rem; color: var(--color-midnight-blue);"></i>
+    <!-- LEGACY BLOCK: Media Object Examples -->
+    <div style="max-width: 1200px; margin: var(--space-xl) auto; padding: 0 var(--container-padding);">
+      <!-- EXAMPLE 1 -->
+      <div class="media-object">
+        <div class="media-icon"><i class="fas fa-flask"></i></div>
+        <div class="media-body">
+          <h3 class="media-title">Research Excellence</h3>
+          <p class="media-text">My research focuses on gerontological nursing, long‑term care quality, and evidence‑based practice.</p>
         </div>
-        <!-- Number below the circle -->
-        <span class="media-number">3,200+</span>
+      </div>
+      <!-- EXAMPLE 2 -->
+      <div class="media-object">
+        <div class="media-icon"><span class="media-number">45</span></div>
+        <div class="media-body">
+          <h3 class="media-title">Publications</h3>
+          <p class="media-text">Peer‑reviewed articles in high‑impact journals.</p>
+        </div>
+      </div>
+      <!-- EXAMPLE 3 -->
+      <div class="media-object">
+        <div class="media-icon"><img src="assets/img/temp-1.webp" alt="Project image"></div>
+        <div class="media-body">
+          <h3 class="media-title">Grant‑Funded Study</h3>
+          <p class="media-text">A multi‑site project investigating staff‑to‑resident ratios.</p>
+        </div>
+      </div>
+      <!-- EXAMPLE 4 -->
+      <div class="media-object">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: var(--space-xs);">
+          <div style="width: 70px; height: 70px; border-radius: 50%; background-color: var(--color-gold-light); display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-chalkboard-teacher" style="font-size: 2rem; color: var(--color-midnight-blue);"></i>
+          </div>
+          <span class="media-number">3,200+</span>
+        </div>
+        <div class="media-body">
+          <h3 class="media-title">Students Taught</h3>
+          <p class="media-text">Thousands of undergraduate and postgraduate nursing students.</p>
+        </div>
+      </div>
+      <!-- EXAMPLE 5 -->
+      <div class="media-object">
+        <div class="media-icon"><i class="fas fa-award"></i></div>
+        <div class="media-body"><h3 class="media-title">Award Recipient</h3></div>
+      </div>
     </div>
 
-    <div class="media-body">
-        <h3 class="media-title">Students Taught</h3>
-        <p class="media-text">
-            Over the course of my career, I have educated thousands of undergraduate
-            and postgraduate nursing students.
-        </p>
-    </div>
-</div>
-
-<!-- EXAMPLE 5: Only icon and title (no description) -->
-      
-<div class="media-object">
-    <div class="media-icon">
-        <i class="fas fa-award"></i>
-    </div>
-    <div class="media-body">
-        <h3 class="media-title">Award Recipient</h3>
-    </div>
-</div>
-
-<!-- END OF MEDIA OBJECT EXAMPLES -->
-
-
-
-      
-
-
-      <p>
-          Any paragraph can be here, and any <code>formula can be highlighted in this way</code>, to differentiate it from normal text.
-          This text is supposed to be <code>black</code> if the format is correct.
-        </p>
-
-
-
-
-      <!-- Empty vertical space helper (change height as needed) -->
-      <div style="height: var(--space-lg);"></div>
-
-
-
-
-      
-
-      <!-- BLOCK START: Dark block with vertical top alignment (text starts from the top) -->
-      
+    <!-- LEGACY BLOCK: Dark Block (top aligned) -->
+    <div style="max-width: 1200px; margin: var(--space-xl) auto; padding: 0 var(--container-padding);">
       <div class="content-block-dark" style="display: flex; flex-direction: column; justify-content: flex-start;">
         <h3 class="heading-medium">Milestones &amp; Impact</h3>
-        <p>
-          This dark block uses <code>justify-content: flex-start</code>, so text starts at the top.
-          Change it to <code>center</code> if you prefer vertically centred text.
-        </p>
-
-        
-        <!-- Two images side by side -->
-        
+        <p>This dark block uses <code>justify-content: flex-start</code>, so text starts at the top.</p>
         <div style="display: flex; gap: var(--space-sm); margin-top: var(--space-md);">
           <img src="assets/img/temp-2.webp" alt="Image 1" style="width:50%; border-radius:8px;" loading="lazy">
           <img src="assets/img/temp-3.webp" alt="Image 2" style="width:50%; border-radius:8px;" loading="lazy">
         </div>
-
-        
-        <!-- Right‑aligned button -->
-        
         <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap; justify-content: flex-end; margin-top: var(--space-md);">
           <a href="#" class="btn btn-secondary">Learn More</a>
         </div>
-
-        
       </div>
-      
-      <!-- BLOCK END: Dark block (top aligned) -->
-
-
-
-      
-
-
-       <!-- Empty vertical space helper (change height as needed) -->
-      <div style="height: var(--space-lg);"></div>
-
-
-
-
-
-
-  <!-- ============================================================
-    DARK CONTENT BLOCK (customisable background, text, radius)
-   ============================================================ -->
-        
-        <!-- ── First dark block (with margin-bottom: 0) ── -->
-      
-        <div class="content-block-dark" style="display: flex; flex-direction: column; justify-content: flex-start;
-                    background-color: #1A2530;              /* ← change me for different background */
-                    color: #ffffff;                         /* ← change me for different text colour */
-                    border-radius: 12px 12px 0 0;            /* ← change me for different roundness */
-                    margin-bottom: 0;                        /* ← remove the default gap below */
-                   
-                    /* Optional: add a border or shadow */
-                    /* border: 1px solid var(--color-gold); */
-                    /* box-shadow: 0 4px 12px rgba(0,0,0,0.08); */
-                    ">
-          
-          <h3 class="heading-medium">Title of the first coloured block</h3>
-          <p>
-            Text placed inside the first coloured box. You can put paragraphs, images, lists – anything.
-          </p>
-        </div>
-
-      
-        <!-- ── Second dark block (touches the first one) ── -->
-      
-        <div class="content-block-dark" style="display: flex; flex-direction: column; justify-content: flex-start;
-                    background-color: #2C3E50;              /* ← slightly lighter for contrast */
-                    color: #f0f0f0;                         /* ← change me for different text colour */
-                    border-radius: 0 0 12px 12px;          /* ← change me for different roundness */
-                    margin-top: 0;                          /* ← ensures it touches the block above */
-                    margin-bottom: 0;                       /* ← remove gap below (if another block follows) */
-                    ">
-          <h3 class="heading-medium">Title of the second coloured block</h3>
-          <p>
-            This block sits directly below the first one – no gap at all. To recreate the gap,
-            either remove "margin-bottom: 0" from the first block, or insert a spacer div.
-          </p>
-        
-        </div>
-       
-      <!-- BLOCK END: Two Dark blocks touching each other -->
-
-
-
-
-      
-
-      
-      <!-- BLOCK START: Transparent block (no visible box) -->
-      
-      <div class="content-block-transparent">
-        <h3 class="heading-medium">A Section Without a Box</h3>
-        <p class="paragraph">
-          This text sits directly on the page background. There is no border or background colour.
-        </p>
-      
-      </div>
-      
-      <!-- BLOCK END: Transparent block -->
-      
-
-     
-
-        <!-- Empty vertical space helper (change height as needed) -->
-    <div style="height: var(--space-lg);"></div>
-    
-
-
-
-      
-    <!-- Horizontal separator (change thickness and colour below) -->
-    <div class="container">
-      <hr style="border: none; border-top: 2px solid var(--color-border); margin: var(--space-lg) 0;">
     </div>
 
+    <!-- LEGACY BLOCK: Two Touching Dark Blocks -->
+    <div style="max-width: 1200px; margin: var(--space-xl) auto; padding: 0 var(--container-padding);">
+      <div class="content-block-dark" style="display: flex; flex-direction: column; justify-content: flex-start; background-color: #1A2530; color: #ffffff; border-radius: 12px 12px 0 0; margin-bottom: 0;">
+        <h3 class="heading-medium">Title of the first coloured block</h3>
+        <p>Text placed inside the first coloured box.</p>
+      </div>
+      <div class="content-block-dark" style="display: flex; flex-direction: column; justify-content: flex-start; background-color: #2C3E50; color: #f0f0f0; border-radius: 0 0 12px 12px; margin-top: 0; margin-bottom: 0;">
+        <h3 class="heading-medium">Title of the second coloured block</h3>
+        <p>This block sits directly below the first one.</p>
+      </div>
+    </div>
 
+    <!-- LEGACY BLOCK: Transparent Block -->
+    <div style="max-width: 1200px; margin: var(--space-xl) auto; padding: 0 var(--container-padding);">
+      <div class="content-block-transparent">
+        <h3 class="heading-medium">A Section Without a Box</h3>
+        <p class="paragraph">This text sits directly on the page background.</p>
+      </div>
+    </div>
 
-      
-
-      <!-- BLOCK START: Split block – IMAGE LEFT, TEXT RIGHT -->
-      
-      <div style="display: flex; flex-wrap: nowrap; gap: 0; align-items: stretch;
-                  margin-bottom: var(--space-lg);">
-
+    <!-- LEGACY BLOCK: Split Block - Image Left, Text Right -->
+    <div style="max-width: 1200px; margin: var(--space-xl) auto; padding: 0 var(--container-padding);">
+      <div style="display: flex; flex-wrap: nowrap; gap: 0; align-items: stretch; margin-bottom: var(--space-lg);">
         <div style="flex: 0 0 30%; min-width: 100px; border-radius: 12px 0 0 12px; overflow: hidden;">
-          <img src="assets/img/temp-1.webp" alt="Description"
-               style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          <img src="assets/img/temp-1.webp" alt="Description" style="width: 100%; height: 100%; object-fit: cover; display: block;">
         </div>
-
-        <div style="flex: 1 1 70%; background-color: var(--color-midnight-blue); color: var(--color-text-inverted);
-                    padding: var(--space-lg); border-radius: 0 12px 12px 0;
-                    display: flex; flex-direction: column; justify-content: center;">
+        <div style="flex: 1 1 70%; background-color: var(--color-midnight-blue); color: var(--color-text-inverted); padding: var(--space-lg); border-radius: 0 12px 12px 0; display: flex; flex-direction: column; justify-content: center;">
           <h3 style="color: var(--color-gold); margin-bottom: var(--space-sm);">Project Alpha</h3>
-          <p style="line-height: 1.6; opacity: 0.9;">
-            Description of this project goes here. Change the heading, text, and button.
-          </p>
-          <div style="margin-top: var(--space-md);">
-            <a href="#" class="btn btn-secondary">Read More</a>
-          </div>
+          <p style="line-height: 1.6; opacity: 0.9;">Description of this project goes here.</p>
+          <div style="margin-top: var(--space-md);"><a href="#" class="btn btn-secondary">Read More</a></div>
         </div>
-      
       </div>
-      
-      <!-- BLOCK END: Split block – IMAGE LEFT, TEXT RIGHT -->
+    </div>
 
-
-
-      
-
-      <!-- BLOCK START: Split block – IMAGE RIGHT, TEXT LEFT -->
-      
-      <div style="display: flex; flex-wrap: nowrap; gap: 0; align-items: stretch;
-                  margin-bottom: var(--space-lg); flex-direction: row-reverse;">
-
+    <!-- LEGACY BLOCK: Split Block - Image Right, Text Left -->
+    <div style="max-width: 1200px; margin: var(--space-xl) auto; padding: 0 var(--container-padding);">
+      <div style="display: flex; flex-wrap: nowrap; gap: 0; align-items: stretch; margin-bottom: var(--space-lg); flex-direction: row-reverse;">
         <div style="flex: 0 0 30%; min-width: 100px; border-radius: 0 12px 12px 0; overflow: hidden;">
-          <img src="assets/img/temp-2.webp" alt="Description"
-               style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          <img src="assets/img/temp-2.webp" alt="Description" style="width: 100%; height: 100%; object-fit: cover; display: block;">
         </div>
-
-        <div style="flex: 1 1 70%; background-color: var(--color-midnight-blue); color: var(--color-text-inverted);
-                    padding: var(--space-lg); border-radius: 12px 0 0 12px;
-                    display: flex; flex-direction: column; justify-content: center;">
+        <div style="flex: 1 1 70%; background-color: var(--color-midnight-blue); color: var(--color-text-inverted); padding: var(--space-lg); border-radius: 12px 0 0 12px; display: flex; flex-direction: column; justify-content: center;">
           <h3 style="color: var(--color-gold); margin-bottom: var(--space-sm);">Project Beta</h3>
-          <p style="line-height: 1.6; opacity: 0.9;">
-            When the image is on the right, the text panel's rounded corners flip to the left side.
-          </p>
-          <div style="margin-top: var(--space-md);">
-            <a href="#" class="btn btn-secondary">Read More</a>
-          </div>
+          <p style="line-height: 1.6; opacity: 0.9;">When the image is on the right, the text panel's rounded corners flip to the left side.</p>
+          <div style="margin-top: var(--space-md);"><a href="#" class="btn btn-secondary">Read More</a></div>
         </div>
-      
       </div>
-     
-      <!-- BLOCK END: Split block – IMAGE RIGHT, TEXT LEFT -->
-      
+    </div>
 
-
-      
-      <div style="height: var(--space-lg);"></div>
-      
-
-
-      
-      <!-- BLOCK START: Quotation callout (with optional button) -->
-      
+    <!-- LEGACY BLOCK: Quotation Callout -->
+    <div style="max-width: 1200px; margin: var(--space-xl) auto; padding: 0 var(--container-padding);">
       <div class="callout callout-quote">
-        <p>“This is a block quote with large ornamental quotation marks.
-        Use it for important excerpts, testimonials, or key takeaways.”</p>
-        <!-- Delete the button line if not needed -->
+        <p>“This is a block quote with large ornamental quotation marks.”</p>
         <a href="#" class="btn btn-text">Optional button</a>
-      
       </div>
-      
-      <!-- BLOCK END: Quotation callout -->
-      
+    </div>
 
-      <div style="height: var(--space-lg);"></div>
-      
-
-      <!-- BLOCK START: Text highlighting examples -->
-      
+    <!-- LEGACY BLOCK: Text Highlighting -->
+    <div style="max-width: 1200px; margin: var(--space-xl) auto; padding: 0 var(--container-padding);">
       <div class="content-block-white">
         <h3 class="heading-medium">Text Highlighting</h3>
-
-        <!-- Highlight part of a heading -->
-        <h4 class="heading-small">
-          A heading with <mark style="background-color: #ffff00; padding: 0 2px;">highlighted keywords</mark>.
-        </h4>
-
-        <!-- Highlight part of a paragraph -->
-        <p class="paragraph">
-          This is normal text, and you can highlight
-          <mark style="background-color: #D4AF37; padding: 0 2px;">any portion</mark>
-          by changing the <code>background-color</code> in the <code>&lt;mark&gt;</code> tag.
-          Common colours: #ffff00 (yellow), #90EE90 (light green), #87CEEB (light blue).
-        </p>
-      
+        <h4 class="heading-small">A heading with <mark style="background-color: #ffff00; padding: 0 2px;">highlighted keywords</mark>.</h4>
+        <p class="paragraph">This is normal text, and you can highlight <mark style="background-color: #D4AF37; padding: 0 2px;">any portion</mark>.</p>
       </div>
-      <!-- BLOCK END: Text highlighting -->
-      
+    </div>
 
-
-      
-      <div style="height: var(--space-lg);"></div>
-
-
-      <!-- TIMELINE placeholder – rendered by JavaScript [data are entered in the JS at the end of this document]-->
-<div id="timeline-container" style="margin: var(--space-xl) 0;"></div>
-
-
-        <div style="height: var(--space-lg);"></div>
-      
-
-      <!-- BLOCK START: White block with centered buttons -->
-      
+    <!-- LEGACY BLOCK: Centered Buttons -->
+    <div style="max-width: 1200px; margin: var(--space-xl) auto; padding: 0 var(--container-padding);">
       <div class="content-block-white">
         <h4 class="heading-small">Centered Buttons</h4>
-        <p class="paragraph">These buttons are centered (justify-content: center).</p>
+        <p class="paragraph">These buttons are centered.</p>
         <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap; justify-content: center; margin-top: var(--space-md);">
           <a href="#" class="btn btn-primary">Centered Button</a>
         </div>
-     
       </div>
-      
-      <!-- BLOCK END: Centered buttons -->
-
-
-
-   
-
-
-
-    <!-- ============================================================
-     ACCORDION (COLLAPSIBLE) SECTION
-     ============================================================
-     - To add more items: copy the block from "ACCORDION ITEM START"
-       to "ACCORDION ITEM END" and change the title and inner content.
-     - To change the VERTICAL LINE COLOR: edit the value of
-       "border-left-color" in the .accordion-body style.
-     - To change the LINE THICKNESS: edit "border-left-width".
-     - To give the content area a BACKGROUND COLOR: add
-       "background-color: #f9f9f9;" (or any colour) to the
-       .accordion-body style.
-     ============================================================ -->
-
-  <div class="accordion-container" style="margin-bottom: var(--space-lg);">
-
-  <!-- ===== ACCORDION ITEM START (Replicable) ===== -->
-  <div class="accordion-item" style="border-bottom: 1px solid var(--color-border);">
-
-    <!-- Header button -->
-    <button class="accordion-header"
-            style="display: flex; align-items: center; justify-content: space-between;
-                   width: 100%; padding: var(--space-md); background: var(--color-white);
-                   border: none; border-radius: 8px; font-size: var(--font-size-lg);
-                   font-weight: 600; color: var(--color-midnight-blue); cursor: pointer;
-                   transition: background-color 0.2s;">
-      <span>Project Alpha</span>
-      <span class="accordion-icon" style="font-size: 1.5rem; line-height: 1; pointer-events: none;">+</span>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="accordion-body left-line"
-         style="display: none; padding: var(--space-sm) var(--space-md) var(--space-md);
-                 background-color: transparent; /* ← change to any colour if needed */
-                line-height: 1.6;">
-      <p class="paragraph">Put any content here: paragraphs, images, lists, callouts…</p>
-      <!-- Example image -->
-      <img src="assets/img/temp-1.webp" alt="Demo" style="width:100%; border-radius:8px; margin-top: var(--space-sm);">
     </div>
-  </div>
-    
-  <!-- ===== ACCORDION ITEM END ===== -->
 
-  <!-- ===== ACCORDION ITEM START (copy this block to add more) ===== -->
-    
-  <div class="accordion-item" style="border-bottom: 1px solid var(--color-border);">
-    <button class="accordion-header"
-            style="display: flex; align-items: center; justify-content: space-between;
-                   width: 100%; padding: var(--space-md); background: var(--color-white);
-                   border: none; border-radius: 8px; font-size: var(--font-size-lg);
-                   font-weight: 600; color: var(--color-midnight-blue); cursor: pointer;
-                   transition: background-color 0.2s;">
-      <span>Project Beta</span>
-      <span class="accordion-icon" style="font-size: 1.5rem; line-height: 1; pointer-events: none;">+</span>
-    </button>
-    <div class="accordion-body left-line"
-         style="display: none; padding: var(--space-sm) var(--space-md) var(--space-md);
-                 background-color: transparent; /* ← change to any colour if needed */
-                line-height: 1.6;">
-      <p class="paragraph">Another panel’s content.</p>
+    <!-- LEGACY BLOCK: Accordion -->
+    <div style="max-width: 1200px; margin: var(--space-xl) auto; padding: 0 var(--container-padding);">
+      <div class="accordion-container" style="margin-bottom: var(--space-lg);">
+        <div class="accordion-item" style="border-bottom: 1px solid var(--color-border);">
+          <button class="accordion-header" style="display: flex; align-items: center; justify-content: space-between; width: 100%; padding: var(--space-md); background: var(--color-white); border: none; border-radius: 8px; font-size: var(--font-size-lg); font-weight: 600; color: var(--color-midnight-blue); cursor: pointer; transition: background-color 0.2s;">
+            <span>Project Alpha</span>
+            <span class="accordion-icon" style="font-size: 1.5rem; line-height: 1; pointer-events: none;">+</span>
+          </button>
+          <div class="accordion-body left-line" style="display: none; padding: var(--space-sm) var(--space-md) var(--space-md); background-color: transparent; line-height: 1.6;">
+            <p class="paragraph">Put any content here: paragraphs, images, lists, callouts…</p>
+            <img src="assets/img/temp-1.webp" alt="Demo" style="width:100%; border-radius:8px; margin-top: var(--space-sm);">
+          </div>
+        </div>
+        <div class="accordion-item" style="border-bottom: 1px solid var(--color-border);">
+          <button class="accordion-header" style="display: flex; align-items: center; justify-content: space-between; width: 100%; padding: var(--space-md); background: var(--color-white); border: none; border-radius: 8px; font-size: var(--font-size-lg); font-weight: 600; color: var(--color-midnight-blue); cursor: pointer; transition: background-color 0.2s;">
+            <span>Project Beta</span>
+            <span class="accordion-icon" style="font-size: 1.5rem; line-height: 1; pointer-events: none;">+</span>
+          </button>
+          <div class="accordion-body left-line" style="display: none; padding: var(--space-sm) var(--space-md) var(--space-md); background-color: transparent; line-height: 1.6;">
+            <p class="paragraph">Another panel’s content.</p>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-    
-  <!-- ===== ACCORDION ITEM END ===== -->
 
-</div>
-
-<!-- ==================== ACCORDION (COLLAPSIBLE) SECTION END  =================== -->
-
-
-
-      
-
-
-<!-- STATS COUNTER placeholder – rendered by JavaScript [all detailed contents should be inserted in the JS part at the bottom] -->
-
+    <!-- LEGACY BLOCK: Stats Counter (dynamic, from JS) -->
+    <div style="max-width: 1200px; margin: var(--space-xl) auto; padding: 0 var(--container-padding);">
       <div id="stats-counter-container" class="grid-4" style="gap: var(--space-lg); margin-bottom: var(--space-lg);"></div>
-
-<!-- ==================== STATS COUNTER placeholder END  =================== -->
-
-
-
-
-
-      
-
     </div>
-    <!-- ===== END OF CONTENT PLAYGROUND CONTAINER ===== -->
 
-    <div style="height: var(--space-xl);"></div>
+    <!-- LEGACY BLOCK: Timeline (dynamic, from JS) -->
+    <div style="max-width: 1200px; margin: var(--space-xl) auto; padding: 0 var(--container-padding);">
+      <div id="timeline-container" style="margin: var(--space-xl) 0;"></div>
+    </div>
 
   </main>
-  
-  <!-- ========== FOOTER ========== -->
+
   <footer data-component="footer"></footer>
 
-
-
-
-<!-- ===== ACCORDION JAVASCRIPT (independent open / close) ===== -->
-<script>
-(function() {
-  const accordionHeaders = document.querySelectorAll('.accordion-header');
-
-  accordionHeaders.forEach(header => {
-    header.addEventListener('click', function() {
-      const body = this.nextElementSibling;          // the accordion-body div
-      const icon = this.querySelector('.accordion-icon');
-      const isOpen = body.style.display === 'block';
-
-      if (isOpen) {
-        // Close the panel
-        body.style.display = 'none';
-        icon.textContent = '+';
-      } else {
-        // Open the panel
-        body.style.display = 'block';
-        icon.textContent = '–';
-      }
-    });
-  });
-})();
-</script>
-
-
-
-  
-
-
-   <!-- // ------------------------------------------------------------------
-// SIMPLE STATS COUNTER JS
-// ------------------------------------------------------------------
-// Edit the array below to add/remove stats.
-// - icon   : Font Awesome class (e.g. 'fas fa-flask'), or leave empty '' for image
-// - img    : path to image in assets/img/, used ONLY if icon is empty
-// - number : the statistic (text – keeps your formatting, e.g. "45" or "3,200+")
-// - label  : the short label below the number
-  -->
-
+  <!-- ===== ACCORDION JS ===== -->
   <script>
-                const statsData = [
-                { icon: 'fas fa-flask', img: '', number: '45', label: 'Publications' },
-                { icon: 'fas fa-chart-bar', img: '', number: '12', label: 'Grants' },
-                { icon: 'fas fa-chalkboard-teacher', img: '', number: '3,200+', label: 'Students Taught' },
-                { icon: '', img: 'assets/img/temp-1.webp', number: '8', label: 'Ongoing Projects' },
-                { icon: 'fas fa-award', img: '', number: '5', label: 'Awards' }
-              ];
-              
-              // Circle appearance (edit to change size/colours)
-              const STAT_CIRCLE_SIZE = '80px';            // width & height of the circle
-              const STAT_CIRCLE_BG   = 'var(--color-gold-light)';
-              const STAT_ICON_COLOR  = 'var(--color-midnight-blue)';
-              const STAT_ICON_SIZE   = '2rem';
-              const STAT_IMAGE_SIZE  = '60%';             // image inside circle
-              
-              function renderStatsCounter() {
-                const container = document.getElementById('stats-counter-container');
-                if (!container) return;
-                if (!statsData || statsData.length === 0) {
-                  container.style.display = 'none';       // totally hidden when empty
-                  return;
-                }
-                container.innerHTML = '';
-              
-                statsData.forEach(item => {
-                  const card = document.createElement('div');
-                  card.style.textAlign = 'center';
-              
-                  // ---- Circle ----
-                  const circle = document.createElement('div');
-                  circle.style.cssText = `
-                    width: ${STAT_CIRCLE_SIZE};
-                    height: ${STAT_CIRCLE_SIZE};
-                    border-radius: 50%;
-                    background-color: ${STAT_CIRCLE_BG};
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    margin: 0 auto var(--space-sm) auto;
-                  `;
-              
-                  if (item.img) {
-                    // Use image instead of icon
-                    const imgEl = document.createElement('img');
-                    imgEl.src = item.img;
-                    imgEl.alt = item.label;
-                    imgEl.style.width = STAT_IMAGE_SIZE;
-                    imgEl.style.height = STAT_IMAGE_SIZE;
-                    imgEl.style.objectFit = 'cover';
-                    imgEl.style.borderRadius = '50%';
-                    circle.appendChild(imgEl);
-                  } else if (item.icon) {
-                    const iconEl = document.createElement('i');
-                    iconEl.className = item.icon + ' fa-fw';
-                    iconEl.style.color = STAT_ICON_COLOR;
-                    iconEl.style.fontSize = STAT_ICON_SIZE;
-                    circle.appendChild(iconEl);
-                  }
-              
-                  // ---- Number ----
-                  const numberEl = document.createElement('div');
-                  numberEl.style.fontSize = 'var(--font-size-xl)';
-                  numberEl.style.fontWeight = '700';
-                  numberEl.style.color = 'var(--color-midnight-blue)';
-                  numberEl.textContent = item.number;
-              
-                  // ---- Label ----
-                  const labelEl = document.createElement('div');
-                  labelEl.style.fontSize = 'var(--font-size-sm)';
-                  labelEl.style.color = 'var(--color-text-muted)';
-                  labelEl.textContent = item.label;
-              
-                  card.appendChild(circle);
-                  card.appendChild(numberEl);
-                  card.appendChild(labelEl);
-                  container.appendChild(card);
-                });
-              }
-
-</script>
-    
-      
-   
-  <!-- // Call the function together with other page‑specific renderers
-// (add `renderStatsCounter();` inside your init function)
-
-// ===================================================================
-  -->
-
-
-  
-   <!-- 
-  // ------------------------------------------------------------------
-// TIMELINE JS
-// ------------------------------------------------------------------
-// Edit the array below. Each object is one timeline entry.
-// - year  : e.g. "2020"
-// - title : e.g. "PhD in Gerontological Nursing"
-// - desc  : short description
-  -->
-
-<script>
-            const timelineData = [
-            { year: '2026', title: 'Launched International Research Collaboration', desc: 'Started a multi‑centre study across Europe and Asia.' },
-            { year: '2024', title: 'Published Landmark Paper', desc: 'First author on a paper that influenced national guidelines.' },
-            { year: '2021', title: 'Appointed Associate Professor', desc: 'Joined the faculty of nursing at a leading university.' },
-            { year: '2019', title: 'Completed PhD', desc: 'Defended thesis on long‑term care quality indicators.' }
-          ];
-          
-          // Customisation
-          const TIMELINE_LINE_COLOR = 'var(--color-gold)';
-          const TIMELINE_DOT_COLOR  = 'var(--color-gold)';
-          const TIMELINE_LINE_WIDTH = '2px';
-          
-          function renderTimeline() {
-            const container = document.getElementById('timeline-container');
-            if (!container) return;
-            if (!timelineData || timelineData.length === 0) {
-              container.style.display = 'none';
-              return;
-            }
-          
-            container.innerHTML = '';
-          
-            // ---- Outer wrapper with central line ----
-            const wrapper = document.createElement('div');
-            wrapper.style.cssText = `
-              position: relative;
-              padding-left: var(--space-lg);
-              padding-right: var(--space-lg);
-            `;
-          
-            // Central line (visible on desktop)
-            const line = document.createElement('div');
-            line.style.cssText = `
-              position: absolute;
-              top: 0;
-              bottom: 0;
-              left: 50%;
-              width: ${TIMELINE_LINE_WIDTH};
-              background-color: ${TIMELINE_LINE_COLOR};
-              transform: translateX(-50%);
-              z-index: 0;
-            `;
-            wrapper.appendChild(line);
-          
-            // ---- Build entries ----
-            timelineData.forEach((entry, index) => {
-              const isLeft = index % 2 === 0;   // even items on the left
-          
-              const row = document.createElement('div');
-              row.style.cssText = `
-                display: flex;
-                align-items: flex-start;
-                margin-bottom: var(--space-lg);
-                position: relative;
-                z-index: 1;
-              `;
-          
-              // Year dot
-              const dot = document.createElement('div');
-              dot.style.cssText = `
-                flex-shrink: 0;
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                background-color: ${TIMELINE_DOT_COLOR};
-                color: white;
-                font-weight: 700;
-                font-size: 0.75rem;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-top: var(--space-xs);
-              `;
-              dot.textContent = entry.year;
-          
-              // Content card
-              const card = document.createElement('div');
-              card.style.cssText = `
-                flex: 1;
-                background-color: var(--color-white);
-                border: 1px solid var(--color-border);
-                border-radius: 12px;
-                padding: var(--space-md);
-                box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-              `;
-          
-              const titleEl = document.createElement('h4');
-              titleEl.style.cssText = `
-                font-size: var(--font-size-lg);
-                font-weight: 600;
-                color: var(--color-midnight-blue);
-                margin-bottom: var(--space-xs);
-              `;
-              titleEl.textContent = entry.title;
-          
-              const descEl = document.createElement('p');
-              descEl.style.cssText = `
-                font-size: var(--font-size-sm);
-                color: var(--color-text-muted);
-                line-height: 1.5;
-              `;
-              descEl.textContent = entry.desc;
-          
-              card.appendChild(titleEl);
-              card.appendChild(descEl);
-          
-              // Layout: left/right
-              if (isLeft) {
-                row.style.flexDirection = 'row';
-                row.appendChild(dot);
-                row.appendChild(document.createElement('div')).style.width = 'var(--space-md)'; // spacer
-                row.appendChild(card);
-                card.style.marginRight = '5%';
-              } else {
-                row.style.flexDirection = 'row-reverse';
-                row.appendChild(dot);
-                row.appendChild(document.createElement('div')).style.width = 'var(--space-md)'; // spacer
-                row.appendChild(card);
-                card.style.marginLeft = '5%';
-              }
-          
-              wrapper.appendChild(row);
-            });
-          
-            container.appendChild(wrapper);
+    (function() {
+      const accordionHeaders = document.querySelectorAll('.accordion-header');
+      accordionHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+          const body = this.nextElementSibling;
+          const icon = this.querySelector('.accordion-icon');
+          const isOpen = body.style.display === 'block';
+          if (isOpen) {
+            body.style.display = 'none';
+            icon.textContent = '+';
+          } else {
+            body.style.display = 'block';
+            icon.textContent = '–';
           }
+        });
+      });
+    })();
+  </script>
 
-</script>
-  
-   <!--  // Call the function together with other page‑specific renderers -->
+  <!-- ===== STATS COUNTER JS ===== -->
+  <script>
+    const statsData = [
+      { icon: 'fas fa-flask', img: '', number: '45', label: 'Publications' },
+      { icon: 'fas fa-chart-bar', img: '', number: '12', label: 'Grants' },
+      { icon: 'fas fa-chalkboard-teacher', img: '', number: '3,200+', label: 'Students Taught' },
+      { icon: '', img: 'assets/img/temp-1.webp', number: '8', label: 'Ongoing Projects' },
+      { icon: 'fas fa-award', img: '', number: '5', label: 'Awards' }
+    ];
+    const STAT_CIRCLE_SIZE = '80px';
+    const STAT_CIRCLE_BG   = 'var(--color-gold-light)';
+    const STAT_ICON_COLOR  = 'var(--color-midnight-blue)';
+    const STAT_ICON_SIZE   = '2rem';
+    const STAT_IMAGE_SIZE  = '60%';
 
+    function renderStatsCounter() {
+      const container = document.getElementById('stats-counter-container');
+      if (!container) return;
+      if (!statsData || statsData.length === 0) { container.style.display = 'none'; return; }
+      container.innerHTML = '';
+      statsData.forEach(item => {
+        const card = document.createElement('div');
+        card.style.textAlign = 'center';
+        const circle = document.createElement('div');
+        circle.style.cssText = `width:${STAT_CIRCLE_SIZE}; height:${STAT_CIRCLE_SIZE}; border-radius:50%; background-color:${STAT_CIRCLE_BG}; display:flex; align-items:center; justify-content:center; margin:0 auto var(--space-sm) auto;`;
+        if (item.img) {
+          const imgEl = document.createElement('img');
+          imgEl.src = item.img; imgEl.alt = item.label;
+          imgEl.style.width = STAT_IMAGE_SIZE; imgEl.style.height = STAT_IMAGE_SIZE;
+          imgEl.style.objectFit = 'cover'; imgEl.style.borderRadius = '50%';
+          circle.appendChild(imgEl);
+        } else if (item.icon) {
+          const iconEl = document.createElement('i');
+          iconEl.className = item.icon + ' fa-fw';
+          iconEl.style.color = STAT_ICON_COLOR; iconEl.style.fontSize = STAT_ICON_SIZE;
+          circle.appendChild(iconEl);
+        }
+        const numberEl = document.createElement('div');
+        numberEl.style.fontSize = 'var(--font-size-xl)'; numberEl.style.fontWeight = '700';
+        numberEl.style.color = 'var(--color-midnight-blue)'; numberEl.textContent = item.number;
+        const labelEl = document.createElement('div');
+        labelEl.style.fontSize = 'var(--font-size-sm)'; labelEl.style.color = 'var(--color-text-muted)';
+        labelEl.textContent = item.label;
+        card.appendChild(circle); card.appendChild(numberEl); card.appendChild(labelEl);
+        container.appendChild(card);
+      });
+    }
+  </script>
 
-   <!-- // ================================================================ -->
+  <!-- ===== TIMELINE JS ===== -->
+  <script>
+    const timelineData = [
+      { year: '2026', title: 'Launched International Research Collaboration', desc: 'Started a multi‑centre study across Europe and Asia.' },
+      { year: '2024', title: 'Published Landmark Paper', desc: 'First author on a paper that influenced national guidelines.' },
+      { year: '2021', title: 'Appointed Associate Professor', desc: 'Joined the faculty of nursing at a leading university.' },
+      { year: '2019', title: 'Completed PhD', desc: 'Defended thesis on long‑term care quality indicators.' }
+    ];
+    const TIMELINE_LINE_COLOR = 'var(--color-gold)';
+    const TIMELINE_DOT_COLOR  = 'var(--color-gold)';
+    const TIMELINE_LINE_WIDTH = '2px';
 
+    function renderTimeline() {
+      const container = document.getElementById('timeline-container');
+      if (!container) return;
+      if (!timelineData || timelineData.length === 0) { container.style.display = 'none'; return; }
+      container.innerHTML = '';
+      const wrapper = document.createElement('div');
+      wrapper.style.cssText = 'position:relative; padding-left:var(--space-lg); padding-right:var(--space-lg);';
+      const line = document.createElement('div');
+      line.style.cssText = `position:absolute; top:0; bottom:0; left:50%; width:${TIMELINE_LINE_WIDTH}; background-color:${TIMELINE_LINE_COLOR}; transform:translateX(-50%); z-index:0;`;
+      wrapper.appendChild(line);
+      timelineData.forEach((entry, index) => {
+        const isLeft = index % 2 === 0;
+        const row = document.createElement('div');
+        row.style.cssText = 'display:flex; align-items:flex-start; margin-bottom:var(--space-lg); position:relative; z-index:1;';
+        const dot = document.createElement('div');
+        dot.style.cssText = `flex-shrink:0; width:40px; height:40px; border-radius:50%; background-color:${TIMELINE_DOT_COLOR}; color:white; font-weight:700; font-size:0.75rem; display:flex; align-items:center; justify-content:center; margin-top:var(--space-xs);`;
+        dot.textContent = entry.year;
+        const card = document.createElement('div');
+        card.style.cssText = 'flex:1; background-color:var(--color-white); border:1px solid var(--color-border); border-radius:12px; padding:var(--space-md); box-shadow:0 2px 8px rgba(0,0,0,0.04);';
+        const titleEl = document.createElement('h4');
+        titleEl.style.cssText = 'font-size:var(--font-size-lg); font-weight:600; color:var(--color-midnight-blue); margin-bottom:var(--space-xs);';
+        titleEl.textContent = entry.title;
+        const descEl = document.createElement('p');
+        descEl.style.cssText = 'font-size:var(--font-size-sm); color:var(--color-text-muted); line-height:1.5;';
+        descEl.textContent = entry.desc;
+        card.appendChild(titleEl); card.appendChild(descEl);
+        if (isLeft) {
+          row.style.flexDirection = 'row'; row.appendChild(dot);
+          row.appendChild(document.createElement('div')).style.width = 'var(--space-md)';
+          row.appendChild(card); card.style.marginRight = '5%';
+        } else {
+          row.style.flexDirection = 'row-reverse'; row.appendChild(dot);
+          row.appendChild(document.createElement('div')).style.width = 'var(--space-md)';
+          row.appendChild(card); card.style.marginLeft = '5%';
+        }
+        wrapper.appendChild(row);
+      });
+      container.appendChild(wrapper);
+    }
+  </script>
 
-
-<script>
-  
-   // ---- INITIALISE ALL COMPONENTS (Do not delete; this initiate functions ralted to STATS COUNTER & TIMELINE)----
-  (function() {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function() {
+  <!-- ===== INITIALISE STATS & TIMELINE ===== -->
+  <script>
+    (function() {
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          renderStatsCounter();
+          renderTimeline();
+        });
+      } else {
         renderStatsCounter();
         renderTimeline();
-        // add other render calls here
-      });
-    } else {
-      renderStatsCounter();
-      renderTimeline();
-    }
-  })();
-  
-</script>
+      }
+    })();
+  </script>
 
- <!-- // ================================================================-->
-
- 
   <!-- ========== SCRIPTS (EXACT ORDER) ========== -->
   <script src="assets/js/utils.js"></script>
   <script src="assets/js/navigation.js"></script>
@@ -1012,8 +707,5 @@ RESEARCH-PORTFOLIO.HTML - DR. SAMEH ELTAYBANI - RESEARCH PORTFOLIO
   <script src="assets/js/search.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="assets/js/aos-init.js"></script>
-
-
-  
 </body>
 </html>
