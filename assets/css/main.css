@@ -4287,6 +4287,43 @@ h2, h3 {
     scroll-margin-top: 140px; /* Adjust this number to match your header/breadcrumb height */
 }
 
+
+/* 1. Desktop: Keep the toggle hidden */
+#rp-toc-mobile-toggle {
+    display: none;
+}
+
+/* 2. Mobile: Styles for screens 1100px or smaller */
+@media (max-width: 1100px) {
+    /* Hide the button on desktop, show it here */
+    #rp-toc-mobile-toggle {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background: var(--color-midnight-blue);
+        color: white;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    /* Hide the sidebar by default on mobile */
+    .rp-toc-sidebar {
+        display: none; 
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: white;
+        z-index: 1000;
+        padding: 20px;
+    }
+    
+    /* When the class 'active' is added via JS, show the sidebar */
+    .rp-toc-sidebar.active {
+        display: flex;
+    }
+}
+
+
 /* ============================================================================
    END OF THE main.css FILE
    ============================================================================ */
