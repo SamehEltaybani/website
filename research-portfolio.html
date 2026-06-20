@@ -663,11 +663,11 @@ My work in healthcare research is defined by a comprehensive and integrated appr
     
 // This script automatically creates the Table of Contents
 // It looks for any <h2> or <h3> tags in your content and adds them to the menu
-     
-
+      
     document.addEventListener("DOMContentLoaded", function() {
         // --- 1. GENERATE THE TABLE OF CONTENTS ---
         const tocContent = document.getElementById("rp-toc-content");
+        // Select headings only within the main content area
         const headings = document.querySelectorAll("main h2:not(.ignore-toc), main h3:not(.ignore-toc)");
         const tocList = document.createElement("ul");
 
@@ -677,8 +677,11 @@ My work in healthcare research is defined by a comprehensive and integrated appr
             }
             const listItem = document.createElement("li");
             const link = document.createElement("a");
-            // Use only the hash ID so it stays on the current page
-            link.href = "#" + heading.id; 
+            
+            // FIX: Use ONLY the hash (#) instead of the full path.
+            // This ensures the browser stays on the current page.
+            link.href = "#" + heading.id;
+            
             link.textContent = (heading.tagName === "H3" ? "- " : "■ ") + heading.textContent;
             
             listItem.appendChild(link);
@@ -690,23 +693,24 @@ My work in healthcare research is defined by a comprehensive and integrated appr
         const mobileToggle = document.getElementById("rp-toc-mobile-toggle");
         const tocSidebar = document.getElementById("rp-toc-sidebar");
         const closeBtn = document.getElementById("rp-toc-close");
+        const body = document.body;
 
         mobileToggle.addEventListener("click", () => {
             tocSidebar.classList.add("active");
-            document.body.style.overflow = "hidden";
+            body.style.overflow = "hidden";
         });
 
         closeBtn.addEventListener("click", () => {
             tocSidebar.classList.remove("active");
-            document.body.style.overflow = "";
+            body.style.overflow = "";
         });
 
         // Close menu when clicking a ToC link
-        const tocLinks = tocSidebar.querySelectorAll("a");
+        const tocLinks = document.querySelectorAll(".rp-toc-sidebar a");
         tocLinks.forEach(link => {
             link.addEventListener("click", () => {
                 tocSidebar.classList.remove("active");
-                document.body.style.overflow = "";
+                body.style.overflow = "";
             });
         });
     });
