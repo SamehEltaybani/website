@@ -4347,7 +4347,11 @@ h2, h3 {
     }
 }
 
-
+/* Prevent scrolling while the menu is open */
+body.toc-open {
+    overflow: hidden;
+    height: 100vh;
+}
 
 /* ============================================================================
    END OF THE main.css FILE
