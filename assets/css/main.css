@@ -4196,6 +4196,70 @@ pre code {
 }
 
 
+/* ============================================================================
+   TABLE OF CONTENTS (TOC) - SIDEBAR STYLES
+   ============================================================================ */
+
+/* 1. Creates the two-column side-by-side layout */
+.rp-toc-wrapper {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-md);
+    gap: var(--space-lg);
+    align-items: flex-start;
+}
+
+/* 2. The Sidebar Sidebar: Sticky and fixed width */
+.rp-toc-sidebar {
+    flex: 0 0 250px;
+    position: sticky;
+    top: 20px; /* Adjust this value if it overlaps with your breadcrumbs */
+    max-height: calc(100vh - 40px); /* Keeps it within screen height */
+    overflow-y: auto; /* Adds scroll if content is long */
+    padding-right: var(--space-sm);
+}
+
+.rp-toc-title {
+    font-size: 1.2rem;
+    color: var(--color-midnight-blue);
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-xs);
+    border-bottom: 2px solid var(--color-gold);
+}
+
+/* 3. The List Styles */
+#rp-toc-content ul {
+    list-style: none;
+}
+
+#rp-toc-content li {
+    margin-bottom: var(--space-xs);
+}
+
+#rp-toc-content a {
+    text-decoration: none;
+    color: var(--color-text-main);
+    font-size: 0.95rem;
+    display: block;
+}
+
+#rp-toc-content a:hover {
+    color: var(--color-gold);
+}
+
+/* 4. Responsive: Stack on mobile */
+@media (max-width: 1100px) {
+    .rp-toc-wrapper {
+        flex-direction: column;
+    }
+    .rp-toc-sidebar {
+        position: static;
+        width: 100%;
+    }
+}
+
+
 
 /* ============================================================================
    END OF THE main.css FILE
