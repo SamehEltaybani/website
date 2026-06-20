@@ -4290,31 +4290,42 @@ h2, h3 {
 
 /* Mobile version */
 
-/* --- Desktop: Force everything to hide by default --- */
-.rp-mobile-only {
+/* --- Desktop Defaults (Hidden) --- */
+#rp-toc-mobile-toggle, #rp-toc-close {
     display: none !important;
 }
 
-/* --- Mobile: Only show when screen is narrow --- */
+/* --- Mobile Only (Screens 1100px or smaller) --- */
 @media (max-width: 1100px) {
-    .rp-mobile-only {
+    /* Show buttons only on mobile */
+    #rp-toc-mobile-toggle, #rp-toc-close {
         display: block !important;
     }
 
+    /* Make the Toggle Button Sticky */
     #rp-toc-mobile-toggle {
-        position: fixed !important;
-        top: 0;
-        left: 0;
+        position: sticky;
+        top: 0; /* Adjust this if you have a header */
+        z-index: 998;
         width: 100%;
-        height: 50px;
+        padding: 15px;
         background: var(--color-midnight-blue);
         color: white;
-        z-index: 999;
+        text-align: left;
+        cursor: pointer;
         border: none;
+        font-weight: bold;
     }
 
+    /* Hide the sidebar container until clicked */
     .rp-toc-sidebar {
-        display: none !important; /* Hide sidebar until active */
+        display: none !important; 
+    }
+
+    /* Show sidebar only when 'active' class is added via JS */
+    .rp-toc-sidebar.active {
+        display: flex !important;
+        flex-direction: column;
         position: fixed;
         top: 0;
         left: 0;
@@ -4326,19 +4337,15 @@ h2, h3 {
         overflow-y: auto;
     }
 
-   .rp-toc-sidebar.active {
-        display: block !important;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: white;
-        z-index: 9999;
-        padding: 20px;
-        overflow-y: auto;
+    #rp-toc-close {
+        background: none;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+        margin-bottom: 20px;
     }
 }
+
 
 
 /* ============================================================================
