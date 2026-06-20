@@ -191,24 +191,6 @@ main {
   margin-top: 0;
 }
 
-/* This allows the background to stretch to the screen edges (used mainly for the portfolio pages to overcome the limited wrapper used for the ToC)*/
-
-.full-width-bg {
-    position: relative;
-    z-index: 1;
-}
-
-/* This creates a background layer that stretches without moving your cards */
-.full-width-bg::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -50vw; /* Pulls only the background to the left */
-    right: -50vw; /* Pulls only the background to the right */
-    bottom: 0;
-    background-color: #f3e9fc; /* Your desired color */
-    z-index: -1; /* Pushes the background behind your content */
-}
 
 /* ============================================================================
    SPACING UTILITIES (Margin & Padding)
