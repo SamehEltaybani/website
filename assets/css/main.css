@@ -4053,16 +4053,6 @@ pre code {
     box-shadow: 0 6px 18px rgba(0,0,0,0.1);
 }
 
-/* Removes link styles from your custom cards */
-.rp-quickgrid-card a {
-    text-decoration: none;
-    color: inherit; /* Keeps the text color the same as the rest of your site */
-}
-
-/* Removes the underline if the user hovers over the card */
-.rp-quickgrid-card a:hover {
-    text-decoration: none;
-}
 
 .rp-quickgrid-card i {
     font-size: 2.2rem;
@@ -4255,6 +4245,9 @@ pre code {
 
 #rp-toc-content li {
     margin-bottom: var(--space-xs);
+    padding-left: 20px;    /* Creates space for the indentation */
+    text-indent: -20px;    /* Pulls the first line back to align the bullet */
+    margin-bottom: 8px;
 }
 
 #rp-toc-content a {
@@ -4262,6 +4255,7 @@ pre code {
     color: var(--color-text-main);
     font-size: 0.95rem;
     display: block;
+    word-wrap: break-word;
 }
 
 #rp-toc-content a:hover {
