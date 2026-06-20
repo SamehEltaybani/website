@@ -44,9 +44,10 @@
 
 
 <div class="rp-toc-wrapper">
-
-    <aside class="rp-toc-sidebar" id="rp-toc-sidebar">
-        <h2 class="rp-toc-title">Table of Contents</h2>
+    <button id="rp-toc-mobile-toggle">Table of Contents ▼</button>
+        <aside class="rp-toc-sidebar">
+        <button id="rp-toc-close">✕ Close</button>
+        
         <div id="rp-toc-content"></div>
     </aside>
 
@@ -658,41 +659,48 @@ My work in healthcare research is defined by a comprehensive and integrated appr
 
 
   <script>
+
     
 // This script automatically creates the Table of Contents
 // It looks for any <h2> or <h3> tags in your content and adds them to the menu
    
     document.addEventListener("DOMContentLoaded", function() {
         const tocContent = document.getElementById("rp-toc-content");
-        
-        // This line searches for H2/H3 tags that do NOT have the class "ignore-toc"
         const headings = document.querySelectorAll("main h2:not(.ignore-toc), main h3:not(.ignore-toc)");
         const tocList = document.createElement("ul");
-        
-        // This gets the current file's actual address to fix the URL jumping
         const currentPage = window.location.pathname;
 
         headings.forEach((heading, index) => {
-            // Assign a unique ID if one doesn't exist
-            if (!heading.id) {
-                heading.id = "rp-toc-section-" + index;
-            }
-
+            if (!heading.id) heading.id = "rp-toc-section-" + index;
             const listItem = document.createElement("li");
             const link = document.createElement("a");
-            
-            // This forces the link to point to the current page + the section ID
             link.href = currentPage + "#" + heading.id;
+            link.textContent = (heading.tagName === "H3" ? "- " : "■ ") + heading.textContent;
             
-            // Visual indicators
-            const symbol = (heading.tagName === "H3") ? "- " : "■ ";
-            link.textContent = symbol + heading.textContent;
+            // Add click event to close mobile menu when a link is clicked
+            link.addEventListener("click", () => {
+                if (window.innerWidth <= 1100) {
+                    document.querySelector(".rp-toc-sidebar").classList.remove("active");
+                }
+            });
             
             listItem.appendChild(link);
             tocList.appendChild(listItem);
         });
-
         tocContent.appendChild(tocList);
+
+        // Mobile Toggle Logic (New)
+        const mobileToggle = document.getElementById("rp-toc-mobile-toggle");
+        const tocSidebar = document.querySelector(".rp-toc-sidebar");
+        const closeBtn = document.getElementById("rp-toc-close");
+
+        mobileToggle.addEventListener("click", () => {
+            tocSidebar.classList.add("active");
+        });
+
+        closeBtn.addEventListener("click", () => {
+            tocSidebar.classList.remove("active");
+        });
     });
 </script>
   
