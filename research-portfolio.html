@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+  
 <head>
+  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -18,7 +20,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  
 </head>
+
+  
 <body data-page="research-portfolio.html">
 
   <nav data-component="navigation" class="navbar">
@@ -35,6 +40,32 @@
 
   <main>
 
+
+  <!-- ========== TABLE OF CONTENTS WRAPPER ========== -->
+  <div class="rp-toc-wrapper">
+
+    <!-- Mobile button (visible only on phones) -->
+    <button class="rp-toc-mobile-btn" id="rp-toc-mobile-btn">On this page ▾</button>
+
+    <!-- Overlay (behind mobile popup) -->
+    <div class="rp-toc-overlay" id="rp-toc-overlay"></div>
+
+    <!-- Mobile popup (filled by JS) -->
+    <div class="rp-toc-mobile-popup" id="rp-toc-mobile-popup">
+      <button class="search-modal-close-btn" id="rp-toc-popup-close" style="position:absolute; top:8px; right:8px;">&times;</button>
+      <ul class="rp-toc-list" id="rp-toc-mobile-list"></ul>
+    </div>
+
+    <!-- Desktop sidebar (filled by JS) -->
+    <aside class="rp-toc-sidebar" id="rp-toc-sidebar">
+      <div class="rp-toc-scroll-indicator top" id="rp-toc-indicator-top">▲</div>
+      <ul class="rp-toc-list" id="rp-toc-desktop-list"></ul>
+      <div class="rp-toc-scroll-indicator bottom" id="rp-toc-indicator-bottom">▼</div>
+    </aside>
+
+    <!-- Main content area (all existing sections go here) -->
+    <div class="rp-toc-content">
+    
     
     <!-- ===== INTRODUCTION (photo circle + bio, transparent) ===== -->
     
@@ -615,7 +646,13 @@ My work in healthcare research is defined by a comprehensive and integrated appr
       </div>
     </div>
 
-   
+
+
+
+    </div>     <!-- /.rp-toc-content -->
+  </div>     <!-- /.rp-toc-wrapper -->
+    
+      
   </main>
 
   <footer data-component="footer"></footer>
@@ -643,6 +680,80 @@ My work in healthcare research is defined by a comprehensive and integrated appr
     })();
   </script>
 
+
+ <!-- ========== Table of Content SCRIPTS ========== -->
+
+<script>
+  (function() {
+    const sidebarList = document.getElementById('rp-toc-desktop-list');
+    const mobileList = document.getElementById('rp-toc-mobile-list');
+    const sidebar = document.getElementById('rp-toc-sidebar');
+
+    // Collect headings that have data-toc
+    const headings = document.querySelectorAll('.rp-toc-content h2[data-toc], .rp-toc-content h3[data-toc]');
+    if (!headings.length) return;
+
+    // Build the ToC HTML
+    let html = '';
+    headings.forEach(h => {
+      const level = h.tagName.toLowerCase();   // h2 or h3
+      const isSub = (level === 'h3');
+      const id = h.getAttribute('id');
+      if (!id) return; // skip if no id
+      const text = h.textContent.trim();
+      html += `<li class="rp-toc-item ${isSub ? 'toc-sub' : ''}"><a href="#${id}">${text}</a></li>`;
+    });
+
+    // Populate both lists
+    if (sidebarList) sidebarList.innerHTML = html;
+    if (mobileList) mobileList.innerHTML = html;
+
+    // ---- Scroll indicators (desktop) ----
+    function updateIndicators() {
+      if (!sidebar) return;
+      const topIndicator = document.getElementById('rp-toc-indicator-top');
+      const bottomIndicator = document.getElementById('rp-toc-indicator-bottom');
+      if (!topIndicator || !bottomIndicator) return;
+
+      const canScrollDown = sidebar.scrollTop + sidebar.clientHeight < sidebar.scrollHeight - 2;
+      const canScrollUp = sidebar.scrollTop > 2;
+
+      topIndicator.style.display = canScrollUp ? 'block' : 'none';
+      bottomIndicator.style.display = canScrollDown ? 'block' : 'none';
+    }
+
+    if (sidebar) {
+      sidebar.addEventListener('scroll', updateIndicators);
+      // Initial check
+      window.addEventListener('load', updateIndicators);
+      setTimeout(updateIndicators, 100);
+    }
+
+    // ---- Mobile popup logic ----
+    const mobileBtn = document.getElementById('rp-toc-mobile-btn');
+    const mobilePopup = document.getElementById('rp-toc-mobile-popup');
+    const overlay = document.getElementById('rp-toc-overlay');
+    const closeBtn = document.getElementById('rp-toc-popup-close');
+
+    function openMobileToc() {
+      mobilePopup.style.display = 'block';
+      overlay.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileToc() {
+      mobilePopup.style.display = 'none';
+      overlay.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    if (mobileBtn) mobileBtn.addEventListener('click', openMobileToc);
+    if (closeBtn) closeBtn.addEventListener('click', closeMobileToc);
+    if (overlay) overlay.addEventListener('click', closeMobileToc);
+  })();
+</script>
+
+  
 
   <!-- ========== SCRIPTS (EXACT ORDER) ========== -->
   <script src="assets/js/utils.js"></script>
