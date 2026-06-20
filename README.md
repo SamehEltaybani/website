@@ -1,8 +1,17 @@
 # GENRAL CODING NOTES
 
 
+IGNORING HEADING in the Table of content 
+==============================================
+
+To hide a specific heading: If you have a heading you don't want in the menu, just add the class like this: <h2 class="ignore-toc">Hidden Heading</h2>. The script will now skip it.
+
+
+
 Bullet point list for each portfolio (can be inserted anywhere within any text) 
 Two versions for each portfolio (With and without heading)
+=====================================
+
 
 
 RESEARCH PORTFOLIO 
