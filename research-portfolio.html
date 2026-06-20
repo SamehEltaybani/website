@@ -663,44 +663,31 @@ My work in healthcare research is defined by a comprehensive and integrated appr
     
 // This script automatically creates the Table of Contents
 // It looks for any <h2> or <h3> tags in your content and adds them to the menu
-   
+     
     document.addEventListener("DOMContentLoaded", function() {
-        // --- 1. Existing ToC Generation ---
-        const tocContent = document.getElementById("rp-toc-content");
-        const headings = document.querySelectorAll("main h2:not(.ignore-toc), main h3:not(.ignore-toc)");
-        const tocList = document.createElement("ul");
-        const currentPage = window.location.pathname;
-
-        headings.forEach((heading, index) => {
-            if (!heading.id) heading.id = "rp-toc-section-" + index;
-            const listItem = document.createElement("li");
-            const link = document.createElement("a");
-            link.href = currentPage + "#" + heading.id;
-            link.textContent = (heading.tagName === "H3" ? "- " : "■ ") + heading.textContent;
-            
-            // Close mobile menu on click
-            link.addEventListener("click", () => {
-                if (window.innerWidth <= 1100) {
-                    document.getElementById("rp-toc-sidebar").classList.remove("active");
-                }
-            });
-            
-            listItem.appendChild(link);
-            tocList.appendChild(listItem);
-        });
-        tocContent.appendChild(tocList);
-
-        // --- 2. Mobile Toggle Logic ---
         const mobileToggle = document.getElementById("rp-toc-mobile-toggle");
         const tocSidebar = document.getElementById("rp-toc-sidebar");
         const closeBtn = document.getElementById("rp-toc-close");
+        const body = document.body;
 
+        // Function to toggle menu and body scroll
         mobileToggle.addEventListener("click", () => {
             tocSidebar.classList.add("active");
+            body.style.overflow = "hidden"; // Disables background scroll
         });
 
         closeBtn.addEventListener("click", () => {
             tocSidebar.classList.remove("active");
+            body.style.overflow = ""; // Re-enables background scroll
+        });
+
+        // Close when clicking a link
+        const tocLinks = document.querySelectorAll(".rp-toc-sidebar a");
+        tocLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                tocSidebar.classList.remove("active");
+                body.style.overflow = "";
+            });
         });
     });
 </script>
