@@ -4227,16 +4227,16 @@ pre code {
 
 /* ---- Sidebar (desktop) ---- */
 .rp-toc-sidebar {
-    flex: 0 0 220px;                /* fixed width – change the number if you want wider */
+    flex: 0 0 220px;
     max-width: 220px;
     position: sticky;
-    top: calc(var(--nav-height-desktop) + var(--breadcrumb-height) + 12px);
-    height: calc(100vh - var(--nav-height-desktop) - var(--breadcrumb-height) - 24px);
+    top: calc(var(--nav-height-desktop) + var(--breadcrumb-height));   /* flush below breadcrumb */
+    height: calc(100vh - var(--nav-height-desktop) - var(--breadcrumb-height));  /* full remaining height */
     overflow-y: auto;
     padding: var(--space-md);
     border-right: 1px solid var(--color-border);
     background-color: var(--color-white);
-    display: none;                  /* hidden on mobile (shown by media query) */
+    display: none;
 }
 
 .rp-toc-sidebar::-webkit-scrollbar {
@@ -4280,30 +4280,41 @@ pre code {
     font-size: 0.8rem;
 }
 
-.rp-toc-item.toc-sub a::before {
-    content: "– ";
+/* Heading (h2) – square marker */
+.rp-toc-item a::before {
+    content: "■ ";
     color: var(--color-gold);
+    font-size: 0.6rem;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+/* Sub‑heading (h3) – dot marker (override square) */
+.rp-toc-item.toc-sub a::before {
+    content: "● ";
+    color: var(--color-gold);
+    font-size: 0.9rem;
+    vertical-align: middle;
+    margin-right: 4px;
 }
 
 /* Scroll indicators inside sidebar */
 .rp-toc-scroll-indicator {
     display: none;
     text-align: center;
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: var(--color-gold);
-    padding: 2px 0;
+    padding: 4px 0;
+    background-color: var(--color-white);
     position: sticky;
-    z-index: 2;
+    z-index: 3;
 }
 .rp-toc-scroll-indicator.top {
     top: 0;
-    background: linear-gradient(to bottom, var(--color-white) 60%, transparent);
 }
 .rp-toc-scroll-indicator.bottom {
     bottom: 0;
-    background: linear-gradient(to top, var(--color-white) 60%, transparent);
 }
-
 /* ---- Main content area next to sidebar ---- */
 .rp-toc-content {
     flex: 1;
@@ -4312,9 +4323,12 @@ pre code {
 
 /* ---- Mobile button (hidden on desktop) ---- */
 .rp-toc-mobile-btn {
-    display: none;                  /* shown only on mobile */
-    width: 100%;
-    padding: var(--space-sm) var(--space-md);
+    display: none;
+    position: sticky;
+    top: calc(var(--nav-height-mobile) + var(--breadcrumb-height) + 8px);
+    left: var(--space-md);
+    width: auto;
+    padding: var(--space-xs) var(--space-md);
     background: var(--color-white);
     border: 1px solid var(--color-gold);
     border-radius: 50px;
@@ -4323,6 +4337,8 @@ pre code {
     text-align: center;
     cursor: pointer;
     margin-bottom: var(--space-sm);
+    z-index: 50;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 /* ---- Mobile popup (hidden by default) ---- */
