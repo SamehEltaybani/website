@@ -4214,5 +4214,178 @@ pre code {
 
 
 /* ============================================================================
+   RESEARCH PORTFOLIO – TABLE OF CONTENTS
+   ============================================================================ */
+
+/* Wrapper holds sidebar + content */
+.rp-toc-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    max-width: 100%;
+}
+
+/* ---- Sidebar (desktop) ---- */
+.rp-toc-sidebar {
+    flex: 0 0 220px;                /* fixed width – change the number if you want wider */
+    max-width: 220px;
+    position: sticky;
+    top: calc(var(--nav-height-desktop) + var(--breadcrumb-height) + 12px);
+    height: calc(100vh - var(--nav-height-desktop) - var(--breadcrumb-height) - 24px);
+    overflow-y: auto;
+    padding: var(--space-md);
+    border-right: 1px solid var(--color-border);
+    background-color: var(--color-white);
+    display: none;                  /* hidden on mobile (shown by media query) */
+}
+
+.rp-toc-sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+.rp-toc-sidebar::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 4px;
+}
+
+/* ToC list inside sidebar */
+.rp-toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.rp-toc-item {
+    margin-bottom: 2px;
+}
+
+.rp-toc-item a {
+    display: block;
+    padding: 4px var(--space-xs);
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.rp-toc-item a:hover,
+.rp-toc-item a.active {
+    background-color: var(--color-bg-alt);
+    color: var(--color-midnight-blue);
+}
+
+/* Sub‑headings (h3) – indented, dash marker */
+.rp-toc-item.toc-sub a {
+    padding-left: var(--space-lg);
+    font-size: 0.8rem;
+}
+
+.rp-toc-item.toc-sub a::before {
+    content: "– ";
+    color: var(--color-gold);
+}
+
+/* Scroll indicators inside sidebar */
+.rp-toc-scroll-indicator {
+    display: none;
+    text-align: center;
+    font-size: 1rem;
+    color: var(--color-gold);
+    padding: 2px 0;
+    position: sticky;
+    z-index: 2;
+}
+.rp-toc-scroll-indicator.top {
+    top: 0;
+    background: linear-gradient(to bottom, var(--color-white) 60%, transparent);
+}
+.rp-toc-scroll-indicator.bottom {
+    bottom: 0;
+    background: linear-gradient(to top, var(--color-white) 60%, transparent);
+}
+
+/* ---- Main content area next to sidebar ---- */
+.rp-toc-content {
+    flex: 1;
+    min-width: 0;                   /* prevent overflow */
+}
+
+/* ---- Mobile button (hidden on desktop) ---- */
+.rp-toc-mobile-btn {
+    display: none;                  /* shown only on mobile */
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-white);
+    border: 1px solid var(--color-gold);
+    border-radius: 50px;
+    color: var(--color-midnight-blue);
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: var(--space-sm);
+}
+
+/* ---- Mobile popup (hidden by default) ---- */
+.rp-toc-mobile-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 400px;
+    max-height: 70vh;
+    overflow-y: auto;
+    background: var(--color-white);
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    z-index: 1100;
+    padding: var(--space-lg);
+}
+
+.rp-toc-mobile-popup .rp-toc-list {
+    margin-top: var(--space-sm);
+}
+
+/* Overlay behind mobile popup */
+.rp-toc-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1099;
+}
+
+/* ---- Show the right elements on the right screens ---- */
+@media (min-width: 1101px) {
+    .rp-toc-sidebar {
+        display: block;
+    }
+    .rp-toc-mobile-btn,
+    .rp-toc-mobile-popup,
+    .rp-toc-overlay {
+        display: none !important;
+    }
+}
+
+@media (max-width: 1100px) {
+    .rp-toc-wrapper {
+        flex-direction: column;
+    }
+    .rp-toc-sidebar {
+        display: none;
+    }
+    .rp-toc-mobile-btn {
+        display: block;
+    }
+    .rp-toc-content {
+        padding-top: var(--space-sm);
+    }
+}
+
+/* ============================================================================
    END OF THE main.css FILE
    ============================================================================ */
