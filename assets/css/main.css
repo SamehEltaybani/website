@@ -4305,7 +4305,7 @@ h2, h3 {
     /* Make the Toggle Button Sticky */
     #rp-toc-mobile-toggle {
         position: fixed;
-        top: 110px;     
+        top: 100px;     
         left: 0;
         z-index: 998;
         width: auto;    /* Makes the button only as wide as its text */
