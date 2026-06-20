@@ -50,14 +50,18 @@
     <!-- Overlay (behind mobile popup) -->
     <div class="rp-toc-overlay" id="rp-toc-overlay"></div>
 
-    <!-- Mobile popup (filled by JS) -->
+        <!-- Mobile popup (filled by JS) -->
     <div class="rp-toc-mobile-popup" id="rp-toc-mobile-popup">
-      <button class="search-modal-close-btn" id="rp-toc-popup-close" style="position:absolute; top:8px; right:8px;">&times;</button>
+      <div class="rp-toc-popup-header" style="position: sticky; top: 0; background: var(--color-white); z-index: 5; padding-bottom: var(--space-sm); border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center;">
+        <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--color-midnight-blue); margin: 0;">Table of Contents</h4>
+        <button class="search-modal-close-btn" id="rp-toc-popup-close" style="position: static;">&times;</button>
+      </div>
       <ul class="rp-toc-list" id="rp-toc-mobile-list"></ul>
     </div>
 
-    <!-- Desktop sidebar (filled by JS) -->
+       <!-- Desktop sidebar (filled by JS) -->
     <aside class="rp-toc-sidebar" id="rp-toc-sidebar">
+      <h4 style="font-size: 0.9rem; font-weight: 700; color: var(--color-midnight-blue); margin: 0 0 var(--space-sm) 0; padding-bottom: var(--space-xs); border-bottom: 1px solid var(--color-border);">Table of Contents</h4>
       <div class="rp-toc-scroll-indicator top" id="rp-toc-indicator-top">▲</div>
       <ul class="rp-toc-list" id="rp-toc-desktop-list"></ul>
       <div class="rp-toc-scroll-indicator bottom" id="rp-toc-indicator-bottom">▼</div>
@@ -689,24 +693,74 @@ My work in healthcare research is defined by a comprehensive and integrated appr
     const mobileList = document.getElementById('rp-toc-mobile-list');
     const sidebar = document.getElementById('rp-toc-sidebar');
 
-    // Collect headings that have data-toc
     const headings = document.querySelectorAll('.rp-toc-content h2[data-toc], .rp-toc-content h3[data-toc]');
     if (!headings.length) return;
 
-    // Build the ToC HTML
-    let html = '';
+    // Group sub‑headings under their parent h2
+    const tocItems = [];
+    let currentParent = null;
     headings.forEach(h => {
-      const level = h.tagName.toLowerCase();   // h2 or h3
-      const isSub = (level === 'h3');
+      const level = h.tagName.toLowerCase();
       const id = h.getAttribute('id');
-      if (!id) return; // skip if no id
       const text = h.textContent.trim();
-      html += `<li class="rp-toc-item ${isSub ? 'toc-sub' : ''}"><a href="#${id}">${text}</a></li>`;
+      if (!id) return;
+
+      if (level === 'h2') {
+        currentParent = { id, text, subs: [] };
+        tocItems.push(currentParent);
+      } else if (level === 'h3' && currentParent) {
+        currentParent.subs.push({ id, text });
+      }
     });
 
+    // Build the HTML for both lists
+    function buildTocHTML() {
+      let html = '';
+      tocItems.forEach(parent => {
+        const hasSubs = parent.subs.length > 0;
+        html += `<li class="rp-toc-item">`;
+        html += `<a href="#${parent.id}">${parent.text}</a>`;
+        if (hasSubs) {
+          html += `<span class="rp-toc-toggle" data-parent="${parent.id}" style="cursor:pointer; float:right; color:var(--color-gold); font-weight:700; margin-left:4px;">+</span>`;
+        }
+        html += `</li>`;
+
+        if (hasSubs) {
+          html += `<li class="rp-toc-subgroup" id="subgroup-${parent.id}" style="display:none;">`;
+          html += `<ul class="rp-toc-sublist" style="list-style:none; padding:0; margin:0;">`;
+          parent.subs.forEach(sub => {
+            html += `<li class="rp-toc-item toc-sub"><a href="#${sub.id}">${sub.text}</a></li>`;
+          });
+          html += `</ul></li>`;
+        }
+      });
+      return html;
+    }
+
+    const tocHTML = buildTocHTML();
+
     // Populate both lists
-    if (sidebarList) sidebarList.innerHTML = html;
-    if (mobileList) mobileList.innerHTML = html;
+    if (sidebarList) sidebarList.innerHTML = tocHTML;
+    if (mobileList) mobileList.innerHTML = tocHTML;
+
+    // Toggle sub‑headings
+    document.querySelectorAll('.rp-toc-toggle').forEach(toggle => {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const parentId = this.getAttribute('data-parent');
+        const subgroup = document.getElementById('subgroup-' + parentId);
+        if (subgroup) {
+          if (subgroup.style.display === 'none') {
+            subgroup.style.display = 'list-item';
+            this.textContent = '–';
+          } else {
+            subgroup.style.display = 'none';
+            this.textContent = '+';
+          }
+        }
+      });
+    });
 
     // ---- Scroll indicators (desktop) ----
     function updateIndicators() {
@@ -724,7 +778,6 @@ My work in healthcare research is defined by a comprehensive and integrated appr
 
     if (sidebar) {
       sidebar.addEventListener('scroll', updateIndicators);
-      // Initial check
       window.addEventListener('load', updateIndicators);
       setTimeout(updateIndicators, 100);
     }
