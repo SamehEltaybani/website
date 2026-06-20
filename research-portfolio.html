@@ -699,29 +699,32 @@ My work in healthcare research is defined by a comprehensive and integrated appr
 
 
 // --- MOBILE TOC FUNCTIONALITY ---
-        const mobileToggle = document.getElementById("rp-toc-mobile-toggle");
-        const closeButton = document.getElementById("rp-toc-close");
-        const sidebar = document.querySelector(".rp-toc-sidebar");
+const mobileToggle = document.getElementById("rp-toc-mobile-toggle");
+const closeButton = document.getElementById("rp-toc-close");
+const sidebar = document.querySelector(".rp-toc-sidebar");
 
-        if (mobileToggle && sidebar) {
-            mobileToggle.addEventListener("click", function() {
-                sidebar.classList.add("active");
-            });
-        }
+if (mobileToggle && sidebar) {
+    mobileToggle.addEventListener("click", function() {
+        sidebar.classList.add("active");
+        document.body.classList.add("toc-open"); // Locks the background scroll
+    });
+}
 
-        if (closeButton && sidebar) {
-            closeButton.addEventListener("click", function() {
-                sidebar.classList.remove("active");
-            });
-        }
+if (closeButton && sidebar) {
+    closeButton.addEventListener("click", function() {
+        sidebar.classList.remove("active");
+        document.body.classList.remove("toc-open"); // Unlocks the background scroll
+    });
+}
 
-        // Optional: Close the TOC when a link is clicked (so the user sees the page jump)
-        const tocLinks = document.querySelectorAll("#rp-toc-content a");
-        tocLinks.forEach(link => {
-            link.addEventListener("click", () => {
-                sidebar.classList.remove("active");
-            });
-        });
+// Close the TOC when a link is clicked
+const tocLinks = document.querySelectorAll("#rp-toc-content a");
+tocLinks.forEach(link => {
+    link.addEventListener("click", () => {
+        sidebar.classList.remove("active");
+        document.body.classList.remove("toc-open"); // Unlocks the background scroll
+    });
+});
       
       
     });
