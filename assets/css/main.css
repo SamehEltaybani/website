@@ -4305,7 +4305,7 @@ h2, h3 {
     /* Make the Toggle Button Sticky */
    #rp-toc-mobile-toggle {
     position: fixed; /* Fixes it to the screen */
-    top: 150px;       /* IMPORTANT: Adjust this value to clear your nav bar */
+    top: 80px;       /* IMPORTANT: Adjust this value to clear your nav bar */
     left: 0;
     z-index: 998;    /* Keeps it above page content */
     width: 100%;
