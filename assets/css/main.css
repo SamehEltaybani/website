@@ -4303,20 +4303,25 @@ h2, h3 {
     }
 
     /* Make the Toggle Button Sticky */
-   #rp-toc-mobile-toggle {
-    position: fixed; /* Fixes it to the screen */
-    top: 100px;       /* IMPORTANT: Adjust this value to clear your nav bar */
-    left: 0;
-    z-index: 998;    /* Keeps it above page content */
-    width: 100%;
-    padding: 15px;
-    background: var(--color-midnight-blue);
-    color: white;
-    text-align: left;
-    cursor: pointer;
-    border: none;
-    font-weight: bold;
-}
+    #rp-toc-mobile-toggle {
+        position: fixed;
+        top: 110px;     
+        left: 0;
+        z-index: 998;
+        width: auto;    /* Makes the button only as wide as its text */
+        max-width: 80%; /* Prevents it from going off-screen if text is long */
+        padding: 10px 20px;
+        background: var(--color-midnight-blue);
+        color: white;
+        text-align: left;
+        cursor: pointer;
+        border: none;
+        font-weight: bold;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 15px; 
+    }
 
     /* Hide the sidebar container until clicked */
     .rp-toc-sidebar {
