@@ -37,6 +37,18 @@ main {
     flex: 1 0 auto;
 }
 
+
+/* This allows the background to stretch to the screen edges */
+.full-width-bg {
+    width: 100vw;            /* 100% of the viewport width */
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    padding: 20px 0;        /* Adds breathing room inside the colored area */
+}
+
 /* ============================================================================
    DESIGN TOKENS 
    ============================================================================ */
