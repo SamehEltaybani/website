@@ -1,4 +1,4 @@
-# website
+# GENRAL CODING NOTES
 
 
 Bullet point list for each portfolio (can be inserted anywhere within any text) 
