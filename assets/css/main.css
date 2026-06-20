@@ -4214,18 +4214,27 @@ pre code {
 .rp-toc-sidebar {
     flex: 0 0 250px;
     position: sticky;
-    top: 20px; /* Adjust this value if it overlaps with your breadcrumbs */
-    max-height: calc(100vh - 40px); /* Keeps it within screen height */
-    overflow-y: auto; /* Adds scroll if content is long */
-    padding-right: var(--space-sm);
+    top: 20px;
+    max-height: calc(100vh - 40px);
+    display: flex; /* Added to manage vertical layout */
+    flex-direction: column; /* Stacks Title and List */
 }
 
+/* This keeps the title fixed at the top */
 .rp-toc-title {
+    flex-shrink: 0; /* Ensures the title doesn't shrink */
     font-size: 1.2rem;
     color: var(--color-midnight-blue);
     margin-bottom: var(--space-md);
     padding-bottom: var(--space-xs);
     border-bottom: 2px solid var(--color-gold);
+}
+
+/* This makes ONLY the list scrollable */
+#rp-toc-content {
+    overflow-y: auto; /* Scroll only the content */
+    flex-grow: 1; /* Fills remaining space */
+    overscroll-behavior: contain; /* This prevents the sidebar from scrolling the main page */
 }
 
 /* 3. The List Styles */
@@ -4260,6 +4269,10 @@ pre code {
 }
 
 
+/* Offsets the jump so the heading isn't hidden under the nav/breadcrumbs */
+h2, h3 {
+    scroll-margin-top: 120px; /* Adjust this number to match your header/breadcrumb height */
+}
 
 /* ============================================================================
    END OF THE main.css FILE
