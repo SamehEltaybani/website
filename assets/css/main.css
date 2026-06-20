@@ -4290,45 +4290,31 @@ h2, h3 {
 
 /* Mobile version */
 
-/* --- Mobile Only (Screens 1100px or smaller) --- */
+/* --- Desktop: Force everything to hide by default --- */
+.rp-mobile-only {
+    display: none !important;
+}
+
+/* --- Mobile: Only show when screen is narrow --- */
 @media (max-width: 1100px) {
-    /* Show buttons only on mobile */
-    #rp-toc-mobile-toggle, #rp-toc-close {
+    .rp-mobile-only {
         display: block !important;
     }
 
-    /* Force the Toggle Button to stay pinned to the top */
     #rp-toc-mobile-toggle {
-        position: fixed !important; /* Forces it to ignore parent container */
+        position: fixed !important;
         top: 0;
         left: 0;
         width: 100%;
-        height: 50px; /* Set a specific height */
-        padding: 0 15px;
+        height: 50px;
         background: var(--color-midnight-blue);
         color: white;
-        text-align: left;
-        cursor: pointer;
+        z-index: 999;
         border: none;
-        font-weight: bold;
-        z-index: 998;
-        display: flex !important;
-        align-items: center;
     }
 
-    /* Add top padding to the content so the button doesn't cover your breadcrumbs */
-    .rp-toc-wrapper {
-        padding-top: 50px; 
-    }
-
-    /* Keep existing sidebar styles below... */
     .rp-toc-sidebar {
-        display: none !important; 
-    }
-
-    .rp-toc-sidebar.active {
-        display: flex !important;
-        flex-direction: column;
+        display: none !important; /* Hide sidebar until active */
         position: fixed;
         top: 0;
         left: 0;
@@ -4338,6 +4324,11 @@ h2, h3 {
         z-index: 9999;
         padding: 20px;
         overflow-y: auto;
+    }
+
+    .rp-toc-sidebar.active {
+        display: flex !important;
+        flex-direction: column;
     }
 }
 
