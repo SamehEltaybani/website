@@ -4290,7 +4290,7 @@ h2, h3 {
 
 /* Mobile version */
 
-/* 1. Ensure the sidebar stays hidden on desktop and the toggle button is gone */
+/* 1. Ensure the toggle and close buttons are hidden by default on desktop */
 #rp-toc-mobile-toggle, #rp-toc-close {
     display: none;
 }
@@ -4300,6 +4300,8 @@ h2, h3 {
     /* Show mobile buttons */
     #rp-toc-mobile-toggle {
         display: block;
+        position: sticky; /* Keeps it visible while scrolling */
+        top: var(--breadcrumb-height, 50px); /* Adjust based on your header/breadcrumb */
         width: 100%;
         padding: 15px;
         background: var(--color-midnight-blue);
@@ -4308,6 +4310,7 @@ h2, h3 {
         cursor: pointer;
         border: none;
         font-weight: bold;
+        z-index: 998; /* Stays below the active menu overlay */
     }
 
     #rp-toc-close {
@@ -4331,7 +4334,7 @@ h2, h3 {
         background: white;
         z-index: 9999;
         padding: 20px;
-        overflow-y: auto; /* Enables scrolling inside the menu */
+        overflow-y: auto;
     }
 }
 
