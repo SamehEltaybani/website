@@ -665,23 +665,43 @@ My work in healthcare research is defined by a comprehensive and integrated appr
 // It looks for any <h2> or <h3> tags in your content and adds them to the menu
      
     document.addEventListener("DOMContentLoaded", function() {
+        // --- 1. GENERATE THE TABLE OF CONTENTS ---
+        const tocContent = document.getElementById("rp-toc-content");
+        const headings = document.querySelectorAll("main h2:not(.ignore-toc), main h3:not(.ignore-toc)");
+        const tocList = document.createElement("ul");
+        const currentPage = window.location.pathname;
+
+        headings.forEach((heading, index) => {
+            if (!heading.id) {
+                heading.id = "rp-toc-section-" + index;
+            }
+            const listItem = document.createElement("li");
+            const link = document.createElement("a");
+            link.href = currentPage + "#" + heading.id;
+            link.textContent = (heading.tagName === "H3" ? "- " : "■ ") + heading.textContent;
+            
+            listItem.appendChild(link);
+            tocList.appendChild(listItem);
+        });
+        tocContent.appendChild(tocList);
+
+        // --- 2. MOBILE TOGGLE LOGIC ---
         const mobileToggle = document.getElementById("rp-toc-mobile-toggle");
         const tocSidebar = document.getElementById("rp-toc-sidebar");
         const closeBtn = document.getElementById("rp-toc-close");
         const body = document.body;
 
-        // Function to toggle menu and body scroll
         mobileToggle.addEventListener("click", () => {
             tocSidebar.classList.add("active");
-            body.style.overflow = "hidden"; // Disables background scroll
+            body.style.overflow = "hidden";
         });
 
         closeBtn.addEventListener("click", () => {
             tocSidebar.classList.remove("active");
-            body.style.overflow = ""; // Re-enables background scroll
+            body.style.overflow = "";
         });
 
-        // Close when clicking a link
+        // Close menu when clicking a ToC link
         const tocLinks = document.querySelectorAll(".rp-toc-sidebar a");
         tocLinks.forEach(link => {
             link.addEventListener("click", () => {
