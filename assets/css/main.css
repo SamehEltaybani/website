@@ -4326,9 +4326,17 @@ h2, h3 {
         overflow-y: auto;
     }
 
-    .rp-toc-sidebar.active {
-        display: flex !important;
-        flex-direction: column;
+   .rp-toc-sidebar.active {
+        display: block !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: white;
+        z-index: 9999;
+        padding: 20px;
+        overflow-y: auto;
     }
 }
 
