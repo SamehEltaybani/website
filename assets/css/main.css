@@ -4214,8 +4214,8 @@ pre code {
 .rp-toc-sidebar {
     flex: 0 0 250px;
     position: sticky;
-    top: 120px;
-    max-height: calc(100vh - 140px);
+    top: 130px;
+    max-height: calc(100vh - 150px);
     display: flex; 
     flex-direction: column; 
 }
@@ -4271,7 +4271,7 @@ pre code {
 
 /* Offsets the jump so the heading isn't hidden under the nav/breadcrumbs */
 h2, h3 {
-    scroll-margin-top: 130px; /* Adjust this number to match your header/breadcrumb height */
+    scroll-margin-top: 140px; /* Adjust this number to match your header/breadcrumb height */
 }
 
 /* ============================================================================
