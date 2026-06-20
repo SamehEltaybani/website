@@ -38,7 +38,20 @@
   <div data-component="breadcrumb" class="breadcrumb-bar"
        style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
 
-  <main> 
+
+
+
+
+
+<div class="rp-toc-wrapper">
+
+    <aside class="rp-toc-sidebar" id="rp-toc-sidebar">
+        <h2 class="rp-toc-title">Table of Contents</h2>
+        <div id="rp-toc-content"></div>
+    </aside>
+
+<main class="rp-toc-main-content">
+         
     
     <!-- ===== INTRODUCTION (photo circle + bio, transparent) ===== -->
     
@@ -609,9 +622,14 @@ My work in healthcare research is defined by a comprehensive and integrated appr
       </div>
     </div>
 
-    
-      
-  </main>
+
+  
+
+    </main>
+
+</div>
+
+  
 
   <footer data-component="footer"></footer>
 
@@ -639,7 +657,32 @@ My work in healthcare research is defined by a comprehensive and integrated appr
   </script>
 
 
+<script>
+    // This script automatically creates the Table of Contents
+    // It looks for any <h2> or <h3> tags in your content and adds them to the menu
+    document.addEventListener("DOMContentLoaded", function() {
+        const tocContent = document.getElementById("rp-toc-content");
+        const headings = document.querySelectorAll(".rp-toc-main-content h2, .rp-toc-main-content h3");
+        const tocList = document.createElement("ul");
 
+        headings.forEach((heading, index) => {
+            // Create a unique ID for the heading if it doesn't have one
+            if (!heading.id) {
+                heading.id = "rp-toc-section-" + index;
+            }
+
+            const listItem = document.createElement("li");
+            const link = document.createElement("a");
+            link.href = "#" + heading.id;
+            link.textContent = (heading.tagName === "H3" ? "- " : "■ ") + heading.textContent;
+            
+            listItem.appendChild(link);
+            tocList.appendChild(listItem);
+        });
+
+        tocContent.appendChild(tocList);
+    });
+</script>
   
 
   <!-- ========== SCRIPTS ========== -->
