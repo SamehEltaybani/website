@@ -3455,9 +3455,9 @@ pre code {
     gap: var(--space-md);
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 768px) {
     .data-quickgrid-container {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
     }
 }
 
@@ -3491,11 +3491,6 @@ pre code {
     color: var(--color-midnight-blue);
 }
 
-.data-quickgrid-card p {
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-    margin: 0;
-}
 
 /* ---- Themed rows (replaces old inline styles) ---- */
 
@@ -3743,9 +3738,9 @@ pre code {
 }
 
 
-@media (max-width: 1100px) {
+@media (max-width: 768px) {
     .tp-quickgrid-container {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
     }
 }
 
@@ -3777,12 +3772,6 @@ pre code {
     font-size: 1.05rem;
     margin: var(--space-sm) 0 var(--space-xs);
     color: var(--color-midnight-blue);
-}
-
-.tp-quickgrid-card p {
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-    margin: 0;
 }
 
 /* ---- 10 Themed Rows ---- */
@@ -4040,9 +4029,9 @@ pre code {
     gap: var(--space-md);
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 768px) {
     .rp-quickgrid-container {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
     }
 }
 
@@ -4076,11 +4065,6 @@ pre code {
     color: var(--color-midnight-blue);
 }
 
-.rp-quickgrid-card p {
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-    margin: 0;
-}
 
 /* ---- 10 Themed Rows ---- */
 .rp-theme-row {
