@@ -4214,8 +4214,8 @@ pre code {
 .rp-toc-sidebar {
     flex: 0 0 250px;
     position: sticky;
-    top: 100px;
-    max-height: calc(100vh - 120px);
+    top: 120px;
+    max-height: calc(100vh - 140px);
     display: flex; 
     flex-direction: column; 
 }
