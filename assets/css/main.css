@@ -194,14 +194,20 @@ main {
 /* This allows the background to stretch to the screen edges (used mainly for the portfolio pages to overcome the limited wrapper used for the ToC)*/
 
 .full-width-bg {
-    width: 100vw;            /* 100% of the viewport width */
     position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    display: flex;
-    justify-content: center;  
+    z-index: 1;
+}
+
+/* This creates a background layer that stretches without moving your cards */
+.full-width-bg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -50vw; /* Pulls only the background to the left */
+    right: -50vw; /* Pulls only the background to the right */
+    bottom: 0;
+    background-color: #f3e9fc; /* Your desired color */
+    z-index: -1; /* Pushes the background behind your content */
 }
 
 /* ============================================================================
