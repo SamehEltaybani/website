@@ -44,15 +44,15 @@
 
 
 <div class="rp-toc-wrapper">
-  <button id="rp-toc-mobile-toggle">Table of Contents ▼</button>
-
+    <button id="rp-toc-mobile-toggle" class="rp-mobile-only">Table of Contents ▼</button>
+    
     <aside class="rp-toc-sidebar" id="rp-toc-sidebar">
-      <button id="rp-toc-close">✕ Close</button>
+        <button id="rp-toc-close" class="rp-mobile-only">✕ Close</button>
         <h2 class="rp-toc-title">Table of Contents</h2>
         <div id="rp-toc-content"></div>
     </aside>
 
-<main class="rp-toc-main-content">
+    <main class="rp-toc-main-content">
          
     
     <!-- ===== INTRODUCTION (photo circle + bio, transparent) ===== -->
@@ -665,49 +665,35 @@ My work in healthcare research is defined by a comprehensive and integrated appr
 // It looks for any <h2> or <h3> tags in your content and adds them to the menu
      
     document.addEventListener("DOMContentLoaded", function() {
-        // --- 1. GENERATE THE TABLE OF CONTENTS ---
+        // Generation Logic remains the same...
         const tocContent = document.getElementById("rp-toc-content");
         const headings = document.querySelectorAll("main h2:not(.ignore-toc), main h3:not(.ignore-toc)");
         const tocList = document.createElement("ul");
-        const currentPage = window.location.pathname;
-
+        
         headings.forEach((heading, index) => {
-            if (!heading.id) {
-                heading.id = "rp-toc-section-" + index;
-            }
-            const listItem = document.createElement("li");
-            const link = document.createElement("a");
-            link.href = currentPage + "#" + heading.id;
-            link.textContent = (heading.tagName === "H3" ? "- " : "■ ") + heading.textContent;
-            
-            listItem.appendChild(link);
-            tocList.appendChild(listItem);
+            if (!heading.id) heading.id = "rp-toc-section-" + index;
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = "#" + heading.id;
+            a.textContent = (heading.tagName === "H3" ? "- " : "■ ") + heading.textContent;
+            li.appendChild(a);
+            tocList.appendChild(li);
         });
         tocContent.appendChild(tocList);
 
-        // --- 2. MOBILE TOGGLE LOGIC ---
+        // Mobile Interaction
         const mobileToggle = document.getElementById("rp-toc-mobile-toggle");
         const tocSidebar = document.getElementById("rp-toc-sidebar");
         const closeBtn = document.getElementById("rp-toc-close");
-        const body = document.body;
 
         mobileToggle.addEventListener("click", () => {
             tocSidebar.classList.add("active");
-            body.style.overflow = "hidden";
+            document.body.style.overflow = "hidden";
         });
 
         closeBtn.addEventListener("click", () => {
             tocSidebar.classList.remove("active");
-            body.style.overflow = "";
-        });
-
-        // Close menu when clicking a ToC link
-        const tocLinks = document.querySelectorAll(".rp-toc-sidebar a");
-        tocLinks.forEach(link => {
-            link.addEventListener("click", () => {
-                tocSidebar.classList.remove("active");
-                body.style.overflow = "";
-            });
+            document.body.style.overflow = "";
         });
     });
 </script>
