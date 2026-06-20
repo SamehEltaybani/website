@@ -4254,6 +4254,16 @@ pre code {
     margin: 0;
 }
 
+.rp-toc-toggle {
+    display: inline-block;
+    width: 18px;
+    text-align: center;
+    font-size: 0.8rem;
+    line-height: 1;
+    user-select: none;
+}
+
+
 .rp-toc-item {
     margin-bottom: 2px;
 }
