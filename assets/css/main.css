@@ -4205,11 +4205,18 @@ pre code {
 .rp-toc-wrapper {
     display: flex;
     max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
     padding: var(--space-md);
     gap: var(--space-lg);
     align-items: flex-start;
 }
+
+.rp-toc-main-content {
+    flex: 1;           /* Tells the content: "take up all the space left over" */
+    min-width: 0;      /* Ensures the text doesn't push the sidebar out of view */
+}
+
 
 /* 2. The Sidebar Sidebar: Sticky and fixed width */
 .rp-toc-sidebar {
