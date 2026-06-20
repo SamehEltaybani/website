@@ -664,24 +664,29 @@ My work in healthcare research is defined by a comprehensive and integrated appr
 // This script automatically creates the Table of Contents
 // It looks for any <h2> or <h3> tags in your content and adds them to the menu
      
+
     document.addEventListener("DOMContentLoaded", function() {
-        // Generation Logic remains the same...
+        // --- 1. GENERATE THE TABLE OF CONTENTS ---
         const tocContent = document.getElementById("rp-toc-content");
         const headings = document.querySelectorAll("main h2:not(.ignore-toc), main h3:not(.ignore-toc)");
         const tocList = document.createElement("ul");
-        
+
         headings.forEach((heading, index) => {
-            if (!heading.id) heading.id = "rp-toc-section-" + index;
-            const li = document.createElement("li");
-            const a = document.createElement("a");
-            a.href = "#" + heading.id;
-            a.textContent = (heading.tagName === "H3" ? "- " : "■ ") + heading.textContent;
-            li.appendChild(a);
-            tocList.appendChild(li);
+            if (!heading.id) {
+                heading.id = "rp-toc-section-" + index;
+            }
+            const listItem = document.createElement("li");
+            const link = document.createElement("a");
+            // Use only the hash ID so it stays on the current page
+            link.href = "#" + heading.id; 
+            link.textContent = (heading.tagName === "H3" ? "- " : "■ ") + heading.textContent;
+            
+            listItem.appendChild(link);
+            tocList.appendChild(listItem);
         });
         tocContent.appendChild(tocList);
 
-        // Mobile Interaction
+        // --- 2. MOBILE TOGGLE LOGIC ---
         const mobileToggle = document.getElementById("rp-toc-mobile-toggle");
         const tocSidebar = document.getElementById("rp-toc-sidebar");
         const closeBtn = document.getElementById("rp-toc-close");
@@ -694,6 +699,15 @@ My work in healthcare research is defined by a comprehensive and integrated appr
         closeBtn.addEventListener("click", () => {
             tocSidebar.classList.remove("active");
             document.body.style.overflow = "";
+        });
+
+        // Close menu when clicking a ToC link
+        const tocLinks = tocSidebar.querySelectorAll("a");
+        tocLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                tocSidebar.classList.remove("active");
+                document.body.style.overflow = "";
+            });
         });
     });
 </script>
