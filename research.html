@@ -275,11 +275,31 @@ My research focuses on gerontological nursing, long‑term care quality, and evi
     <!-- FEATURE BUTTONS (3 stacked, centred) -->
     
 <section class="section" style="padding-bottom: var(--space-lg);>
-  <div class="container">
-    <div id="feature-buttons-container" class="feature-buttons-container">
-      <!-- Rendered by JavaScript -->
+ <div class="feature-buttons-container">
+  <a href="blog/blog-15.html" class="btn-feature" data-aos="fade-up" style="padding: var(--space-sm) var(--space-md);">
+    <i class="fas fa-newspaper btn-feature-icon" style="width:40px; height:40px; font-size:1.4rem;"></i>
+    <div class="btn-feature-text">
+      <div class="btn-feature-title">Read my insights about exceptional research</div>
     </div>
+    <span class="btn-feature-arrow">›</span>
+  </a>
+
+  <a href="research-portfolio.html" class="btn-feature" data-aos="fade-up" style="padding: var(--space-sm) var(--space-md);">
+    <i class="fas fa-folder-open btn-feature-icon" style="width:40px; height:40px; font-size:1.4rem;"></i>
+    <div class="btn-feature-text">
+      <div class="btn-feature-title">Explore my research portfolio</div>
     </div>
+    <span class="btn-feature-arrow">›</span>
+  </a>
+
+  <a href="assets/doc/temp.pdf" class="btn-feature" data-aos="fade-up" style="padding: var(--space-sm) var(--space-md);">
+    <i class="fas fa-image btn-feature-icon" style="width:40px; height:40px; font-size:1.4rem;"></i>
+    <div class="btn-feature-text">
+      <div class="btn-feature-title">Infographic summary</div>
+    </div>
+    <span class="btn-feature-arrow">›</span>
+  </a>
+</div>
 </section>
  
 
@@ -584,82 +604,7 @@ My research focuses on gerontological nursing, long‑term care quality, and evi
       }
 
       
-        // ------------------------------------------------
-        // FEATURE BUTTONS (simplified)
-        // ------------------------------------------------
-      
-              const featureButtonsData = [
-                {
-                  icon: 'fas fa-newspaper',
-                  title: 'Read my insights about exceptional research',
-                  description: '',
-                  link: 'blog/blog-15.html'
-                },
-                {
-                  icon: 'fas fa-folder-open',
-                  title: 'Explore my research portfolio',
-                  description: '',
-                  link: 'research-portfolio.html'
-                },
-                {
-                  icon: 'fas fa-image',
-                  title: 'Infographic summary',
-                  description: '',
-                  link: 'assets/doc/temp.pdf'
-                }
-              ];
-              
-              function renderFeatureButtons() {
-                const container = document.getElementById('feature-buttons-container');
-                if (!container) return;
-                container.innerHTML = '';
-              
-                featureButtonsData.forEach(btn => {
-                  const a = document.createElement('a');
-                  a.href = btn.link;
-                  a.className = 'btn-feature';
-                  a.setAttribute('data-aos', 'fade-up');
-                  a.style.padding = 'var(--space-sm) var(--space-md)';
-                  
-              
-                  // Icon
-                  
-                  const icon = document.createElement('i');
-                  icon.className = btn.icon + ' btn-feature-icon';
-                  icon.style.width = '40px';
-                  icon.style.height = '40px';
-                  icon.style.fontSize = '1.4rem';
-                  a.appendChild(icon);
-              
-                  // Text block
-                  
-                  const textDiv = document.createElement('div');
-                  textDiv.className = 'btn-feature-text';
-
-                    const titleDiv = document.createElement('div');
-                    titleDiv.className = 'btn-feature-title';
-                    titleDiv.textContent = btn.title;
-                    textDiv.appendChild(titleDiv);
-                    
-                    if (btn.description && btn.description.trim() !== '') {
-                        const descDiv = document.createElement('div');
-                        descDiv.className = 'btn-feature-desc';
-                        descDiv.textContent = btn.description;
-                        textDiv.appendChild(descDiv);
-                    }
-                    a.appendChild(textDiv);
-                  
-              
-                  // Arrow
-                  
-                  const arrow = document.createElement('span');
-                  arrow.className = 'btn-feature-arrow';
-                  arrow.innerHTML = '&#x203A;';   // single right‑pointing angle quote
-                  a.appendChild(arrow);
-              
-                  container.appendChild(a);
-                });
-              }
+     
 
       
      
@@ -670,7 +615,6 @@ My research focuses on gerontological nursing, long‑term care quality, and evi
       
       function initPageSpecific() {
         renderExternalButtons();
-        renderFeatureButtons();
       }
 
       if (document.readyState === 'loading') {
