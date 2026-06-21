@@ -154,13 +154,78 @@ My research focuses on gerontological nursing, long‑term care quality, and evi
     
     <div style="padding: var(--space-lg) 0; background-color: transparent;">
       <div class="container" style="padding: 0 20px; max-width: 1200px; margin: 0 auto;">
-        <div id="external-buttons-container" class="mt-xl">
-          <!-- Rendered by JavaScript -->
-        </div>
+
+
+<div id="external-buttons-container" class="mt-lg">
+  <a href="publications.html" class="btn btn-secondary">
+    <span style="display: inline-flex; align-items: center; justify-content: center; background: #ffffff; padding: 4px 6px; border-radius: 4px; margin-right: 8px;">
+      <i class="fas fa-list-ul fa-fw" style="color: var(--color-midnight-blue); font-size: 0.9rem;"></i>
+    </span>
+    Publication List
+  </a>
+
+  <a href="https://scholar.google.com/citations?user=YOUR_ID" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+    <span style="display: inline-flex; align-items: center; justify-content: center; background: #ffffff; padding: 4px 6px; border-radius: 4px; margin-right: 8px;">
+      <i class="fas fa-graduation-cap fa-fw" style="color: var(--color-midnight-blue); font-size: 0.9rem;"></i>
+    </span>
+    Google Scholar
+  </a>
+
+  <a href="https://www.researchgate.net/profile/Sameh_Eltaybani" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+    <span style="display: inline-flex; align-items: center; justify-content: center; background: #ffffff; padding: 4px 6px; border-radius: 4px; margin-right: 8px;">
+      <i class="fab fa-researchgate fa-fw" style="color: var(--color-midnight-blue); font-size: 0.9rem;"></i>
+    </span>
+    ResearchGate
+  </a>
+
+  <a href="https://orcid.org/0000-0002-1234-5678" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+    <span style="display: inline-flex; align-items: center; justify-content: center; background: #ffffff; padding: 4px 6px; border-radius: 4px; margin-right: 8px;">
+      <i class="fab fa-orcid fa-fw" style="color: var(--color-midnight-blue); font-size: 0.9rem;"></i>
+    </span>
+    ORCID
+  </a>
+
+  <a href="https://www.webofscience.com/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+    <span style="display: inline-flex; align-items: center; justify-content: center; background: #ffffff; padding: 4px 6px; border-radius: 4px; margin-right: 8px;">
+      <i class="fas fa-globe fa-fw" style="color: var(--color-midnight-blue); font-size: 0.9rem;"></i>
+    </span>
+    Web of Science
+  </a>
+
+  <a href="https://www.scopus.com/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+    <span style="display: inline-flex; align-items: center; justify-content: center; background: #ffffff; padding: 4px 6px; border-radius: 4px; margin-right: 8px;">
+      <i class="fas fa-database fa-fw" style="color: var(--color-midnight-blue); font-size: 0.9rem;"></i>
+    </span>
+    Scopus
+  </a>
+
+  <a href="https://pubmed.ncbi.nlm.nih.gov/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+    <span style="display: inline-flex; align-items: center; justify-content: center; background: #ffffff; padding: 4px 6px; border-radius: 4px; margin-right: 8px;">
+      <i class="fas fa-book-medical fa-fw" style="color: var(--color-midnight-blue); font-size: 0.9rem;"></i>
+    </span>
+    PubMed
+  </a>
+
+  <a href="https://researchmap.jp/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+    <span style="display: inline-flex; align-items: center; justify-content: center; background: #ffffff; padding: 4px 6px; border-radius: 4px; margin-right: 8px;">
+      <i class="fas fa-map fa-fw" style="color: var(--color-midnight-blue); font-size: 0.9rem;"></i>
+    </span>
+    ResearchMap
+  </a>
+</div>
+        
       </div>
     </div>
 
 
+<!-- ========== 
+    Note: If you later want to replace any icon with a circular image, 
+    simply replace the <i> tag and the white‑square <span> with an <img> element, e.g.:
+
+html
+<img src="assets/img/research-map.webp" style="width: 24px; height: 24px; border-radius: 50%; margin-right: 8px;">
+
+    ========== -->
     
 <!-- ========== VALUE‑BASED RESEARCH SECTION (centred layout) ========== -->
     
@@ -471,7 +536,6 @@ My research focuses on gerontological nursing, long‑term care quality, and evi
 
   </main>
 
-  <!-- ========== FOOTER ========== -->
   <footer data-component="footer"></footer>
 
   <!-- ========== SCRIPTS (EXACT ORDER - DO NOT CHANGE) ========== -->
@@ -485,148 +549,7 @@ My research focuses on gerontological nursing, long‑term care quality, and evi
   <script src="assets/js/aos-init.js"></script>
 
  
-  <!-- ========== PAGE-SPECIFIC SCRIPTS ========== -->
-  
-  <script>
-    (function() {
-      'use strict';
-
-      
-      // -----------------------------------------------
-      // EXTERNAL RESOURCE BUTTONS
-      // ------------------------------------------------
-
-
- // ICON REPLACEMENT NOTE:
-          // Example of how to replace any icon with a circular image from assets/img/:
-          //                       {
-          //        label: 'ResearchMap',
-          //        url: 'https://researchmap.jp/',
-          //       // icon: 'fas fa-map',               // ← remove or comment out this line
-          //        img: 'assets/img/research-map.webp',  // ← add this line
-          //        variant: 'primary'
-          //      }
-        
-
-//  ==========================================================================================       
-
-
-
-      
-            const externalButtons = [
-        {
-          label: 'Publication List',
-          url: 'publications.html',
-          icon: 'fas fa-list-ul',
-          variant: 'secondary'       // gold background to stand out
-        },
-        {
-          label: 'Google Scholar',
-          url: 'https://scholar.google.com/citations?user=YOUR_ID',
-          icon: 'fas fa-graduation-cap',
-          variant: 'primary'
-        },
-        {
-          label: 'ResearchGate',
-          url: 'https://www.researchgate.net/profile/Sameh_Eltaybani',
-          icon: 'fab fa-researchgate',
-          variant: 'primary'
-        },
-        {
-          label: 'ORCID',
-          url: 'https://orcid.org/0000-0002-1234-5678',
-          icon: 'fab fa-orcid',
-          variant: 'primary'
-        },
-        {
-          label: 'Web of Science',
-          url: 'https://www.webofscience.com/',
-          icon: 'fas fa-globe',
-          variant: 'primary'
-        },
-        {
-          label: 'Scopus',
-          url: 'https://www.scopus.com/',
-          icon: 'fas fa-database',
-          variant: 'primary'
-        },
-        {
-          label: 'PubMed',
-          url: 'https://pubmed.ncbi.nlm.nih.gov/',
-          icon: 'fas fa-book-medical',
-          variant: 'primary'
-        },
-        {
-          label: 'ResearchMap',
-          url: 'https://researchmap.jp/',
-          icon: 'fas fa-map',
-          variant: 'primary'
-        }
-      ];
-
-    
-      function renderExternalButtons() {
-        const container = document.getElementById('external-buttons-container');
-        if (!container) return;
-        container.innerHTML = '';
-
-        externalButtons.forEach(btn => {
-          const a = document.createElement('a');
-          a.href = btn.url;
-          a.classList.add('btn', btn.variant === 'secondary' ? 'btn-secondary' : 'btn-primary');
-          a.target = '_blank';
-          a.rel = 'noopener noreferrer';
-
-          // White square icon container
-                const iconWrapper = document.createElement('span');
-                iconWrapper.style.cssText = 'display: inline-flex; align-items: center; justify-content: center; background: #ffffff; padding: 4px 6px; border-radius: 4px; margin-right: 6px;';
-                
-                if (btn.img) {
-                  // Circular image inside the square
-                  const imgEl = document.createElement('img');
-                  imgEl.src = btn.img;
-                  imgEl.alt = btn.label;
-                  imgEl.style.width = '24px';
-                  imgEl.style.height = '24px';
-                  imgEl.style.borderRadius = '50%';
-                  imgEl.style.objectFit = 'cover';
-                  iconWrapper.appendChild(imgEl);
-                } else {
-                  const icon = document.createElement('i');
-                  icon.className = btn.icon + ' fa-fw';
-                  icon.style.color = 'var(--color-midnight-blue)';
-                  icon.style.fontSize = '0.9rem';
-                  iconWrapper.appendChild(icon);
-                }
-                
-                a.appendChild(iconWrapper);
-                a.appendChild(document.createTextNode(' ' + btn.label));
-                container.appendChild(a);
-        });
-      }
-
-      
-     
-
-      
-     
-
-      // -------------------------------------------
-      // INITIALISATION
-      // --------------------------------------------
-      
-      function initPageSpecific() {
-        renderExternalButtons();
-      }
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initPageSpecific);
-      } else {
-        initPageSpecific();
-      }
-    })();
-    
-  </script>
+ 
   
 </body>
 </html>
