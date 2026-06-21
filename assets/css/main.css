@@ -4305,7 +4305,7 @@ h2, h3 {
     /* Make the Toggle Button Sticky */
     #rp-toc-mobile-toggle {
         position: fixed;
-        top: 100px;     
+        top: 105px;     
         left: 0;
         z-index: 998;
         width: auto;    /* Makes the button only as wide as its text */
@@ -4321,6 +4321,7 @@ h2, h3 {
         border-top-right-radius: 0;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 15px; 
+        box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
     }
 
     /* Hide the sidebar container until clicked */
