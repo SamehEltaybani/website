@@ -1924,207 +1924,129 @@ footer .footer-copyright {
     }
 }
 
-
 /* ============================================================================
-   HOME PAGE – AT A GLANCE
+   HOME PAGE – PROFILE + PHILOSOPHY + WHAT I DO
    ============================================================================ */
 
-.home-glance {
-    padding: var(--space-xl) 0;
-    background-color: transparent;
+/* Circular photo */
+.home-profile-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-gold);
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    display: block;
+    margin: 0 auto var(--space-md) auto;
 }
 
-.home-glance-container {
+/* Short bio paragraph */
+.home-bio {
+    max-width: 600px;
+    margin: 0 auto var(--space-xl) auto;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-text-main);
+}
+
+/* Grid for the three Philosophy / Mission / Approach boxes */
+.home-pma-grid {
     display: flex;
-    flex-wrap: nowrap;
-    gap: 0;                        /* removed gap – we'll use padding instead */
-    max-width: 1200px;
-    width: 100%;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+    justify-content: center;
+    max-width: 1000px;
+    margin: 0 auto var(--space-xl) auto;
+}
+
+.home-pma-card {
+    flex: 1 1 250px;
+    text-align: center;
+    padding: var(--space-lg);
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.home-pma-card i {
+    font-size: 2rem;
+    color: var(--color-gold);
+    margin-bottom: var(--space-sm);
+}
+
+.home-pma-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-midnight-blue);
+    margin-bottom: var(--space-xs);
+}
+
+.home-pma-card p {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* "What I Do" title */
+.home-what-title {
+    text-align: center;
+    font-size: 2rem;
+    color: var(--color-midnight-blue);
+    margin: 0 0 var(--space-md) 0;
+}
+
+/* Grid for the three "What I Do" boxes */
+.home-what-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+    justify-content: center;
+    max-width: 1000px;
     margin: 0 auto;
 }
 
-/* ---- Photo column (50%) ---- */
-
-.home-glance-photo {
-    flex: 0 0 25%;
-    display: flex;
-    justify-content: flex-end;      
-    align-items: center;
-    padding-right: var(--space-lg); 
-}
-
-.home-glance-img {
-    width: 100%;
-    max-width: 280px;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 2px solid var(--color-gold);
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-}
-
-/* ---- Content column (50%) ---- */
-
-.home-glance-content {
-    flex: 0 0 75%;
-    padding-left: var(--space-lg);
-}
-
-/* Title pill + line row */
-
-.home-glance-title-row {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    margin-bottom: var(--space-lg);
-}
-
-.home-glance-title-pill {
-    display: inline-block;
-    background-color: #ffffff;
-    color: var(--color-midnight-blue);
-    padding: var(--space-xs) var(--space-md);
-    border-radius: 50px;
-    font-weight: 700;
-    font-size: 0.9rem;
-    white-space: nowrap;
-    border: 1px solid var(--color-gold);
-}
-
-.home-glance-title-line {
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(to right, var(--color-gold) 0%, transparent 100%);
-    margin-left: var(--space-sm);
-}
-
-/* ---- Icon list ---- */
-
-.home-glance-icons {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-}
-
-.home-glance-item {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-md);
-}
-
-.home-glance-icon-circle {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background-color: #ffffff;
-    border: 1px solid var(--color-gold);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    color: var(--color-midnight-blue);
-    font-size: 1.5rem;
-}
-
-.home-glance-item-text {
-    flex: 1;
-}
-
-.home-glance-item-text p {
-    margin: 0 0 var(--space-xs) 0;
-    color: var(--color-text-main);
-    font-size: var(--font-size-sm);
-    line-height: 1.5;
-}
-
-.home-glance-readmore {
-    display: block;
-    text-align: right;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--color-midnight-blue);
+.home-what-card {
+    flex: 1 1 250px;
+    display: block;                 /* makes the whole card a link */
     text-decoration: none;
-    transition: color 0.2s;
+    color: inherit;
+    text-align: center;
+    padding: var(--space-lg);
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: box-shadow 0.2s, border-color 0.2s;
 }
 
-.home-glance-readmore:hover {
+.home-what-card:hover {
+    border-color: var(--color-gold);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+.home-what-card i {
+    font-size: 2rem;
     color: var(--color-gold);
+    margin-bottom: var(--space-sm);
 }
 
-
-/* The pill box that holds the icon and the sentence */
-
-.home-glance-item-pill {
-    display: flex;
-    align-items: center;            /* vertically center icon and text */
-    gap: var(--space-md);
-    background-color: #ffffff;
-    border: 1px solid var(--color-gold);
-    border-radius: 50px;            /* pill shape */
-    padding: var(--space-sm) var(--space-sm) var(--space-sm) var(--space-sm);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    width: 100%;
-    box-sizing: border-box;
+.home-what-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-midnight-blue);
+    margin-bottom: var(--space-xs);
 }
 
-/* Make the paragraph sit nicely inside the pill */
-
-.home-glance-item-pill .home-glance-item-text p {
+.home-what-card p {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
     margin: 0;
-    line-height: 1.4;
 }
 
-
-/* ---- Mobile: photo first, then content, everything centered ---- */
-
-@media (max-width: 1100px) {
- 
-    .home-glance-container {
-        flex-direction: column;
-        align-items: center;
-        text-align: left;
-    }
-     .home-glance-photo {
-        flex: auto;
-        justify-content: center;   /* back to centered on mobile */
-        padding-right: 0;
-        margin-bottom: var(--space-lg);
-    }
- 
-    .home-glance-content {
-        flex: auto;
-        width: 100%;
-        padding-left: 0;
-    }
- 
-}
-
-
-/* ============================================================================
-   AT A GLANCE – align icon & pill centres with the title’s gold line
-   ============================================================================ */
-
-/* Nudge the icon list 28 px to the left so the circles’ centres sit on the midline.
-   (28 px = half of the 56 px icon‑circle width) */
-.home-glance-icons {
-    margin-left: -28px;
-}
-
-/* Nudge the title pill row 50 px to the left.
-   (50 px = half of the estimated pill width – adjust if you change the text) */
-.home-glance-title-row {
-    margin-left: -50px;
-}
-
-/* Mobile: remove the nudges so everything stacks cleanly */
-@media (max-width: 1100px) {
-    .home-glance-icons {
-        margin-left: 0;
-    }
-    .home-glance-title-row {
-        margin-left: 0;
-    }
-}
 
 /* ============================================================================
    FEATURED CARDS (Home page)
