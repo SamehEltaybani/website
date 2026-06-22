@@ -33,7 +33,19 @@
   <div data-component="breadcrumb" class="breadcrumb-bar"
        style="height: var(--breadcrumb-height); display: flex; align-items: center; box-sizing: border-box;"></div>
 
-  <main>
+
+
+  
+ <div class="toc-wrapper">
+    <button id="toc-mobile-toggle" class="rp-mobile-only">Table of Contents ▼</button>
+    
+    <aside class="toc-sidebar" id="toc-sidebar">
+        <button id="toc-close" class="rp-mobile-only">✕ Close</button>
+        <h2 class="toc-title">Table of Contents</h2>
+        <div id="toc-content"></div>
+    </aside>
+
+    <main class="toc-main-content">
 
 
   <section class="section">
@@ -472,7 +484,7 @@ My teaching is shaped by a comprehensive, learner centered approach that integra
 
   </main>
 
-
+</div>
 
 
   
@@ -503,6 +515,76 @@ My teaching is shaped by a comprehensive, learner centered approach that integra
 </script>
 
 
+<script>
+    
+// This script automatically creates the Table of Contents
+// It looks for any <h2> or <h3> tags in your content and adds them to the menu
+   
+    document.addEventListener("DOMContentLoaded", function() {
+        const tocContent = document.getElementById("toc-content");
+        
+        // This line searches for H2/H3 tags that do NOT have the class "ignore-toc"
+        const headings = document.querySelectorAll("main h2:not(.ignore-toc), main h3:not(.ignore-toc)");
+        const tocList = document.createElement("ul");
+        
+        // This gets the current file's actual address to fix the URL jumping
+        const currentPage = window.location.pathname;
+
+        headings.forEach((heading, index) => {
+            // Assign a unique ID if one doesn't exist
+            if (!heading.id) {
+                heading.id = "toc-section-" + index;
+            }
+
+            const listItem = document.createElement("li");
+            const link = document.createElement("a");
+            
+            // This forces the link to point to the current page + the section ID
+            link.href = currentPage + "#" + heading.id;
+            
+            // Visual indicators
+            const symbol = (heading.tagName === "H3") ? "- " : "■ ";
+            link.textContent = symbol + heading.textContent;
+            
+            listItem.appendChild(link);
+            tocList.appendChild(listItem);
+        });
+
+        tocContent.appendChild(tocList);
+
+
+
+// --- MOBILE TOC FUNCTIONALITY ---
+const mobileToggle = document.getElementById("toc-mobile-toggle");
+const closeButton = document.getElementById("toc-close");
+const sidebar = document.querySelector(".toc-sidebar");
+
+if (mobileToggle && sidebar) {
+    mobileToggle.addEventListener("click", function() {
+        sidebar.classList.add("active");
+        document.body.classList.add("toc-open"); // Locks the background scroll
+    });
+}
+
+if (closeButton && sidebar) {
+    closeButton.addEventListener("click", function() {
+        sidebar.classList.remove("active");
+        document.body.classList.remove("toc-open"); // Unlocks the background scroll
+    });
+}
+
+// Close the TOC when a link is clicked
+const tocLinks = document.querySelectorAll("#toc-content a");
+tocLinks.forEach(link => {
+    link.addEventListener("click", () => {
+        sidebar.classList.remove("active");
+        document.body.classList.remove("toc-open"); // Unlocks the background scroll
+    });
+});
+      
+      
+    });
+</script>
   
 
   <script src="assets/js/utils.js"></script>
