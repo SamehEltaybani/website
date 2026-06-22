@@ -4004,6 +4004,7 @@ pre code {
 }
 
 /* Collapsible body – hidden by default, with a violet left line */
+
 .rp-accordion-body {
     display: none;
     padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg);
@@ -4020,18 +4021,18 @@ pre code {
     text-align: left;
     margin-top: var(--space-md);
     padding: var(--space-md);
-    background: transparent;              /* matches the old transparent style */
-    border-left: none;                    /* no extra border – the body already has one */
+    padding-right: 40px;               /* room for the closing mark */
+    background: transparent;
+    border-left: none;
+    width: fit-content;                /* container fits the text width */
+    max-width: 100%;                   /* never overflow */
+    position: relative;
 }
 
 .rp-accordion-body .rp-theme-btn {
     display: inline-block;
     float: right;
     margin-top: var(--space-sm);
-}
-
-.rp-accordion-body .rp-theme-right {
-    padding-right: 40px;     
 }
 
 .rp-theme-middle {
@@ -4093,7 +4094,7 @@ pre code {
 }
 
 .rp-accordion-body .rp-theme-right::after {
-    right: 20px;
+    right: 8px;
 }
 
 /* Mobile – prevent quotation overlap */
