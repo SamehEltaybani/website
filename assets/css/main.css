@@ -3941,53 +3941,58 @@ pre code {
     flex-shrink: 0;
 }
 
-/* ---- Quick‑scan Grid (5 columns desktop, 2 on mobile) ---- */
-.rp-quickgrid-container {
-    max-width: 1200px;
+/* ----  RESEARCH PORTFOLIO – quick‑scan vertical pills---- */
+
+.rp-pill-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-width: 900px;
     margin: 0 auto;
-    padding-left: var(--container-padding);
-    padding-right: var(--container-padding);
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    padding: 0 var(--container-padding);
+}
+
+.rp-pill-card {
+    display: flex;
+    align-items: center;
     gap: var(--space-md);
-}
-
-@media (max-width: 1100px) {
-    .rp-quickgrid-container {
-        grid-template-columns: 1fr;
-    }
-}
-
-.rp-quickgrid-card {
-    display: block;
+    padding: 12px 20px;
     background: var(--color-white);
     border: 1px solid var(--color-border);
-    border-radius: 12px;
-    padding: var(--space-md);
-    text-align: center;
+    border-radius: 50px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
     text-decoration: none;
     color: inherit;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    transition: box-shadow 0.2s, border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.rp-quickgrid-card:hover {
+.rp-pill-card:hover {
     border-color: var(--color-gold);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-
-.rp-quickgrid-card i {
-    font-size: 2.2rem;
+.rp-pill-card i {
+    font-size: 1.4rem;
     color: #581596;
-    margin-bottom: var(--space-sm);
+    flex-shrink: 0;
 }
 
-.rp-quickgrid-card h3 {
-    font-size: 1.05rem;
-    margin: var(--space-sm) 0 var(--space-xs);
+.rp-pill-card h3 {
+    flex: 1;
+    font-size: 0.95rem;
+    font-weight: 600;
     color: var(--color-midnight-blue);
+    margin: 0;
 }
+
+.rp-pill-arrow {
+    font-size: 1.2rem;
+    color: var(--color-gold);
+    flex-shrink: 0;
+}
+
+
+
 
 
 /* ---- 10 Themed Rows ---- */
