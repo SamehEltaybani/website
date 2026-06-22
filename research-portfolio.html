@@ -43,16 +43,16 @@
 
 
 
-<div class="rp-toc-wrapper">
-    <button id="rp-toc-mobile-toggle" class="rp-mobile-only">Table of Contents ▼</button>
+<div class="toc-wrapper">
+    <button id="toc-mobile-toggle" class="rp-mobile-only">Table of Contents ▼</button>
     
-    <aside class="rp-toc-sidebar" id="rp-toc-sidebar">
-        <button id="rp-toc-close" class="rp-mobile-only">✕ Close</button>
-        <h2 class="rp-toc-title">Table of Contents</h2>
-        <div id="rp-toc-content"></div>
+    <aside class="toc-sidebar" id="toc-sidebar">
+        <button id="toc-close" class="rp-mobile-only">✕ Close</button>
+        <h2 class="toc-title">Table of Contents</h2>
+        <div id="toc-content"></div>
     </aside>
 
-    <main class="rp-toc-main-content">
+    <main class="toc-main-content">
 
 <section class="section">
   <div class="container">
@@ -680,7 +680,7 @@ My work in healthcare research is defined by a comprehensive and integrated appr
 // It looks for any <h2> or <h3> tags in your content and adds them to the menu
    
     document.addEventListener("DOMContentLoaded", function() {
-        const tocContent = document.getElementById("rp-toc-content");
+        const tocContent = document.getElementById("toc-content");
         
         // This line searches for H2/H3 tags that do NOT have the class "ignore-toc"
         const headings = document.querySelectorAll("main h2:not(.ignore-toc), main h3:not(.ignore-toc)");
@@ -692,7 +692,7 @@ My work in healthcare research is defined by a comprehensive and integrated appr
         headings.forEach((heading, index) => {
             // Assign a unique ID if one doesn't exist
             if (!heading.id) {
-                heading.id = "rp-toc-section-" + index;
+                heading.id = "toc-section-" + index;
             }
 
             const listItem = document.createElement("li");
@@ -714,9 +714,9 @@ My work in healthcare research is defined by a comprehensive and integrated appr
 
 
 // --- MOBILE TOC FUNCTIONALITY ---
-const mobileToggle = document.getElementById("rp-toc-mobile-toggle");
-const closeButton = document.getElementById("rp-toc-close");
-const sidebar = document.querySelector(".rp-toc-sidebar");
+const mobileToggle = document.getElementById("toc-mobile-toggle");
+const closeButton = document.getElementById("toc-close");
+const sidebar = document.querySelector(".toc-sidebar");
 
 if (mobileToggle && sidebar) {
     mobileToggle.addEventListener("click", function() {
@@ -733,7 +733,7 @@ if (closeButton && sidebar) {
 }
 
 // Close the TOC when a link is clicked
-const tocLinks = document.querySelectorAll("#rp-toc-content a");
+const tocLinks = document.querySelectorAll("#toc-content a");
 tocLinks.forEach(link => {
     link.addEventListener("click", () => {
         sidebar.classList.remove("active");
