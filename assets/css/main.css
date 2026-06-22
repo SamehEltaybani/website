@@ -4024,11 +4024,14 @@ pre code {
 }
 
 .rp-accordion-body .rp-theme-btn {
-    display: inline-block;
+    display: block;
+    text-align: right;
     margin-top: var(--space-sm);
 }
 
-
+.rp-accordion-body .rp-theme-right {
+    padding-right: 40px;     
+}
 
 .rp-theme-middle {
     flex: 1 1 300px;
@@ -4091,8 +4094,7 @@ pre code {
 /* Mobile – prevent quotation overlap */
 @media (max-width: 1100px) {
    
-   
-    .rp-theme-right {
+   .rp-theme-right {
         flex: auto;
         max-width: 100%;
         padding-top: var(--space-md);
