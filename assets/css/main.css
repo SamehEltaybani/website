@@ -4127,7 +4127,7 @@ pre code {
    ============================================================================ */
 
 /* 1. Creates the two-column side-by-side layout */
-.rp-toc-wrapper {
+.toc-wrapper {
     display: flex;
     max-width: 1200px;
     width: 100%;
@@ -4137,13 +4137,13 @@ pre code {
     align-items: flex-start;
 }
 
-.rp-toc-main-content {
+.toc-main-content {
     flex: 1;           /* Tells the content: "take up all the space left over" */
     min-width: 0;      
 }
 
 /* 2. The Sidebar Sidebar: Sticky and fixed width */
-.rp-toc-sidebar {
+.toc-sidebar {
     flex: 0 0 250px;
     position: sticky;
     top: 140px;
@@ -4154,7 +4154,7 @@ pre code {
 }
 
 /* This keeps the title fixed at the top */
-.rp-toc-title {
+.toc-title {
     flex-shrink: 0; /* Ensures the title doesn't shrink */
     font-size: 1.2rem;
     color: var(--color-midnight-blue);
@@ -4164,25 +4164,25 @@ pre code {
 }
 
 /* This makes ONLY the list scrollable */
-#rp-toc-content {
+#toc-content {
     overflow-y: auto; /* Scroll only the content */
     flex-grow: 1; /* Fills remaining space */
     overscroll-behavior: contain; /* This prevents the sidebar from scrolling the main page */
 }
 
 /* 3. The List Styles */
-#rp-toc-content ul {
+#toc-content ul {
     list-style: none;
 }
 
-#rp-toc-content li {
+#toc-content li {
     margin-bottom: var(--space-xs);
     padding-left: 20px;    /* Creates space for the indentation */
     text-indent: -20px;    /* Pulls the first line back to align the bullet */
     margin-bottom: 8px;
 }
 
-#rp-toc-content a {
+#toc-content a {
     text-decoration: none;
     color: var(--color-text-main);
     font-size: 0.95rem;
@@ -4190,16 +4190,16 @@ pre code {
     word-wrap: break-word;
 }
 
-#rp-toc-content a:hover {
+#toc-content a:hover {
     color: var(--color-gold);
 }
 
 /* 4. Responsive: Stack on mobile */
 @media (max-width: 1100px) {
-    .rp-toc-wrapper {
+    .toc-wrapper {
         flex-direction: column;
     }
-    .rp-toc-sidebar {
+    .toc-sidebar {
         position: static;
         width: 100%;
     }
@@ -4215,19 +4215,19 @@ h2, h3 {
 /* Mobile version */
 
 /* --- Desktop Defaults (Hidden) --- */
-#rp-toc-mobile-toggle, #rp-toc-close {
+#toc-mobile-toggle, #toc-close {
     display: none !important;
 }
 
 /* --- Mobile Only (Screens 1100px or smaller) --- */
 @media (max-width: 1100px) {
     /* Show buttons only on mobile */
-    #rp-toc-mobile-toggle, #rp-toc-close {
+    #toc-mobile-toggle, #toc-close {
         display: block !important;
     }
 
     /* Make the Toggle Button Sticky */
-    #rp-toc-mobile-toggle {
+    #toc-mobile-toggle {
         position: fixed;
         top: 105px;     
         left: 0;
@@ -4249,12 +4249,12 @@ h2, h3 {
     }
 
     /* Hide the sidebar container until clicked */
-    .rp-toc-sidebar {
+    .toc-sidebar {
         display: none !important; 
     }
 
     /* Show sidebar only when 'active' class is added via JS */
-    .rp-toc-sidebar.active {
+    .toc-sidebar.active {
         display: flex !important;
         flex-direction: column;
         position: fixed;
@@ -4268,7 +4268,7 @@ h2, h3 {
         overflow-y: auto;
     }
 
-    #rp-toc-close {
+    #toc-close {
         background: none;
         border: none;
         font-size: 1.2rem;
