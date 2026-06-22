@@ -4012,6 +4012,7 @@ pre code {
     margin-bottom: var(--space-sm);
     text-align: left;                     /* all content left‑aligned */
     line-height: 1.6;
+    overflow: auto;    
 }
 
 /* Ensure the quotation and button inside the body are also left‑aligned */
@@ -4024,8 +4025,8 @@ pre code {
 }
 
 .rp-accordion-body .rp-theme-btn {
-    display: block;
-    text-align: right;
+    display: inline-block;
+    float: right;
     margin-top: var(--space-sm);
 }
 
@@ -4089,6 +4090,10 @@ pre code {
     right: 0;
     opacity: 0.35;
     font-family: serif;
+}
+
+.rp-accordion-body .rp-theme-right::after {
+    right: 20px;
 }
 
 /* Mobile – prevent quotation overlap */
