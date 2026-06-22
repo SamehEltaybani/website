@@ -3366,103 +3366,114 @@ pre code {
     flex-shrink: 0;
 }
 
-/* ---- Quick‑scan grid (max 1200px, 5 cards per row on desktop, 2 on phone) ---- */
 
-.data-quickgrid-container {
-    max-width: 1200px;
+/* ============================================================================
+   DATA ANALYSIS PORTFOLIO – ACCORDION (replaces pills + theme rows)
+   ============================================================================ */
+
+/* Accordion container */
+.da-accordion-container {
+    max-width: 900px;
     margin: 0 auto;
-    padding-left: var(--container-padding);
-    padding-right: var(--container-padding);
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    padding: 0 var(--container-padding);
+}
+
+/* Each accordion item */
+.da-accordion-item {
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* The clickable header bar */
+.da-accordion-header {
+    display: flex;
+    align-items: center;
     gap: var(--space-md);
-}
-
-@media (max-width: 768px) {
-    .data-quickgrid-container {
-        grid-template-columns: 1fr;
-    }
-}
-
-.data-quickgrid-card {
-    display: block;
-    background: var(--color-white);
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-    padding: var(--space-md);
-    text-align: center;
-    text-decoration: none;
-    color: inherit;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    transition: box-shadow 0.2s, border-color 0.2s;
-}
-
-.data-quickgrid-card:hover {
-    border-color: var(--color-gold);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-}
-
-.data-quickgrid-card i {
-    font-size: 2.2rem;
-    color: #2A9D8F;
-    margin-bottom: var(--space-sm);
-}
-
-.data-quickgrid-card h3 {
-    font-size: 1.05rem;
-    margin: var(--space-sm) 0 var(--space-xs);
+    width: 100%;
+    padding: 14px 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
     color: var(--color-midnight-blue);
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: color 0.2s;
 }
+
+.da-accordion-header:hover {
+    color: #2A9D8F;
+}
+
+/* Icon inside the header (teal) */
+.da-accordion-header i {
+    font-size: 1.3rem;
+    color: #2A9D8F;
+    flex-shrink: 0;
+}
+
+/* Title text – fills remaining space */
+.da-accordion-header span:first-of-type {
+    flex: 1;
+}
+
+/* The + / – toggle indicator */
+.da-accordion-icon {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    flex-shrink: 0;
+    width: 24px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+/* Collapsible body – hidden by default, with a teal left line */
+.da-accordion-body {
+    display: none;
+    padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg);
+    border-left: 3px solid #2A9D8F;
+    margin-left: 8px;
+    margin-bottom: var(--space-sm);
+    text-align: left;
+    line-height: 1.6;
+    overflow: auto;                     /* contains the floated button */
+}
+
+/* Ensure the quotation and button inside the body are also left‑aligned */
+.da-accordion-body .data-theme-right {
+    text-align: left;
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    padding-right: 40px;                /* room for the closing mark */
+    background: transparent;
+    border-left: none;
+    width: fit-content;
+    max-width: 100%;
+    position: relative;
+}
+
+/* Close the closing quotation mark to the text */
+.da-accordion-body .data-theme-right::after {
+    right: 4px;
+}
+
+.da-accordion-body .data-theme-btn {
+    display: inline-block;
+    float: right;
+    margin-top: var(--space-sm);
+}
+
+
 
 
 /* ---- Themed rows (replaces old inline styles) ---- */
-
-.data-theme-row {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    gap: var(--space-lg);
-    padding: var(--space-lg) 0;
-}
-
-.data-theme-left {
-    flex: 0 0 80px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-}
-
-.data-theme-icon-circle {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    border: 2px solid #2A9D8F;
-    background: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    color: #2A9D8F;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);   /* more prominent */
-}
 
 .data-theme-middle {
     flex: 1 1 300px;
     min-width: 200px;
 }
 
-.data-theme-middle img {
-    max-width: 80%;
-    max-height: 250px;
-    object-fit: cover;
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    display: block;
-    margin: var(--space-sm) auto;
-}
 
 .data-theme-btn {
     display: inline-block;
@@ -3519,17 +3530,7 @@ pre code {
 /* Prevent quotation overlap on mobile */
 
 @media (max-width: 1100px) {
-    .data-theme-row {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding-left: var(--space-md);
-        padding-right: var(--space-md);
-    }
-    .data-theme-left {
-        flex: auto;
-    }
-    .data-theme-right {
+  .data-theme-right {
         flex: auto;
         max-width: 100%;
         padding-top: var(--space-md);
@@ -3541,10 +3542,7 @@ pre code {
     }
     .data-theme-right::before { top: -6px; }
     .data-theme-right::after { bottom: -20px; }
-    .data-theme-middle img {
-        max-width: 100%;
-    }
-}
+   }
 
 
 
