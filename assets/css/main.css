@@ -4210,6 +4210,274 @@ pre code {
 }
 
 
+/*  RESEARCH THEMES SECTIONS   */
+
+/* ---- Section containers ---- */
+.rp-themes-section {
+    padding: var(--space-xl) 0;
+    background-color: transparent;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+}
+
+/* ---- Categories section ---- */
+.rp-categories-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-midnight-blue);
+    margin: 0 0 var(--space-sm) 0;
+    text-align: left;
+}
+
+.rp-categories-intro {
+    color: var(--color-text-main);
+    line-height: 1.6;
+    margin: 0 0 var(--space-md) 0;
+    max-width: 800px;
+}
+
+/* "Full publication list" button – right aligned pill */
+
+.rp-publications-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 10px 20px;
+    background: var(--color-white);
+    border: 1px solid #581596;
+    border-radius: 50px;
+    color: #581596;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    float: right;
+    margin-bottom: var(--space-xl);
+    transition: background 0.2s, color 0.2s;
+}
+
+.rp-publications-btn:hover {
+    background: #581596;
+    color: #fff;
+}
+
+.rp-publications-btn .btn-text-left {
+    flex: 1;
+    text-align: left;
+}
+
+.rp-publications-btn .btn-arrow-right {
+    font-size: 1.2rem;
+    color: inherit;
+}
+
+/* Clearfix for the float */
+.rp-clearfix::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+/* ---- Categories row ---- */
+.rp-category-row {
+    margin-bottom: var(--space-xl);
+}
+
+.rp-category-row h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-midnight-blue);
+    margin: 0 0 var(--space-xs) 0;
+}
+
+.rp-category-row p {
+    color: var(--color-text-main);
+    line-height: 1.6;
+    margin: 0 0 var(--space-md) 0;
+}
+
+/* Pill buttons inside categories */
+.rp-category-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+}
+
+.rp-category-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 8px 18px;
+    background: var(--color-white);
+    border: 1px solid #581596;
+    border-radius: 50px;
+    color: #581596;
+    font-weight: 500;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+}
+
+.rp-category-btn:hover {
+    background: #581596;
+    color: #fff;
+}
+
+.rp-category-btn .btn-arrow-right {
+    font-size: 1rem;
+    color: inherit;
+    margin-left: auto;
+}
+
+/* ---- Detailed theme row ---- */
+.rp-theme-detail {
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.rp-theme-detail:last-child {
+    border-bottom: none;
+}
+
+.rp-theme-detail-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+}
+
+.rp-theme-detail-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 2px solid #581596;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.8rem;
+    color: #581596;
+}
+
+.rp-theme-detail-header h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-midnight-blue);
+    margin: 0;
+}
+
+.rp-theme-detail p {
+    color: var(--color-text-main);
+    line-height: 1.6;
+    margin: 0 0 var(--space-md) 0;
+}
+
+/* "Examples:" heading with gold fading underline */
+.rp-examples-heading {
+    font-weight: 700;
+    color: var(--color-midnight-blue);
+    margin: 0 0 var(--space-sm) 0;
+    position: relative;
+    display: inline-block;
+}
+
+.rp-examples-heading::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, var(--color-gold) 0%, transparent 100%);
+}
+
+/* Examples bullet list */
+.rp-examples-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-md) 0;
+}
+
+.rp-examples-list li {
+    position: relative;
+    padding-left: 1.2rem;
+    margin-bottom: var(--space-xs);
+    color: var(--color-text-main);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.rp-examples-list li::before {
+    content: '●';
+    color: #581596;
+    font-size: 0.7rem;
+    position: absolute;
+    left: 0;
+    top: 0.15rem;
+}
+
+.rp-examples-list li a {
+    color: var(--color-text-main);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.rp-examples-list li a:hover {
+    color: #581596;
+    text-decoration: underline;
+}
+
+/* "More insights" link */
+.rp-more-insights {
+    display: block;
+    text-align: right;
+    color: var(--color-midnight-blue);
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-decoration: none;
+    margin-top: var(--space-sm);
+    transition: color 0.2s;
+}
+
+.rp-more-insights:hover {
+    color: #581596;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* ============================================================================
    TABLE OF CONTENTS (TOC) for all portfolios - SIDEBAR STYLES
