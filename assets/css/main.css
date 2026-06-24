@@ -3841,6 +3841,77 @@ pre code {
    RESEARCH PORTFOLIO – violet accent (#581596) / soft lavender (#f3e9fc)
    ============================================================================ */
 
+
+
+/*  Below biography – QUICK NOTE   */
+
+.rp-quick-note {
+    border-left: 4px solid #581596;
+    padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg);
+    margin: var(--space-lg) 0;
+    background: transparent;
+    font-size: 0.95rem;
+    color: var(--color-text-main);
+    line-height: 1.6;
+    max-width: 900px;
+}
+
+.rp-quick-note-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xs);
+}
+
+.rp-quick-note-header i {
+    font-size: 1.4rem;
+    color: #581596;
+}
+
+.rp-quick-note-header span {
+    font-weight: 700;
+    color: var(--color-midnight-blue);
+    font-size: 1rem;
+}
+
+.rp-quick-note-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-xs) var(--space-sm);
+    margin-top: var(--space-sm);
+}
+
+.rp-quick-note-links a {
+    color: var(--color-midnight-blue);
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+.rp-quick-note-links a:hover {
+    color: #581596;
+}
+
+/* Pill buttons for other portfolios */
+.rp-note-btn {
+    display: inline-block;
+    padding: 4px 16px;
+    border: 1px solid #581596;
+    border-radius: 50px;
+    color: #581596;
+    font-weight: 500;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    margin-left: var(--space-sm);
+}
+
+.rp-note-btn:hover {
+    background: #581596;
+    color: #fff;
+}
+
+
 /* ---- Stats Counter ---- */
 .rp-stats-row {
     max-width: 1200px;
@@ -3948,9 +4019,7 @@ pre code {
 }
 
 
-/* ============================================================================
-   RESEARCH PORTFOLIO – ACCORDION 
-   ============================================================================ */
+/*    RESEARCH PORTFOLIO – ACCORDION  */
 
 /* Accordion container – no extra styling, just holds the items */
 .rp-accordion-container {
