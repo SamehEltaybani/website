@@ -695,18 +695,12 @@ main {
 }
 
 .topped-dark-bottom p {
-    color: #000000;                         /* true black text */
+    color: var(--color-midnight-blue);                     
     font-size: 0.9rem;
     line-height: 1.5;
     margin: 0;
 }
 
-/* ---- Mobile: dark top left‑aligned ---- */
-@media (max-width: 1100px) {
-    .topped-dark-top {
-        text-align: left;
-    }
-}
 
 
 /* ============================================================================
