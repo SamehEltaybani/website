@@ -3596,10 +3596,7 @@ pre code {
     font-family: serif;
 }
 
-/* Remove the specific override as it's no longer needed */
-.da-accordion-body .da-theme-right::after {
-    right: auto; 
-}
+
 
 /* Mobile – prevent quotation overlap */
 
