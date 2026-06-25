@@ -3943,6 +3943,7 @@ pre code {
     position: relative;
     font-size: 0.95rem;
     line-height: 1.5;
+    margin-left: 3px;
 }
 
 .tp-theme-right::before {
@@ -3950,7 +3951,7 @@ pre code {
     font-size: 3.5rem;
     color: var(--color-gold);
     position: absolute;
-    top: -14px;
+    top: -17px;
     left: 0;
     opacity: 0.35;
     font-family: serif;
@@ -3960,16 +3961,14 @@ pre code {
     content: "\201D";
     font-size: 3.5rem;
     color: var(--color-gold);
-    position: absolute;
-    bottom: -28px;
-    right: 0;
+    display: inline-block;    /* Changed from absolute */
+    vertical-align: -0.5em;   /* Adjusts height to sit nicely with text */
+    line-height: 0;           /* Prevents the large font from pushing lines apart */
+    margin-left: 1px;         /* Adds a small gap after the text */
     opacity: 0.35;
     font-family: serif;
 }
 
-.tp-accordion-body .tp-theme-right::after {
-    right: 4px;
-}
 
 /* Mobile – prevent quotation overlap */
 
@@ -4391,6 +4390,7 @@ pre code {
     position: relative;
     font-size: 0.95rem;
     line-height: 1.5;
+    margin-left: 3px;
 }
 
 .rp-theme-right::before {
@@ -4398,7 +4398,7 @@ pre code {
     font-size: 3.5rem;
     color: var(--color-gold);
     position: absolute;
-    top: -14px;
+    top: -17px;
     left: 0;
     opacity: 0.35;
     font-family: serif;
@@ -4408,16 +4408,14 @@ pre code {
     content: "\201D";
     font-size: 3.5rem;
     color: var(--color-gold);
-    position: absolute;
-    bottom: -28px;
-    right: 0;
+    display: inline-block;    /* Changed from absolute */
+    vertical-align: -0.5em;   /* Adjusts height to sit nicely with text */
+    line-height: 0;           /* Prevents the large font from pushing lines apart */
+    margin-left: 1px;         /* Adds a small gap after the text */
     opacity: 0.35;
     font-family: serif;
 }
 
-.rp-accordion-body .rp-theme-right::after {
-    right: 4px;
-}
 
 /* Mobile – prevent quotation overlap */
 
