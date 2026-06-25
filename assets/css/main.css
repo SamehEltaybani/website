@@ -3578,9 +3578,9 @@ pre code {
     font-size: 3.5rem;
     color: var(--color-gold);
     position: absolute;
-    top: -14px;
+    top: -16px;
     left: 0;
-    margin-right: 2px; 
+    margin-right: 10px; 
     opacity: 0.35;
     font-family: serif;
 }
@@ -3590,9 +3590,9 @@ pre code {
     font-size: 3.5rem;
     color: var(--color-gold);
     display: inline-block;    /* Changed from absolute */
-    vertical-align: -0.4em;   /* Adjusts height to sit nicely with text */
+    vertical-align: -0.2em;   /* Adjusts height to sit nicely with text */
     line-height: 0;           /* Prevents the large font from pushing lines apart */
-    margin-left: 2px;         /* Adds a small gap after the text */
+    margin-left: 1px;         /* Adds a small gap after the text */
     opacity: 0.35;
     font-family: serif;
 }
