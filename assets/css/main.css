@@ -3962,11 +3962,12 @@ pre code {
 }
 
 
-/* ============================================================================
-   TEACHING PORTFOLIO – ACCORDION (replaces pills + theme rows)
-   ============================================================================ */
+/* ===============================================
+   TEACHING PORTFOLIO – ACCORDION 
+   =============================================== */
 
-/* Accordion container – no extra styling, just holds the items */
+/* Accordion container  */
+
 .tp-accordion-container {
     max-width: 900px;
     margin: 0 auto;
@@ -3974,11 +3975,13 @@ pre code {
 }
 
 /* Each accordion item */
+
 .tp-accordion-item {
     border-bottom: 1px solid var(--color-border);
 }
 
 /* The clickable header bar */
+
 .tp-accordion-header {
     display: flex;
     align-items: center;
@@ -4000,7 +4003,8 @@ pre code {
     color: #6B3A5B;
 }
 
-/* Icon inside the header (violet) */
+/* Icon inside the header */
+
 .tp-accordion-header i {
     font-size: 1.3rem;
     color: #6B3A5B;
@@ -4008,11 +4012,13 @@ pre code {
 }
 
 /* Title text – fills remaining space */
+
 .tp-accordion-header span:first-of-type {
     flex: 1;
 }
 
 /* The + / – toggle indicator */
+
 .tp-accordion-icon {
     font-size: 1.3rem;
     font-weight: 700;
@@ -4226,13 +4232,9 @@ pre code {
 }
 
 
-
-
-
 /* ============================================================================
    RESEARCH PORTFOLIO – violet accent (#581596) / soft lavender (#f3e9fc)
    ============================================================================ */
-
 
 
 /*  Below biography – QUICK NOTE   */
@@ -4285,6 +4287,7 @@ pre code {
 }
 
 /* Pill buttons for other portfolios */
+
 .rp-note-btn {
     display: inline-block;
     padding: 4px 16px;
@@ -4342,6 +4345,7 @@ pre code {
 }
 
 /* ---- My Approach (dark full‑width) ---- */
+
 .rp-approach {
     padding: var(--space-xl) 0;
     background-color: var(--color-midnight-blue);
@@ -4354,6 +4358,7 @@ pre code {
 }
 
 /* ---- What I Do / What I Avoid ---- */
+
 .rp-do-avoid-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -4415,6 +4420,7 @@ pre code {
 /*    RESEARCH PORTFOLIO – ACCORDION  */
 
 /* Accordion container – no extra styling, just holds the items */
+
 .rp-accordion-container {
     max-width: 900px;
     margin: 0 auto;
@@ -4450,7 +4456,7 @@ pre code {
     color: #581596;
 }
 
-/* Icon inside the header (violet) */
+/* Icon inside the header */
 .rp-accordion-header i {
     font-size: 1.3rem;
     color: #581596;
@@ -4458,11 +4464,13 @@ pre code {
 }
 
 /* Title text – fills remaining space */
+
 .rp-accordion-header span:first-of-type {
     flex: 1;
 }
 
 /* The + / – toggle indicator */
+
 .rp-accordion-icon {
     font-size: 1.3rem;
     font-weight: 700;
