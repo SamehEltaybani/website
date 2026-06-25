@@ -3588,15 +3588,17 @@ pre code {
     content: "\201D";
     font-size: 3.5rem;
     color: var(--color-gold);
-    position: absolute;
-    bottom: -28px;
-    right: 0;
+    display: inline-block;    /* Changed from absolute */
+    vertical-align: -0.4em;   /* Adjusts height to sit nicely with text */
+    line-height: 0;           /* Prevents the large font from pushing lines apart */
+    margin-left: 4px;         /* Adds a small gap after the text */
     opacity: 0.35;
     font-family: serif;
 }
 
+/* Remove the specific override as it's no longer needed */
 .da-accordion-body .da-theme-right::after {
-    right: 4px;
+    right: auto; 
 }
 
 /* Mobile – prevent quotation overlap */
