@@ -3343,6 +3343,78 @@ pre code {
    DATA ANALYSIS PORTFOLIO
    ============================================================================ */
 
+
+
+/*  Below biography – QUICK NOTE   */
+
+.da-quick-note {
+    border-left: 4px solid #2A9D8F;
+    padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg);
+    margin: var(--space-lg) 0;
+    background: transparent;
+    font-size: 0.95rem;
+    color: var(--color-text-main);
+    line-height: 1.6;
+    max-width: 900px;
+}
+
+.da-quick-note-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xs);
+}
+
+.da-quick-note-header i {
+    font-size: 1.4rem;
+    color: #2A9D8F;
+}
+
+.da-quick-note-header span {
+    font-weight: 700;
+    color: var(--color-midnight-blue);
+    font-size: 1rem;
+}
+
+.da-quick-note-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-xs) var(--space-sm);
+    margin-top: var(--space-sm);
+}
+
+.da-quick-note-links a {
+    color: var(--color-midnight-blue);
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+.da-quick-note-links a:hover {
+    color: #2A9D8F;
+}
+
+/* Pill buttons for other portfolios */
+
+.da-note-btn {
+    display: inline-block;
+    padding: 4px 16px;
+    border: 1px solid #2A9D8F;
+    border-radius: 50px;
+    color: #2A9D8F;
+    font-weight: 500;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    margin-left: var(--space-sm);
+}
+
+.da-note-btn:hover {
+    background: #2A9D8F;
+    color: #fff;
+}
+
+
 /* ---- Stats counter (centred, max 1200px) ---- */
 
 .data-stats-row {
@@ -3481,7 +3553,8 @@ pre code {
     color: #2A9D8F;
 }
 
-/* Icon inside the header (violet) */
+/* Icon inside the header */
+
 .da-accordion-header i {
     font-size: 1.3rem;
     color: #2A9D8F;
@@ -3489,11 +3562,13 @@ pre code {
 }
 
 /* Title text – fills remaining space */
+
 .da-accordion-header span:first-of-type {
     flex: 1;
 }
 
 /* The + / – toggle indicator */
+
 .da-accordion-icon {
     font-size: 1.3rem;
     font-weight: 700;
@@ -3717,6 +3792,78 @@ pre code {
 /* ============================================================================
    TEACHING PORTFOLIO – plum accent (#6B3A5B) / warm ivory (#FDF7F0)
    ============================================================================ */
+
+
+
+/*  Below biography – QUICK NOTE   */
+
+.tp-quick-note {
+    border-left: 4px solid #6B3A5B;
+    padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg);
+    margin: var(--space-lg) 0;
+    background: transparent;
+    font-size: 0.95rem;
+    color: var(--color-text-main);
+    line-height: 1.6;
+    max-width: 900px;
+}
+
+.tp-quick-note-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xs);
+}
+
+.tp-quick-note-header i {
+    font-size: 1.4rem;
+    color: #6B3A5B;
+}
+
+.tp-quick-note-header span {
+    font-weight: 700;
+    color: var(--color-midnight-blue);
+    font-size: 1rem;
+}
+
+.tp-quick-note-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-xs) var(--space-sm);
+    margin-top: var(--space-sm);
+}
+
+.tp-quick-note-links a {
+    color: var(--color-midnight-blue);
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+.tp-quick-note-links a:hover {
+    color: #6B3A5B;
+}
+
+/* Pill buttons for other portfolios */
+
+.tp-note-btn {
+    display: inline-block;
+    padding: 4px 16px;
+    border: 1px solid #6B3A5B;
+    border-radius: 50px;
+    color: #6B3A5B;
+    font-weight: 500;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    margin-left: var(--space-sm);
+}
+
+.tp-note-btn:hover {
+    background: #6B3A5B;
+    color: #fff;
+}
+
 
 /* ---- Stats Counter ---- */
 
@@ -4158,6 +4305,7 @@ pre code {
 
 
 /* ---- Stats Counter ---- */
+
 .rp-stats-row {
     max-width: 1200px;
     margin: 0 auto;
@@ -4274,11 +4422,13 @@ pre code {
 }
 
 /* Each accordion item */
+
 .rp-accordion-item {
     border-bottom: 1px solid var(--color-border);
 }
 
 /* The clickable header bar */
+
 .rp-accordion-header {
     display: flex;
     align-items: center;
@@ -4436,7 +4586,6 @@ pre code {
     
 }
 
-
 /* ---- Keywords inside accordion bodies ---- */
 
 .rp-accordion-keywords {
@@ -4508,6 +4657,7 @@ pre code {
 }
 
 /* Underlined keyword */
+
 .rp-keyword {
     position: relative;
     font-weight: 600;
@@ -4529,6 +4679,7 @@ pre code {
 /*  RESEARCH THEMES SECTIONS   */
 
 /* ---- Section containers ---- */
+
 .rp-themes-section {
     padding: var(--space-xl) 0;
     background-color: transparent;
@@ -4596,6 +4747,7 @@ pre code {
 }
 
 /* ---- Categories row ---- */
+
 .rp-category-row {
     margin-bottom: var(--space-xl);
 }
@@ -4693,6 +4845,7 @@ pre code {
 }
 
 /* "Examples:" heading with gold fading underline */
+
 .rp-examples-heading {
     font-weight: 700;
     color: var(--color-midnight-blue);
