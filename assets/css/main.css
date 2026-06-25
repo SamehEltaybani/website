@@ -3571,6 +3571,7 @@ pre code {
     position: relative;
     font-size: 0.95rem;
     line-height: 1.5;
+    margin-left: 3px;
 }
 
 .da-theme-right::before {
@@ -3578,9 +3579,8 @@ pre code {
     font-size: 3.5rem;
     color: var(--color-gold);
     position: absolute;
-    top: -2px;
+    top: -17px;
     left: 0;
-    margin-right: 2px; 
     opacity: 0.35;
     font-family: serif;
 }
@@ -3590,13 +3590,12 @@ pre code {
     font-size: 3.5rem;
     color: var(--color-gold);
     display: inline-block;    /* Changed from absolute */
-    vertical-align: -0.2em;   /* Adjusts height to sit nicely with text */
+    vertical-align: -0.5em;   /* Adjusts height to sit nicely with text */
     line-height: 0;           /* Prevents the large font from pushing lines apart */
     margin-left: 1px;         /* Adds a small gap after the text */
     opacity: 0.35;
     font-family: serif;
 }
-
 
 
 /* Mobile – prevent quotation overlap */
