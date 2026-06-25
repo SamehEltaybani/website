@@ -3505,6 +3505,7 @@ pre code {
 }
 
 /* Collapsible body – hidden by default, with a teal left line */
+
 .da-accordion-body {
     display: none;
     padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg);
@@ -3517,6 +3518,7 @@ pre code {
 }
 
 /* Ensure the quotation and button inside the body are also left‑aligned */
+
 .da-accordion-body .data-theme-right {
     text-align: left;
     margin-top: var(--space-md);
@@ -3530,6 +3532,7 @@ pre code {
 }
 
 /* Close the closing quotation mark to the text */
+
 .da-accordion-body .data-theme-right::after {
     right: 4px;
 }
@@ -3545,13 +3548,13 @@ pre code {
 
 /* ---- Themed rows (replaces old inline styles) ---- */
 
-.data-theme-middle {
+.da-theme-middle {
     flex: 1 1 300px;
     min-width: 200px;
 }
 
 
-.data-theme-btn {
+.da-theme-btn {
     display: inline-block;
     background: var(--color-white);
     border: 1px solid #2A9D8F;
@@ -3565,12 +3568,12 @@ pre code {
     margin-top: var(--space-sm);
 }
 
-.data-theme-btn:hover {
+.da-theme-btn:hover {
     background: #2A9D8F;
     color: #fff;
 }
 
-.data-theme-right {
+.da-theme-right {
     flex: 0 0 240px;
     background: transparent;
     padding: var(--space-md);
@@ -3581,7 +3584,7 @@ pre code {
     line-height: 1.5;
 }
 
-.data-theme-right::before {
+.da-theme-right::before {
     content: "\201C";
     font-size: 3.5rem;
     color: var(--color-gold);
@@ -3592,7 +3595,7 @@ pre code {
     font-family: serif;
 }
 
-.data-theme-right::after {
+.da-theme-right::after {
     content: "\201D";
     font-size: 3.5rem;
     color: var(--color-gold);
@@ -3606,18 +3609,18 @@ pre code {
 /* Prevent quotation overlap on mobile */
 
 @media (max-width: 1100px) {
-  .data-theme-right {
+  .da-theme-right {
         flex: auto;
         max-width: 100%;
         padding-top: var(--space-md);
         margin-top: var(--space-sm);
     }
-    .data-theme-right::before,
+    .da-theme-right::before,
     .data-theme-right::after {
         font-size: 2.5rem;
     }
-    .data-theme-right::before { top: -6px; }
-    .data-theme-right::after { bottom: -20px; }
+    .da-theme-right::before { top: -6px; }
+    .da-theme-right::after { bottom: -20px; }
    }
 
 
