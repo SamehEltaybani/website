@@ -4168,6 +4168,7 @@ pre code {
 }
 
 /* Ensure the quotation and button inside the body are also left‑aligned */
+
 .rp-accordion-body .rp-theme-right {
     text-align: left;
     margin-top: var(--space-md);
@@ -4249,6 +4250,7 @@ pre code {
 }
 
 /* Mobile – prevent quotation overlap */
+
 @media (max-width: 1100px) {
    
    .rp-theme-right {
@@ -4275,7 +4277,7 @@ pre code {
     gap: var(--space-md);
     margin-bottom: var(--space-md);
     color: var(--color-text-muted);
-    font-size: 0.85rem;
+    font-size: 1.0rem;
 }
 
 .rp-accordion-keywords span {
@@ -4285,12 +4287,13 @@ pre code {
 }
 
 .rp-accordion-keywords i {
-    font-size: 0.35rem;
+    font-size: 0.7rem;
     color: var(--color-gold);
     flex-shrink: 0;
 }
 
 /* Stack keywords vertically on mobile */
+
 @media (max-width: 600px) {
     .rp-accordion-keywords {
         flex-direction: column;
