@@ -3447,8 +3447,7 @@ pre code {
    DATA ANALYSIS PORTFOLIO – ACCORDION (replaces pills + theme rows)
    ============================================================================ */
 
-/* Accordion container */
-
+/* Accordion container – no extra styling, just holds the items */
 .da-accordion-container {
     max-width: 900px;
     margin: 0 auto;
@@ -3479,13 +3478,13 @@ pre code {
 }
 
 .da-accordion-header:hover {
-    color: #581596;
+    color: #2A9D8F;
 }
 
 /* Icon inside the header (violet) */
 .da-accordion-header i {
     font-size: 1.3rem;
-    color: #581596;
+    color: #2A9D8F;
     flex-shrink: 0;
 }
 
@@ -3510,7 +3509,7 @@ pre code {
 .da-accordion-body {
     display: none;
     padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg);
-    border-left: 3px solid #581596;
+    border-left: 3px solid #2A9D8F;
     margin-left: 8px;
     margin-bottom: var(--space-sm);
     text-align: left;                     /* all content left‑aligned */
@@ -3547,8 +3546,8 @@ pre code {
 .da-theme-btn {
     display: inline-block;
     background: var(--color-white);
-    border: 1px solid #581596;
-    color: #581596;
+    border: 1px solid #2A9D8F;
+    color: #2A9D8F;
     padding: 6px 20px;
     border-radius: 50px;
     font-weight: 600;
@@ -3559,7 +3558,7 @@ pre code {
 }
 
 .da-theme-btn:hover {
-    background: #581596;
+    background: #2A9D8F;
     color: #fff;
 }
 
@@ -3680,10 +3679,11 @@ pre code {
     line-height: 1.5;
 }
 
-/* Violet dot */
+/* Bullet point dot */
+
 .da-bullet-list li::before {
     content: '●';
-    color: #581596;
+    color: #2A9D8F;
     font-size: 0.7rem;
     position: absolute;
     left: 0;
@@ -3691,6 +3691,7 @@ pre code {
 }
 
 /* Underlined keyword */
+
 .da-keyword {
     position: relative;
     font-weight: 600;
@@ -3698,6 +3699,7 @@ pre code {
 }
 
 /* Fading gold underline */
+
 .da-keyword::after {
     content: '';
     position: absolute;
@@ -3818,7 +3820,7 @@ pre code {
    TEACHING PORTFOLIO – ACCORDION (replaces pills + theme rows)
    ============================================================================ */
 
-/* Accordion container */
+/* Accordion container – no extra styling, just holds the items */
 .tp-accordion-container {
     max-width: 900px;
     margin: 0 auto;
@@ -3852,7 +3854,7 @@ pre code {
     color: #6B3A5B;
 }
 
-/* Icon inside the header (plum) */
+/* Icon inside the header (violet) */
 .tp-accordion-header i {
     font-size: 1.3rem;
     color: #6B3A5B;
@@ -3875,34 +3877,31 @@ pre code {
     transition: transform 0.2s;
 }
 
-/* Collapsible body – hidden by default, with a plum left line */
+/* Collapsible body – hidden by default, with a violet left line */
+
 .tp-accordion-body {
     display: none;
     padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg);
     border-left: 3px solid #6B3A5B;
     margin-left: 8px;
     margin-bottom: var(--space-sm);
-    text-align: left;
+    text-align: left;                     /* all content left‑aligned */
     line-height: 1.6;
-    overflow: auto;                     /* contains the floated button */
+    overflow: auto;    
 }
 
 /* Ensure the quotation and button inside the body are also left‑aligned */
+
 .tp-accordion-body .tp-theme-right {
     text-align: left;
     margin-top: var(--space-md);
     padding: var(--space-md);
-    padding-right: 40px;                /* room for the closing mark */
+    padding-right: 40px;               /* room for the closing mark */
     background: transparent;
     border-left: none;
-    width: fit-content;
-    max-width: 100%;
+    width: fit-content;                /* container fits the text width */
+    max-width: 100%;                   /* never overflow */
     position: relative;
-}
-
-/* Close the closing quotation mark to the text */
-.tp-accordion-body .tp-theme-right::after {
-    right: 4px;                         /* same as Research Portfolio */
 }
 
 .tp-accordion-body .tp-theme-btn {
@@ -3911,25 +3910,11 @@ pre code {
     margin-top: var(--space-sm);
 }
 
-
-
-
-
-
-
-
-
-
-
-/* ---- 10 Themed Rows ---- */
-
-
-
-
 .tp-theme-middle {
     flex: 1 1 300px;
     min-width: 200px;
 }
+
 
 .tp-theme-btn {
     display: inline-block;
@@ -3983,11 +3968,15 @@ pre code {
     font-family: serif;
 }
 
-/* Mobile – prevent quotation overlap and give breathing room */
+.tp-accordion-body .tp-theme-right::after {
+    right: 4px;
+}
+
+/* Mobile – prevent quotation overlap */
 
 @media (max-width: 1100px) {
-     
-    .tp-theme-right {
+   
+   .tp-theme-right {
         flex: auto;
         max-width: 100%;
         padding-top: var(--space-md);
@@ -3999,7 +3988,98 @@ pre code {
     }
     .tp-theme-right::before { top: -6px; }
     .tp-theme-right::after { bottom: -20px; }
-   }
+    
+}
+
+
+/* ---- Keywords inside accordion bodies ---- */
+
+.tp-accordion-keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+    color: var(--color-text-muted);
+    font-size: 1.0rem;
+}
+
+.tp-accordion-keywords span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.tp-accordion-keywords i {
+    font-size: 0.7rem;
+    color: var(--color-gold);
+    flex-shrink: 0;
+}
+
+/* Stack keywords vertically on mobile */
+
+@media (max-width: 600px) {
+    .tp-accordion-keywords {
+        flex-direction: column;
+        gap: var(--space-xs);
+    }
+}
+
+
+/*  bullet list with underlined keywords */
+
+.tp-bullet-list {
+    margin-bottom: var(--space-md);
+}
+
+.tp-bullet-list h4 {
+    font-weight: 700;
+    color: var(--color-midnight-blue);
+    margin: 0 0 var(--space-sm) 0;
+}
+
+.tp-bullet-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tp-bullet-list li {
+    position: relative;
+    padding-left: 1.2rem;
+    margin-bottom: var(--space-xs);
+    color: var(--color-text-main);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Bullet point dot */
+.tp-bullet-list li::before {
+    content: '●';
+    color: #6B3A5B;
+    font-size: 0.7rem;
+    position: absolute;
+    left: 0;
+    top: 0.15rem;
+}
+
+/* Underlined keyword */
+.tp-keyword {
+    position: relative;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Fading gold underline */
+.tp-keyword::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, var(--color-gold) 0%, transparent 100%);
+}
+
 
 
 
@@ -4420,7 +4500,7 @@ pre code {
     line-height: 1.5;
 }
 
-/* Violet dot */
+/* Bullet point dot */
 .rp-bullet-list li::before {
     content: '●';
     color: #581596;
@@ -4685,32 +4765,6 @@ pre code {
 .rp-more-insights:hover {
     color: #581596;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
