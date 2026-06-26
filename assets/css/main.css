@@ -5015,8 +5015,10 @@ pre code {
 
 
 /* Offsets the jump so the heading isn't hidden under the nav/breadcrumbs */
-h2, h3 {
-    scroll-margin-top: 140px; /* Adjust this number to match your header/breadcrumb height */
+/* Whenever I want to jump to a new class, that new class should be added to this rule [, new class]*/
+
+h2, h3, .rp-theme-detail {
+    scroll-margin-top: 140px; 
 }
 
 
