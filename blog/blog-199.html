@@ -46,11 +46,8 @@ The page automatically:
 
   <!-- Fixed codes -->
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
-
   <link rel="stylesheet" href="assets/css/main.css">
-
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
 
  
@@ -68,13 +65,17 @@ The page automatically:
     .share-dropdown, .qr-overlay, .search-icon-btn,
     #theme-toggle-desktop, #theme-toggle-mobile,
     #search-toggle, .hamburger, .mobile-menu, .mobile-menu-overlay,
-    .back-to-top {
+    .back-to-top, #back-to-top, .back-to-top-btn {
       display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
     }
+
 
     .no-print { display: none !important; }
 
     /* Smaller fonts */
+   
     body { font-size: 11pt; color: #000; }
     #article-content, #article-content p, #article-content li { font-size: 11pt; }
     .heading-large { font-size: 15pt; }
@@ -82,6 +83,7 @@ The page automatically:
     .heading-small { font-size: 11pt; }
 
     /* Keep images and callouts together */
+   
     figure, img, .callout {
       break-inside: avoid !important;
       page-break-inside: avoid !important;
@@ -91,6 +93,7 @@ The page automatically:
     h2, h3, h4 { break-after: avoid !important; page-break-after: avoid !important; }
 
     /* Page margins and page numbers */
+   
     @page {
       margin-top: 45pt;
       margin-bottom: 45pt;
@@ -128,9 +131,11 @@ The page automatically:
     }
 
     /* ---- PRINT NOTES ---- */
+   
     .print-info-block {
       display: block !important;
       margin-top: 20pt;
+      margin-bottom: 20pt;
       border-top: none;
       padding-top: 0;
     }
