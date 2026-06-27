@@ -7,23 +7,11 @@ Before using:
  - Change the <title>, meta description, og:title, og:description,
    og:image, and og:url in the <head>.
  - Edit the article content inside <div id="article-content">.
- - Add an entry in /json/blog-list.json:
-     "blogfile": "blog/your-file.html",
-     "shortTitle": "...",
-     "categories": ["...", "..."],
-     "date": "YYYY-MM-DD",
-     "readingTime": "X min."   (optional)
+ - Add an entry in /json/blog-list.json
 
-The page automatically:
- - Highlights the Blog navigation item.
- - Shows the shortTitle in the breadcrumb (Home > Blog > shortTitle).
- - Calculates reading time from the article content.
- - Displays a scroll progress bar.
- - Loads "Recommended for You" articles.
- - Provides a single "Action link" trigger for sharing tools.
- - Activates a lightbox on all images inside the article.
 ============================================================================
 -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -244,10 +232,6 @@ The page automatically:
           </div>
         </header>
 
-
-
-
-
        
 
         <!-- ==================================================================
@@ -366,6 +350,39 @@ The page automatically:
             </div>
           </div>
 
+         <!-- Note callout -->
+          <div class="callout callout-note-btn">
+            <div style="display: flex; align-items: flex-start; gap: var(--space-md);">
+              <div style="font-size: 2rem; color: var(--color-midnight-light); flex-shrink: 0;"><i class="fas fa-info-circle"></i></div>
+              <div style="flex: 1;">
+                <p>Supplementary information or an important remark.</p>
+                <div style="text-align: right;"><a href="#" class="btn btn-text">Reference</a></div>
+              </div>
+            </div>
+          </div>
+
+         <!-- Note callout -->
+          <div class="callout callout-note-btn">
+            <div style="display: flex; align-items: flex-start; gap: var(--space-md);">
+              <div style="font-size: 2rem; color: var(--color-midnight-light); flex-shrink: 0;"><i class="fas fa-info-circle"></i></div>
+              <div style="flex: 1;">
+                <p>Supplementary information or an important remark.</p>
+                <div style="text-align: right;"><a href="#" class="btn btn-text">Reference</a></div>
+              </div>
+            </div>
+          </div>
+         
+         <!-- Note callout -->
+          <div class="callout callout-note-btn">
+            <div style="display: flex; align-items: flex-start; gap: var(--space-md);">
+              <div style="font-size: 2rem; color: var(--color-midnight-light); flex-shrink: 0;"><i class="fas fa-info-circle"></i></div>
+              <div style="flex: 1;">
+                <p>Supplementary information or an important remark.</p>
+                <div style="text-align: right;"><a href="#" class="btn btn-text">Reference</a></div>
+              </div>
+            </div>
+          </div>
+
           <!-- Quotation callout -->
           <div class="callout callout-quote">
             <p>“This is a block quote with large ornamental quotation marks.”</p>
@@ -394,6 +411,7 @@ The page automatically:
           <p>&copy; Dr. Sameh Eltaybani. Content is for informational purposes only and represents personal views. <a href="legal.html">Read more &gt;&gt;</a></p>
         </div>
 
+       
         <!-- ==================================================================
              "READ MORE INSIGHTS" BUTTON
              ================================================================== -->
@@ -402,6 +420,7 @@ The page automatically:
           <a href="blog.html" class="btn btn-primary no-print">Read More Insights</a>
         </div>
 
+       
         <!-- ==================================================================
              RECOMMENDED FOR YOU SECTION
              ================================================================== -->
@@ -415,24 +434,22 @@ The page automatically:
     </article>
   </main>
 
-  <!-- ========== FOOTER ========== -->
+ 
+  <!-- ========== FOOTER AND SCRIPTS AND LIGHTBOX LIBRARY ========== -->
   <footer data-component="footer"></footer>
-
-  <!-- ========== SCRIPTS ========== -->
   <script src="assets/js/utils.js"></script>
   <script src="assets/js/navigation.js"></script>
   <script src="assets/js/breadcrumbs.js"></script>
   <script src="assets/js/footer.js"></script>
   <script src="assets/js/back-to-top.js"></script>
   <script src="assets/js/search.js"></script>
-
-  <!-- LIGHTBOX LIBRARY (loaded before the page‑specific script) -->
   <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
 
  
   <!-- ==================================================================
        PAGE‑SPECIFIC SCRIPTS
        ================================================================== -->
+ 
   <script>
     (function() {
       'use strict';
