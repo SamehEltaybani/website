@@ -23,7 +23,7 @@
 
             const item = document.createElement("li");
             const link = document.createElement("a");
-            link.href = "#" + heading.id;
+            link.href = window.location.pathname + "#" + heading.id;
 
             // Marker: ■ for h2, ‒ for h3
             const marker = (heading.tagName === "H3") ? "‒ " : "■ ";
