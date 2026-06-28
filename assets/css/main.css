@@ -651,7 +651,7 @@ main {
 /* Individual card */
 
 .topped-dark-card {
-    flex: 1 1 280px;
+    flex: 1 1 350px;
     max-width: 380px;
     border-radius: 12px;
     overflow: hidden;
@@ -662,10 +662,11 @@ main {
 }
 
 /* ---- Dark top section ---- */
+
 .topped-dark-top {
     background-color: var(--color-midnight-blue);
     padding: var(--space-md);
-    text-align: center;                     /* centered on desktop */
+    text-align: center;                    
     border-radius: 12px 12px 0 0;
 }
 
