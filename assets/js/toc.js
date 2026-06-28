@@ -27,34 +27,51 @@
 
         tocContent.appendChild(tocList);
 
-        // --- MOBILE TOC FUNCTIONALITY ---
+                // --- MOBILE TOC FUNCTIONALITY ---
         const mobileToggle = document.getElementById("toc-mobile-toggle");
         const closeButton = document.getElementById("toc-close");
         const sidebar = document.querySelector(".toc-sidebar");
+        const overlay = document.getElementById("toc-overlay");   // NEW
 
-        if (mobileToggle && sidebar) {
-            mobileToggle.addEventListener("click", function () {
+        function openMobileToc() {
+            if (sidebar) {
                 sidebar.classList.add("active");
                 document.body.classList.add("toc-open");
-            });
+            }
+            if (overlay) {
+                overlay.style.display = "block";
+            }
+        }
+
+        function closeMobileToc() {
+            if (sidebar) {
+                sidebar.classList.remove("active");
+                document.body.classList.remove("toc-open");
+            }
+            if (overlay) {
+                overlay.style.display = "none";
+            }
+        }
+
+        if (mobileToggle && sidebar) {
+            mobileToggle.addEventListener("click", openMobileToc);
         }
 
         if (closeButton && sidebar) {
-            closeButton.addEventListener("click", function () {
-                sidebar.classList.remove("active");
-                document.body.classList.remove("toc-open");
-            });
+            closeButton.addEventListener("click", closeMobileToc);
+        }
+
+        // Close TOC when overlay is tapped
+        if (overlay) {
+            overlay.addEventListener("click", closeMobileToc);
         }
 
         // Close TOC when a link is clicked
         const tocLinks = document.querySelectorAll("#toc-content a");
         tocLinks.forEach(link => {
             link.addEventListener("click", () => {
-                if (sidebar) {
-                    sidebar.classList.remove("active");
-                    document.body.classList.remove("toc-open");
-                }
+                closeMobileToc();
             });
         });
-    });
-})();
+    });   
+})();    
