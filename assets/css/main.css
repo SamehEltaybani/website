@@ -641,7 +641,7 @@ main {
 .topped-dark-row {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-md);
+    gap: var(--space-lg);
     justify-content: center;
     max-width: 1200px;
     margin: 0 auto;
@@ -707,6 +707,7 @@ main {
 /* ============================================================================
    LISTS – global indent inside main content
    ============================================================================ */
+
 main ul,
 main ol {
     padding-left: 1.5rem;
