@@ -760,9 +760,9 @@ main {
 
 .quote-highlight {
     display: inline;
-    background-color: rgba(212, 175, 55, 0.12);   /* light gold */
+    background-color: rgba(212, 175, 55, 0.1);   /* light gold */
     padding: 0.15em 0;                             /* vertical padding behind text */
-    line-height: 2.8;                              /* large line‑height creates gaps between lines */
+    line-height: 1.0;                              /* large line‑height creates gaps between lines */
     box-decoration-break: clone;                   /* each line gets its own background */
     -webkit-box-decoration-break: clone;
     font-style: normal;                            /* keeps text normal, not italic */
