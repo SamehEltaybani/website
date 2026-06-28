@@ -711,19 +711,17 @@ main {
 
 .quote-block {
     position: relative;
-    padding: var(--space-xl) var(--space-lg);
+    padding: var(--space-lg) var(--space-md);    
     margin: var(--space-lg) auto;
     max-width: 700px;
     text-align: center;
     --quote-color: var(--color-gold);
 }
 
-/* Opening mark – top left */
-
 .quote-block::before {
-    content: "\201C";                        /* left double quotation mark */
+    content: "\201C";
     position: absolute;
-    top: -10px;
+    top: -5px;                                    
     left: 0;
     font-size: 5rem;
     line-height: 1;
@@ -731,15 +729,13 @@ main {
     font-family: Georgia, "Times New Roman", serif;
     font-weight: 900;
     opacity: 0.9;
-    text-shadow: 0 0 3px var(--quote-color);   /* makes the mark thicker */
+    text-shadow: 0 0 3px var(--quote-color);
 }
 
-/* Closing mark – bottom right */
-
 .quote-block::after {
-    content: "\201D";                        /* right double quotation mark */
+    content: "\201D";
     position: absolute;
-    bottom: -30px;
+    bottom: -20px;                               
     right: 0;
     font-size: 5rem;
     line-height: 1;
@@ -762,13 +758,13 @@ main {
 
 /* Mobile – slightly smaller marks */
 
-@media (max-width: 1100px) {
+@media (max-width: 768px) {
     .quote-block::before,
     .quote-block::after {
         font-size: 3.5rem;
     }
     .quote-block::before { top: -4px; }
-    .quote-block::after { bottom: -20px; }
+    .quote-block::after { bottom: -16px; }
 }
 
 
