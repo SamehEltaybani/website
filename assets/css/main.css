@@ -5185,6 +5185,61 @@ body.toc-open {
     z-index: 9998;            /* just below the sidebar (which is 9999) */
 }
 
+
+
+/* ============================================================================
+   BLOG ARTICLE – TABLE OF CONTENTS
+   ============================================================================ */
+
+/* The whole ToC box */
+.blog-toc-box {
+    background-color: var(--color-bg-alt);        /* light grey */
+    border-left: 4px solid var(--color-gold);
+    padding: var(--space-md);
+    margin-bottom: var(--space-lg);
+    border-radius: 0 8px 8px 0;
+}
+
+/* Title */
+.blog-toc-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-midnight-blue);
+    margin: 0 0 var(--space-sm) 0;
+    padding-bottom: var(--space-xs);
+    border-bottom: 1px solid var(--color-gold);
+}
+
+/* The unordered list */
+.blog-toc-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.blog-toc-box li {
+    margin-bottom: 4px;
+}
+
+.blog-toc-box a {
+    text-decoration: none;
+    color: var(--color-text-main);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    transition: color 0.2s;
+}
+
+.blog-toc-box a:hover {
+    color: var(--color-gold);
+    text-decoration: underline;
+}
+
+/* Hide the whole box when JavaScript didn't insert any list items */
+.blog-toc-box:not(:has(ul)) {
+    display: none;
+}
+
+
 /* ============================================================================
    END OF THE main.css FILE
    ============================================================================ */
