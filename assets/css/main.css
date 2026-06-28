@@ -5171,6 +5171,20 @@ body.toc-open {
     height: 100vh;
 }
 
+
+/* ===========   TOC OVERLAY (mobile only)   =========== */
+
+.toc-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 9998;            /* just below the sidebar (which is 9999) */
+}
+
 /* ============================================================================
    END OF THE main.css FILE
    ============================================================================ */
