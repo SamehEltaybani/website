@@ -704,6 +704,72 @@ main {
 
 
 
+
+/* ========================
+   QUOTE BLOCK 
+  =============================== */
+
+.quote-block {
+    position: relative;
+    padding: var(--space-xl) var(--space-lg);
+    margin: var(--space-lg) 0;
+    --quote-color: var(--color-gold);       /* default colour – change inline */
+}
+
+/* Opening mark – top left */
+
+.quote-block::before {
+    content: "\201C";                        /* left double quotation mark */
+    position: absolute;
+    top: -10px;
+    left: 0;
+    font-size: 5rem;
+    line-height: 1;
+    color: var(--quote-color);
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 900;
+    opacity: 0.9;
+    text-shadow: 0 0 3px var(--quote-color);   /* makes the mark thicker */
+}
+
+/* Closing mark – bottom right */
+
+.quote-block::after {
+    content: "\201D";                        /* right double quotation mark */
+    position: absolute;
+    bottom: -30px;
+    right: 0;
+    font-size: 5rem;
+    line-height: 1;
+    color: var(--quote-color);
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 900;
+    opacity: 0.9;
+    text-shadow: 0 0 3px var(--quote-color);
+}
+
+/* Ensure the text inside the quote is never italic */
+
+.quote-block p {
+    font-style: normal;
+    line-height: 1.7;
+    font-size: 1rem;
+    color: var(--color-text-main);
+    margin: 0;
+}
+
+/* Mobile – slightly smaller marks */
+
+@media (max-width: 1100px) {
+    .quote-block::before,
+    .quote-block::after {
+        font-size: 3.5rem;
+    }
+    .quote-block::before { top: -4px; }
+    .quote-block::after { bottom: -20px; }
+}
+
+
 /* ============================================================================
    LISTS – global indent inside main content
    ============================================================================ */
