@@ -712,8 +712,10 @@ main {
 .quote-block {
     position: relative;
     padding: var(--space-xl) var(--space-lg);
-    margin: var(--space-lg) 0;
-    --quote-color: var(--color-gold);       /* default colour – change inline */
+    margin: var(--space-lg) auto;
+    max-width: 700px;
+    text-align: center;
+    --quote-color: var(--color-gold);
 }
 
 /* Opening mark – top left */
