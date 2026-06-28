@@ -214,7 +214,7 @@ Before using:
   <main>
    
     <article class="section" style="padding-top: 0; padding-bottom: 0;">
-      <div class="container" style="max-width: 800px; margin: 0 auto; background-color: #ffffff; padding-top: var(--space-xl); padding-bottom: var(--space-xl);">
+      <div class="container" style="max-width: 800px; margin: 0 auto; background-color: #fefdfb; box-shadow: 0 4px 20px rgba(0,0,0,0.05); padding-top: var(--space-xl); padding-bottom: var(--space-xl);">
 
         <!-- ==================================================================
              TITLE METADATA BLOCK (populated by JavaScript)
@@ -235,10 +235,9 @@ Before using:
         </header>
 
        
-
-        <!-- ==================================================================
-             SHARE TRIGGER (top) – single "Action link" button
-             ================================================================== -->
+<!-- ==================================================================
+ SHARE TRIGGER (top) – single "Action link" button
+================================================================== -->
        
         <div id="share-btn-top" class="share-btn-wrapper"></div>
         <hr style="border: none; border-top: 2px solid var(--color-border); margin: 4px 0 var(--space-lg) 0;">
@@ -264,9 +263,15 @@ Before using:
                </div>
 
        
-        <!-- ==================================================================
-             ARTICLE CONTENT (editable)
-             ================================================================== -->
+<!-- ==================================================================
+ARTICLE CONTENT (editable)
+================================================================== -->
+
+
+<!-- ===== TABLE OF CONTENTS (blog article) ===== -->
+        <div id="blog-toc-container" class="blog-toc-box">
+            <h3 class="blog-toc-title">Table of Contents</h3>
+        </div>
        
         <div id="article-content">
 
@@ -447,6 +452,7 @@ Before using:
   <script src="assets/js/search.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
   <script src="assets/js/article-page.js"></script>
+  <script src="assets/js/blog-toc.js"></script>
 
  
  
