@@ -713,7 +713,7 @@ main {
     position: relative;
     padding: var(--space-lg) var(--space-md);    
     margin: var(--space-lg) auto;
-    max-width: 700px;
+    max-width: 450px;
     text-align: center;
     --quote-color: var(--color-gold);
 }
@@ -755,6 +755,20 @@ main {
     color: var(--color-text-main);
     margin: 0;
 }
+
+/* QUOTE LINE HIGHLIGHT  */
+
+.quote-highlight {
+    display: inline;
+    background-color: rgba(212, 175, 55, 0.12);   /* light gold */
+    padding: 0.15em 0;                             /* vertical padding behind text */
+    line-height: 2.2;                              /* large line‑height creates gaps between lines */
+    box-decoration-break: clone;                   /* each line gets its own background */
+    -webkit-box-decoration-break: clone;
+    font-style: normal;                            /* keeps text normal, not italic */
+}
+
+
 
 /* Mobile – slightly smaller marks */
 
