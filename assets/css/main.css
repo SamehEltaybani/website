@@ -642,7 +642,7 @@ main {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-lg);
-    justify-content: space-between;
+    justify-content: center;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 var(--container-padding);
