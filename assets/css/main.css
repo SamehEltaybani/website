@@ -641,7 +641,7 @@ main {
 .topped-dark-row {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-lg);
+    gap: var(--space-md);
     justify-content: center;
     max-width: 1200px;
     margin: 0 auto;
@@ -651,7 +651,7 @@ main {
 /* Individual card */
 
 .topped-dark-card {
-    flex: 1 1 350px;
+    flex: 1 1 300px;
     max-width: 380px;
     border-radius: 12px;
     overflow: hidden;
