@@ -4426,13 +4426,13 @@ pre code {
 
 .rp-approach {
     padding: var(--space-xl) 0;
-    background-color: var(--color-midnight-blue);
+    background-color: Transparent;
 }
 .rp-approach-text {
     max-width: 800px;
     margin: 0 auto;
     text-align: center;
-    color: var(--color-text-inverted);
+    color: var(--color-text-main);
 }
 
 /* ---- What I Do / What I Avoid ---- */
@@ -4733,6 +4733,7 @@ pre code {
 }
 
 /* Bullet point dot */
+
 .rp-bullet-list li::before {
     content: '●';
     color: #581596;
@@ -4951,6 +4952,7 @@ pre code {
 }
 
 /* Examples bullet list */
+
 .rp-examples-list {
     list-style: none;
     padding: 0;
@@ -4987,6 +4989,7 @@ pre code {
 }
 
 /* "More insights" link */
+
 .rp-more-insights {
     display: block;
     text-align: right;
@@ -5012,7 +5015,9 @@ pre code {
    TABLE OF CONTENTS (TOC) for all portfolios - SIDEBAR STYLES
    ============================================================================ */
 
+
 /* 1. Creates the two-column side-by-side layout */
+
 .toc-wrapper {
     display: flex;
     max-width: 1200px;
@@ -5040,6 +5045,7 @@ pre code {
 }
 
 /* This keeps the title fixed at the top */
+
 .toc-title {
     flex-shrink: 0; /* Ensures the title doesn't shrink */
     font-size: 1.2rem;
@@ -5050,6 +5056,7 @@ pre code {
 }
 
 /* This makes ONLY the list scrollable */
+
 #toc-content {
     overflow-y: auto; /* Scroll only the content */
     flex-grow: 1; /* Fills remaining space */
@@ -5057,6 +5064,7 @@ pre code {
 }
 
 /* 3. The List Styles */
+
 #toc-content ul {
     list-style: none;
 }
@@ -5093,6 +5101,7 @@ pre code {
 
 
 /* Offsets the jump so the heading isn't hidden under the nav/breadcrumbs */
+
 /* Whenever I want to jump to a new class, that new class should be added to this rule [, new class]*/
 
 h2, h3, .rp-theme-detail {
@@ -5103,11 +5112,13 @@ h2, h3, .rp-theme-detail {
 /* Mobile version */
 
 /* --- Desktop Defaults (Hidden) --- */
+
 #toc-mobile-toggle, #toc-close {
     display: none !important;
 }
 
 /* --- Mobile Only (Screens 1100px or smaller) --- */
+
 @media (max-width: 1100px) {
     /* Show buttons only on mobile */
     #toc-mobile-toggle, #toc-close {
@@ -5115,6 +5126,7 @@ h2, h3, .rp-theme-detail {
     }
 
     /* Make the Toggle Button Sticky */
+ 
     #toc-mobile-toggle {
         position: fixed;
         top: 105px;     
@@ -5137,11 +5149,13 @@ h2, h3, .rp-theme-detail {
     }
 
     /* Hide the sidebar container until clicked */
+ 
     .toc-sidebar {
         display: none !important; 
     }
 
     /* Show sidebar only when 'active' class is added via JS */
+ 
     .toc-sidebar.active {
         display: flex !important;
         flex-direction: column;
@@ -5166,6 +5180,7 @@ h2, h3, .rp-theme-detail {
 }
 
 /* Prevent scrolling while the menu is open */
+
 body.toc-open {
     overflow: hidden;
     height: 100vh;
@@ -5192,6 +5207,7 @@ body.toc-open {
    ============================================================================ */
 
 /* The whole ToC box */
+
 .blog-toc-box {
     background-color: var(--color-bg-alt);        /* light grey */
     border-left: 4px solid var(--color-gold);
@@ -5201,6 +5217,7 @@ body.toc-open {
 }
 
 /* Title */
+
 .blog-toc-title {
     font-size: 1.1rem;
     font-weight: 700;
@@ -5211,6 +5228,7 @@ body.toc-open {
 }
 
 /* The unordered list */
+
 .blog-toc-box ul {
     list-style: none;
     padding: 0;
@@ -5235,6 +5253,7 @@ body.toc-open {
 }
 
 /* Hide the whole box when JavaScript didn't insert any list items */
+
 .blog-toc-box:not(:has(ul)) {
     display: none;
 }
