@@ -4399,7 +4399,7 @@ pre code {
     text-align: center;
     flex-shrink: 0;
     color: #6B3A5B;
-    font-size: 0.9rem;
+    font-size: 1.5rem;
 }
 
 .tp-course-row-text {
@@ -4422,7 +4422,7 @@ pre code {
     gap: var(--space-sm);
     padding: 2px 0;
     color: var(--color-text-main);
-    font-size: 1.5rem;
+    font-size: 0.9rem;
     line-height: 1.5;
 }
 
@@ -4457,6 +4457,7 @@ pre code {
 
 .tp-course-btn i {
     font-size: 0.9rem;
+    margin-left: auto;
 }
 
 .tp-course-btn:hover {
