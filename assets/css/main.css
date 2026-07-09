@@ -4331,19 +4331,18 @@ pre code {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
+    width: 600px;
     padding: 14px 20px;
     background: transparent;
     border: 1px solid #6B3A5B;
-    border-radius: 50%;
+    border-radius: 50px;
     color: #6B3A5B;
     text-decoration: none;
     font-size: 1rem;
     font-weight: 500;
     margin-bottom: var(--space-sm);
     transition: background-color 0.2s, color 0.2s;
-    max-width: 600px;
-}
+   }
 
 .tp-activity-btn:hover {
     background-color: #6B3A5B;
@@ -4364,7 +4363,7 @@ pre code {
 /* Course card */
 
 .tp-course-card {
-    border-left: 4px solid #581596;
+    border-left: 4px solid #6B3A5B;
     padding-left: var(--space-md);
     margin-bottom: var(--space-lg);
     background: transparent;
@@ -4384,10 +4383,10 @@ pre code {
 .tp-course-row i {
     color: #6B3A5B;
     font-size: 2rem;
-    width: 18px;
+    width: 36px;
     text-align: center;
     flex-shrink: 0;
-    margin-top: 4px;
+    margin-top: 6px;
 }
 
 /* Bullet list with caret‑right icons */
@@ -4408,7 +4407,7 @@ pre code {
 }
 
 .tp-course-bullets li i {
-    color: #581596;
+    color: #6B3A5B;
     font-size: 0.9rem;
     flex-shrink: 0;
     margin-top: 4px;
