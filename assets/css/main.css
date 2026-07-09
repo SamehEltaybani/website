@@ -4316,119 +4316,6 @@ pre code {
 
 
 
-/*   TEACHING ACTIVITIES / COURSES */
-
-/* Section wrapper */
-
-.tp-activities-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 var(--container-padding);
-}
-
-/* The three navigation buttons */
-
-.tp-activity-btn {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 400px;
-    padding: 14px 20px;
-    background: transparent;
-    border: 1px solid #6B3A5B;
-    border-radius: 50px;
-    color: #6B3A5B;
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 500;
-    margin-bottom: var(--space-sm);
-    transition: background-color 0.2s, color 0.2s;
-   }
-
-.tp-activity-btn:hover {
-    background-color: #6B3A5B;
-    color: #fff;
-}
-
-.tp-activity-btn span:last-child {
-    font-size: 1.4rem;
-    font-weight: 300;
-}
-
-/* Each activity sub‑section */
-
-.tp-activity-section {
-    margin-bottom: var(--space-xl);
-}
-
-/* Course card */
-
-.tp-course-card {
-    border-left: 4px solid #6B3A5B;
-    padding-left: var(--space-md);
-    margin-bottom: var(--space-lg);
-    background: transparent;
-}
-
-/* Row inside a course card (icon + text) */
-
-.tp-course-row {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-sm);
-    margin-bottom: var(--space-xs);
-    color: var(--color-text-main);
-    line-height: 1.5;
-}
-
-.tp-course-row i {
-    color: #6B3A5B;
-    font-size: 2rem;
-    width: 36px;
-    text-align: center;
-    flex-shrink: 0;
-    margin-top: 6px;
-}
-
-/* Bullet list with caret‑right icons */
-
-.tp-course-bullets {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.tp-course-bullets li {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-sm);
-    margin-bottom: 4px;
-    color: var(--color-text-main);
-    line-height: 1.5;
-}
-
-.tp-course-bullets li i {
-    color: #6B3A5B;
-    font-size: 0.9rem;
-    flex-shrink: 0;
-    margin-top: 4px;
-}
-
-/* Clickable link inside a course card */
-.tp-course-link {
-    text-decoration: none;
-    color: #6B3A5B;
-    font-weight: 500;
-    transition: color 0.2s;
-}
-
-.tp-course-link:hover {
-    color: var(--color-gold);
-    text-decoration: underline;
-}
-
-
-
 
 
 
@@ -4465,13 +4352,14 @@ pre code {
 }
 
 /* ---- Course Card ---- */
+
 .tp-course-card {
-    background: var(--color-white);
-    border: 1px solid var(--color-border);
+    background: transparent;
+    border-left: 4px solid #6B3A5B;
     border-radius: 12px;
     padding: var(--space-lg);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
+
 
 /* Row 1: icon circle + title */
 .tp-course-header {
