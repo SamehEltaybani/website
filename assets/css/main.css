@@ -4322,6 +4322,7 @@ pre code {
 /*   TEACHING ACTIVITIES / COURSES */
 
 /* Section wrapper */
+
 .tp-activities-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -4329,6 +4330,7 @@ pre code {
 }
 
 /* The three navigation buttons */
+
 .tp-activity-btn {
     display: flex;
     align-items: center;
@@ -4337,13 +4339,14 @@ pre code {
     padding: 14px 20px;
     background: transparent;
     border: 1px solid #581596;
-    border-radius: 8px;
+    border-radius: 50%;
     color: #581596;
     text-decoration: none;
     font-size: 1rem;
     font-weight: 500;
     margin-bottom: var(--space-sm);
     transition: background-color 0.2s, color 0.2s;
+    max-width: 600px;
 }
 
 .tp-activity-btn:hover {
@@ -4357,11 +4360,13 @@ pre code {
 }
 
 /* Each activity sub‑section */
+
 .tp-activity-section {
     margin-bottom: var(--space-xl);
 }
 
 /* Course card */
+
 .tp-course-card {
     border-left: 4px solid #581596;
     padding-left: var(--space-md);
@@ -4370,6 +4375,7 @@ pre code {
 }
 
 /* Row inside a course card (icon + text) */
+
 .tp-course-row {
     display: flex;
     align-items: flex-start;
@@ -4389,6 +4395,7 @@ pre code {
 }
 
 /* Bullet list with caret‑right icons */
+
 .tp-course-bullets {
     list-style: none;
     padding: 0;
