@@ -10,7 +10,6 @@ To hide a specific heading: If you have a heading you don't want in the menu, ju
 
 
 
-
 UNIFIED STAND ALONE TITLE THROUGHOUT THE WEBSITE 
 
 
