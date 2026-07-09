@@ -4322,7 +4322,6 @@ pre code {
 
 /* === TEACHING COURSES ==== */
 
-/* Section wrapper */
 .tp-courses-section {
     padding: var(--space-xl) 0;
     background-color: transparent;
@@ -4334,7 +4333,6 @@ pre code {
     padding: 0 var(--container-padding);
 }
 
-/* Title */
 .tp-courses-title {
     font-size: 2rem;
     font-weight: 700;
@@ -4343,7 +4341,6 @@ pre code {
     text-align: left;
 }
 
-/* Paragraph */
 .tp-courses-paragraph {
     font-size: 1rem;
     line-height: 1.6;
@@ -4356,7 +4353,6 @@ pre code {
 .tp-course-card {
     background: transparent;
     border-left: 4px solid #6B3A5B;
-    border-radius: 12px;
     padding: var(--space-lg);
 }
 
@@ -4426,7 +4422,7 @@ pre code {
     gap: var(--space-sm);
     padding: 2px 0;
     color: var(--color-text-main);
-    font-size: 0.9rem;
+    font-size: 1.5rem;
     line-height: 1.5;
 }
 
