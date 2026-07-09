@@ -4315,6 +4315,117 @@ pre code {
 }
 
 
+
+
+
+
+/*   TEACHING ACTIVITIES / COURSES */
+
+/* Section wrapper */
+.tp-activities-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+}
+
+/* The three navigation buttons */
+.tp-activity-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 14px 20px;
+    background: transparent;
+    border: 1px solid #581596;
+    border-radius: 8px;
+    color: #581596;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: var(--space-sm);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.tp-activity-btn:hover {
+    background-color: #581596;
+    color: #fff;
+}
+
+.tp-activity-btn span:last-child {
+    font-size: 1.4rem;
+    font-weight: 300;
+}
+
+/* Each activity sub‑section */
+.tp-activity-section {
+    margin-bottom: var(--space-xl);
+}
+
+/* Course card */
+.tp-course-card {
+    border-left: 4px solid #581596;
+    padding-left: var(--space-md);
+    margin-bottom: var(--space-lg);
+    background: transparent;
+}
+
+/* Row inside a course card (icon + text) */
+.tp-course-row {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xs);
+    color: var(--color-text-main);
+    line-height: 1.5;
+}
+
+.tp-course-row i {
+    color: #581596;
+    font-size: 1rem;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+    margin-top: 3px;
+}
+
+/* Bullet list with caret‑right icons */
+.tp-course-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tp-course-bullets li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    margin-bottom: 4px;
+    color: var(--color-text-main);
+    line-height: 1.5;
+}
+
+.tp-course-bullets li i {
+    color: #581596;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+
+/* Clickable link inside a course card */
+.tp-course-link {
+    text-decoration: none;
+    color: #581596;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.tp-course-link:hover {
+    color: var(--color-gold);
+    text-decoration: underline;
+}
+
+
+
 /* ============================================================================
    RESEARCH PORTFOLIO – violet accent (#581596) / soft lavender (#f3e9fc)
    ============================================================================ */
