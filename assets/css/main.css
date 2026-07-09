@@ -4045,9 +4045,7 @@ pre code {
 }
 
 
-/* ===============================================
-   TEACHING PORTFOLIO – ACCORDION 
-   =============================================== */
+/*    TEACHING PORTFOLIO – ACCORDION  */
 
 /* Accordion container  */
 
@@ -4317,8 +4315,6 @@ pre code {
 
 
 
-
-
 /*   TEACHING ACTIVITIES / COURSES */
 
 /* Section wrapper */
@@ -4338,9 +4334,9 @@ pre code {
     width: 100%;
     padding: 14px 20px;
     background: transparent;
-    border: 1px solid #581596;
+    border: 1px solid #6B3A5B;
     border-radius: 50%;
-    color: #581596;
+    color: #6B3A5B;
     text-decoration: none;
     font-size: 1rem;
     font-weight: 500;
@@ -4350,7 +4346,7 @@ pre code {
 }
 
 .tp-activity-btn:hover {
-    background-color: #581596;
+    background-color: #6B3A5B;
     color: #fff;
 }
 
@@ -4386,12 +4382,12 @@ pre code {
 }
 
 .tp-course-row i {
-    color: #581596;
-    font-size: 1rem;
+    color: #6B3A5B;
+    font-size: 2rem;
     width: 18px;
     text-align: center;
     flex-shrink: 0;
-    margin-top: 3px;
+    margin-top: 4px;
 }
 
 /* Bullet list with caret‑right icons */
@@ -4421,7 +4417,7 @@ pre code {
 /* Clickable link inside a course card */
 .tp-course-link {
     text-decoration: none;
-    color: #581596;
+    color: #6B3A5B;
     font-weight: 500;
     transition: color 0.2s;
 }
