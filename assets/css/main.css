@@ -4429,6 +4429,162 @@ pre code {
 
 
 
+
+
+
+
+/* === TEACHING COURSES ==== */
+
+/* Section wrapper */
+.tp-courses-section {
+    padding: var(--space-xl) 0;
+    background-color: transparent;
+}
+
+.tp-courses-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+}
+
+/* Title */
+.tp-courses-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-midnight-blue);
+    margin-bottom: var(--space-sm);
+    text-align: left;
+}
+
+/* Paragraph */
+.tp-courses-paragraph {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-text-main);
+    margin-bottom: var(--space-xl);
+}
+
+/* ---- Course Card ---- */
+.tp-course-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: var(--space-lg);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+/* Row 1: icon circle + title */
+.tp-course-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+}
+
+.tp-course-icon-circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 2px solid #6B3A5B;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #6B3A5B;
+    font-size: 1.5rem;
+}
+
+.tp-course-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-midnight-blue);
+    margin: 0;
+}
+
+/* Rows 2 & 3: icon + text */
+.tp-course-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-md);
+    margin-bottom: var(--space-sm);
+}
+
+.tp-course-row-icon {
+    width: 56px;                     /* same width as the circle for alignment */
+    text-align: center;
+    flex-shrink: 0;
+    color: #6B3A5B;
+    font-size: 0.9rem;
+}
+
+.tp-course-row-text {
+    flex: 1;
+    color: var(--color-text-main);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Row 4: bullet list with caret‑right icons */
+.tp-course-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-md) 0;
+}
+
+.tp-course-list li {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+    padding: 2px 0;
+    color: var(--color-text-main);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.tp-course-list li i {
+    color: #6B3A5B;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+    width: 16px;
+    text-align: center;
+}
+
+/* Row 5: right‑aligned pill button */
+.tp-course-btn-wrapper {
+    text-align: right;
+    margin-top: var(--space-sm);
+}
+
+.tp-course-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--color-white);
+    border: 1px solid #6B3A5B;
+    color: #6B3A5B;
+    padding: 8px 24px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+}
+
+.tp-course-btn i {
+    font-size: 0.9rem;
+}
+
+.tp-course-btn:hover {
+    background: #6B3A5B;
+    color: #fff;
+}
+
+
+
+
+
+
 /* ============================================================================
    RESEARCH PORTFOLIO – violet accent (#581596) / soft lavender (#f3e9fc)
    ============================================================================ */
