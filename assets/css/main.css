@@ -4348,7 +4348,7 @@ pre code {
     background: transparent;
     border-left: 4px solid #6B3A5B;
     padding: var(--space-lg);
-    margin-bottom: 12px;
+    margin-bottom: var(--space-lg);
 }
 
 
