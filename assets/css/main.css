@@ -4339,7 +4339,7 @@ pre code {
     font-size: 1rem;
     line-height: 1.6;
     color: var(--color-text-main);
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-md);
 }
 
 /* ---- Course Card ---- */
