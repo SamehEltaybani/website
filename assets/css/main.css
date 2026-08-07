@@ -62,7 +62,7 @@ main {
     
     /* ===== COLORS - Roles ===== */
  
-    --color-bg-main: #f8fff4;       /* The background space outside the container area [any space beyond the navigation bar, readcrumb, footer]  #f9f9f7 */
+    --color-bg-main: #f4f8ff;       /* The background space outside the container area [any space beyond the navigation bar, readcrumb, footer]  #f9f9f7 */
     --color-bg-alt: #F8F9FA;
     --color-hover-bg: #E9ECEF;
     --color-bg-breadcrumb: #E9ECEF;
